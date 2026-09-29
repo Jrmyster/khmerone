@@ -96,6 +96,13 @@ export function HelperBot({ locale, query, resultCount, onSelectFilter, onFocusS
         <rect className="bot-eye" x="36" y="48" width="9" height="12" rx="4.5" fill="#7cf7ff"/>
         <rect className="bot-eye" x="67" y="48" width="9" height="12" rx="4.5" fill="#7cf7ff"/>
         <path className="bot-mouth" d="M45 69Q56 78 67 69" fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round"/>
+        <g transform="rotate(-9 56 26)">
+          <path d="M26 32Q29 14 52 12Q75 11 84 27L82 35Q56 30 29 37Z" fill="#875632" stroke="#c18a55" strokeWidth="1.8" strokeLinejoin="round"/>
+          <path d="M32 31Q50 20 78 28M54 13Q58 20 56 31" fill="none" stroke="#c99962" strokeWidth="1.2" opacity=".85"/>
+          <path d="M75 30Q90 28 105 35Q108 37 104 40Q90 42 76 36Z" fill="#694027" stroke="#b17a49" strokeWidth="1.5" strokeLinejoin="round"/>
+          <path d="M80 33Q93 32 102 37" fill="none" stroke="#d2a06c" strokeWidth="1" opacity=".8"/>
+          <circle cx="53" cy="13" r="2" fill="#b98450"/>
+        </g>
         <circle cx="20" cy="43" r="2" fill="#fbbf24"/><circle cx="92" cy="43" r="2" fill="#fbbf24"/>
         <path d="M36 97v7m40-7v7" stroke="#4fb9cc" strokeWidth="4" strokeLinecap="round"/>
         <rect x="31" y="103" width="50" height="21" rx="9" fill="#172a41" stroke="#4fb9cc" strokeWidth="2"/>
