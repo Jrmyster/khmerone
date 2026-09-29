@@ -120,6 +120,23 @@ export const apps: AppEntry[] = [
     icon: "world", url: "https://world-game-atlas.jrmyster7.chatgpt.site/", offlineReady: false,
   },
   {
+    id: "fast-and-faster",
+    title: { en: "Fast & Faster", km: "លឿន និងលឿនជាង (Fast & Faster)" },
+    category: AppCategory.Utilities,
+    categoryLabel: { en: "Educational utility / skill building", km: "ឧបករណ៍សិក្សា និងការអភិវឌ្ឍជំនាញ" },
+    tagline: { en: "Interactive speed practice, typing fluency, and rapid skill-building for Cambodian learners.", km: "ហាត់ល្បឿន វាយអត្ថបទឱ្យស្ទាត់ និងអភិវឌ្ឍជំនាញរហ័សសម្រាប់អ្នកសិក្សាកម្ពុជា។" },
+    description: { en: "Practice with speed drills and instant feedback in a lightweight tool that works offline.", km: "អនុវត្តលំហាត់ហាត់ល្បឿន និងទទួលមតិកែលម្អភ្លាមៗក្នុងឧបករណ៍ស្រាលដែលអាចប្រើក្រៅបណ្ដាញ។" },
+    audience: { en: "All grades & learners", km: "គ្រប់កម្រិតថ្នាក់ និងអ្នកសិក្សាទាំងអស់" },
+    grades: ["primary", "lower-secondary", "high-school", "vocational-adult"],
+    gradeBadge: { en: "All grades", km: "គ្រប់កម្រិតថ្នាក់" },
+    features: [
+      { en: "Speed drills", km: "លំហាត់ហាត់ល្បឿន" },
+      { en: "Instant feedback", km: "មតិកែលម្អភ្លាមៗ" },
+      { en: "Lightweight offline performance", km: "ដំណើរការលឿន និងអាចប្រើក្រៅបណ្ដាញ" },
+    ],
+    icon: "speed", url: "https://fastandfaster.netlify.app/", offlineReady: true,
+  },
+  {
     id: "war-is-dumb",
     title: { en: "War is Dumb", km: "សង្គ្រាមគឺមិនឆ្លាត" },
     category: AppCategory.SocialStudies,

@@ -15,7 +15,7 @@ Add this to the page's `<head>`:
 ></script>
 ```
 
-The bar is inserted at the start of `<body>`. The `data-current-app` attribute may be omitted; the component then matches the current hostname. Valid IDs: `school-connect-cambodia`, `anatomykh`, `finlitkh`, `khmer-vocation`, `khmer-english-exam`, `chhouk-baby`, `world-game`, and `war-is-dumb`.
+The bar is inserted at the start of `<body>`. The `data-current-app` attribute may be omitted; the component then matches the current hostname. Valid IDs: `school-connect-cambodia`, `anatomykh`, `finlitkh`, `khmer-vocation`, `khmer-english-exam`, `chhouk-baby`, `world-game`, `fast-and-faster`, and `war-is-dumb`.
 
 For explicit placement, omit `data-auto-inject` and add `<khmerone-bar data-current-app="anatomykh"></khmerone-bar>` where the bar should appear.
 

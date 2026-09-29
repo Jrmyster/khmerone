@@ -8,10 +8,11 @@ export enum AppCategory {
   Finance = "finance",
   Simulations = "simulations",
   SocialStudies = "social-studies",
+  Utilities = "utilities",
 }
 
 export type GradeLevel = "primary" | "lower-secondary" | "high-school" | "vocational-adult";
-export type AppIcon = "school" | "anatomy" | "finance" | "language" | "exam" | "baby" | "world" | "peace";
+export type AppIcon = "school" | "anatomy" | "finance" | "language" | "exam" | "baby" | "world" | "peace" | "speed";
 
 export interface AppEntry {
   id: string;
@@ -22,6 +23,8 @@ export interface AppEntry {
   description: LocalizedText;
   audience: LocalizedText;
   grades: GradeLevel[];
+  /** Optional compact badge for entries spanning every grade. */
+  gradeBadge?: LocalizedText;
   features: LocalizedText[];
   notice?: LocalizedText;
   icon: AppIcon;

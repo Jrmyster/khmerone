@@ -14,6 +14,7 @@
     { id: "khmer-english-exam", en: "Khmer English Exam", km: "ប្រឡងភាសាអង់គ្លេសខ្មែរ", url: "https://khmerenglishexam.com/", icon: "📝" },
     { id: "chhouk-baby", en: "Chhouk Baby", km: "ឈូក បេប៊ី", url: "https://chhoukbaby.netlify.app/", icon: "👶" },
     { id: "world-game", en: "World Game Simulation", km: "កម្មវិធីក្លែងធ្វើពិភពលោក", url: "https://world-game-atlas.jrmyster7.chatgpt.site/", icon: "🌍" },
+    { id: "fast-and-faster", en: "Fast & Faster", km: "លឿន និងលឿនជាង", url: "https://fastandfaster.netlify.app/", icon: "⚡" },
     { id: "war-is-dumb", en: "War is Dumb", km: "សង្គ្រាមគឺមិនឆ្លាត", url: "https://warisobsolete.com/", icon: "🕊️" },
   ];
 

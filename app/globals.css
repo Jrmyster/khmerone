@@ -146,6 +146,7 @@ h1, h2, h3, p { margin: 0; }
 .icon-finance { border-color: rgba(52, 211, 153, .27); background: rgba(16, 185, 129, .1); color: var(--emerald); }
 .icon-world { background: rgba(56, 189, 248, .11); }
 .icon-peace { border-color: rgba(251, 191, 36, .28); background: rgba(245, 158, 11, .1); color: var(--amber); }
+.icon-speed { border-color: rgba(251, 191, 36, .42); background: rgba(245, 158, 11, .12); color: var(--amber); }
 .card-number { color: var(--amber); font-size: 13px; font-variant-numeric: tabular-nums; letter-spacing: .1em; }
 .category-label { color: var(--cyan); font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .card-content h3 { margin: 7px 0 8px; font-size: 23px; line-height: 1.32; letter-spacing: -.02em; }
