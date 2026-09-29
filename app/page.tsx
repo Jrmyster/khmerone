@@ -124,6 +124,11 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const timer = window.setTimeout(() => setPromoDismissed(true), 5000);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     document.documentElement.lang = locale;
     document.documentElement.dataset.theme = theme;
     document.documentElement.dataset.accent = accent;
@@ -235,6 +240,6 @@ export default function Home() {
     <MascotBot locale={locale} query={query} resultCount={results.length} onSelectFilter={(nextFilter) => { setQuery(""); setGrade("all"); setFilter(nextFilter); document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onFocusSearch={() => { searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); searchRef.current?.focus(); }} />
     <footer className="footer wrap"><div className="footer-rule" /><div><span className="footer-brand">KhmerOne<span>.com</span></span><p>{t.footer}</p></div><span className="footer-note"><Check size={16} />{t.network}</span></footer>
     <BottomFloatingSearch locale={locale} query={query} prompt={prompt} fading={fading} searchFocused={searchFocused} onFocusChange={setSearchFocused} onSelectPrompt={selectSearchPrompt} onQueryChange={(value) => { setQuery(value); if (value) { setFilter("all"); setGrade("all"); } }} />
-    {promoVisible && <CambodiaTomorrowBanner locale={locale} onDismiss={() => setPromoDismissed(true)} />}
+    <CambodiaTomorrowBanner locale={locale} visible={promoVisible} onDismiss={() => setPromoDismissed(true)} />
   </div>;
 }

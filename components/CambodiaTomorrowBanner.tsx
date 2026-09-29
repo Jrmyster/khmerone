@@ -28,7 +28,7 @@ const copy = {
   },
 };
 
-export function CambodiaTomorrowBanner({ locale, onDismiss }: { locale: Locale; onDismiss: () => void }) {
+export function CambodiaTomorrowBanner({ locale, visible, onDismiss }: { locale: Locale; visible: boolean; onDismiss: () => void }) {
   const [loreOpened, setLoreOpened] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const t = copy[locale];
@@ -39,7 +39,7 @@ export function CambodiaTomorrowBanner({ locale, onDismiss }: { locale: Locale; 
   };
 
   return <>
-    <aside className="movie-promo fixed bottom-0 left-0 right-0 z-40" aria-label={t.label}>
+    {visible && <aside className="movie-promo fixed bottom-0 left-0 right-0 z-40" aria-label={t.label}>
       <div className="movie-promo-inner">
         <div className="movie-poster" aria-hidden="true">
           <Image src="/cambodia-tomorrow-poster-320.webp" alt="" width={320} height={429} unoptimized />
@@ -57,7 +57,7 @@ export function CambodiaTomorrowBanner({ locale, onDismiss }: { locale: Locale; 
         </div>
         <button className="movie-dismiss" type="button" aria-label={t.dismiss} title={t.dismiss} onClick={onDismiss}><X size={18} /></button>
       </div>
-    </aside>
+    </aside>}
 
     <dialog className="movie-dialog" ref={dialogRef} aria-labelledby="movie-dialog-title" onClick={(event) => { if (event.target === dialogRef.current) dialogRef.current.close(); }}>
       <button className="movie-dialog-close" type="button" aria-label={t.close} onClick={() => dialogRef.current?.close()}><X size={20} /></button>
