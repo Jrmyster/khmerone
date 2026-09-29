@@ -36,12 +36,22 @@ export function HelperBot({ locale, query, resultCount, onSelectFilter, onFocusS
   const [open, setOpen] = useState(false);
   const [spinning, setSpinning] = useState(false);
   const [showBubble, setShowBubble] = useState(false);
+  const [showGreeting, setShowGreeting] = useState(false);
   const spinTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searching = query.trim().length > 0;
   const t = words[locale];
 
   useEffect(() => {
-    const frame = requestAnimationFrame(() => setShowBubble(searching));
+    const frame = requestAnimationFrame(() => setShowGreeting(true));
+    const timer = setTimeout(() => setShowGreeting(false), 2500);
+    return () => { cancelAnimationFrame(frame); clearTimeout(timer); };
+  }, []);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setShowBubble(searching);
+      if (searching) setShowGreeting(false);
+    });
     const timer = searching ? setTimeout(() => setShowBubble(false), 3200) : null;
     return () => { cancelAnimationFrame(frame); if (timer) clearTimeout(timer); };
   }, [searching, query]);
@@ -58,13 +68,15 @@ export function HelperBot({ locale, query, resultCount, onSelectFilter, onFocusS
   const toggle = () => {
     setOpen((current) => !current);
     setShowBubble(false);
+    setShowGreeting(false);
     setSpinning(true);
     if (spinTimer.current) clearTimeout(spinTimer.current);
     spinTimer.current = setTimeout(() => setSpinning(false), 650);
   };
 
   return <div className={`helper-bot fixed left-6 bottom-8 z-50 ${searching ? "is-searching" : ""}`}>
-    {showBubble && !open && <div className="bot-bubble rounded-2xl border border-cyan-500/30 bg-slate-900/90 p-3 text-cyan-200 shadow-lg backdrop-blur-md" role="status">
+    {showGreeting && !searching && !open && <div className="bot-bubble bot-greeting" role="status" lang="km"><p>សួស្តី</p></div>}
+    {showBubble && searching && !open && <div className="bot-bubble rounded-2xl border border-cyan-500/30 bg-slate-900/90 p-3 text-cyan-200 shadow-lg backdrop-blur-md" role="status">
       <span className="bot-bubble-label">KHMERONE // SEARCH</span>
       <p>{resultCount ? t.searching : t.noMatches}</p>
       <small>{resultCount} {t.matches}</small>
