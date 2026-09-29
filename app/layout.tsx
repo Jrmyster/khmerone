@@ -17,5 +17,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { width: "device-width", initialScale: 1, maximumScale: 5, viewportFit: "cover", themeColor: "#0f172a" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" data-theme="dark"><body className={kantumruy.variable}>{children}</body></html>;
+  return <html lang="en" data-theme="cyberpunk" data-accent="default"><body className={kantumruy.variable}>{children}</body></html>;
 }

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, Baby, BookOpenText, Check, ClipboardCheck, Coins, Globe2, GraduationCap, HeartPulse, Languages, Moon, Search, SlidersHorizontal, Sun, TriangleAlert, WifiOff, X, Zap, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Baby, BookOpenText, Check, ClipboardCheck, Coins, Globe2, GraduationCap, HeartPulse, Languages, Search, SlidersHorizontal, TriangleAlert, WifiOff, X, Zap, type LucideIcon } from "lucide-react";
 import { apps, gradeLabels } from "@/data/apps";
 import { crewConcepts, pathways } from "@/data/engagement";
 import { searchAppCatalog, searchCrewConcepts, searchSkillPathways } from "@/utils/search";
@@ -16,6 +16,8 @@ import { PowerSkillsDashboard } from "@/components/PowerSkillsDashboard";
 import { CrewDirectory } from "@/components/CrewDirectory";
 import { DonationNotice } from "@/components/DonationNotice";
 import { FuturePerspectiveBanner } from "@/components/FuturePerspectiveBanner";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { rainbowAccents, themeColor, themePresets, type AccentId, type ThemeId } from "@/data/themes";
 import { useCyberProgress } from "@/hooks/useCyberProgress";
 
 const icons: Record<AppEntry["icon"], LucideIcon> = {
@@ -85,7 +87,9 @@ function matchesFilter(app: AppEntry, filter: FilterKey) {
 
 export default function Home() {
   const [locale, setLocale] = useState<Locale>("en");
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<ThemeId>("cyberpunk");
+  const [accent, setAccent] = useState<AccentId>("default");
+  const [settingsReady, setSettingsReady] = useState(false);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [grade, setGrade] = useState<GradeLevel | "all">("all");
@@ -99,10 +103,14 @@ export default function Home() {
 
   useEffect(() => {
     const savedLocale = localStorage.getItem("khmerone-locale");
-    const savedTheme = localStorage.getItem("khmerone-theme-v2");
+    const savedTheme = localStorage.getItem("khmerone-theme-v3") ?? localStorage.getItem("khmerone-theme-v2");
+    const savedAccent = localStorage.getItem("khmerone-accent-v1");
     const frame = requestAnimationFrame(() => {
       if (savedLocale === "km" || savedLocale === "en") setLocale(savedLocale);
-      if (savedTheme === "dark" || savedTheme === "light") setTheme(savedTheme);
+      if (savedTheme === "dark") setTheme("cyberpunk");
+      else if (themePresets.some((item) => item.id === savedTheme)) setTheme(savedTheme as ThemeId);
+      if (rainbowAccents.some((item) => item.id === savedAccent)) setAccent(savedAccent as AccentId);
+      setSettingsReady(true);
     });
     if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => {});
     return () => cancelAnimationFrame(frame);
@@ -111,9 +119,13 @@ export default function Home() {
   useEffect(() => {
     document.documentElement.lang = locale;
     document.documentElement.dataset.theme = theme;
-    localStorage.setItem("khmerone-locale", locale);
-    localStorage.setItem("khmerone-theme-v2", theme);
-  }, [locale, theme]);
+    document.documentElement.dataset.accent = accent;
+    if (settingsReady) {
+      localStorage.setItem("khmerone-locale", locale);
+      localStorage.setItem("khmerone-theme-v3", theme);
+      localStorage.setItem("khmerone-accent-v1", accent);
+    }
+  }, [locale, theme, accent, settingsReady]);
 
   useEffect(() => {
     const poster = bottomPosterRef.current;
@@ -150,11 +162,11 @@ export default function Home() {
   const reset = () => { setQuery(""); setFilter("all"); setGrade("all"); };
 
   return <div className={`site-shell has-floating-search ${locale === "km" ? "khmer" : "english"} ${promoVisible ? "promo-active" : ""}`}>
-    <KhmerOneBar locale={locale} dark={theme === "dark"} homeUrl="/#directory" />
+    <KhmerOneBar locale={locale} dark={themePresets.find((item) => item.id === theme)?.mode === "dark"} accentColor={themeColor(theme, accent)} homeUrl="/#directory" />
     <header className="main-header wrap">
       <Link className="brand" href="/" aria-label="KhmerOne home"><span className="brand-mark" aria-hidden="true"><span /><span /><span /><span /></span><span>Khmer<span className="brand-accent">One</span><small>.com</small></span></Link>
       <div className="header-actions">
-        <button className="icon-button" aria-label={theme === "dark" ? t.themeLight : t.themeDark} title={theme === "dark" ? t.themeLight : t.themeDark} onClick={() => setTheme(theme === "light" ? "dark" : "light")}>{theme === "light" ? <Moon size={19} /> : <Sun size={19} />}</button>
+        <ThemeSwitcher locale={locale} theme={theme} accent={accent} onThemeChange={setTheme} onAccentChange={setAccent} />
         <button className="language-button" aria-label={t.language} onClick={() => setLocale(locale === "en" ? "km" : "en")}><Languages size={17} aria-hidden="true" /><span className="language-label-full">{locale === "en" ? "ភាសាខ្មែរ" : "English"}</span><span className="language-label-short">{locale === "en" ? "ខ្មែរ" : "EN"}</span></button>
       </div>
     </header>

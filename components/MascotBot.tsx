@@ -206,22 +206,22 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
           <linearGradient id="bot-face" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#142b43"/><stop offset="1" stopColor="#081523"/></linearGradient>
           <filter id="bot-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3"/></filter>
         </defs>
-        <path d="M56 24V11" fill="none" stroke="#75dded" strokeWidth="3" strokeLinecap="round"/>
-        <circle className="bot-antenna-glow" cx="56" cy="8" r="8" fill="#00f0ff" filter="url(#bot-glow)"/>
-        <circle className="bot-antenna-tip" cx="56" cy="8" r="4" fill="#8afaff"/>
-        <rect x="6" y="54" width="16" height="23" rx="6" fill="#18334b" stroke="#36cce4" strokeWidth="2"/>
-        <rect x="90" y="54" width="16" height="23" rx="6" fill="#18334b" stroke="#36cce4" strokeWidth="2"/>
-        <rect x="19" y="23" width="74" height="74" rx="24" fill="url(#bot-shell)" stroke="#38bdf8" strokeWidth="2.5"/>
+        <path d="M56 24V11" fill="none" stroke="var(--accent-primary)" strokeWidth="3" strokeLinecap="round"/>
+        <circle className="bot-antenna-glow" cx="56" cy="8" r="8" fill="var(--accent-primary)" filter="url(#bot-glow)"/>
+        <circle className="bot-antenna-tip" cx="56" cy="8" r="4" fill="var(--accent-primary)"/>
+        <rect x="6" y="54" width="16" height="23" rx="6" fill="#18334b" stroke="var(--accent-primary)" strokeWidth="2"/>
+        <rect x="90" y="54" width="16" height="23" rx="6" fill="#18334b" stroke="var(--accent-primary)" strokeWidth="2"/>
+        <rect x="19" y="23" width="74" height="74" rx="24" fill="url(#bot-shell)" stroke="var(--accent-primary)" strokeWidth="2.5"/>
         <g ref={faceRef}>
-          <rect x="25" y="34" width="62" height="48" rx="15" fill="url(#bot-face)" stroke="#2a8199" strokeWidth="1.5"/>
-          <ellipse cx="40.5" cy="54" rx="9" ry="10" fill="#38bdf8" opacity=".34" filter="url(#bot-glow)"/>
-          <ellipse cx="71.5" cy="54" rx="9" ry="10" fill="#38bdf8" opacity=".34" filter="url(#bot-glow)"/>
-          <circle cx="40.5" cy="54" r="9" fill="#102638" stroke="#2a8199" strokeWidth="1.4"/>
-          <circle cx="71.5" cy="54" r="9" fill="#102638" stroke="#2a8199" strokeWidth="1.4"/>
+          <rect x="25" y="34" width="62" height="48" rx="15" fill="url(#bot-face)" stroke="var(--accent-primary)" strokeWidth="1.5"/>
+          <ellipse cx="40.5" cy="54" rx="9" ry="10" fill="var(--accent-primary)" opacity=".34" filter="url(#bot-glow)"/>
+          <ellipse cx="71.5" cy="54" rx="9" ry="10" fill="var(--accent-primary)" opacity=".34" filter="url(#bot-glow)"/>
+          <circle cx="40.5" cy="54" r="9" fill="#102638" stroke="var(--accent-primary)" strokeWidth="1.4"/>
+          <circle cx="71.5" cy="54" r="9" fill="#102638" stroke="var(--accent-primary)" strokeWidth="1.4"/>
           <g className={`bot-gaze ${blinking ? "bot-gaze-blinking" : ""}`}>
-            <g ref={leftPupilRef} className="bot-pupil"><circle cx="40.5" cy="54" r="3.5" fill="#7cf7ff"/><circle cx="39.5" cy="52.8" r="1" fill="#fff" opacity=".9"/></g>
-            <g ref={rightPupilRef} className="bot-pupil"><circle cx="71.5" cy="54" r="3.5" fill="#7cf7ff"/><circle cx="70.5" cy="52.8" r="1" fill="#fff" opacity=".9"/></g>
-            <path className="bot-blink-line" d="M35 54h11m20 0h11" fill="none" stroke="#7cf7ff" strokeWidth="2.5" strokeLinecap="round"/>
+            <g ref={leftPupilRef} className="bot-pupil"><circle cx="40.5" cy="54" r="3.5" fill="var(--accent-primary)"/><circle cx="39.5" cy="52.8" r="1" fill="#fff" opacity=".9"/></g>
+            <g ref={rightPupilRef} className="bot-pupil"><circle cx="71.5" cy="54" r="3.5" fill="var(--accent-primary)"/><circle cx="70.5" cy="52.8" r="1" fill="#fff" opacity=".9"/></g>
+            <path className="bot-blink-line" d="M35 54h11m20 0h11" fill="none" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round"/>
           </g>
           <path className="bot-mouth" d="M45 69Q56 78 67 69" fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round"/>
         </g>
@@ -236,16 +236,16 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
         <circle cx="98" cy="75" r="2.5" fill="#f8fafc" stroke="#a5f3fc" strokeWidth="1"/>
         <path d="M95 77Q94 87 99 87Q104 87 103 77" fill="none" stroke="#e2e8f0" strokeWidth="2.5" strokeLinecap="round"/>
         <path d="M106 77v5m-2.5-2.5h5" fill="none" stroke="#ffffff" strokeWidth="1.4" strokeLinecap="round"/>
-        <path d="M36 97v7m40-7v7" stroke="#4fb9cc" strokeWidth="4" strokeLinecap="round"/>
-        <rect x="27" y="103" width="58" height="21" rx="9" fill="#172a41" stroke="#4fb9cc" strokeWidth="2"/>
+        <path d="M36 97v7m40-7v7" stroke="var(--accent-primary)" strokeWidth="4" strokeLinecap="round"/>
+        <rect x="27" y="103" width="58" height="21" rx="9" fill="#172a41" stroke="var(--accent-primary)" strokeWidth="2"/>
         <path d="M45 97L58 104M73 97L63 104" fill="none" stroke="#e2e8f0" strokeWidth="2" strokeLinecap="round"/>
         <path d="M57 105L64 105L67 118L61 123L56 119Z" fill="#b91c1c" stroke="#f87171" strokeWidth="1" strokeLinejoin="round"/>
         <path d="M54 101L58 98L64 101L62 107L57 107Z" fill="#ef4444" stroke="#fca5a5" strokeWidth="1" strokeLinejoin="round"/>
         <path d="M60 108L63 118" stroke="#fca5a5" strokeWidth="1" opacity=".75"/>
         <rect x="31" y="106" width="24" height="15" rx="4" fill="#0b2131" stroke="#fbbf24" strokeWidth="1"/>
         <text x="43" y="117.3" fill="#f8fafc" fontFamily="system-ui, sans-serif" fontSize="10" fontWeight="800" textAnchor="middle">bot</text>
-        <path d="M40 124v3m32-3v3" stroke="#4fb9cc" strokeWidth="4" strokeLinecap="round"/>
-        <path className="bot-spark" d="M9 29v6m-3-3h6M99 20v6m-3-3h6" fill="none" stroke="#00f0ff" strokeWidth="1.6" strokeLinecap="round"/>
+        <path d="M40 124v3m32-3v3" stroke="var(--accent-primary)" strokeWidth="4" strokeLinecap="round"/>
+        <path className="bot-spark" d="M9 29v6m-3-3h6M99 20v6m-3-3h6" fill="none" stroke="var(--accent-primary)" strokeWidth="1.6" strokeLinecap="round"/>
       </svg>
     </button>
   </div>;

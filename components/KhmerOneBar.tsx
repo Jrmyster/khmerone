@@ -5,8 +5,8 @@ import { ChevronDown } from "lucide-react";
 import type { Locale } from "@/types/app";
 
 /** Copy into a React child app; styling is self-contained. */
-export function KhmerOneBar({ locale = "en", homeUrl = "https://khmerone.com/", dark = true }: {
-  locale?: Locale; homeUrl?: string; dark?: boolean;
+export function KhmerOneBar({ locale = "en", homeUrl = "https://khmerone.com/", dark = true, accentColor }: {
+  locale?: Locale; homeUrl?: string; dark?: boolean; accentColor?: string;
 }) {
   const [open, setOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
@@ -16,8 +16,8 @@ export function KhmerOneBar({ locale = "en", homeUrl = "https://khmerone.com/", 
   const colors = {
     "--network-bg": dark ? "#080e18" : "#e9f8fa",
     "--network-fg": dark ? "#c7e9f2" : "#06485c",
-    "--network-accent": dark ? "#00f0ff" : "#006d80",
-    "--network-border": dark ? "rgba(0,240,255,.22)" : "rgba(6,182,212,.35)",
+    "--network-accent": accentColor ?? (dark ? "#38bdf8" : "#0369a1"),
+    "--network-border": accentColor ? `color-mix(in srgb, ${accentColor} 35%, transparent)` : "rgba(6,182,212,.35)",
   } as CSSProperties;
 
   useEffect(() => {
