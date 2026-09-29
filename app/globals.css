@@ -116,9 +116,20 @@ h1, h2, h3, p { margin: 0; }
 .brand:hover { color: var(--cyan); }
 .brand small { font-size: 15px; letter-spacing: 0; font-weight: 600; color: var(--muted); }
 .brand-accent { color: var(--cyan); text-shadow: 0 0 14px color-mix(in srgb, var(--accent-primary) 28%, transparent); }
-.brand-mark { width: 37px; height: 37px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; transform: rotate(-10deg); filter: drop-shadow(0 0 9px color-mix(in srgb, var(--accent-primary) 25%, transparent)); }
-.brand-mark span { background: var(--cyan-action); border-radius: 3px 8px 2px 8px; }
-.brand-mark span:nth-child(2), .brand-mark span:nth-child(3) { background: var(--amber); }
+.angkor-icon { position: relative; width: 50px; height: 44px; flex: none; display: grid; place-items: center; transition: transform .3s ease; }
+.angkor-icon::before { content: ""; position: absolute; inset: 7px 5px; border-radius: 50%; background: rgba(245,158,11,.42); filter: blur(11px); opacity: .78; transition: transform .35s ease, background-color .35s ease, opacity .35s ease; }
+.angkor-icon svg { position: relative; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 8px rgba(245,158,11,.58)); transition: filter .3s ease; }
+.angkor-layer { transition: opacity .3s ease; }
+.angkor-layer-sky { opacity: 0; }
+.angkor-beacon { transform-origin: 60px 8px; animation: angkor-beacon 2.6s ease-in-out infinite; }
+.brand:is(:hover,:focus-visible,:active) .angkor-icon { transform: translateY(-2px) scale(1.1); }
+.brand:is(:hover,:focus-visible,:active) .angkor-icon::before { transform: scale(1.35); background: rgba(56,189,248,.5); opacity: 1; }
+.brand:is(:hover,:focus-visible,:active) .angkor-icon svg { filter: drop-shadow(0 0 10px rgba(56,189,248,.88)) drop-shadow(0 0 12px rgba(245,158,11,.32)); }
+.brand:is(:hover,:focus-visible,:active) .angkor-layer-gold { opacity: 0; }
+.brand:is(:hover,:focus-visible,:active) .angkor-layer-sky { opacity: 1; }
+.brand:is(:hover,:focus-visible,:active) .angkor-detail { stroke: #e0f7ff; }
+@keyframes angkor-beacon { 0%,100% { opacity: .65; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.35); } }
+@media (prefers-reduced-motion: reduce) { .angkor-icon, .angkor-icon::before, .angkor-icon svg, .angkor-layer { transition: none; } .angkor-beacon { animation: none; } }
 .header-actions { display: flex; align-items: center; gap: 10px; }
 .icon-button, .language-button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); color: var(--text); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .icon-button { width: 44px; flex: none; }
@@ -329,7 +340,7 @@ h1, h2, h3, p { margin: 0; }
   .main-header { height: 70px; }
   .brand { font-size: 21px; }
   .brand-khmer { font-size: 10px; }
-  .brand-mark { width: 30px; height: 30px; }
+  .angkor-icon { width: 42px; height: 38px; }
   .brand small { font-size: 12px; }
   .language-button { padding: 0 10px; }
   .hero { padding-top: 4px; padding-bottom: 25px; }
@@ -674,7 +685,7 @@ h1, h2, h3, p { margin: 0; }
 @media (max-width: 680px) {
   .wrap { padding-left: 16px; padding-right: 16px; }
   .brand { font-size: 20px; gap: 9px; }
-  .brand-mark { width: 28px; height: 28px; }
+  .angkor-icon { width: 40px; height: 36px; }
   .brand small { display: none; }
   .language-label-full { display: none; }
   .language-label-short { display: inline; }
@@ -710,7 +721,7 @@ h1, h2, h3, p { margin: 0; }
   .main-header.wrap { padding-left: 12px; padding-right: 12px; }
   .header-actions { gap: 6px; }
   .brand { font-size: 18px; gap: 6px; }
-  .brand-mark { width: 26px; height: 26px; }
+  .angkor-icon { width: 37px; height: 34px; }
   .language-button { gap: 5px; padding: 0 7px; }
   .hero h1 { font-size: 31px; }
   .movie-promo-inner { grid-template-columns: 46px minmax(0, 1fr) 44px; gap: 6px; }
