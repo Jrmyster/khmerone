@@ -26,6 +26,8 @@ export interface AppEntry {
   /** Optional compact badge for entries spanning every grade. */
   gradeBadge?: LocalizedText;
   features: LocalizedText[];
+  /** Additional search terms in either language. */
+  tags?: string[];
   notice?: LocalizedText;
   icon: AppIcon;
   /** Null means no verified launch address has been supplied. */

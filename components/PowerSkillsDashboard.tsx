@@ -57,7 +57,7 @@ export function PowerSkillsDashboard({ locale, progress, status, ready, onToggle
         const count = pathway.steps.filter((step) => progress.completedStepIds.includes(step.id)).length;
         const complete = status.finishedIds.includes(pathway.id);
         const related = apps.find((app) => app.id === pathway.relatedAppId);
-        return <article className={`pathway-card ${complete ? "pathway-complete" : ""}`} key={pathway.id}>
+        return <article id={`pathway-${pathway.id}`} className={`pathway-card ${complete ? "pathway-complete" : ""}`} key={pathway.id}>
           <div className="pathway-top"><span className="pathway-icon"><Icon size={22} aria-hidden="true" /></span><span className="pathway-index">{String(index + 1).padStart(2, "0")} / {pathway.minutes} {t.minutes}</span></div>
           <h3>{pathway.title[locale]}</h3><p className="pathway-promise">{pathway.promise[locale]}</p>
           <div className="pathway-progress"><span>{count}/{pathway.steps.length} {t.step}</span><span>{complete ? t.done : `+${pathway.steps.length * 20 + 50} XP`}</span></div>

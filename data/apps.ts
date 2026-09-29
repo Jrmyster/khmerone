@@ -22,6 +22,7 @@ export const apps: AppEntry[] = [
       { en: "Interactive quizzes", km: "សំណួរអន្តរកម្ម" },
       { en: "Bilingual lesson plans", km: "ផែនការមេរៀនពីរភាសា" },
     ],
+    tags: ["science", "math", "English", "life skills", "school", "សាលា"],
     icon: "school",
     url: "https://schoolconnectcambodia.com/",
     offlineReady: true,
@@ -39,6 +40,7 @@ export const apps: AppEntry[] = [
       { en: "3D WebGL models", km: "គំរូ 3D WebGL" },
       { en: "Khmer / English labels", km: "ស្លាកខ្មែរ / អង់គ្លេស" },
     ],
+    tags: ["biology", "3D", "STEM", "human body", "ជីវវិទ្យា"],
     icon: "anatomy", url: "https://anatomykh.com/", offlineReady: false,
   },
   {
@@ -54,6 +56,7 @@ export const apps: AppEntry[] = [
       { en: "Savings calculators", km: "ឧបករណ៍គណនាការសន្សំ" },
       { en: "Real-world scenarios", km: "ស្ថានភាពជីវិតពិត" },
     ],
+    tags: ["budget", "savings", "money", "ហិរញ្ញវត្ថុ"],
     icon: "finance", url: "https://finlitkh.com/", offlineReady: false,
   },
   {
@@ -69,6 +72,7 @@ export const apps: AppEntry[] = [
       { en: "Audio pronunciation", km: "សំឡេងបញ្ចេញសូរ" },
       { en: "Branching dialogues", km: "សន្ទនាដែលមានជម្រើស" },
     ],
+    tags: ["English", "speaking", "workplace", "vocational", "សន្ទនា"],
     icon: "language", url: "https://khmervoc.com/", offlineReady: false,
   },
   {
@@ -83,6 +87,7 @@ export const apps: AppEntry[] = [
     features: [
       { en: "English exam practice", km: "ការហាត់ប្រឡងភាសាអង់គ្លេស" },
     ],
+    tags: ["exam", "English", "test", "ប្រឡង"],
     icon: "exam", url: "https://khmerenglishexam.com/", offlineReady: false,
   },
   {
@@ -98,6 +103,7 @@ export const apps: AppEntry[] = [
       { en: "Visual care guides", km: "មគ្គុទ្ទេសក៍ថែទាំតាមរូបភាព" },
       { en: "Developmental milestones", km: "ដំណាក់កាលអភិវឌ្ឍន៍កុមារ" },
     ],
+    tags: ["maternal", "infant", "baby", "development", "ទារក"],
     notice: {
       en: "Medical information is pending government review. Consult a licensed doctor about your baby's health.",
       km: "ព័ត៌មានវេជ្ជសាស្ត្រកំពុងរង់ចាំការពិនិត្យពីរដ្ឋាភិបាល។ សូមពិគ្រោះជាមួយវេជ្ជបណ្ឌិតមានអាជ្ញាបណ្ណអំពីសុខភាពទារករបស់អ្នក។",
@@ -117,6 +123,7 @@ export const apps: AppEntry[] = [
       { en: "Dymaxion projections", km: "ផែនទី Dymaxion" },
       { en: "Resource allocation models", km: "គំរូបែងចែកធនធាន" },
     ],
+    tags: ["energy", "resources", "systems", "Dymaxion", "3D", "STEM"],
     icon: "world", url: "https://world-game-atlas.jrmyster7.chatgpt.site/", offlineReady: false,
   },
   {
@@ -134,6 +141,7 @@ export const apps: AppEntry[] = [
       { en: "Instant feedback", km: "មតិកែលម្អភ្លាមៗ" },
       { en: "Lightweight offline performance", km: "ដំណើរការលឿន និងអាចប្រើក្រៅបណ្ដាញ" },
     ],
+    tags: ["typing", "speed", "practice", "វាយអត្ថបទ", "ជំនាញ"],
     icon: "speed", url: "https://fastandfaster.netlify.app/", offlineReady: true,
   },
   {
@@ -149,6 +157,7 @@ export const apps: AppEntry[] = [
       { en: "Scenario modeling", km: "គំរូស្ថានការណ៍" },
       { en: "Nonviolent frameworks", km: "វិធីសាស្ត្រអហិង្សា" },
     ],
+    tags: ["peace", "game theory", "conflict", "nonviolence", "សន្តិភាព"],
     icon: "peace", url: "https://warisobsolete.com/", offlineReady: false,
   },
 ];

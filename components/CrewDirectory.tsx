@@ -27,7 +27,7 @@ export function CrewDirectory({ locale, selectedId, onSelect }: { locale: Locale
     {visible.length ? <div className="crew-grid">{visible.map((crew) => {
       const interestName = pathways.find((pathway) => pathway.id === crew.interest)?.title[locale];
       const selected = selectedId === crew.id;
-      return <article className={`crew-card ${selected ? "crew-selected" : ""}`} key={crew.id}>
+      return <article id={`crew-${crew.id}`} className={`crew-card ${selected ? "crew-selected" : ""}`} key={crew.id}>
         <div className="crew-card-top"><span className="crew-concept">{t.concept}</span><span className="crew-province"><MapPin size={13} aria-hidden="true" />{crew.province[locale]}</span></div>
         <h3>{crew.title[locale]}</h3><span className="crew-interest">{interestName}</span>
         <p><strong>{t.project}:</strong> {crew.project[locale]}</p>

@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Baby, BookOpenText, Check, ClipboardCheck, Coins, Globe2, GraduationCap, HeartPulse, Languages, Moon, Search, SlidersHorizontal, Sun, TriangleAlert, WifiOff, X, Zap, type LucideIcon } from "lucide-react";
 import { apps, gradeLabels } from "@/data/apps";
+import { crewConcepts, pathways } from "@/data/engagement";
+import { searchAppCatalog, searchCrewConcepts, searchSkillPathways } from "@/utils/search";
 import { AppCategory, type AppEntry, type FilterKey, type GradeLevel, type Locale } from "@/types/app";
 import { KhmerOneBar } from "@/components/KhmerOneBar";
 import { HelperBot } from "@/components/HelperBot";
@@ -41,6 +43,8 @@ const copy = {
     linkInfo: "A public link has not been added yet.",
     network: "Nine learning spaces. One starting point.",
     healthNotice: "Health notice",
+    matchingPaths: "Matching skill paths", matchingCrews: "Matching crews",
+    noAppMatches: "No app cards match this search. Explore the related results above.",
     footer: "Learning should be easy to find, wherever you are.",
     themeDark: "Switch to dark mode", themeLight: "Switch to light mode", language: "Switch language",
   },
@@ -56,6 +60,8 @@ const copy = {
     linkInfo: "មិនទាន់មានតំណសាធារណៈទេ។",
     network: "កន្លែងសិក្សាប្រាំបួន។ ចាប់ផ្ដើមពីទីនេះ។",
     healthNotice: "សេចក្ដីជូនដំណឹងអំពីសុខភាព",
+    matchingPaths: "ជំនាញដែលត្រូវនឹងការស្វែងរក", matchingCrews: "ក្រុមដែលត្រូវនឹងការស្វែងរក",
+    noAppMatches: "គ្មានកម្មវិធីដែលត្រូវនឹងការស្វែងរកទេ។ សូមមើលលទ្ធផលពាក់ព័ន្ធខាងលើ។",
     footer: "ការសិក្សាគួរតែងាយស្រួលស្វែងរក ទោះអ្នកនៅទីណាក៏ដោយ។",
     themeDark: "ប្ដូរទៅផ្ទៃងងឹត", themeLight: "ប្ដូរទៅផ្ទៃភ្លឺ", language: "ប្ដូរភាសា",
   },
@@ -96,18 +102,11 @@ export default function Home() {
 
   const t = copy[locale];
   const results = useMemo(() => {
-    const words = query.normalize("NFKC").trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
-    return apps.filter((app) => {
-      if (!matchesFilter(app, filter) || (grade !== "all" && !app.grades.includes(grade))) return false;
-      const haystack = [app.title.en, app.title.km, app.tagline.en, app.tagline.km,
-        app.description.en, app.description.km, app.categoryLabel.en, app.categoryLabel.km,
-        app.audience.en, app.audience.km, app.gradeBadge?.en, app.gradeBadge?.km, app.notice?.en, app.notice?.km,
-        ...app.features.flatMap((f) => [f.en, f.km]),
-        ...app.grades.flatMap((g) => [gradeLabels[g].en, gradeLabels[g].km]),
-      ].join(" ").normalize("NFKC").toLocaleLowerCase();
-      return words.every((word) => haystack.includes(word));
-    });
+    return searchAppCatalog(apps, query).filter((app) =>
+      matchesFilter(app, filter) && (grade === "all" || app.grades.includes(grade)));
   }, [query, filter, grade]);
+  const pathwayMatches = useMemo(() => query.trim() ? searchSkillPathways(pathways, query) : [], [query]);
+  const crewMatches = useMemo(() => query.trim() ? searchCrewConcepts(crewConcepts, query) : [], [query]);
 
   const reset = () => { setQuery(""); setFilter("all"); setGrade("all"); };
 
@@ -139,6 +138,10 @@ export default function Home() {
         </div>
         <div className="filter-row" role="group" aria-label={t.browse}>{filters.map(({ key, label }) => <button key={key} type="button" className={`filter-chip ${filter === key ? "active" : ""}`} aria-pressed={filter === key} onClick={() => setFilter(key)}>{label[locale]}</button>)}</div>
         <div className="directory-heading"><div><span className="section-index">03 / {t.browse}</span><h2 id="directory-title">{t.all}</h2></div><span className="result-count" aria-live="polite">{results.length} {results.length === 1 ? t.app : t.apps}</span></div>
+        {(pathwayMatches.length > 0 || crewMatches.length > 0) && <div className="related-search-results" aria-live="polite">
+          {pathwayMatches.length > 0 && <div><h3>{t.matchingPaths}</h3><div className="related-search-links">{pathwayMatches.map((pathway) => <a href={`#pathway-${pathway.id}`} key={pathway.id}>{pathway.title[locale]} <ArrowUpRight size={15} aria-hidden="true" /></a>)}</div></div>}
+          {crewMatches.length > 0 && <div><h3>{t.matchingCrews}</h3><div className="related-search-links">{crewMatches.map((crew) => <a href={`#crew-${crew.id}`} key={crew.id}>{crew.title[locale]} <ArrowUpRight size={15} aria-hidden="true" /></a>)}</div></div>}
+        </div>}
         {results.length ? <div className="app-grid">{results.map((app, index) => {
           const Icon = icons[app.icon];
           return <article className="app-card" key={app.id}>
@@ -148,7 +151,7 @@ export default function Home() {
             {app.notice && <aside className="health-notice" aria-label={t.healthNotice}><TriangleAlert size={18} aria-hidden="true" /><div><strong>{t.healthNotice}</strong><p>{app.notice[locale]}</p></div></aside>}
             <div className="card-bottom">{app.url ? <a className="launch-button" href={app.url} target="_blank" rel="noopener noreferrer" onClick={() => cyber.exploreApp(app.id)} aria-label={`${t.launch}: ${app.title[locale]}`}>{t.launch}<ArrowUpRight size={18} aria-hidden="true" /></a> : <span className="pending-button" title={t.linkInfo} aria-label={`${app.title[locale]}: ${t.linkInfo}`}>{t.pending}</span>}</div>
           </article>;
-        })}</div> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>}
+        })}</div> : pathwayMatches.length || crewMatches.length ? <p className="related-only-note">{t.noAppMatches}</p> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>}
       </section>
     </main>
     <HelperBot locale={locale} query={query} resultCount={results.length} onSelectFilter={(nextFilter) => { setQuery(""); setGrade("all"); setFilter(nextFilter); document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onFocusSearch={() => { searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); searchRef.current?.focus(); }} />
