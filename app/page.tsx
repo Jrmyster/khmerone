@@ -20,6 +20,7 @@ import { DonationNotice } from "@/components/DonationNotice";
 import { FuturePerspectiveBanner } from "@/components/FuturePerspectiveBanner";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { AngkorWatIcon } from "@/components/AngkorWatIcon";
+import { HDCursor } from "@/components/HDCursor";
 import { rainbowAccents, themeColor, themePresets, type AccentId, type ThemeId } from "@/data/themes";
 import { useCyberProgress } from "@/hooks/useCyberProgress";
 
@@ -236,5 +237,6 @@ export default function Home() {
     <footer className="footer wrap"><div className="footer-rule" /><div><span className="footer-brand">KhmerOne<span>.com</span></span><p>{t.footer}</p></div><span className="footer-note"><Check size={16} />{t.network}</span></footer>
     <BottomFloatingSearch locale={locale} query={query} prompt={prompt} fading={fading} searchFocused={searchFocused} onFocusChange={setSearchFocused} onSelectPrompt={selectSearchPrompt} onQueryChange={(value) => { setQuery(value); if (value) { setFilter("all"); setGrade("all"); } }} />
     {promoVisible && <CambodiaTomorrowBanner locale={locale} onDismiss={() => setPromoDismissed(true)} />}
+    <HDCursor />
   </div>;
 }
