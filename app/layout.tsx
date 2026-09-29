@@ -8,12 +8,14 @@ const moul = Moul({ subsets: ["khmer"], weight: "400", display: "swap", variable
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://khmerone.com"),
-  title: "KhmerOne — Learning, connected",
-  description: "Discover bilingual learning apps for Cambodian students, teachers, families and lifelong learners.",
-  applicationName: "KhmerOne",
+  title: "KhmerOne (ខ្មែរ វ័ន) — Learning, connected",
+  description: "KhmerOne (ខ្មែរវ័ន / ខ្មែរ វ័ន) connects Cambodian students, teachers and families with bilingual learning apps.",
+  applicationName: "KhmerOne | ខ្មែរ វ័ន",
+  keywords: ["KhmerOne", "KhmerOne.com", "ខ្មែរវ័ន", "ខ្មែរ វ័ន", "Cambodian education", "Khmer learning apps"],
+  alternates: { canonical: "/" },
   manifest: "/manifest.webmanifest",
   icons: { icon: "/favicon.svg" },
-  openGraph: { type: "website", title: "KhmerOne — Learning, connected", description: "One starting point for Cambodian learning apps.", url: "https://khmerone.com" },
+  openGraph: { type: "website", title: "KhmerOne (ខ្មែរ វ័ន) — Learning, connected", description: "One starting point for Cambodian learning apps.", url: "https://khmerone.com" },
 };
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, maximumScale: 5, viewportFit: "cover", themeColor: "#0f172a" };

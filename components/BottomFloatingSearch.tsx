@@ -5,6 +5,7 @@ import { Search, X } from "lucide-react";
 import { DynamicSearchPrompt } from "@/components/DynamicSearchBar";
 import type { SearchPrompt } from "@/data/searchPrompts";
 import type { Locale } from "@/types/app";
+import { isKhmerOneAlias } from "@/lib/khmerUtils";
 
 interface BottomFloatingSearchProps {
   locale: Locale;
@@ -15,9 +16,10 @@ interface BottomFloatingSearchProps {
   searchFocused: boolean;
   onFocusChange: (focused: boolean) => void;
   onSelectPrompt: (prompt: SearchPrompt) => void;
+  onBrandAlias: () => void;
 }
 
-export function BottomFloatingSearch({ locale, query, onQueryChange, prompt, fading, searchFocused, onFocusChange, onSelectPrompt }: BottomFloatingSearchProps) {
+export function BottomFloatingSearch({ locale, query, onQueryChange, prompt, fading, searchFocused, onFocusChange, onSelectPrompt, onBrandAlias }: BottomFloatingSearchProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [keyboard, setKeyboard] = useState({ open: false, own: false, inset: 0 });
   const placeholder = locale === "km"
@@ -90,7 +92,7 @@ export function BottomFloatingSearch({ locale, query, onQueryChange, prompt, fad
     };
   }, []);
 
-  return <form className={`bottom-floating-search ${keyboard.open ? keyboard.own ? "search-keyboard-open" : "search-keyboard-hidden" : ""}`} style={{ "--keyboard-inset": `${keyboard.inset}px` } as CSSProperties} role="search" onSubmit={(event) => { event.preventDefault(); revealResults(); }}>
+  return <form className={`bottom-floating-search ${keyboard.open ? keyboard.own ? "search-keyboard-open" : "search-keyboard-hidden" : ""}`} style={{ "--keyboard-inset": `${keyboard.inset}px` } as CSSProperties} role="search" onSubmit={(event) => { event.preventDefault(); if (isKhmerOneAlias(query)) { inputRef.current?.blur(); onBrandAlias(); } else revealResults(); }}>
     <div className="floating-search-pill">
       <button type="button" className="floating-search-focus-button" aria-label={label} onClick={() => inputRef.current?.focus()}><Search size={21} className="floating-search-icon" aria-hidden="true" /></button>
       <div className="floating-search-input-wrap"><input

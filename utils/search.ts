@@ -2,10 +2,11 @@ import { gradeLabels } from "../data/apps";
 import { rotatingSearchPrompts } from "../data/searchPrompts";
 import type { AppEntry } from "../types/app";
 import type { CrewConcept, SkillPathway } from "../types/engagement";
+import { isKhmerOneAlias } from "../lib/khmerUtils";
 
 /** Keep letters, numbers and combining marks, including Khmer script. */
 export function normalizeSearchText(value: string = ""): string {
-  return value.normalize("NFKC").toLocaleLowerCase().replace(/[\s\p{P}\p{S}]+/gu, "");
+  return value.normalize("NFKC").toLocaleLowerCase().replace(/[\s\p{Cf}\p{P}\p{S}]+/gu, "");
 }
 
 function matchesFields(fields: string[], query: string): boolean {
@@ -20,6 +21,7 @@ function matchesFields(fields: string[], query: string): boolean {
 }
 
 export function searchAppCatalog(entries: AppEntry[], query: string): AppEntry[] {
+  if (isKhmerOneAlias(query)) return entries;
   const normalizedQuery = normalizeSearchText(query);
   const featured = normalizedQuery && rotatingSearchPrompts.find((item) =>
     [item.query, item.en, item.km].some((text) => normalizeSearchText(text) === normalizedQuery));

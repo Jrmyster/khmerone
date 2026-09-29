@@ -1,7 +1,7 @@
 {
-  "name": "KhmerOne — Learning, connected",
+  "name": "KhmerOne (ខ្មែរ វ័ន) — Learning, connected",
   "short_name": "KhmerOne",
-  "description": "A bilingual launcher for Cambodian learning apps.",
+  "description": "KhmerOne (ខ្មែរវ័ន / ខ្មែរ វ័ន) is a bilingual launcher for Cambodian learning apps.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
