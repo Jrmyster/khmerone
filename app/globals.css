@@ -110,6 +110,10 @@ h1, h2, h3, p { margin: 0; }
 
 .main-header { height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .brand { min-height: 44px; display: inline-flex; align-items: center; gap: 13px; text-decoration: none; font-size: 25px; font-weight: 800; letter-spacing: -.04em; color: var(--text); }
+.brand-lockup { display: inline-flex; flex-direction: column; align-items: center; min-width: 0; }
+.brand-title { white-space: nowrap; line-height: 1.12; }
+.brand-khmer { display: block; padding: 1px 3px 0; font-family: var(--font-moul), "Moul", serif; font-size: 11px; font-weight: 400; line-height: 1.75; letter-spacing: .015em; white-space: nowrap; color: #fbbf24; background: linear-gradient(110deg, #fde68a, #fbbf24 55%, #f59e0b); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px rgba(245, 158, 11, .55)); }
+:root:is([data-theme="light"],[data-theme="sepia"]) .brand-khmer { background: linear-gradient(110deg, #94510b, #b45309 55%, #78350f); background-clip: text; -webkit-background-clip: text; filter: drop-shadow(0 0 4px rgba(180, 83, 9, .25)); }
 .brand:hover { color: var(--cyan); }
 .brand small { font-size: 15px; letter-spacing: 0; font-weight: 600; color: var(--muted); }
 .brand-accent { color: var(--cyan); text-shadow: 0 0 14px color-mix(in srgb, var(--accent-primary) 28%, transparent); }
@@ -297,6 +301,7 @@ h1, h2, h3, p { margin: 0; }
   .wrap { padding-left: 18px; padding-right: 18px; }
   .main-header { height: 70px; }
   .brand { font-size: 21px; }
+  .brand-khmer { font-size: 10px; }
   .brand-mark { width: 30px; height: 30px; }
   .brand small { font-size: 12px; }
   .language-button { padding: 0 10px; }
