@@ -10,14 +10,13 @@ export const themePresets = [
 ] as const;
 
 export const rainbowAccents = [
-  { id: "red", en: "Crimson Red", km: "ពណ៌ក្រហម", color: "#ef4444" },
-  { id: "orange", en: "Sunset Orange", km: "ពណ៌ទឹកក្រូច", color: "#f97316" },
-  { id: "yellow", en: "Amber Gold", km: "ពណ៌លឿងមាស", color: "#eab308" },
-  { id: "green", en: "Emerald Green", km: "ពណ៌បៃតង", color: "#10b981" },
-  { id: "cyan", en: "Electric Cyan", km: "ពណ៌ខៀវ", color: "#38bdf8" },
-  { id: "indigo", en: "Deep Indigo", km: "ពណ៌អាំងឌីហ្គោ", color: "#6366f1" },
-  { id: "violet", en: "Vivid Violet", km: "ពណ៌ស្វាយ", color: "#a855f7" },
-  { id: "pink", en: "Hot Pink", km: "ពណ៌ផ្កាឈូក", color: "#ec4899" },
+  { id: "red", letter: "R", en: "Crimson / Red", km: "ក្រហម", color: "#ef4444" },
+  { id: "orange", letter: "O", en: "Sunset / Orange", km: "ទឹកក្រូច", color: "#f97316" },
+  { id: "yellow", letter: "Y", en: "Solar Gold / Yellow", km: "លឿង", color: "#eab308" },
+  { id: "green", letter: "G", en: "Emerald / Green", km: "បៃតង", color: "#22c55e" },
+  { id: "blue", letter: "B", en: "Ocean Sky / Blue", km: "ខៀវ", color: "#0284c7" },
+  { id: "indigo", letter: "I", en: "Deep Royal / Indigo", km: "អាំងឌីហ្គោ", color: "#6366f1" },
+  { id: "violet", letter: "V", en: "Vivid Purple / Violet", km: "ស្វាយ", color: "#a855f7" },
 ] as const;
 
 export type ThemeId = (typeof themePresets)[number]["id"];

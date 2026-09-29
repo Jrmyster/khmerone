@@ -108,12 +108,14 @@ export default function Home() {
   useEffect(() => {
     const savedLocale = localStorage.getItem("khmerone-locale");
     const savedTheme = localStorage.getItem("khmerone-theme-v3") ?? localStorage.getItem("khmerone-theme-v2");
-    const savedAccent = localStorage.getItem("khmerone-accent-v1");
+    const savedAccent = localStorage.getItem("khmerone-accent-v2") ?? localStorage.getItem("khmerone-accent-v1");
     const frame = requestAnimationFrame(() => {
       if (savedLocale === "km" || savedLocale === "en") setLocale(savedLocale);
       if (savedTheme === "dark") setTheme("cyberpunk");
       else if (themePresets.some((item) => item.id === savedTheme)) setTheme(savedTheme as ThemeId);
-      if (rainbowAccents.some((item) => item.id === savedAccent)) setAccent(savedAccent as AccentId);
+      if (savedAccent === "cyan") setAccent("blue");
+      else if (savedAccent === "pink") setAccent("violet");
+      else if (rainbowAccents.some((item) => item.id === savedAccent)) setAccent(savedAccent as AccentId);
       setSettingsReady(true);
     });
     if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => {});
@@ -127,7 +129,7 @@ export default function Home() {
     if (settingsReady) {
       localStorage.setItem("khmerone-locale", locale);
       localStorage.setItem("khmerone-theme-v3", theme);
-      localStorage.setItem("khmerone-accent-v1", accent);
+      localStorage.setItem("khmerone-accent-v2", accent);
     }
   }, [locale, theme, accent, settingsReady]);
 
