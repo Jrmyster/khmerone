@@ -102,7 +102,7 @@ h1, h2, h3, p { margin: 0; }
   background-image: linear-gradient(to right, var(--accent-primary) 1px, transparent 1px), linear-gradient(to bottom, var(--accent-primary) 1px, transparent 1px);
   background-size: 48px 48px;
 }
-.site-shell > :not(.helper-bot, .movie-promo, .movie-dialog, .bottom-floating-search) { position: relative; z-index: 1; }
+.site-shell > :not(.helper-bot, .movie-promo, .movie-dialog, .bottom-floating-search, .back-to-top) { position: relative; z-index: 1; }
 .site-shell > .khmerone-network-bar { z-index: 60; }
 .site-shell > .main-header { z-index: 58; }
 .site-shell.khmer { line-height: 1.65; }
@@ -780,3 +780,36 @@ h1, h2, h3, p { margin: 0; }
 .bottom-floating-search.search-keyboard-open,
 .promo-active .bottom-floating-search.search-keyboard-open { bottom: calc(12px + env(safe-area-inset-bottom) + var(--keyboard-inset, 0px)); }
 .bottom-floating-search.search-keyboard-hidden { opacity: 0; pointer-events: none; }
+
+.back-to-top {
+  position: fixed;
+  right: calc(20px + env(safe-area-inset-right));
+  bottom: calc(98px + env(safe-area-inset-bottom));
+  z-index: 56;
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 13px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface-strong);
+  color: var(--text);
+  box-shadow: 0 10px 24px rgba(0,0,0,.3), 0 0 13px var(--accent-glow);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+}
+.back-to-top:hover { transform: translateY(-3px); border-color: var(--cyan); color: var(--cyan); box-shadow: var(--hover-glow); }
+.back-to-top:active { transform: scale(.95); }
+.back-to-top-label { white-space: nowrap; }
+.promo-active .back-to-top { bottom: calc(224px + env(safe-area-inset-bottom)); }
+@media (max-width: 900px) { .promo-active .back-to-top { bottom: calc(260px + env(safe-area-inset-bottom)); } }
+@media (max-width: 680px) {
+  .back-to-top { right: calc(16px + env(safe-area-inset-right)); bottom: calc(88px + env(safe-area-inset-bottom)); width: 48px; padding: 0; }
+  .back-to-top-label { display: none; }
+  .promo-active .back-to-top { bottom: calc(206px + env(safe-area-inset-bottom)); }
+}
+:root.mobile-keyboard-open .back-to-top { display: none; }
