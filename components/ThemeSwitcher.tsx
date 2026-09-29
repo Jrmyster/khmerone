@@ -74,6 +74,9 @@ export function ThemeSwitcher({ locale, theme, accent, onAccentChange }: ThemeSw
             </svg>
             {rainbowAccents.map((option, index) => <button type="button" key={option.id} className={`paint-dollop ${accent === option.id ? "selected" : ""}`} style={{ "--paint-color": option.color, "--paint-x": `${paintPositions[index].x}%`, "--paint-y": `${paintPositions[index].y}%`, "--paint-x-mobile": `${paintPositions[index].mobileX}%`, "--paint-y-mobile": `${paintPositions[index].mobileY}%`, "--paint-delay": `${index * .35}s` } as CSSProperties} aria-label={`${option.letter} — ${option[locale]}`} title={`${option.letter} — ${option[locale]}`} aria-pressed={accent === option.id} onClick={() => onAccentChange(option.id)}><span className="paint-dollop-core" aria-hidden="true">{option.letter}</span></button>)}
           </div>
+          <div className="palette-color-key" aria-label={t.accents}>
+            {rainbowAccents.map((option) => <button type="button" key={option.id} style={{ "--paint-color": option.color } as CSSProperties} aria-label={option[locale]} aria-pressed={accent === option.id} onClick={() => onAccentChange(option.id)}><span aria-hidden="true" />{locale === "km" ? option.km : option.en.split(" / ").at(-1)}</button>)}
+          </div>
           <div className="palette-selected-color" aria-live="polite">{accent === "default" ? t.default : rainbowAccents.find((option) => option.id === accent)?.[locale]}</div>
           <button type="button" className={`theme-accent-default ${accent === "default" ? "selected" : ""}`} aria-pressed={accent === "default"} onClick={() => onAccentChange("default")}><span className="accent-dot" style={{ backgroundColor: themePresets.find((item) => item.id === theme)?.color }} aria-hidden="true" />{t.default}</button>
         </div>
