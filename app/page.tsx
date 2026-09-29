@@ -15,6 +15,7 @@ import { BottomFloatingSearch } from "@/components/BottomFloatingSearch";
 import { PowerSkillsDashboard } from "@/components/PowerSkillsDashboard";
 import { CrewDirectory } from "@/components/CrewDirectory";
 import { DonationNotice } from "@/components/DonationNotice";
+import { FuturePerspectiveBanner } from "@/components/FuturePerspectiveBanner";
 import { useCyberProgress } from "@/hooks/useCyberProgress";
 
 const icons: Record<AppEntry["icon"], LucideIcon> = {
@@ -191,6 +192,7 @@ export default function Home() {
           </article>;
         })}</div> : pathwayMatches.length || crewMatches.length ? <p className="related-only-note">{t.noAppMatches}</p> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>}
       </section>
+      <FuturePerspectiveBanner locale={locale} />
       <section className="museum-feature wrap" aria-label={t.museumConcept}>
         <figure>
           <Image src="/museum-of-obsolete-systems.webp" alt={t.museumAlt} width={1448} height={1086} sizes="(max-width: 680px) calc(100vw - 36px), (max-width: 1232px) calc(100vw - 48px), 1232px" loading="lazy" unoptimized />

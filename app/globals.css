@@ -213,6 +213,21 @@ h1, h2, h3, p { margin: 0; }
 .donation-status svg { flex: none; color: #fbbf24; }
 .khmer .donation-card h2, .khmer .donation-card p, .khmer .donation-status { line-height: 1.75; }
 
+.future-note-section { padding-bottom: 55px; }
+.future-note-card { position: relative; isolation: isolate; display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; gap: 17px; max-width: 920px; margin: 0 auto; padding: 27px 28px; overflow: hidden; border: 1px solid rgba(129, 140, 248, .34); border-radius: 18px; background: rgba(15, 23, 42, .9); box-shadow: 0 16px 45px rgba(0, 0, 0, .18); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.future-note-card::before, .future-note-card::after { content: ""; position: absolute; z-index: -1; width: 220px; height: 220px; border-radius: 50%; pointer-events: none; filter: blur(60px); }
+.future-note-card::before { top: -150px; left: -100px; background: rgba(99, 102, 241, .2); }
+.future-note-card::after { bottom: -170px; right: -100px; background: rgba(6, 182, 212, .13); }
+.future-note-icon { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(129, 140, 248, .3); border-radius: 12px; background: rgba(99, 102, 241, .12); color: #a5b4fc; }
+.future-note-copy { min-width: 0; }
+.future-note-badge { display: inline-block; max-width: 100%; padding: 5px 11px; border: 1px solid rgba(129, 140, 248, .32); border-radius: 999px; background: rgba(49, 46, 129, .35); color: #c7d2fe; font-size: 12px; font-weight: 800; line-height: 1.5; overflow-wrap: anywhere; }
+.future-note-card h2 { margin: 12px 0 9px; color: #f8fafc; font-size: clamp(21px, 2.4vw, 27px); line-height: 1.35; overflow-wrap: anywhere; }
+.future-note-card p { max-width: 740px; color: #cbd5e1; font-size: 16px; line-height: 1.7; }
+.future-note-dismiss { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid transparent; border-radius: 10px; background: transparent; color: #aebbd0; }
+.future-note-dismiss:hover { border-color: rgba(129, 140, 248, .35); background: rgba(99, 102, 241, .13); color: #fff; }
+.khmer .future-note-card h2 { line-height: 1.65; }
+.khmer .future-note-card p { line-height: 1.8; }
+
 @media (min-width: 640px) {
   .app-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
   .app-card { padding: 20px; }
@@ -577,6 +592,12 @@ h1, h2, h3, p { margin: 0; }
   .app-card, .pathway-card, .crew-card, .xp-panel, .hero-panel { backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: 0 8px 25px rgba(0, 0, 0, .13); }
   .movie-promo, .floating-search-pill { backdrop-filter: none; -webkit-backdrop-filter: none; }
   .movie-poster-grid, .movie-poster-wire, .movie-poster-scan { animation: none; }
+  .future-note-card { display: block; padding: 22px 18px 24px; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .future-note-icon { margin-bottom: 13px; }
+  .future-note-badge { max-width: calc(100% - 52px); border-radius: 12px; }
+  .future-note-dismiss { position: absolute; top: 17px; right: 14px; }
+  .future-note-card p { font-size: 15px; line-height: 1.7; }
+  .khmer .future-note-card p { line-height: 1.8; }
   .khmer .hero p, .khmer .card-tagline, .khmer .card-description, .khmer .health-notice,
   .khmer .skills-header p, .khmer .crew-header p, .khmer .pathway-promise,
   .khmer .step-copy strong, .khmer .step-copy small, .khmer .crew-card p,
