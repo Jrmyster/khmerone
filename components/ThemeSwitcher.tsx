@@ -13,23 +13,23 @@ interface ThemeSwitcherProps {
 }
 
 const paintPositions = [
-  { x: 39, y: 18, mobileX: 33, mobileY: 19 },
-  { x: 53, y: 12, mobileX: 51, mobileY: 10 },
-  { x: 68, y: 15, mobileX: 70, mobileY: 17 },
-  { x: 82, y: 29, mobileX: 84, mobileY: 35 },
-  { x: 71, y: 74, mobileX: 71, mobileY: 74 },
-  { x: 36, y: 82, mobileX: 36, mobileY: 82 },
-  { x: 14, y: 56, mobileX: 14, mobileY: 56 },
+  { x: 27, y: 24 },
+  { x: 49, y: 15 },
+  { x: 72, y: 24 },
+  { x: 82, y: 49 },
+  { x: 70, y: 76 },
+  { x: 44, y: 80 },
+  { x: 19, y: 57 },
 ] as const;
 
 export function ThemeSwitcher({ locale, theme, accent, onAccentChange }: ThemeSwitcherProps) {
   const [open, setOpen] = useState(false);
   const controlRef = useRef<HTMLDivElement>(null);
   const t = locale === "km" ? {
-    button: "ជ្រើសពណ៌", title: "ក្ដារលាយពណ៌ ROYGBIV", accents: "ពណ៌ឥន្ទធនូ ROYGBIV",
+    button: "ជ្រើសពណ៌", title: "ក្ដារលាយពណ៌", accents: "ពណ៌ឥន្ទធនូ ROYGBIV",
     default: "ពណ៌ដើម", close: "បិទការជ្រើសពណ៌",
   } : {
-    button: "Artist color palette", title: "Painter's ROYGBIV Palette", accents: "ROYGBIV rainbow paints",
+    button: "Artist color palette", title: "Painter's Palette", accents: "ROYGBIV rainbow paints",
     default: "Original accent", close: "Close color palette",
   };
 
@@ -52,12 +52,10 @@ export function ThemeSwitcher({ locale, theme, accent, onAccentChange }: ThemeSw
     <button type="button" className="icon-button theme-trigger" aria-label={t.button} title={t.button} aria-expanded={open} aria-controls="theme-picker" onClick={() => setOpen((value) => !value)}>
       <Palette size={20} aria-hidden="true" /><span className="theme-trigger-dot" style={{ backgroundColor: currentColor }} aria-hidden="true" />
     </button>
-    {open && <>
-      <button type="button" className="theme-picker-backdrop" tabIndex={-1} aria-label={t.close} onClick={() => setOpen(false)} />
+    {open &&
       <div className="theme-picker" id="theme-picker" role="dialog" aria-label={t.button}>
-        <div className="theme-picker-head"><div className="theme-picker-heading"><Palette size={20} aria-hidden="true" /><strong>{t.title}</strong></div><div className="palette-thumb-hole" aria-hidden="true" /><button type="button" className="theme-picker-close" aria-label={t.close} onClick={() => setOpen(false)}><X size={19} aria-hidden="true" /></button></div>
+        <div className="theme-picker-head"><div className="theme-picker-heading"><strong>{t.title}</strong></div><button type="button" className="theme-picker-close" aria-label={t.close} onClick={() => { setOpen(false); controlRef.current?.querySelector<HTMLButtonElement>(".theme-trigger")?.focus(); }}><X size={18} aria-hidden="true" /></button></div>
         <div className="theme-picker-section" role="group" aria-label={t.accents}>
-          <h2>{t.accents}</h2>
           <div className="palette-wheel">
             <svg className="wood-palette-art" viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
               <defs>
@@ -72,15 +70,11 @@ export function ThemeSwitcher({ locale, theme, accent, onAccentChange }: ThemeSw
               <ellipse cx="229" cy="166" rx="32" ry="26" fill="none" stroke="#542a16" strokeWidth="5"/>
               <path d="M199 166a30 24 0 0 1 58 -9" fill="none" stroke="#f5cb89" strokeOpacity=".8" strokeWidth="3"/>
             </svg>
-            {rainbowAccents.map((option, index) => <button type="button" key={option.id} className={`paint-dollop ${accent === option.id ? "selected" : ""}`} style={{ "--paint-color": option.color, "--paint-x": `${paintPositions[index].x}%`, "--paint-y": `${paintPositions[index].y}%`, "--paint-x-mobile": `${paintPositions[index].mobileX}%`, "--paint-y-mobile": `${paintPositions[index].mobileY}%`, "--paint-delay": `${index * .35}s` } as CSSProperties} aria-label={`${option.letter} — ${option[locale]}`} title={`${option.letter} — ${option[locale]}`} aria-pressed={accent === option.id} onClick={() => onAccentChange(option.id)}><span className="paint-dollop-core" aria-hidden="true">{option.letter}</span></button>)}
+            <button type="button" className="palette-reset-hole" aria-label={t.default} title={t.default} aria-pressed={accent === "default"} onClick={() => onAccentChange("default")} />
+            {rainbowAccents.map((option, index) => <button type="button" key={option.id} className={`paint-dollop ${accent === option.id ? "selected" : ""}`} style={{ "--paint-color": option.color, "--paint-x": `${paintPositions[index].x}%`, "--paint-y": `${paintPositions[index].y}%`, "--paint-delay": `${index * .35}s` } as CSSProperties} data-label={locale === "km" ? option.km : option.en.split(" / ").at(-1)} aria-label={`${option.letter} — ${option[locale]}`} title={`${option.letter} — ${option[locale]}`} aria-pressed={accent === option.id} onClick={() => onAccentChange(option.id)}><span className="paint-dollop-core" aria-hidden="true">{option.letter}</span></button>)}
           </div>
-          <div className="palette-color-key" aria-label={t.accents}>
-            {rainbowAccents.map((option) => <button type="button" key={option.id} style={{ "--paint-color": option.color } as CSSProperties} aria-label={option[locale]} aria-pressed={accent === option.id} onClick={() => onAccentChange(option.id)}><span aria-hidden="true" />{locale === "km" ? option.km : option.en.split(" / ").at(-1)}</button>)}
-          </div>
-          <div className="palette-selected-color" aria-live="polite">{accent === "default" ? t.default : rainbowAccents.find((option) => option.id === accent)?.[locale]}</div>
-          <button type="button" className={`theme-accent-default ${accent === "default" ? "selected" : ""}`} aria-pressed={accent === "default"} onClick={() => onAccentChange("default")}><span className="accent-dot" style={{ backgroundColor: themePresets.find((item) => item.id === theme)?.color }} aria-hidden="true" />{t.default}</button>
         </div>
       </div>
-    </>}
+    }
   </div>;
 }
