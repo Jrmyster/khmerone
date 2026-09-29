@@ -1,5 +1,5 @@
-const CACHE = "khmerone-v5";
-const CORE = ["/", "/api/catalog", "/manifest.webmanifest", "/favicon.svg"];
+const CACHE = "khmerone-v6";
+const CORE = ["/", "/api/catalog", "/manifest.webmanifest", "/favicon.svg", "/cambodia-tomorrow-320.webp"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(CORE)).then(() => self.skipWaiting()));

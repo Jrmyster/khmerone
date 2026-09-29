@@ -7,6 +7,7 @@ import { apps, gradeLabels } from "@/data/apps";
 import { AppCategory, type AppEntry, type FilterKey, type GradeLevel, type Locale } from "@/types/app";
 import { KhmerOneBar } from "@/components/KhmerOneBar";
 import { HelperBot } from "@/components/HelperBot";
+import { CambodiaTomorrowBanner } from "@/components/CambodiaTomorrowBanner";
 import { PowerSkillsDashboard } from "@/components/PowerSkillsDashboard";
 import { CrewDirectory } from "@/components/CrewDirectory";
 import { useCyberProgress } from "@/hooks/useCyberProgress";
@@ -69,6 +70,7 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [grade, setGrade] = useState<GradeLevel | "all">("all");
+  const [promoVisible, setPromoVisible] = useState(true);
   const searchRef = useRef<HTMLInputElement>(null);
   const cyber = useCyberProgress();
 
@@ -107,7 +109,7 @@ export default function Home() {
 
   const reset = () => { setQuery(""); setFilter("all"); setGrade("all"); };
 
-  return <div className={`site-shell ${locale === "km" ? "khmer" : "english"}`}>
+  return <div className={`site-shell ${locale === "km" ? "khmer" : "english"} ${promoVisible ? "promo-active" : ""}`}>
     <KhmerOneBar locale={locale} dark={theme === "dark"} homeUrl="/" />
     <header className="main-header wrap">
       <Link className="brand" href="/" aria-label="KhmerOne home"><span className="brand-mark" aria-hidden="true"><span /><span /><span /><span /></span><span>Khmer<span className="brand-accent">One</span><small>.com</small></span></Link>
@@ -149,5 +151,6 @@ export default function Home() {
     </main>
     <HelperBot locale={locale} query={query} resultCount={results.length} onSelectFilter={(nextFilter) => { setQuery(""); setGrade("all"); setFilter(nextFilter); document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onFocusSearch={() => { searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); searchRef.current?.focus(); }} />
     <footer className="footer wrap"><div className="footer-rule" /><div><span className="footer-brand">KhmerOne<span>.com</span></span><p>{t.footer}</p></div><span className="footer-note"><Check size={16} />{t.network}</span></footer>
+    {promoVisible && <CambodiaTomorrowBanner locale={locale} onDismiss={() => setPromoVisible(false)} />}
   </div>;
 }
