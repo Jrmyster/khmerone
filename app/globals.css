@@ -192,6 +192,12 @@ h1, h2, h3, p { margin: 0; }
 .museum-feature figcaption { min-height: 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; padding: 11px 16px; color: var(--muted); font-size: 13px; }
 .museum-feature figcaption a { display: inline-flex; align-items: center; gap: 4px; color: var(--cyan); font-weight: 700; text-decoration: none; }
 .museum-feature figcaption a:hover { text-decoration: underline; }
+.tomorrow-feature { padding-bottom: 55px; }
+.tomorrow-feature figure { width: min(100%, 550px); margin: 0 auto; overflow: hidden; border: 1px solid var(--line); border-radius: 15px; background: #0b1726; box-shadow: var(--glass-shadow), 0 0 24px rgba(0, 240, 255, .08); }
+.tomorrow-feature img { display: block; width: 100%; height: auto; }
+.tomorrow-feature figcaption { min-height: 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; padding: 11px 16px; color: var(--muted); font-size: 13px; }
+.tomorrow-feature figcaption a { display: inline-flex; align-items: center; gap: 4px; color: var(--cyan); font-weight: 700; text-decoration: none; }
+.tomorrow-feature figcaption a:hover { text-decoration: underline; }
 
 @media (max-width: 950px) {
   .app-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

@@ -48,6 +48,8 @@ const copy = {
     noAppMatches: "No app cards match this search. Explore the related results above.",
     museumConcept: "Museum of Obsolete Systems · concept artwork", fullArtwork: "View full image",
     museumAlt: "Fictional KHMER ONE Museum of Obsolete Systems webpage with a futuristic atrium, clocks, periodic table, graph and engine exhibits",
+    tomorrowConcept: "Cambodia Tomorrow (2061) · concept poster",
+    tomorrowAlt: "Four Cambodian student engineers overlooking a green futuristic Phnom Penh at sunset",
     footer: "Learning should be easy to find, wherever you are.",
     themeDark: "Switch to dark mode", themeLight: "Switch to light mode", language: "Switch language",
   },
@@ -67,6 +69,8 @@ const copy = {
     noAppMatches: "គ្មានកម្មវិធីដែលត្រូវនឹងការស្វែងរកទេ។ សូមមើលលទ្ធផលពាក់ព័ន្ធខាងលើ។",
     museumConcept: "សារមន្ទីរប្រព័ន្ធហួសសម័យ · រូបភាពគំនិត", fullArtwork: "មើលរូបភាពពេញ",
     museumAlt: "រូបភាពគេហទំព័រ KHMER ONE សារមន្ទីរប្រព័ន្ធហួសសម័យ មានសាលអនាគត នាឡិកា តារាងធាតុ ក្រាប និងម៉ាស៊ីន",
+    tomorrowConcept: "កម្ពុជាថ្ងៃស្អែក (២០៦១) · ផ្ទាំងរូបភាពគំនិត",
+    tomorrowAlt: "សិស្សវិស្វករកម្ពុជាបួននាក់មើលភ្នំពេញបៃតងអនាគតនៅពេលថ្ងៃលិច",
     footer: "ការសិក្សាគួរតែងាយស្រួលស្វែងរក ទោះអ្នកនៅទីណាក៏ដោយ។",
     themeDark: "ប្ដូរទៅផ្ទៃងងឹត", themeLight: "ប្ដូរទៅផ្ទៃភ្លឺ", language: "ប្ដូរភាសា",
   },
@@ -83,9 +87,12 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [grade, setGrade] = useState<GradeLevel | "all">("all");
-  const [promoVisible, setPromoVisible] = useState(true);
+  const [promoDismissed, setPromoDismissed] = useState(false);
+  const [bottomPosterInView, setBottomPosterInView] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
+  const bottomPosterRef = useRef<HTMLElement>(null);
   const cyber = useCyberProgress();
+  const promoVisible = !promoDismissed && !bottomPosterInView;
 
   useEffect(() => {
     const savedLocale = localStorage.getItem("khmerone-locale");
@@ -104,6 +111,16 @@ export default function Home() {
     localStorage.setItem("khmerone-locale", locale);
     localStorage.setItem("khmerone-theme-v2", theme);
   }, [locale, theme]);
+
+  useEffect(() => {
+    const poster = bottomPosterRef.current;
+    if (!poster || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(([entry]) => setBottomPosterInView(entry.isIntersecting), {
+      rootMargin: "0px 0px -12% 0px", threshold: 0.05,
+    });
+    observer.observe(poster);
+    return () => observer.disconnect();
+  }, []);
 
   const t = copy[locale];
   const results = useMemo(() => {
@@ -164,10 +181,16 @@ export default function Home() {
           <figcaption><span>{t.museumConcept}</span><a href="/museum-of-obsolete-systems.webp" target="_blank" rel="noopener noreferrer">{t.fullArtwork} <ArrowUpRight size={15} aria-hidden="true" /></a></figcaption>
         </figure>
       </section>
+      <section ref={bottomPosterRef} className="tomorrow-feature wrap" aria-label={t.tomorrowConcept}>
+        <figure>
+          <Image src="/cambodia-tomorrow-800.webp" alt={t.tomorrowAlt} width={800} height={1200} sizes="(max-width: 680px) calc(100vw - 36px), 550px" loading="lazy" unoptimized />
+          <figcaption><span>{t.tomorrowConcept}</span><a href="/cambodia-tomorrow-800.webp" target="_blank" rel="noopener noreferrer">{t.fullArtwork} <ArrowUpRight size={15} aria-hidden="true" /></a></figcaption>
+        </figure>
+      </section>
     </main>
     <HelperBot locale={locale} query={query} resultCount={results.length} onSelectFilter={(nextFilter) => { setQuery(""); setGrade("all"); setFilter(nextFilter); document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onFocusSearch={() => { searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); searchRef.current?.focus(); }} />
     <footer className="footer wrap"><div className="footer-rule" /><div><span className="footer-brand">KhmerOne<span>.com</span></span><p>{t.footer}</p></div><span className="footer-note"><Check size={16} />{t.network}</span></footer>
     <BottomFloatingSearch locale={locale} query={query} onQueryChange={(value) => { setQuery(value); if (value) { setFilter("all"); setGrade("all"); } }} />
-    {promoVisible && <CambodiaTomorrowBanner locale={locale} onDismiss={() => setPromoVisible(false)} />}
+    {promoVisible && <CambodiaTomorrowBanner locale={locale} onDismiss={() => setPromoDismissed(true)} />}
   </div>;
 }
