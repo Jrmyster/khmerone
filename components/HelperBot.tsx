@@ -104,10 +104,17 @@ export function HelperBot({ locale, query, resultCount, onSelectFilter, onFocusS
           <circle cx="53" cy="13" r="2" fill="#b98450"/>
         </g>
         <circle cx="20" cy="43" r="2" fill="#fbbf24"/><circle cx="92" cy="43" r="2" fill="#fbbf24"/>
+        <circle cx="98" cy="75" r="2.5" fill="#f8fafc" stroke="#a5f3fc" strokeWidth="1"/>
+        <path d="M95 77Q94 87 99 87Q104 87 103 77" fill="none" stroke="#e2e8f0" strokeWidth="2.5" strokeLinecap="round"/>
+        <path d="M106 77v5m-2.5-2.5h5" fill="none" stroke="#ffffff" strokeWidth="1.4" strokeLinecap="round"/>
         <path d="M36 97v7m40-7v7" stroke="#4fb9cc" strokeWidth="4" strokeLinecap="round"/>
-        <rect x="31" y="103" width="50" height="21" rx="9" fill="#172a41" stroke="#4fb9cc" strokeWidth="2"/>
-        <rect x="36" y="106" width="40" height="15" rx="4" fill="#0b2131" stroke="#fbbf24" strokeWidth="1"/>
-        <text x="56" y="117.5" fill="#f8fafc" fontFamily="system-ui, sans-serif" fontSize="11.5" fontWeight="800" textAnchor="middle">bot</text>
+        <rect x="27" y="103" width="58" height="21" rx="9" fill="#172a41" stroke="#4fb9cc" strokeWidth="2"/>
+        <path d="M45 97L58 104M73 97L63 104" fill="none" stroke="#e2e8f0" strokeWidth="2" strokeLinecap="round"/>
+        <path d="M57 105L64 105L67 118L61 123L56 119Z" fill="#b91c1c" stroke="#f87171" strokeWidth="1" strokeLinejoin="round"/>
+        <path d="M54 101L58 98L64 101L62 107L57 107Z" fill="#ef4444" stroke="#fca5a5" strokeWidth="1" strokeLinejoin="round"/>
+        <path d="M60 108L63 118" stroke="#fca5a5" strokeWidth="1" opacity=".75"/>
+        <rect x="31" y="106" width="24" height="15" rx="4" fill="#0b2131" stroke="#fbbf24" strokeWidth="1"/>
+        <text x="43" y="117.3" fill="#f8fafc" fontFamily="system-ui, sans-serif" fontSize="10" fontWeight="800" textAnchor="middle">bot</text>
         <path d="M40 124v3m32-3v3" stroke="#4fb9cc" strokeWidth="4" strokeLinecap="round"/>
         <path className="bot-spark" d="M9 29v6m-3-3h6M99 20v6m-3-3h6" fill="none" stroke="#00f0ff" strokeWidth="1.6" strokeLinecap="round"/>
       </svg>
