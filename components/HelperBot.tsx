@@ -99,7 +99,9 @@ export function HelperBot({ locale, query, resultCount, onSelectFilter, onFocusS
         <circle cx="20" cy="43" r="2" fill="#fbbf24"/><circle cx="92" cy="43" r="2" fill="#fbbf24"/>
         <path d="M36 97v7m40-7v7" stroke="#4fb9cc" strokeWidth="4" strokeLinecap="round"/>
         <rect x="31" y="103" width="50" height="21" rx="9" fill="#172a41" stroke="#4fb9cc" strokeWidth="2"/>
-        <circle cx="56" cy="113" r="4" fill="#fbbf24"/><path d="M40 124v3m32-3v3" stroke="#4fb9cc" strokeWidth="4" strokeLinecap="round"/>
+        <rect x="36" y="106" width="40" height="15" rx="4" fill="#0b2131" stroke="#fbbf24" strokeWidth="1"/>
+        <text x="56" y="117.5" fill="#f8fafc" fontFamily="system-ui, sans-serif" fontSize="11.5" fontWeight="800" textAnchor="middle">bot</text>
+        <path d="M40 124v3m32-3v3" stroke="#4fb9cc" strokeWidth="4" strokeLinecap="round"/>
         <path className="bot-spark" d="M9 29v6m-3-3h6M99 20v6m-3-3h6" fill="none" stroke="#00f0ff" strokeWidth="1.6" strokeLinecap="round"/>
       </svg>
     </button>
