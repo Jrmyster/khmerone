@@ -129,17 +129,17 @@
       ];
       this.shadowRoot.innerHTML = `
         <style>
-          @import url("https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&display=swap");
           :host { all: initial; display: block; width: 100%; position: relative; z-index: 999999; color: #f8fafc; font: 400 14px/1.5 "Kantumruy Pro", system-ui, sans-serif; }
-          *, *::before, *::after { box-sizing: border-box; }
+          *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
           button, a { font: inherit; }
           button:focus-visible, a:focus-visible { outline: 2px solid #fbbf24; outline-offset: 2px; }
-          .bar { min-height: 44px; padding: 5px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid rgba(0,240,255,.24); background: #0b0f19; }
+          .bar { height: 44px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid rgba(0,240,255,.24); background: #0b0f19; }
           .left, .right { min-width: 0; display: flex; align-items: center; gap: 9px; }
-          .brand { color: #eefaff; text-decoration: none; font-weight: 700; white-space: nowrap; }
+          .brand { min-height: 44px; display: inline-flex; align-items: center; color: #eefaff; text-decoration: none; font-weight: 700; white-space: nowrap; }
           .brand:hover { color: #9bf6ff; }
           .network { padding: 2px 6px; border: 1px solid rgba(0,240,255,.4); border-radius: 5px; background: rgba(0,240,255,.12); color: #9bf6ff; font-size: 11px; font-weight: 700; white-space: nowrap; }
-          .trigger, .lang { min-height: 32px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 4px 10px; border: 1px solid #415268; border-radius: 7px; background: #1c2b40; color: #edf7fb; cursor: pointer; transition: background .2s, border-color .2s; }
+          .trigger, .lang { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 4px 10px; border: 1px solid #415268; border-radius: 7px; background: #1c2b40; color: #edf7fb; cursor: pointer; transition: background .2s, border-color .2s, transform .2s; }
+          .trigger:active, .lang:active, .app:active { transform: scale(.95); }
           .trigger:hover, .lang:hover, .trigger[aria-expanded="true"] { border-color: #00f0ff; background: #173c4a; }
           .lang { white-space: nowrap; }
           .dropdown { position: absolute; top: calc(100% + 4px); left: 16px; width: min(340px, calc(100vw - 32px)); max-height: min(550px, calc(100dvh - 60px)); overflow-y: auto; display: none; padding: 6px; border: 1px solid rgba(0,240,255,.35); border-radius: 10px; background: #0f1929; box-shadow: 0 14px 34px rgba(0,0,0,.48); }
@@ -151,9 +151,9 @@
           .icon { width: 23px; flex: none; font-size: 17px; text-align: center; }
           .names { min-width: 0; display: flex; flex-direction: column; }
           .sub { color: #a9c5d0; font-size: 12px; font-weight: 400; }
-          .health-note { color: #fbbf24; font-size: 12px; font-weight: 400; line-height: 1.45; }
+          .health-note { color: #fbbf24; font-size: 14px; font-weight: 400; line-height: 1.6; }
           @media (max-width: 440px) {
-            .bar { padding: 5px 10px; }
+            .bar { padding: 0 10px; }
             .left { gap: 6px; }
             .network { display: none; }
             .trigger, .lang { padding: 4px 7px; font-size: 12px; }

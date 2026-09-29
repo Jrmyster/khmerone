@@ -149,12 +149,12 @@ export default function Home() {
   const reset = () => { setQuery(""); setFilter("all"); setGrade("all"); };
 
   return <div className={`site-shell has-floating-search ${locale === "km" ? "khmer" : "english"} ${promoVisible ? "promo-active" : ""}`}>
-    <KhmerOneBar locale={locale} dark={theme === "dark"} homeUrl="/" />
+    <KhmerOneBar locale={locale} dark={theme === "dark"} homeUrl="/#directory" />
     <header className="main-header wrap">
       <Link className="brand" href="/" aria-label="KhmerOne home"><span className="brand-mark" aria-hidden="true"><span /><span /><span /><span /></span><span>Khmer<span className="brand-accent">One</span><small>.com</small></span></Link>
       <div className="header-actions">
         <button className="icon-button" aria-label={theme === "dark" ? t.themeLight : t.themeDark} title={theme === "dark" ? t.themeLight : t.themeDark} onClick={() => setTheme(theme === "light" ? "dark" : "light")}>{theme === "light" ? <Moon size={19} /> : <Sun size={19} />}</button>
-        <button className="language-button" aria-label={t.language} onClick={() => setLocale(locale === "en" ? "km" : "en")}><Languages size={17} aria-hidden="true" /><span>{locale === "en" ? "ភាសាខ្មែរ" : "English"}</span></button>
+        <button className="language-button" aria-label={t.language} onClick={() => setLocale(locale === "en" ? "km" : "en")}><Languages size={17} aria-hidden="true" /><span className="language-label-full">{locale === "en" ? "ភាសាខ្មែរ" : "English"}</span><span className="language-label-short">{locale === "en" ? "ខ្មែរ" : "EN"}</span></button>
       </div>
     </header>
 

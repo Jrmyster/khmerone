@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Search, X } from "lucide-react";
 import type { Locale } from "@/types/app";
 
@@ -12,6 +12,7 @@ interface BottomFloatingSearchProps {
 
 export function BottomFloatingSearch({ locale, query, onQueryChange }: BottomFloatingSearchProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [keyboard, setKeyboard] = useState({ open: false, own: false, inset: 0 });
   const placeholder = locale === "km"
     ? "ស្វែងរកកម្មវិធី មេរៀន ឬឧបករណ៍..."
     : "Search apps, subjects, or tools...";
@@ -44,7 +45,45 @@ export function BottomFloatingSearch({ locale, query, onQueryChange }: BottomFlo
     return () => window.removeEventListener("keydown", onKeydown);
   }, []);
 
-  return <form className="bottom-floating-search" role="search" onSubmit={(event) => { event.preventDefault(); revealResults(); }}>
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    let expandedHeight = viewport?.height ?? window.innerHeight;
+    let frame = 0;
+    const update = () => {
+      const height = viewport?.height ?? window.innerHeight;
+      const focused = document.activeElement;
+      const editing = focused instanceof HTMLElement &&
+        (focused.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(focused.tagName));
+      if (!editing) expandedHeight = Math.max(expandedHeight, height);
+      const inset = viewport ? Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop) : 0;
+      const open = window.matchMedia("(max-width: 900px)").matches && editing &&
+        (inset > 120 || expandedHeight - height > 150);
+      const next = { open, own: open && focused === inputRef.current, inset: open ? Math.round(inset) : 0 };
+      setKeyboard((current) => current.open === next.open && current.own === next.own && current.inset === next.inset ? current : next);
+      document.documentElement.classList.toggle("mobile-keyboard-open", open);
+    };
+    const scheduleUpdate = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(update); };
+    const resetHeight = () => { expandedHeight = viewport?.height ?? window.innerHeight; scheduleUpdate(); };
+    viewport?.addEventListener("resize", scheduleUpdate);
+    viewport?.addEventListener("scroll", scheduleUpdate);
+    window.addEventListener("resize", scheduleUpdate);
+    window.addEventListener("orientationchange", resetHeight);
+    document.addEventListener("focusin", scheduleUpdate);
+    document.addEventListener("focusout", scheduleUpdate);
+    update();
+    return () => {
+      cancelAnimationFrame(frame);
+      viewport?.removeEventListener("resize", scheduleUpdate);
+      viewport?.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      window.removeEventListener("orientationchange", resetHeight);
+      document.removeEventListener("focusin", scheduleUpdate);
+      document.removeEventListener("focusout", scheduleUpdate);
+      document.documentElement.classList.remove("mobile-keyboard-open");
+    };
+  }, []);
+
+  return <form className={`bottom-floating-search ${keyboard.open ? keyboard.own ? "search-keyboard-open" : "search-keyboard-hidden" : ""}`} style={{ "--keyboard-inset": `${keyboard.inset}px` } as CSSProperties} role="search" onSubmit={(event) => { event.preventDefault(); revealResults(); }}>
     <div className="floating-search-pill">
       <Search size={21} className="floating-search-icon" aria-hidden="true" />
       <input
