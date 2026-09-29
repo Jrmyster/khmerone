@@ -2,15 +2,22 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Search, X } from "lucide-react";
+import { DynamicSearchPrompt } from "@/components/DynamicSearchBar";
+import type { SearchPrompt } from "@/data/searchPrompts";
 import type { Locale } from "@/types/app";
 
 interface BottomFloatingSearchProps {
   locale: Locale;
   query: string;
   onQueryChange: (value: string) => void;
+  prompt: SearchPrompt;
+  fading: boolean;
+  searchFocused: boolean;
+  onFocusChange: (focused: boolean) => void;
+  onSelectPrompt: (prompt: SearchPrompt) => void;
 }
 
-export function BottomFloatingSearch({ locale, query, onQueryChange }: BottomFloatingSearchProps) {
+export function BottomFloatingSearch({ locale, query, onQueryChange, prompt, fading, searchFocused, onFocusChange, onSelectPrompt }: BottomFloatingSearchProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [keyboard, setKeyboard] = useState({ open: false, own: false, inset: 0 });
   const placeholder = locale === "km"
@@ -86,7 +93,7 @@ export function BottomFloatingSearch({ locale, query, onQueryChange }: BottomFlo
   return <form className={`bottom-floating-search ${keyboard.open ? keyboard.own ? "search-keyboard-open" : "search-keyboard-hidden" : ""}`} style={{ "--keyboard-inset": `${keyboard.inset}px` } as CSSProperties} role="search" onSubmit={(event) => { event.preventDefault(); revealResults(); }}>
     <div className="floating-search-pill">
       <Search size={21} className="floating-search-icon" aria-hidden="true" />
-      <input
+      <div className="floating-search-input-wrap"><input
         ref={inputRef}
         type="search"
         value={query}
@@ -94,7 +101,8 @@ export function BottomFloatingSearch({ locale, query, onQueryChange }: BottomFlo
           onQueryChange(event.target.value);
           if (!query && event.target.value.trim()) document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" });
         }}
-        onFocus={revealResults}
+        onFocus={() => { onFocusChange(true); revealResults(); }}
+        onBlur={() => onFocusChange(false)}
         onKeyDown={(event) => {
           if (event.key === "Escape") {
             if (query) onQueryChange("");
@@ -103,9 +111,9 @@ export function BottomFloatingSearch({ locale, query, onQueryChange }: BottomFlo
         }}
         aria-label={label}
         aria-controls="directory"
-        placeholder={placeholder}
+        placeholder={searchFocused ? placeholder : ""}
         autoComplete="off"
-      />
+      />{!query && !searchFocused && <DynamicSearchPrompt locale={locale} prompt={prompt} fading={fading} onSelect={onSelectPrompt} floating />}</div>
       {query ? <button type="button" className="floating-search-clear" aria-label={clearLabel} onClick={() => { onQueryChange(""); inputRef.current?.focus(); }}><X size={16} aria-hidden="true" /></button>
         : <kbd className="floating-search-hint" title="Cmd+K, Ctrl+K, or /">/</kbd>}
     </div>

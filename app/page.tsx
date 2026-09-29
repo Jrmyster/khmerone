@@ -12,6 +12,8 @@ import { KhmerOneBar } from "@/components/KhmerOneBar";
 import { MascotBot } from "@/components/MascotBot";
 import { CambodiaTomorrowBanner } from "@/components/CambodiaTomorrowBanner";
 import { BottomFloatingSearch } from "@/components/BottomFloatingSearch";
+import { DynamicSearchPrompt, useRotatingSearchPrompt } from "@/components/DynamicSearchBar";
+import type { SearchPrompt } from "@/data/searchPrompts";
 import { PowerSkillsDashboard } from "@/components/PowerSkillsDashboard";
 import { CrewDirectory } from "@/components/CrewDirectory";
 import { DonationNotice } from "@/components/DonationNotice";
@@ -91,6 +93,7 @@ export default function Home() {
   const [accent, setAccent] = useState<AccentId>("default");
   const [settingsReady, setSettingsReady] = useState(false);
   const [query, setQuery] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
   const [filter, setFilter] = useState<FilterKey>("all");
   const [grade, setGrade] = useState<GradeLevel | "all">("all");
   const [promoDismissed, setPromoDismissed] = useState(false);
@@ -100,6 +103,7 @@ export default function Home() {
   const bottomPosterRef = useRef<HTMLElement>(null);
   const cyber = useCyberProgress();
   const promoVisible = !promoDismissed && !bottomPosterInView && !nearPageEnd;
+  const { prompt, fading } = useRotatingSearchPrompt(query, searchFocused);
 
   useEffect(() => {
     const savedLocale = localStorage.getItem("khmerone-locale");
@@ -160,6 +164,12 @@ export default function Home() {
   const crewMatches = useMemo(() => query.trim() ? searchCrewConcepts(crewConcepts, query) : [], [query]);
 
   const reset = () => { setQuery(""); setFilter("all"); setGrade("all"); };
+  const selectSearchPrompt = (selected: SearchPrompt) => {
+    setQuery(selected.query);
+    setFilter("all");
+    setGrade("all");
+    document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return <div className={`site-shell has-floating-search ${locale === "km" ? "khmer" : "english"} ${promoVisible ? "promo-active" : ""}`}>
     <KhmerOneBar locale={locale} dark={themePresets.find((item) => item.id === theme)?.mode === "dark"} accentColor={themeColor(theme, accent)} homeUrl="/#directory" />
@@ -184,7 +194,7 @@ export default function Home() {
 
       <section id="directory" className="directory wrap" aria-labelledby="directory-title">
         <div className="directory-toolbar">
-          <div className="search-field"><Search size={21} aria-hidden="true" /><input ref={searchRef} type="search" aria-label={t.searchLabel} placeholder={t.search} value={query} onChange={(e) => setQuery(e.target.value)} />{query && <button className="clear-button" aria-label={t.clear} onClick={() => setQuery("")}><X size={17} /></button>}</div>
+          <div className="search-field"><Search size={21} aria-hidden="true" /><div className="search-input-wrap"><input ref={searchRef} type="search" aria-label={t.searchLabel} placeholder={searchFocused ? t.search : ""} value={query} onChange={(e) => setQuery(e.target.value)} onFocus={() => setSearchFocused(true)} onBlur={() => setSearchFocused(false)} />{!query && !searchFocused && <DynamicSearchPrompt locale={locale} prompt={prompt} fading={fading} onSelect={selectSearchPrompt} />}</div>{query && <button className="clear-button" aria-label={t.clear} onClick={() => setQuery("")}><X size={17} /></button>}</div>
           <label className="grade-field"><SlidersHorizontal size={18} aria-hidden="true" /><select aria-label={t.grade} value={grade} onChange={(e) => setGrade(e.target.value as GradeLevel | "all")}><option value="all">{t.grade}</option>{(Object.keys(gradeLabels) as GradeLevel[]).map((key) => <option key={key} value={key}>{gradeLabels[key][locale]}</option>)}</select></label>
         </div>
         <div className="filter-row" role="group" aria-label={t.browse}>{filters.map(({ key, label }) => <button key={key} type="button" className={`filter-chip ${filter === key ? "active" : ""}`} aria-pressed={filter === key} onClick={() => setFilter(key)}>{label[locale]}</button>)}</div>
@@ -221,7 +231,7 @@ export default function Home() {
     </main>
     <MascotBot locale={locale} query={query} resultCount={results.length} onSelectFilter={(nextFilter) => { setQuery(""); setGrade("all"); setFilter(nextFilter); document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onFocusSearch={() => { searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); searchRef.current?.focus(); }} />
     <footer className="footer wrap"><div className="footer-rule" /><div><span className="footer-brand">KhmerOne<span>.com</span></span><p>{t.footer}</p></div><span className="footer-note"><Check size={16} />{t.network}</span></footer>
-    <BottomFloatingSearch locale={locale} query={query} onQueryChange={(value) => { setQuery(value); if (value) { setFilter("all"); setGrade("all"); } }} />
+    <BottomFloatingSearch locale={locale} query={query} prompt={prompt} fading={fading} searchFocused={searchFocused} onFocusChange={setSearchFocused} onSelectPrompt={selectSearchPrompt} onQueryChange={(value) => { setQuery(value); if (value) { setFilter("all"); setGrade("all"); } }} />
     {promoVisible && <CambodiaTomorrowBanner locale={locale} onDismiss={() => setPromoDismissed(true)} />}
   </div>;
 }

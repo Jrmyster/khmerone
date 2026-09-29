@@ -1,4 +1,5 @@
 import { gradeLabels } from "../data/apps";
+import { rotatingSearchPrompts } from "../data/searchPrompts";
 import type { AppEntry } from "../types/app";
 import type { CrewConcept, SkillPathway } from "../types/engagement";
 
@@ -19,6 +20,10 @@ function matchesFields(fields: string[], query: string): boolean {
 }
 
 export function searchAppCatalog(entries: AppEntry[], query: string): AppEntry[] {
+  const normalizedQuery = normalizeSearchText(query);
+  const featured = normalizedQuery && rotatingSearchPrompts.find((item) =>
+    [item.query, item.en, item.km].some((text) => normalizeSearchText(text) === normalizedQuery));
+  if (featured) return entries.filter((app) => app.id === featured.appId);
   return entries.filter((app) => matchesFields([
     app.id, app.url ?? "", app.category, app.icon,
     app.title.en, app.title.km,
