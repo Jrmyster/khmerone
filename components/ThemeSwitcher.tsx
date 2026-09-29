@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { Check, Palette, X } from "lucide-react";
+import { Palette, X } from "lucide-react";
 import { rainbowAccents, themePresets, type AccentId, type ThemeId } from "@/data/themes";
 import type { Locale } from "@/types/app";
 
@@ -9,19 +9,18 @@ interface ThemeSwitcherProps {
   locale: Locale;
   theme: ThemeId;
   accent: AccentId;
-  onThemeChange: (theme: ThemeId) => void;
   onAccentChange: (accent: AccentId) => void;
 }
 
-export function ThemeSwitcher({ locale, theme, accent, onThemeChange, onAccentChange }: ThemeSwitcherProps) {
+export function ThemeSwitcher({ locale, theme, accent, onAccentChange }: ThemeSwitcherProps) {
   const [open, setOpen] = useState(false);
   const controlRef = useRef<HTMLDivElement>(null);
   const t = locale === "km" ? {
-    button: "ជ្រើសពណ៌ និងរចនាប័ទ្ម", title: "ក្ដារលាយពណ៌ ROYGBIV", presets: "ផ្ទៃរចនាប័ទ្ម", accents: "ពណ៌ឥន្ទធនូ ROYGBIV",
-    default: "ពណ៌ដើមរបស់រចនាប័ទ្ម", close: "បិទការជ្រើសពណ៌",
+    button: "ជ្រើសពណ៌", title: "ក្ដារលាយពណ៌ ROYGBIV", accents: "ពណ៌ឥន្ទធនូ ROYGBIV",
+    default: "ពណ៌ដើម", close: "បិទការជ្រើសពណ៌",
   } : {
-    button: "Artist theme palette", title: "Painter's ROYGBIV Palette", presets: "Studio theme canvas", accents: "ROYGBIV rainbow paints",
-    default: "Use preset accent", close: "Close theme palette",
+    button: "Artist color palette", title: "Painter's ROYGBIV Palette", accents: "ROYGBIV rainbow paints",
+    default: "Original accent", close: "Close color palette",
   };
 
   useEffect(() => {
@@ -52,13 +51,6 @@ export function ThemeSwitcher({ locale, theme, accent, onThemeChange, onAccentCh
           <div className="paint-dollops">{rainbowAccents.map((option) => <button type="button" key={option.id} className={`paint-dollop ${accent === option.id ? "selected" : ""}`} style={{ "--paint-color": option.color } as CSSProperties} aria-label={`${option.letter} — ${option[locale]}`} title={`${option.letter} — ${option[locale]}`} aria-pressed={accent === option.id} onClick={() => onAccentChange(option.id)}><span className="paint-dollop-core" aria-hidden="true">{option.letter}</span></button>)}</div>
           <div className="palette-selected-color" aria-live="polite">{accent === "default" ? t.default : rainbowAccents.find((option) => option.id === accent)?.[locale]}</div>
           <button type="button" className={`theme-accent-default ${accent === "default" ? "selected" : ""}`} aria-pressed={accent === "default"} onClick={() => onAccentChange("default")}><span className="accent-dot" style={{ backgroundColor: themePresets.find((item) => item.id === theme)?.color }} aria-hidden="true" />{t.default}</button>
-        </div>
-        <div className="theme-picker-section" role="group" aria-label={t.presets}>
-          <h2>{t.presets}</h2>
-          <div className="theme-preset-grid">{themePresets.map((preset) => <button type="button" key={preset.id} className={`theme-preset ${theme === preset.id ? "selected" : ""}`} aria-pressed={theme === preset.id} onClick={() => onThemeChange(preset.id)}>
-            <span className="theme-preset-swatch" style={{ backgroundColor: preset.background }} aria-hidden="true"><span style={{ backgroundColor: preset.color }} /></span>
-            <span>{preset[locale]}</span>{theme === preset.id && <Check size={16} aria-hidden="true" />}
-          </button>)}</div>
         </div>
       </div>
     </>}

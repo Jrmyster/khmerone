@@ -178,7 +178,7 @@ export default function Home() {
     <header className="main-header wrap">
       <Link className="brand" href="/" aria-label="KhmerOne home"><span className="brand-mark" aria-hidden="true"><span /><span /><span /><span /></span><span className="brand-lockup"><span className="brand-title">Khmer<span className="brand-accent">One</span><small>.com</small></span><span className="brand-khmer" lang="km">ខ្មែរ វ័ន</span></span></Link>
       <div className="header-actions">
-        <ThemeSwitcher locale={locale} theme={theme} accent={accent} onThemeChange={setTheme} onAccentChange={setAccent} />
+        <ThemeSwitcher locale={locale} theme={theme} accent={accent} onAccentChange={setAccent} />
         <button className="language-button" aria-label={t.language} onClick={() => setLocale(locale === "en" ? "km" : "en")}><Languages size={17} aria-hidden="true" /><span className="language-label-full">{locale === "en" ? "ភាសាខ្មែរ" : "English"}</span><span className="language-label-short">{locale === "en" ? "ខ្មែរ" : "EN"}</span></button>
       </div>
     </header>
