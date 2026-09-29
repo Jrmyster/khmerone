@@ -154,10 +154,10 @@ h1, h2, h3, p { margin: 0; }
 .brand:is(:hover,:focus-visible,:active) .angkor-detail { stroke: #e0f7ff; }
 @keyframes angkor-beacon { 0%,100% { opacity: .65; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.35); } }
 @media (prefers-reduced-motion: reduce) { .angkor-icon, .angkor-icon::before, .angkor-icon svg, .angkor-layer { transition: none; } .angkor-beacon { animation: none; } }
-.header-actions { display: flex; align-items: center; gap: 10px; }
+.header-actions { display: flex; align-items: center; gap: 10px; padding-right: 146px; }
 .icon-button, .language-button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); color: var(--text); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .icon-button { width: 44px; flex: none; }
-.language-button { padding: 0 15px; font-size: 14px; font-weight: 700; }
+.language-button { position: fixed; top: calc(64px + env(safe-area-inset-top)); right: max(24px, calc((100vw - 1184px) / 2)); z-index: 59; padding: 0 15px; background: var(--surface-strong); box-shadow: 0 8px 24px rgba(0,0,0,.25); font-size: 14px; font-weight: 700; }
 .language-label-short { display: none; }
 .icon-button:hover, .language-button:hover { border-color: var(--line-strong); color: var(--cyan); box-shadow: var(--hover-glow); }
 
@@ -731,12 +731,13 @@ h1, h2, h3, p { margin: 0; }
 }
 @media (max-width: 680px) {
   .wrap { padding-left: 16px; padding-right: 16px; }
+  .header-actions { padding-right: 82px; }
   .brand { font-size: 20px; gap: 9px; }
   .angkor-icon { width: 40px; height: 36px; }
   .brand small { display: none; }
   .language-label-full { display: none; }
   .language-label-short { display: inline; }
-  .language-button { padding: 0 10px; }
+  .language-button { top: calc(57px + env(safe-area-inset-top)); right: 16px; padding: 0 10px; }
   .filter-row { margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px; }
   .hero-panel { padding: 24px 18px; }
   .app-card, .pathway-card, .crew-card, .xp-panel, .hero-panel { backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: 0 8px 25px rgba(0, 0, 0, .13); }
@@ -766,10 +767,10 @@ h1, h2, h3, p { margin: 0; }
 }
 @media (max-width: 350px) {
   .main-header.wrap { padding-left: 12px; padding-right: 12px; }
-  .header-actions { gap: 6px; }
+  .header-actions { gap: 6px; padding-right: 76px; }
   .brand { font-size: 18px; gap: 6px; }
   .angkor-icon { width: 37px; height: 34px; }
-  .language-button { gap: 5px; padding: 0 7px; }
+  .language-button { right: 12px; gap: 5px; padding: 0 7px; }
   .hero h1 { font-size: 31px; }
   .movie-promo-inner { grid-template-columns: 46px minmax(0, 1fr) 44px; gap: 6px; }
   .movie-poster { width: 46px; height: 72px; }
