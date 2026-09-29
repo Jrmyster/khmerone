@@ -27,3 +27,7 @@ For a plain HTML app, add:
 ```
 
 The `home` prop/attribute can point at the deployed portal address until a custom domain is connected. The script uses Shadow DOM so its styling stays isolated. Language and theme selections are saved only in the portal browser origin.
+
+## Helper bot
+
+`components/HelperBot.tsx` is a reusable client component. Pass the current `locale`, search `query`, filtered `resultCount`, `onSelectFilter`, and `onFocusSearch`. It reacts to search text with a short bilingual bubble; tapping it spins the SVG avatar and opens category shortcuts. Its animation and glass styles are in `app/globals.css`, including mobile and reduced-motion rules.
