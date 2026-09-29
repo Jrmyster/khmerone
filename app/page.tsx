@@ -9,7 +9,7 @@ import { crewConcepts, pathways } from "@/data/engagement";
 import { searchAppCatalog, searchCrewConcepts, searchSkillPathways } from "@/utils/search";
 import { AppCategory, type AppEntry, type FilterKey, type GradeLevel, type Locale } from "@/types/app";
 import { KhmerOneBar } from "@/components/KhmerOneBar";
-import { HelperBot } from "@/components/HelperBot";
+import { MascotBot } from "@/components/MascotBot";
 import { CambodiaTomorrowBanner } from "@/components/CambodiaTomorrowBanner";
 import { BottomFloatingSearch } from "@/components/BottomFloatingSearch";
 import { PowerSkillsDashboard } from "@/components/PowerSkillsDashboard";
@@ -207,7 +207,7 @@ export default function Home() {
       </section>
       <DonationNotice locale={locale} />
     </main>
-    <HelperBot locale={locale} query={query} resultCount={results.length} onSelectFilter={(nextFilter) => { setQuery(""); setGrade("all"); setFilter(nextFilter); document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onFocusSearch={() => { searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); searchRef.current?.focus(); }} />
+    <MascotBot locale={locale} query={query} resultCount={results.length} onSelectFilter={(nextFilter) => { setQuery(""); setGrade("all"); setFilter(nextFilter); document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onFocusSearch={() => { searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); searchRef.current?.focus(); }} />
     <footer className="footer wrap"><div className="footer-rule" /><div><span className="footer-brand">KhmerOne<span>.com</span></span><p>{t.footer}</p></div><span className="footer-note"><Check size={16} />{t.network}</span></footer>
     <BottomFloatingSearch locale={locale} query={query} onQueryChange={(value) => { setQuery(value); if (value) { setFilter("all"); setGrade("all"); } }} />
     {promoVisible && <CambodiaTomorrowBanner locale={locale} onDismiss={() => setPromoDismissed(true)} />}
