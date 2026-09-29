@@ -1,4 +1,4 @@
-const CACHE = "khmerone-v8";
+const CACHE = "khmerone-v9";
 const CORE = ["/", "/api/catalog", "/manifest.webmanifest", "/favicon.svg", "/cambodia-tomorrow-320.webp"];
 
 self.addEventListener("install", (event) => {
@@ -22,7 +22,7 @@ self.addEventListener("fetch", (event) => {
   }
   event.respondWith(caches.match(request).then((cached) => {
     const refresh = fetch(request).then((response) => {
-      if (response.ok && (request.url.includes("/_next/") || request.url.includes("/assets/") || CORE.includes(new URL(request.url).pathname))) {
+      if (response.ok && (request.url.includes("/_next/") || request.url.includes("/assets/") || CORE.includes(new URL(request.url).pathname) || new URL(request.url).pathname === "/museum-of-obsolete-systems.webp")) {
         const copy = response.clone(); caches.open(CACHE).then((cache) => cache.put(request, copy));
       }
       return response;

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight, Baby, BookOpenText, Check, ClipboardCheck, Coins, Globe2, GraduationCap, HeartPulse, Languages, Moon, Search, SlidersHorizontal, Sun, TriangleAlert, WifiOff, X, Zap, type LucideIcon } from "lucide-react";
 import { apps, gradeLabels } from "@/data/apps";
 import { crewConcepts, pathways } from "@/data/engagement";
@@ -45,6 +46,8 @@ const copy = {
     healthNotice: "Health notice",
     matchingPaths: "Matching skill paths", matchingCrews: "Matching crews",
     noAppMatches: "No app cards match this search. Explore the related results above.",
+    museumConcept: "Museum of Obsolete Systems · concept artwork", fullArtwork: "View full image",
+    museumAlt: "Fictional KHMER ONE Museum of Obsolete Systems webpage with a futuristic atrium, clocks, periodic table, graph and engine exhibits",
     footer: "Learning should be easy to find, wherever you are.",
     themeDark: "Switch to dark mode", themeLight: "Switch to light mode", language: "Switch language",
   },
@@ -62,6 +65,8 @@ const copy = {
     healthNotice: "សេចក្ដីជូនដំណឹងអំពីសុខភាព",
     matchingPaths: "ជំនាញដែលត្រូវនឹងការស្វែងរក", matchingCrews: "ក្រុមដែលត្រូវនឹងការស្វែងរក",
     noAppMatches: "គ្មានកម្មវិធីដែលត្រូវនឹងការស្វែងរកទេ។ សូមមើលលទ្ធផលពាក់ព័ន្ធខាងលើ។",
+    museumConcept: "សារមន្ទីរប្រព័ន្ធហួសសម័យ · រូបភាពគំនិត", fullArtwork: "មើលរូបភាពពេញ",
+    museumAlt: "រូបភាពគេហទំព័រ KHMER ONE សារមន្ទីរប្រព័ន្ធហួសសម័យ មានសាលអនាគត នាឡិកា តារាងធាតុ ក្រាប និងម៉ាស៊ីន",
     footer: "ការសិក្សាគួរតែងាយស្រួលស្វែងរក ទោះអ្នកនៅទីណាក៏ដោយ។",
     themeDark: "ប្ដូរទៅផ្ទៃងងឹត", themeLight: "ប្ដូរទៅផ្ទៃភ្លឺ", language: "ប្ដូរភាសា",
   },
@@ -152,6 +157,12 @@ export default function Home() {
             <div className="card-bottom">{app.url ? <a className="launch-button" href={app.url} target="_blank" rel="noopener noreferrer" onClick={() => cyber.exploreApp(app.id)} aria-label={`${t.launch}: ${app.title[locale]}`}>{t.launch}<ArrowUpRight size={18} aria-hidden="true" /></a> : <span className="pending-button" title={t.linkInfo} aria-label={`${app.title[locale]}: ${t.linkInfo}`}>{t.pending}</span>}</div>
           </article>;
         })}</div> : pathwayMatches.length || crewMatches.length ? <p className="related-only-note">{t.noAppMatches}</p> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>}
+      </section>
+      <section className="museum-feature wrap" aria-label={t.museumConcept}>
+        <figure>
+          <Image src="/museum-of-obsolete-systems.webp" alt={t.museumAlt} width={1448} height={1086} sizes="(max-width: 680px) calc(100vw - 36px), (max-width: 1232px) calc(100vw - 48px), 1232px" loading="lazy" unoptimized />
+          <figcaption><span>{t.museumConcept}</span><a href="/museum-of-obsolete-systems.webp" target="_blank" rel="noopener noreferrer">{t.fullArtwork} <ArrowUpRight size={15} aria-hidden="true" /></a></figcaption>
+        </figure>
       </section>
     </main>
     <HelperBot locale={locale} query={query} resultCount={results.length} onSelectFilter={(nextFilter) => { setQuery(""); setGrade("all"); setFilter(nextFilter); document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onFocusSearch={() => { searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); searchRef.current?.focus(); }} />
