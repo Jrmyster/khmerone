@@ -92,7 +92,7 @@ export function BottomFloatingSearch({ locale, query, onQueryChange, prompt, fad
 
   return <form className={`bottom-floating-search ${keyboard.open ? keyboard.own ? "search-keyboard-open" : "search-keyboard-hidden" : ""}`} style={{ "--keyboard-inset": `${keyboard.inset}px` } as CSSProperties} role="search" onSubmit={(event) => { event.preventDefault(); revealResults(); }}>
     <div className="floating-search-pill">
-      <Search size={21} className="floating-search-icon" aria-hidden="true" />
+      <button type="button" className="floating-search-focus-button" aria-label={label} onClick={() => inputRef.current?.focus()}><Search size={21} className="floating-search-icon" aria-hidden="true" /></button>
       <div className="floating-search-input-wrap"><input
         ref={inputRef}
         type="search"
