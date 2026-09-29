@@ -11,7 +11,7 @@ export enum AppCategory {
 }
 
 export type GradeLevel = "primary" | "lower-secondary" | "high-school" | "vocational-adult";
-export type AppIcon = "school" | "anatomy" | "finance" | "language" | "baby" | "world" | "peace";
+export type AppIcon = "school" | "anatomy" | "finance" | "language" | "exam" | "baby" | "world" | "peace";
 
 export interface AppEntry {
   id: string;
@@ -23,6 +23,7 @@ export interface AppEntry {
   audience: LocalizedText;
   grades: GradeLevel[];
   features: LocalizedText[];
+  notice?: LocalizedText;
   icon: AppIcon;
   /** Null means no verified launch address has been supplied. */
   url: string | null;

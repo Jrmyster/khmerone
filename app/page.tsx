@@ -2,14 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Baby, BookOpenText, Check, Coins, Globe2, GraduationCap, HeartPulse, Languages, Moon, Search, SlidersHorizontal, Sun, WifiOff, X, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Baby, BookOpenText, Check, ClipboardCheck, Coins, Globe2, GraduationCap, HeartPulse, Languages, Moon, Search, SlidersHorizontal, Sun, TriangleAlert, WifiOff, X, type LucideIcon } from "lucide-react";
 import { apps, gradeLabels } from "@/data/apps";
 import { AppCategory, type AppEntry, type FilterKey, type GradeLevel, type Locale } from "@/types/app";
 import { KhmerOneBar } from "@/components/KhmerOneBar";
 
 const icons: Record<AppEntry["icon"], LucideIcon> = {
   school: GraduationCap, anatomy: HeartPulse, finance: Coins, language: Languages,
-  baby: Baby, world: Globe2, peace: BookOpenText,
+  exam: ClipboardCheck, baby: Baby, world: Globe2, peace: BookOpenText,
 };
 
 const filters: { key: FilterKey; label: Record<Locale, string> }[] = [
@@ -31,7 +31,8 @@ const copy = {
     empty: "No apps match your search.", reset: "Clear filters",
     offline: "Offline ready", launch: "Open app", pending: "Link pending",
     linkInfo: "A public link has not been added yet.",
-    network: "Seven learning spaces. One starting point.",
+    network: "Eight learning spaces. One starting point.",
+    healthNotice: "Health notice",
     footer: "Learning should be easy to find, wherever you are.",
     theme: "Toggle dark mode", language: "Switch language",
   },
@@ -44,7 +45,8 @@ const copy = {
     empty: "រកមិនឃើញកម្មវិធីដែលត្រូវនឹងការស្វែងរកទេ។", reset: "លុបតម្រង",
     offline: "អាចប្រើក្រៅបណ្ដាញ", launch: "បើកកម្មវិធី", pending: "រង់ចាំតំណ",
     linkInfo: "មិនទាន់មានតំណសាធារណៈទេ។",
-    network: "កន្លែងសិក្សាប្រាំពីរ។ ចាប់ផ្ដើមពីទីនេះ។",
+    network: "កន្លែងសិក្សាប្រាំបី។ ចាប់ផ្ដើមពីទីនេះ។",
+    healthNotice: "សេចក្ដីជូនដំណឹងអំពីសុខភាព",
     footer: "ការសិក្សាគួរតែងាយស្រួលស្វែងរក ទោះអ្នកនៅទីណាក៏ដោយ។",
     theme: "ប្ដូរពណ៌ផ្ទៃ", language: "ប្ដូរភាសា",
   },
@@ -87,7 +89,8 @@ export default function Home() {
       if (!matchesFilter(app, filter) || (grade !== "all" && !app.grades.includes(grade))) return false;
       const haystack = [app.title.en, app.title.km, app.tagline.en, app.tagline.km,
         app.description.en, app.description.km, app.categoryLabel.en, app.categoryLabel.km,
-        app.audience.en, app.audience.km, ...app.features.flatMap((f) => [f.en, f.km]),
+        app.audience.en, app.audience.km, app.notice?.en, app.notice?.km,
+        ...app.features.flatMap((f) => [f.en, f.km]),
         ...app.grades.flatMap((g) => [gradeLabels[g].en, gradeLabels[g].km]),
       ].join(" ").normalize("NFKC").toLocaleLowerCase();
       return words.every((word) => haystack.includes(word));
@@ -125,6 +128,7 @@ export default function Home() {
             <div className="card-top"><span className={`app-icon icon-${app.icon}`}><Icon size={28} strokeWidth={1.8} aria-hidden="true" /></span><span className="card-number">{String(index + 1).padStart(2, "0")}</span></div>
             <div className="card-content"><span className="category-label">{app.categoryLabel[locale]}</span><h3>{app.title[locale]}</h3><p className="card-tagline">{app.tagline[locale]}</p><p className="card-description">{app.description[locale]}</p></div>
             <div className="card-meta"><div className="grade-badges">{app.grades.map((g) => <span className="grade-badge" key={g}>{gradeLabels[g][locale]}</span>)}</div><div className="card-status">{app.offlineReady && <span className="offline-status"><WifiOff size={14} />{t.offline}</span>}</div></div>
+            {app.notice && <aside className="health-notice" aria-label={t.healthNotice}><TriangleAlert size={18} aria-hidden="true" /><div><strong>{t.healthNotice}</strong><p>{app.notice[locale]}</p></div></aside>}
             <div className="card-bottom">{app.url ? <a className="launch-button" href={app.url} target="_blank" rel="noopener noreferrer" aria-label={`${t.launch}: ${app.title[locale]}`}>{t.launch}<ArrowUpRight size={18} aria-hidden="true" /></a> : <span className="pending-button" title={t.linkInfo} aria-label={`${app.title[locale]}: ${t.linkInfo}`}>{t.pending}</span>}</div>
           </article>;
         })}</div> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>}

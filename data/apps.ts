@@ -39,7 +39,7 @@ export const apps: AppEntry[] = [
       { en: "3D WebGL models", km: "គំរូ 3D WebGL" },
       { en: "Khmer / English labels", km: "ស្លាកខ្មែរ / អង់គ្លេស" },
     ],
-    icon: "anatomy", url: null, offlineReady: false,
+    icon: "anatomy", url: "https://anatomykh.com/", offlineReady: false,
   },
   {
     id: "finlitkh",
@@ -54,11 +54,11 @@ export const apps: AppEntry[] = [
       { en: "Savings calculators", km: "ឧបករណ៍គណនាការសន្សំ" },
       { en: "Real-world scenarios", km: "ស្ថានភាពជីវិតពិត" },
     ],
-    icon: "finance", url: null, offlineReady: false,
+    icon: "finance", url: "https://finlitkh.com/", offlineReady: false,
   },
   {
-    id: "khmer-vocational",
-    title: { en: "Khmer Vocational", km: "វិជ្ជាជីវៈខ្មែរ" },
+    id: "khmer-vocation",
+    title: { en: "Khmer Vocation", km: "វិជ្ជាជីវៈខ្មែរ" },
     category: AppCategory.Languages,
     categoryLabel: { en: "Language acquisition", km: "ការសិក្សាភាសា" },
     tagline: { en: "Practice English for work and daily life.", km: "ហាត់ភាសាអង់គ្លេសសម្រាប់ការងារ និងជីវិតប្រចាំថ្ងៃ។" },
@@ -69,7 +69,21 @@ export const apps: AppEntry[] = [
       { en: "Audio pronunciation", km: "សំឡេងបញ្ចេញសូរ" },
       { en: "Branching dialogues", km: "សន្ទនាដែលមានជម្រើស" },
     ],
-    icon: "language", url: null, offlineReady: false,
+    icon: "language", url: "https://khmervoc.com/", offlineReady: false,
+  },
+  {
+    id: "khmer-english-exam",
+    title: { en: "Khmer English Exam", km: "ប្រឡងភាសាអង់គ្លេសខ្មែរ" },
+    category: AppCategory.Languages,
+    categoryLabel: { en: "English exam practice", km: "ការហាត់ប្រឡងភាសាអង់គ្លេស" },
+    tagline: { en: "Practice English exam skills.", km: "ហាត់ជំនាញសម្រាប់ការប្រឡងភាសាអង់គ្លេស។" },
+    description: { en: "An English exam practice space for Cambodian learners.", km: "កន្លែងហាត់ប្រឡងភាសាអង់គ្លេសសម្រាប់អ្នកសិក្សាកម្ពុជា។" },
+    audience: { en: "High school English learners", km: "សិស្សវិទ្យាល័យដែលរៀនភាសាអង់គ្លេស" },
+    grades: ["high-school"],
+    features: [
+      { en: "English exam practice", km: "ការហាត់ប្រឡងភាសាអង់គ្លេស" },
+    ],
+    icon: "exam", url: "https://khmerenglishexam.com/", offlineReady: false,
   },
   {
     id: "chhouk-baby",
@@ -84,7 +98,11 @@ export const apps: AppEntry[] = [
       { en: "Visual care guides", km: "មគ្គុទ្ទេសក៍ថែទាំតាមរូបភាព" },
       { en: "Developmental milestones", km: "ដំណាក់កាលអភិវឌ្ឍន៍កុមារ" },
     ],
-    icon: "baby", url: null, offlineReady: false,
+    notice: {
+      en: "Medical information is pending government review. Consult a licensed doctor about your baby's health.",
+      km: "ព័ត៌មានវេជ្ជសាស្ត្រកំពុងរង់ចាំការពិនិត្យពីរដ្ឋាភិបាល។ សូមពិគ្រោះជាមួយវេជ្ជបណ្ឌិតមានអាជ្ញាបណ្ណអំពីសុខភាពទារករបស់អ្នក។",
+    },
+    icon: "baby", url: "https://chhoukbaby.netlify.app/", offlineReady: false,
   },
   {
     id: "world-game",
@@ -114,6 +132,6 @@ export const apps: AppEntry[] = [
       { en: "Scenario modeling", km: "គំរូស្ថានការណ៍" },
       { en: "Nonviolent frameworks", km: "វិធីសាស្ត្រអហិង្សា" },
     ],
-    icon: "peace", url: null, offlineReady: false,
+    icon: "peace", url: "https://warisobsolete.com/", offlineReady: false,
   },
 ];

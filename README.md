@@ -1,6 +1,6 @@
 # KhmerOne
 
-A bilingual, mobile-first directory for seven Cambodian educational apps. Built with Next.js App Router, TypeScript, Tailwind CSS and lucide-react.
+A bilingual, mobile-first directory for eight Cambodian educational apps. Built with Next.js App Router, TypeScript, Tailwind CSS and lucide-react.
 
 ## Run
 
@@ -11,7 +11,7 @@ npm run dev
 
 ## Registry and launch links
 
-Edit `data/apps.ts` to update translations, grade levels, descriptions and links. `url: null` deliberately shows **Link pending**; replace it only with a confirmed public URL. School Connect Cambodia is linked to `https://schoolconnectcambodia.com/`. World Game uses the address supplied for the project, `https://world-game-atlas.jrmyster7.chatgpt.site/`. The portal opens external apps in a new tab, since many sites block iframes.
+Edit `data/apps.ts` to update translations, grade levels, descriptions and links. The registry includes the app addresses supplied by the project owner. The portal opens external apps in a new tab, since many sites block iframes. Chhouk Baby carries a bilingual notice that its medical information is pending government review and directs visitors to consult a licensed doctor about their baby's health.
 
 `offlineReady` describes the child app itself. The portal's service worker caches its own shell and `/api/catalog` metadata after a successful visit; it cannot make external apps available offline.
 
