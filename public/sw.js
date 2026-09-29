@@ -1,5 +1,5 @@
-const CACHE = "khmerone-v10";
-const CORE = ["/", "/api/catalog", "/manifest.webmanifest", "/favicon.svg", "/cambodia-tomorrow-320.webp"];
+const CACHE = "khmerone-v11";
+const CORE = ["/", "/api/catalog", "/manifest.webmanifest", "/favicon.svg", "/cambodia-tomorrow-poster-320.webp"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(CORE)).then(() => self.skipWaiting()));
@@ -22,7 +22,7 @@ self.addEventListener("fetch", (event) => {
   }
   event.respondWith(caches.match(request).then((cached) => {
     const refresh = fetch(request).then((response) => {
-      if (response.ok && (request.url.includes("/_next/") || request.url.includes("/assets/") || CORE.includes(new URL(request.url).pathname) || ["/museum-of-obsolete-systems.webp", "/cambodia-tomorrow-800.webp"].includes(new URL(request.url).pathname))) {
+      if (response.ok && (request.url.includes("/_next/") || request.url.includes("/assets/") || CORE.includes(new URL(request.url).pathname) || ["/museum-of-obsolete-systems.webp", "/cambodia-tomorrow-poster-896.webp"].includes(new URL(request.url).pathname))) {
         const copy = response.clone(); caches.open(CACHE).then((cache) => cache.put(request, copy));
       }
       return response;

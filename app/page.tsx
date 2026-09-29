@@ -49,7 +49,7 @@ const copy = {
     museumConcept: "Museum of Obsolete Systems · concept artwork", fullArtwork: "View full image",
     museumAlt: "Fictional KHMER ONE Museum of Obsolete Systems webpage with a futuristic atrium, clocks, periodic table, graph and engine exhibits",
     tomorrowConcept: "Cambodia Tomorrow (2061) · concept poster",
-    tomorrowAlt: "Four Cambodian student engineers overlooking a green futuristic Phnom Penh at sunset",
+    tomorrowAlt: "Cambodia Tomorrow poster: four Cambodian student engineers overlooking a green futuristic Phnom Penh; directed and produced by Jared Wright",
     footer: "Learning should be easy to find, wherever you are.",
     themeDark: "Switch to dark mode", themeLight: "Switch to light mode", language: "Switch language",
   },
@@ -70,7 +70,7 @@ const copy = {
     museumConcept: "សារមន្ទីរប្រព័ន្ធហួសសម័យ · រូបភាពគំនិត", fullArtwork: "មើលរូបភាពពេញ",
     museumAlt: "រូបភាពគេហទំព័រ KHMER ONE សារមន្ទីរប្រព័ន្ធហួសសម័យ មានសាលអនាគត នាឡិកា តារាងធាតុ ក្រាប និងម៉ាស៊ីន",
     tomorrowConcept: "កម្ពុជាថ្ងៃស្អែក (២០៦១) · ផ្ទាំងរូបភាពគំនិត",
-    tomorrowAlt: "សិស្សវិស្វករកម្ពុជាបួននាក់មើលភ្នំពេញបៃតងអនាគតនៅពេលថ្ងៃលិច",
+    tomorrowAlt: "ផ្ទាំងរូបភាពកម្ពុជាថ្ងៃស្អែក៖ សិស្សវិស្វករកម្ពុជាបួននាក់មើលភ្នំពេញបៃតងអនាគត។ ដឹកនាំ និងផលិតដោយ Jared Wright",
     footer: "ការសិក្សាគួរតែងាយស្រួលស្វែងរក ទោះអ្នកនៅទីណាក៏ដោយ។",
     themeDark: "ប្ដូរទៅផ្ទៃងងឹត", themeLight: "ប្ដូរទៅផ្ទៃភ្លឺ", language: "ប្ដូរភាសា",
   },
@@ -183,8 +183,8 @@ export default function Home() {
       </section>
       <section ref={bottomPosterRef} className="tomorrow-feature wrap" aria-label={t.tomorrowConcept}>
         <figure>
-          <Image src="/cambodia-tomorrow-800.webp" alt={t.tomorrowAlt} width={800} height={1200} sizes="(max-width: 680px) calc(100vw - 36px), 550px" loading="lazy" unoptimized />
-          <figcaption><span>{t.tomorrowConcept}</span><a href="/cambodia-tomorrow-800.webp" target="_blank" rel="noopener noreferrer">{t.fullArtwork} <ArrowUpRight size={15} aria-hidden="true" /></a></figcaption>
+          <Image src="/cambodia-tomorrow-poster-896.webp" alt={t.tomorrowAlt} width={896} height={1200} sizes="(max-width: 680px) calc(100vw - 36px), 550px" loading="lazy" unoptimized />
+          <figcaption><span>{t.tomorrowConcept}</span><a href="/cambodia-tomorrow-poster-896.webp" target="_blank" rel="noopener noreferrer">{t.fullArtwork} <ArrowUpRight size={15} aria-hidden="true" /></a></figcaption>
         </figure>
       </section>
     </main>
