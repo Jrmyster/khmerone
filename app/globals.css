@@ -14,6 +14,7 @@
   --success: #34d399;
   --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   --accent-glow: color-mix(in srgb, var(--accent-primary) 35%, transparent);
+  --bg-accent-tint: color-mix(in srgb, var(--accent-primary) 20%, transparent);
   --border-color: color-mix(in srgb, var(--accent-primary) 25%, transparent);
   --canvas: var(--bg-main);
   --surface: var(--bg-card);
@@ -109,25 +110,26 @@ h1, h2, h3, p { margin: 0; }
 .wrap { max-width: 1232px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
 
 /* Fixed scenery stays behind the isolated page content, including dialogs. */
-.cyber-jungle-background { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; user-select: none; background: linear-gradient(160deg, #030712, #0f172a 58%, #041b20); }
-.cyber-jungle-grid { position: absolute; inset: 0; opacity: .15; background-image: linear-gradient(to right, rgba(56,189,248,.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(56,189,248,.12) 1px, transparent 1px); background-size: 40px 40px; }
-.cyber-jungle-mist { position: absolute; inset: 0; background: radial-gradient(ellipse at 3% 10%, rgba(16,185,129,.13), transparent 42%), radial-gradient(ellipse at 96% 53%, rgba(56,189,248,.1), transparent 38%), radial-gradient(ellipse at 44% 105%, rgba(245,158,11,.055), transparent 52%); }
+.cosmic-jungle-background { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; user-select: none; background: linear-gradient(160deg, #02040a, #081324 61%, #030b13); }
+.cosmic-jungle-nebula, .cosmic-jungle-particles { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cyber-jungle-grid { position: absolute; inset: 0; opacity: .24; background-image: linear-gradient(to right, var(--bg-accent-tint) 1px, transparent 1px), linear-gradient(to bottom, var(--bg-accent-tint) 1px, transparent 1px); background-size: 40px 40px; }
+.cyber-jungle-mist { position: absolute; inset: 0; background: radial-gradient(ellipse at 2% 12%, rgba(16,185,129,.11), transparent 40%), radial-gradient(ellipse at 98% 56%, rgba(56,189,248,.08), transparent 38%), radial-gradient(ellipse at 65% 74%, rgba(168,85,247,.055), transparent 42%); }
 .cyber-jungle-beam { position: absolute; top: -20%; width: 22vw; height: 80%; opacity: .11; filter: blur(20px); background: linear-gradient(180deg, rgba(56,189,248,.5), transparent); transform: rotate(22deg); }
 .cyber-jungle-beam-left { left: 8%; }
 .cyber-jungle-beam-right { right: 10%; transform: rotate(-22deg); background: linear-gradient(180deg, rgba(16,185,129,.42), transparent); }
-.cyber-jungle-spores { position: absolute; inset: 0; width: 100%; height: 100%; }
 .cyber-jungle-vine { position: absolute; top: -4%; width: clamp(84px, 12vw, 180px); height: 108%; opacity: .48; overflow: visible; filter: drop-shadow(0 0 5px rgba(16,185,129,.38)); transition: opacity .35s ease, filter .35s ease; }
 .cyber-jungle-vine-left { left: 0; }
 .cyber-jungle-vine-right { right: 0; transform: scaleX(-1); }
 .cyber-jungle-vine-lines { filter: drop-shadow(0 0 4px rgba(56,189,248,.55)); }
 .cyber-jungle-leaves { filter: drop-shadow(0 0 4px rgba(16,185,129,.45)); }
 .cyber-jungle-nodes { filter: drop-shadow(0 0 6px rgba(245,158,11,.65)); }
-.cyber-jungle-background:is(.is-pulsing,.is-near-edge) .cyber-jungle-vine { opacity: .8; filter: drop-shadow(0 0 12px rgba(16,185,129,.65)); }
-:root:not([data-theme="cyberpunk"]) .cyber-jungle-background { background: var(--canvas); }
-:root:is([data-theme="light"],[data-theme="sepia"]) .cyber-jungle-background .cyber-jungle-vine { opacity: .22; }
-:root:is([data-theme="light"],[data-theme="sepia"]) .cyber-jungle-background .cyber-jungle-mist { opacity: .36; }
-:root:is([data-theme="light"],[data-theme="sepia"]) .cyber-jungle-background .cyber-jungle-grid { opacity: .08; }
-:root:is([data-theme="light"],[data-theme="sepia"]) .cyber-jungle-background .cyber-jungle-spores { opacity: .38; }
+.cosmic-jungle-background:is(.is-pulsing,.is-near-edge) .cyber-jungle-vine { opacity: .8; filter: drop-shadow(0 0 12px rgba(16,185,129,.65)); }
+:root:not([data-theme="cyberpunk"]) .cosmic-jungle-background { background: var(--canvas); }
+:root:is([data-theme="light"],[data-theme="sepia"]) .cosmic-jungle-background .cyber-jungle-vine { opacity: .22; }
+:root:is([data-theme="light"],[data-theme="sepia"]) .cosmic-jungle-background .cyber-jungle-mist { opacity: .36; }
+:root:is([data-theme="light"],[data-theme="sepia"]) .cosmic-jungle-background .cyber-jungle-grid { opacity: .08; }
+:root:is([data-theme="light"],[data-theme="sepia"]) .cosmic-jungle-nebula { opacity: .11; }
+:root:is([data-theme="light"],[data-theme="sepia"]) .cosmic-jungle-particles { opacity: .3; }
 @media (max-width: 680px) { .cyber-jungle-vine { width: 72px; opacity: .34; } .cyber-jungle-beam { display: none; } }
 @media (prefers-reduced-motion: reduce) { .cyber-jungle-vine { transition: none; } }
 

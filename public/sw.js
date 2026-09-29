@@ -1,4 +1,4 @@
-const CACHE = "khmerone-v35";
+const CACHE = "khmerone-v36";
 const CORE = ["/", "/api/catalog", "/manifest.webmanifest", "/favicon.svg", "/cambodia-tomorrow-poster-320.webp"];
 
 self.addEventListener("install", (event) => {

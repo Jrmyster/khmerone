@@ -2,10 +2,53 @@
 
 import { useEffect, useRef } from "react";
 
+type Star = { x: number; y: number; radius: number; opacity: number; phase: number; speed: number };
 type Spore = {
   x: number; y: number; radius: number; speed: number; drift: number;
   phase: number; opacity: number; color: string;
 };
+
+/** Draw the expensive gas clouds and spiral arms only when the viewport changes. */
+function paintNebula(ctx: CanvasRenderingContext2D, width: number, height: number) {
+  ctx.clearRect(0, 0, width, height);
+  ctx.save();
+  ctx.translate(width * .51, height * .39);
+  ctx.rotate(-.38);
+  ctx.scale(1, .62);
+  const radius = Math.min(Math.max(width * .52, 220), 750);
+
+  const cloud = (x: number, y: number, r: number, center: string, middle: string) => {
+    const gradient = ctx.createRadialGradient(x, y, 0, x, y, r);
+    gradient.addColorStop(0, center);
+    gradient.addColorStop(.42, middle);
+    gradient.addColorStop(1, "rgba(2,4,10,0)");
+    ctx.fillStyle = gradient;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+  };
+  cloud(-radius * .27, -radius * .1, radius * .78, "rgba(56,189,248,.19)", "rgba(56,189,248,.07)");
+  cloud(radius * .32, radius * .1, radius * .82, "rgba(236,72,153,.18)", "rgba(99,102,241,.06)");
+  cloud(0, 0, radius * .45, "rgba(193,163,255,.35)", "rgba(168,85,247,.11)");
+
+  for (let arm = 0; arm < 2; arm++) {
+    ctx.beginPath();
+    for (let i = 0; i <= 120; i++) {
+      const progress = i / 120;
+      const angle = progress * Math.PI * 2.15 + arm * Math.PI + .3;
+      const distance = 10 + progress * radius * .96;
+      const x = Math.cos(angle) * distance;
+      const y = Math.sin(angle) * distance * .58;
+      if (!i) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = arm ? "rgba(236,72,153,.12)" : "rgba(56,189,248,.16)";
+    ctx.lineWidth = Math.max(14, radius * .055);
+    ctx.shadowBlur = 22;
+    ctx.shadowColor = arm ? "#ec4899" : "#38bdf8";
+    ctx.stroke();
+  }
+  ctx.shadowBlur = 0;
+  cloud(0, 0, radius * .14, "rgba(232,240,255,.42)", "rgba(180,123,245,.16)");
+  ctx.restore();
+}
 
 function EdgeVine({ side }: { side: "left" | "right" }) {
   const stem = `jungle-stem-${side}`;
@@ -32,25 +75,37 @@ function EdgeVine({ side }: { side: "left" | "right" }) {
   </svg>;
 }
 
-export function CyberJungleBackground() {
+export function CosmicJungleBackground() {
   const layerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const nebulaRef = useRef<HTMLCanvasElement>(null);
+  const particleRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const layer = layerRef.current;
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d", { alpha: true });
-    if (!layer || !canvas || !ctx) return;
+    const nebula = nebulaRef.current;
+    const particlesCanvas = particleRef.current;
+    const nebulaCtx = nebula?.getContext("2d", { alpha: true });
+    const ctx = particlesCanvas?.getContext("2d", { alpha: true });
+    if (!layer || !nebula || !particlesCanvas || !nebulaCtx || !ctx) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const coarsePointer = window.matchMedia("(pointer: coarse)");
     let width = 0;
     let height = 0;
-    let particles: Spore[] = [];
+    let stars: Star[] = [];
+    let spores: Spore[] = [];
     let frame = 0;
     let previous = 0;
     let pulseTimer = 0;
 
+    const createStar = (): Star => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: .3 + Math.random() * 1.45,
+      opacity: .2 + Math.random() * .53,
+      phase: Math.random() * Math.PI * 2,
+      speed: .5 + Math.random() * 1.5,
+    });
     const createSpore = (randomY = true): Spore => ({
       x: Math.random() * width,
       y: randomY ? Math.random() * height : height + 8,
@@ -65,22 +120,35 @@ export function CyberJungleBackground() {
     const resize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
-      canvas.width = Math.round(width * pixelRatio);
-      canvas.height = Math.round(height * pixelRatio);
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, coarsePointer.matches ? 1 : 1.5);
+      nebula.width = width;
+      nebula.height = height;
+      paintNebula(nebulaCtx, width, height);
+      particlesCanvas.width = Math.round(width * pixelRatio);
+      particlesCanvas.height = Math.round(height * pixelRatio);
       ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      particles = Array.from({ length: coarsePointer.matches ? 11 : 26 }, () => createSpore());
+      stars = Array.from({ length: coarsePointer.matches ? 155 : 190 }, createStar);
+      spores = Array.from({ length: coarsePointer.matches ? 11 : 26 }, () => createSpore());
       draw(performance.now(), 0);
     };
 
     const draw = (time: number, step: number) => {
       ctx.clearRect(0, 0, width, height);
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
+      for (const star of stars) {
+        const alpha = star.opacity * (.72 + .28 * Math.sin(time * .001 * star.speed + star.phase));
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(230,246,255,${alpha})`;
+        if (star.radius > 1.35) { ctx.shadowColor = "#38bdf8"; ctx.shadowBlur = 7; }
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+      for (let i = 0; i < spores.length; i++) {
+        const p = spores[i];
         p.y -= p.speed * step;
         p.x += p.drift * step;
-        if (p.y < -9 || p.x < -9 || p.x > width + 9) particles[i] = createSpore(false);
-        const spore = particles[i];
+        if (p.y < -9 || p.x < -9 || p.x > width + 9) spores[i] = createSpore(false);
+        const spore = spores[i];
         const alpha = spore.opacity * (.8 + .2 * Math.sin(time * .0013 + spore.phase));
         ctx.beginPath();
         ctx.arc(spore.x, spore.y, spore.radius, 0, Math.PI * 2);
@@ -93,7 +161,7 @@ export function CyberJungleBackground() {
     };
 
     const animate = (time: number) => {
-      if (time - previous >= 33) {
+      if (time - previous >= (coarsePointer.matches ? 50 : 33)) {
         draw(time, Math.min((time - previous) / 16.67, 2));
         previous = time;
       }
@@ -141,12 +209,13 @@ export function CyberJungleBackground() {
     };
   }, []);
 
-  return <div ref={layerRef} className="cyber-jungle-background" aria-hidden="true">
+  return <div ref={layerRef} className="cosmic-jungle-background" aria-hidden="true">
+    <canvas ref={nebulaRef} className="cosmic-jungle-nebula" />
+    <canvas ref={particleRef} className="cosmic-jungle-particles" />
     <div className="cyber-jungle-grid" />
     <div className="cyber-jungle-mist" />
     <div className="cyber-jungle-beam cyber-jungle-beam-left" />
     <div className="cyber-jungle-beam cyber-jungle-beam-right" />
-    <canvas ref={canvasRef} className="cyber-jungle-spores" />
     <EdgeVine side="left" /><EdgeVine side="right" />
   </div>;
 }
