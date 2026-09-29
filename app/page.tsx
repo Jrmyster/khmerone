@@ -7,6 +7,9 @@ import { apps, gradeLabels } from "@/data/apps";
 import { AppCategory, type AppEntry, type FilterKey, type GradeLevel, type Locale } from "@/types/app";
 import { KhmerOneBar } from "@/components/KhmerOneBar";
 import { HelperBot } from "@/components/HelperBot";
+import { PowerSkillsDashboard } from "@/components/PowerSkillsDashboard";
+import { CrewDirectory } from "@/components/CrewDirectory";
+import { useCyberProgress } from "@/hooks/useCyberProgress";
 
 const icons: Record<AppEntry["icon"], LucideIcon> = {
   school: GraduationCap, anatomy: HeartPulse, finance: Coins, language: Languages,
@@ -24,8 +27,9 @@ const filters: { key: FilterKey; label: Record<Locale, string> }[] = [
 
 const copy = {
   en: {
-    eyebrow: "LEARNING, CONNECTED", title: "One place to keep learning.",
-    intro: "Find tools for classrooms, careers and curious minds across Cambodia.",
+    eyebrow: "YOUR NEXT MOVE STARTS HERE", title: "Build skills. Shape your future.",
+    intro: "Try small challenges, discover useful tools, and find a crew for ideas worth building.",
+    power: "Unlock Your Power", explore: "Explore apps",
     search: "Search apps, topics or grade levels", searchLabel: "Search learning apps",
     clear: "Clear search", grade: "Any grade level", browse: "Explore the network",
     apps: "apps", app: "app", all: "All learning apps",
@@ -38,8 +42,9 @@ const copy = {
     themeDark: "Switch to dark mode", themeLight: "Switch to light mode", language: "Switch language",
   },
   km: {
-    eyebrow: "ការសិក្សាដែលភ្ជាប់គ្នា", title: "កន្លែងតែមួយសម្រាប់បន្តការសិក្សា។",
-    intro: "ស្វែងរកឧបករណ៍សម្រាប់ថ្នាក់រៀន អាជីព និងអ្នកចង់ដឹងនៅទូទាំងកម្ពុជា។",
+    eyebrow: "ជំហានបន្ទាប់ចាប់ផ្ដើមនៅទីនេះ", title: "បង្កើនជំនាញ។ បង្កើតអនាគតរបស់អ្នក។",
+    intro: "សាកល្បងលំហាត់ខ្លីៗ ស្វែងរកឧបករណ៍មានប្រយោជន៍ និងក្រុមសម្រាប់គំនិតដែលអ្នកចង់បង្កើត។",
+    power: "ពង្រឹងសមត្ថភាពរបស់អ្នក", explore: "ស្វែងរកកម្មវិធី",
     search: "ស្វែងរកកម្មវិធី ប្រធានបទ ឬកម្រិតថ្នាក់", searchLabel: "ស្វែងរកកម្មវិធីសិក្សា",
     clear: "លុបពាក្យស្វែងរក", grade: "គ្រប់កម្រិតថ្នាក់", browse: "ស្វែងយល់ពីបណ្ដាញ",
     apps: "កម្មវិធី", app: "កម្មវិធី", all: "កម្មវិធីសិក្សាទាំងអស់",
@@ -65,6 +70,7 @@ export default function Home() {
   const [filter, setFilter] = useState<FilterKey>("all");
   const [grade, setGrade] = useState<GradeLevel | "all">("all");
   const searchRef = useRef<HTMLInputElement>(null);
+  const cyber = useCyberProgress();
 
   useEffect(() => {
     const savedLocale = localStorage.getItem("khmerone-locale");
@@ -114,18 +120,21 @@ export default function Home() {
     <main>
       <section className="hero wrap" aria-labelledby="hero-title">
         <div className="hero-panel">
-          <div className="hero-copy"><div className="eyebrow"><span className="eyebrow-line" />{t.eyebrow}</div><h1 id="hero-title">{t.title}</h1><p>{t.intro}</p></div>
+          <div className="hero-copy"><div className="eyebrow"><span className="eyebrow-line" />{t.eyebrow}</div><h1 id="hero-title">{t.title}</h1><p>{t.intro}</p><div className="hero-actions"><a className="hero-primary" href="#power-skills">{t.power}<ArrowUpRight size={18} aria-hidden="true" /></a><a className="hero-secondary" href="#directory">{t.explore}</a></div></div>
           <div className="hero-decoration" aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="orbit-center"><BookOpenText strokeWidth={1.6} size={44} /></div><span className="orbit-node node-one"><HeartPulse size={19} /></span><span className="orbit-node node-two"><Globe2 size={19} /></span><span className="orbit-node node-three"><Languages size={19} /></span></div>
         </div>
       </section>
 
-      <section className="directory wrap" aria-labelledby="directory-title">
+      <PowerSkillsDashboard locale={locale} progress={cyber.progress} status={cyber.status} ready={cyber.ready} onToggleStep={cyber.toggleStep} onExploreApp={cyber.exploreApp} />
+      <CrewDirectory locale={locale} selectedId={cyber.progress.crewInterestId} onSelect={cyber.selectCrew} />
+
+      <section id="directory" className="directory wrap" aria-labelledby="directory-title">
         <div className="directory-toolbar">
           <div className="search-field"><Search size={21} aria-hidden="true" /><input ref={searchRef} type="search" aria-label={t.searchLabel} placeholder={t.search} value={query} onChange={(e) => setQuery(e.target.value)} />{query && <button className="clear-button" aria-label={t.clear} onClick={() => setQuery("")}><X size={17} /></button>}</div>
           <label className="grade-field"><SlidersHorizontal size={18} aria-hidden="true" /><select aria-label={t.grade} value={grade} onChange={(e) => setGrade(e.target.value as GradeLevel | "all")}><option value="all">{t.grade}</option>{(Object.keys(gradeLabels) as GradeLevel[]).map((key) => <option key={key} value={key}>{gradeLabels[key][locale]}</option>)}</select></label>
         </div>
         <div className="filter-row" role="group" aria-label={t.browse}>{filters.map(({ key, label }) => <button key={key} type="button" className={`filter-chip ${filter === key ? "active" : ""}`} aria-pressed={filter === key} onClick={() => setFilter(key)}>{label[locale]}</button>)}</div>
-        <div className="directory-heading"><div><span className="section-index">01 / {t.browse}</span><h2 id="directory-title">{t.all}</h2></div><span className="result-count" aria-live="polite">{results.length} {results.length === 1 ? t.app : t.apps}</span></div>
+        <div className="directory-heading"><div><span className="section-index">03 / {t.browse}</span><h2 id="directory-title">{t.all}</h2></div><span className="result-count" aria-live="polite">{results.length} {results.length === 1 ? t.app : t.apps}</span></div>
         {results.length ? <div className="app-grid">{results.map((app, index) => {
           const Icon = icons[app.icon];
           return <article className="app-card" key={app.id}>
@@ -133,12 +142,12 @@ export default function Home() {
             <div className="card-content"><span className="category-label">{app.categoryLabel[locale]}</span><h3>{app.title[locale]}</h3><p className="card-tagline">{app.tagline[locale]}</p><p className="card-description">{app.description[locale]}</p></div>
             <div className="card-meta"><div className="grade-badges">{app.grades.map((g) => <span className="grade-badge" key={g}>{gradeLabels[g][locale]}</span>)}</div><div className="card-status">{app.offlineReady && <span className="offline-status"><WifiOff size={14} />{t.offline}</span>}</div></div>
             {app.notice && <aside className="health-notice" aria-label={t.healthNotice}><TriangleAlert size={18} aria-hidden="true" /><div><strong>{t.healthNotice}</strong><p>{app.notice[locale]}</p></div></aside>}
-            <div className="card-bottom">{app.url ? <a className="launch-button" href={app.url} target="_blank" rel="noopener noreferrer" aria-label={`${t.launch}: ${app.title[locale]}`}>{t.launch}<ArrowUpRight size={18} aria-hidden="true" /></a> : <span className="pending-button" title={t.linkInfo} aria-label={`${app.title[locale]}: ${t.linkInfo}`}>{t.pending}</span>}</div>
+            <div className="card-bottom">{app.url ? <a className="launch-button" href={app.url} target="_blank" rel="noopener noreferrer" onClick={() => cyber.exploreApp(app.id)} aria-label={`${t.launch}: ${app.title[locale]}`}>{t.launch}<ArrowUpRight size={18} aria-hidden="true" /></a> : <span className="pending-button" title={t.linkInfo} aria-label={`${app.title[locale]}: ${t.linkInfo}`}>{t.pending}</span>}</div>
           </article>;
         })}</div> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>}
       </section>
     </main>
-    <HelperBot locale={locale} query={query} resultCount={results.length} onSelectFilter={(nextFilter) => { setQuery(""); setGrade("all"); setFilter(nextFilter); }} onFocusSearch={() => { searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); searchRef.current?.focus(); }} />
+    <HelperBot locale={locale} query={query} resultCount={results.length} onSelectFilter={(nextFilter) => { setQuery(""); setGrade("all"); setFilter(nextFilter); document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onFocusSearch={() => { searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); searchRef.current?.focus(); }} />
     <footer className="footer wrap"><div className="footer-rule" /><div><span className="footer-brand">KhmerOne<span>.com</span></span><p>{t.footer}</p></div><span className="footer-note"><Check size={16} />{t.network}</span></footer>
   </div>;
 }

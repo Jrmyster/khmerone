@@ -31,3 +31,7 @@ The `home` prop/attribute can point at the deployed portal address until a custo
 ## Helper bot
 
 `components/HelperBot.tsx` is a reusable client component. Pass the current `locale`, search `query`, filtered `resultCount`, `onSelectFilter`, and `onFocusSearch`. It reacts to search text with a short bilingual bubble; tapping it spins the SVG avatar and opens category shortcuts. Its animation and glass styles are in `app/globals.css`, including mobile and reduced-motion rules.
+
+## Youth skill pathways
+
+The homepage includes a four-pathway skills dashboard, personal Cyber-XP badges, and proposed province-based crew concepts. Content and rules live in `data/engagement.ts` and `hooks/useCyberProgress.ts`. Read `docs/youth-engagement.md` for XP calculations, bilingual messaging, and the boundaries of the local-only crew prototype.
