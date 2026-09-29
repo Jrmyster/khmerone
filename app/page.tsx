@@ -34,7 +34,7 @@ const copy = {
     network: "Eight learning spaces. One starting point.",
     healthNotice: "Health notice",
     footer: "Learning should be easy to find, wherever you are.",
-    theme: "Toggle dark mode", language: "Switch language",
+    themeDark: "Switch to dark mode", themeLight: "Switch to light mode", language: "Switch language",
   },
   km: {
     eyebrow: "ការសិក្សាដែលភ្ជាប់គ្នា", title: "កន្លែងតែមួយសម្រាប់បន្តការសិក្សា។",
@@ -48,7 +48,7 @@ const copy = {
     network: "កន្លែងសិក្សាប្រាំបី។ ចាប់ផ្ដើមពីទីនេះ។",
     healthNotice: "សេចក្ដីជូនដំណឹងអំពីសុខភាព",
     footer: "ការសិក្សាគួរតែងាយស្រួលស្វែងរក ទោះអ្នកនៅទីណាក៏ដោយ។",
-    theme: "ប្ដូរពណ៌ផ្ទៃ", language: "ប្ដូរភាសា",
+    themeDark: "ប្ដូរទៅផ្ទៃងងឹត", themeLight: "ប្ដូរទៅផ្ទៃភ្លឺ", language: "ប្ដូរភាសា",
   },
 };
 
@@ -59,14 +59,14 @@ function matchesFilter(app: AppEntry, filter: FilterKey) {
 
 export default function Home() {
   const [locale, setLocale] = useState<Locale>("en");
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [grade, setGrade] = useState<GradeLevel | "all">("all");
 
   useEffect(() => {
     const savedLocale = localStorage.getItem("khmerone-locale");
-    const savedTheme = localStorage.getItem("khmerone-theme");
+    const savedTheme = localStorage.getItem("khmerone-theme-v2");
     const frame = requestAnimationFrame(() => {
       if (savedLocale === "km" || savedLocale === "en") setLocale(savedLocale);
       if (savedTheme === "dark" || savedTheme === "light") setTheme(savedTheme);
@@ -79,7 +79,7 @@ export default function Home() {
     document.documentElement.lang = locale;
     document.documentElement.dataset.theme = theme;
     localStorage.setItem("khmerone-locale", locale);
-    localStorage.setItem("khmerone-theme", theme);
+    localStorage.setItem("khmerone-theme-v2", theme);
   }, [locale, theme]);
 
   const t = copy[locale];
@@ -104,15 +104,17 @@ export default function Home() {
     <header className="main-header wrap">
       <Link className="brand" href="/" aria-label="KhmerOne home"><span className="brand-mark" aria-hidden="true"><span /><span /><span /><span /></span><span>Khmer<span className="brand-accent">One</span><small>.com</small></span></Link>
       <div className="header-actions">
-        <button className="icon-button" aria-label={t.theme} title={t.theme} onClick={() => setTheme(theme === "light" ? "dark" : "light")}>{theme === "light" ? <Moon size={19} /> : <Sun size={19} />}</button>
+        <button className="icon-button" aria-label={theme === "dark" ? t.themeLight : t.themeDark} title={theme === "dark" ? t.themeLight : t.themeDark} onClick={() => setTheme(theme === "light" ? "dark" : "light")}>{theme === "light" ? <Moon size={19} /> : <Sun size={19} />}</button>
         <button className="language-button" aria-label={t.language} onClick={() => setLocale(locale === "en" ? "km" : "en")}><Languages size={17} aria-hidden="true" /><span>{locale === "en" ? "ភាសាខ្មែរ" : "English"}</span></button>
       </div>
     </header>
 
     <main>
       <section className="hero wrap" aria-labelledby="hero-title">
-        <div className="hero-copy"><div className="eyebrow"><span className="eyebrow-line" />{t.eyebrow}</div><h1 id="hero-title">{t.title}</h1><p>{t.intro}</p></div>
-        <div className="hero-decoration" aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="orbit-center"><BookOpenText strokeWidth={1.6} size={44} /></div><span className="orbit-node node-one"><HeartPulse size={19} /></span><span className="orbit-node node-two"><Globe2 size={19} /></span><span className="orbit-node node-three"><Languages size={19} /></span></div>
+        <div className="hero-panel">
+          <div className="hero-copy"><div className="eyebrow"><span className="eyebrow-line" />{t.eyebrow}</div><h1 id="hero-title">{t.title}</h1><p>{t.intro}</p></div>
+          <div className="hero-decoration" aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="orbit-center"><BookOpenText strokeWidth={1.6} size={44} /></div><span className="orbit-node node-one"><HeartPulse size={19} /></span><span className="orbit-node node-two"><Globe2 size={19} /></span><span className="orbit-node node-three"><Languages size={19} /></span></div>
+        </div>
       </section>
 
       <section className="directory wrap" aria-labelledby="directory-title">

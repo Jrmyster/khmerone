@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   openGraph: { type: "website", title: "KhmerOne — Learning, connected", description: "One starting point for Cambodian learning apps.", url: "https://khmerone.com" },
 };
 
-export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#075e57" };
+export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#0B0F19" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={kantumruy.variable}>{children}</body></html>;
+  return <html lang="en" data-theme="dark"><body className={kantumruy.variable}>{children}</body></html>;
 }
