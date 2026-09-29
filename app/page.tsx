@@ -14,6 +14,7 @@ import { CambodiaTomorrowBanner } from "@/components/CambodiaTomorrowBanner";
 import { BottomFloatingSearch } from "@/components/BottomFloatingSearch";
 import { PowerSkillsDashboard } from "@/components/PowerSkillsDashboard";
 import { CrewDirectory } from "@/components/CrewDirectory";
+import { DonationNotice } from "@/components/DonationNotice";
 import { useCyberProgress } from "@/hooks/useCyberProgress";
 
 const icons: Record<AppEntry["icon"], LucideIcon> = {
@@ -89,10 +90,11 @@ export default function Home() {
   const [grade, setGrade] = useState<GradeLevel | "all">("all");
   const [promoDismissed, setPromoDismissed] = useState(false);
   const [bottomPosterInView, setBottomPosterInView] = useState(false);
+  const [nearPageEnd, setNearPageEnd] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const bottomPosterRef = useRef<HTMLElement>(null);
   const cyber = useCyberProgress();
-  const promoVisible = !promoDismissed && !bottomPosterInView;
+  const promoVisible = !promoDismissed && !bottomPosterInView && !nearPageEnd;
 
   useEffect(() => {
     const savedLocale = localStorage.getItem("khmerone-locale");
@@ -120,6 +122,20 @@ export default function Home() {
     });
     observer.observe(poster);
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const updateNearPageEnd = () => {
+      const remaining = document.documentElement.scrollHeight - window.scrollY - window.innerHeight;
+      setNearPageEnd(remaining < Math.max(700, window.innerHeight * .8));
+    };
+    window.addEventListener("scroll", updateNearPageEnd, { passive: true });
+    window.addEventListener("resize", updateNearPageEnd);
+    updateNearPageEnd();
+    return () => {
+      window.removeEventListener("scroll", updateNearPageEnd);
+      window.removeEventListener("resize", updateNearPageEnd);
+    };
   }, []);
 
   const t = copy[locale];
@@ -187,6 +203,7 @@ export default function Home() {
           <figcaption><span>{t.tomorrowConcept}</span><a href="/cambodia-tomorrow-poster-896.webp" target="_blank" rel="noopener noreferrer">{t.fullArtwork} <ArrowUpRight size={15} aria-hidden="true" /></a></figcaption>
         </figure>
       </section>
+      <DonationNotice locale={locale} />
     </main>
     <HelperBot locale={locale} query={query} resultCount={results.length} onSelectFilter={(nextFilter) => { setQuery(""); setGrade("all"); setFilter(nextFilter); document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onFocusSearch={() => { searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); searchRef.current?.focus(); }} />
     <footer className="footer wrap"><div className="footer-rule" /><div><span className="footer-brand">KhmerOne<span>.com</span></span><p>{t.footer}</p></div><span className="footer-note"><Check size={16} />{t.network}</span></footer>
