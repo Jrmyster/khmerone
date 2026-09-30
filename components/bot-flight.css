@@ -1,0 +1,39 @@
+/* Fixed ruler follows the layout viewport, including scrollbars and safe areas. */
+.bot-flight-boundary { position: fixed !important; left: calc(24px + env(safe-area-inset-left)); right: calc(24px + env(safe-area-inset-right)); bottom: 0; height: 0; visibility: hidden; pointer-events: none; }
+.helper-bot { transform: translateX(0); }
+.helper-bot[data-side="left"] { transform: translateX(calc(-1 * var(--bot-travel-distance, 0px))); }
+.helper-bot.bot-flying { transition: transform 3s cubic-bezier(.45,0,.2,1); }
+.helper-bot.bot-viewport-adjusting { transition: none !important; }
+.bot-flying .bot-button { animation: none; }
+.bot-flying .bot-button svg { transform-origin: 50% 52%; }
+.bot-flying[data-side="left"] .bot-button svg { transform: rotate(-9deg); }
+.bot-flying[data-side="right"] .bot-button svg { transform: rotate(9deg); }
+.bot-flying .bot-shadow { opacity: .35; }
+.bot-jet-exhaust { opacity: 0; pointer-events: none; }
+.bot-flying .bot-jet-exhaust { opacity: 1; }
+.bot-flying .bot-jet-plume { transform-box: fill-box; transform-origin: center top; animation: bot-thrust-pulse .16s ease-in-out infinite alternate; }
+.bot-flying .bot-jet-plume-second { animation-delay: -.08s; }
+.bot-jet-particle { opacity: 0; }
+.bot-flying .bot-jet-particle { animation: bot-thrust-particle .55s linear infinite; }
+.bot-flying .bot-jet-particle-second { animation-delay: -.18s; }
+.bot-flying .bot-jet-particle-third { animation-delay: -.36s; }
+.helper-bot[data-side="left"] .bot-bubble, .helper-bot[data-side="left"] .bot-drawer { right: auto; left: 102px; }
+body:has(.helper-bot[data-side="left"]) .back-to-top { left: auto; right: calc(20px + env(safe-area-inset-right)); }
+/* Keep the existing floating search clear throughout the whole horizontal trip. */
+@media (min-width: 901px) {
+  .has-floating-search .helper-bot { bottom: calc(94px + env(safe-area-inset-bottom)); }
+  .has-floating-search.promo-active .helper-bot { bottom: calc(220px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 680px) {
+  .bot-flight-boundary { left: calc(12px + env(safe-area-inset-left)); right: calc(12px + env(safe-area-inset-right)); }
+  .helper-bot[data-side="left"] .bot-bubble, .helper-bot[data-side="left"] .bot-drawer { left: 0; right: auto; }
+  body:has(.helper-bot[data-side="left"]) .back-to-top { right: calc(16px + env(safe-area-inset-right)); }
+}
+@keyframes bot-thrust-pulse { from { transform: scaleY(.76); opacity: .75; } to { transform: scaleY(1); opacity: 1; } }
+@keyframes bot-thrust-particle { from { opacity: .8; transform: translate(0,-3px) scale(1); } to { opacity: 0; transform: translate(2px,8px) scale(.3); } }
+@media (prefers-reduced-motion: reduce) {
+  .helper-bot.bot-flying { transition: none !important; }
+  .bot-flying .bot-button svg { transform: none; }
+  .helper-bot .bot-jet-exhaust { opacity: 0 !important; }
+  .helper-bot .bot-jet-plume, .helper-bot .bot-jet-particle { animation: none !important; }
+}
