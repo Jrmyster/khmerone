@@ -1,0 +1,66 @@
+/* Accessories use the original character's SVG coordinates, so the rig scales
+   with its desktop/mobile button. Motion never changes the button hit target. */
+.bot-backpack { transform: rotate(8deg); transform-origin: 91px 61px; }
+.bot-pack-flap { transform-origin: 96px 43px; transition: transform .55s ease; }
+.bot-study-arm { opacity: 0; transition: transform .65s cubic-bezier(.22,.8,.3,1), opacity .25s ease; }
+.bot-study-arm-left { transform-origin: 23px 66px; transform: translate(3px,-4px) scale(.25); }
+.bot-study-arm-right { transform-origin: 88px 66px; transform: translate(-3px,-4px) scale(.25); }
+.bot-study-book { opacity: 0; transform-origin: 56px 91px; transform: translate(40px,-36px) rotate(30deg) scale(.2); transition: transform .75s cubic-bezier(.22,.8,.3,1), opacity .25s ease; }
+.bot-book-closed, .bot-book-open { transform-origin: 56px 91px; transition: opacity .18s ease, transform .4s ease; }
+.bot-book-open { opacity: 0; transform: scaleX(.04); }
+.bot-snap-dust, .bot-snap-label { opacity: 0; pointer-events: none; }
+.bot-snap-dust { transform-origin: 11px 77px; }
+.bot-study-gaze { transform-origin: 56px 54px; }
+
+.helper-bot[data-study-phase="reach"] .bot-pack-flap,
+.helper-bot[data-study-phase="retrieve"] .bot-pack-flap,
+.helper-bot[data-study-phase="return"] .bot-pack-flap { transform: translate(2px,-3px) rotate(-38deg); }
+.helper-bot:not([data-study-phase="idle"]):not([data-study-phase="settle"]) .bot-study-arm { opacity: 1; }
+.helper-bot[data-study-phase="reach"] .bot-study-arm-left,
+.helper-bot[data-study-phase="return"] .bot-study-arm-left { transform: translate(41px,-19px) rotate(-60deg) scale(.8); }
+.helper-bot[data-study-phase="reach"] .bot-study-arm-right,
+.helper-bot[data-study-phase="return"] .bot-study-arm-right { transform: translate(8px,-16px) rotate(36deg) scale(.8); }
+.helper-bot:is([data-study-phase="retrieve"],[data-study-phase="open"],[data-study-phase="reading"],[data-study-phase="snap"],[data-study-phase="satisfied"]) .bot-study-arm-left { transform: translate(6px,5px) rotate(-15deg) scale(.8); }
+.helper-bot:is([data-study-phase="retrieve"],[data-study-phase="open"],[data-study-phase="reading"],[data-study-phase="snap"],[data-study-phase="satisfied"]) .bot-study-arm-right { transform: translate(-6px,5px) rotate(15deg) scale(.8); }
+.helper-bot:is([data-study-phase="retrieve"],[data-study-phase="open"],[data-study-phase="reading"],[data-study-phase="snap"],[data-study-phase="satisfied"]) .bot-study-book { opacity: 1; transform: translate(0,-3px) rotate(-3deg) scale(1); }
+.helper-bot:is([data-study-phase="open"],[data-study-phase="reading"]) .bot-study-book { transform: translate(0,-9px) rotate(0) scale(1); }
+.helper-bot:is([data-study-phase="open"],[data-study-phase="reading"]) .bot-book-open { opacity: 1; transform: scaleX(1); }
+.helper-bot:is([data-study-phase="open"],[data-study-phase="reading"]) .bot-book-closed { opacity: 0; transform: scaleX(.04); }
+.helper-bot[data-study-phase="reading"] .bot-study-gaze { animation: bot-study-scan 2s linear both; }
+.helper-bot[data-study-phase="reading"] .bot-pupil circle:first-child { transform-box: fill-box; transform-origin: center; transform: scaleY(.68); }
+.helper-bot[data-study-phase="reading"] .bot-mouth { opacity: .4; }
+.helper-bot[data-study-phase="snap"] .bot-book-open { transition-duration: .12s; transform: scaleX(.02); }
+.helper-bot[data-study-phase="snap"] .bot-book-closed { transition-duration: .12s; }
+.helper-bot[data-study-phase="snap"] .bot-study-book { animation: bot-book-snap .18s ease-out both; }
+.helper-bot[data-study-phase="snap"] .bot-snap-dust { animation: bot-dust .18s ease-out both; }
+.helper-bot[data-study-phase="satisfied"] .bot-snap-dust { animation: bot-dust-fade .65s ease-out both; }
+.helper-bot:is([data-study-phase="snap"],[data-study-phase="satisfied"]) .bot-snap-label { opacity: 1; }
+.helper-bot[data-study-phase="snap"] .bot-snap-label { animation: bot-snap-word .18s ease-out both; }
+.helper-bot[data-study-phase="satisfied"] .bot-snap-label { animation: bot-snap-word-fade .65s ease-in both; }
+.helper-bot[data-study-phase="satisfied"] .bot-study-gaze { transform: scale(1.13); transition: transform .18s ease; }
+.helper-bot[data-study-phase="satisfied"] .bot-study-book { transform: translate(0,-2px) rotate(-9deg) scale(1); }
+.helper-bot[data-study-phase="return"] .bot-study-book { opacity: 0; transform: translate(40px,-36px) rotate(30deg) scale(.2); transition: transform .8s ease-in-out, opacity .2s .6s ease; }
+.helper-bot[data-study-phase="settle"] .bot-study-arm { transition-duration: .4s; }
+
+@keyframes bot-study-scan {
+  0%,100% { transform: translate(0,2px); }
+  15% { transform: translate(-2px,2px); }
+  38% { transform: translate(2px,2px); }
+  45% { transform: translate(-2px,3px); }
+  72% { transform: translate(2px,3px); }
+  80% { transform: translate(-2px,4px); }
+  95% { transform: translate(2px,4px); }
+}
+@keyframes bot-book-snap {
+  0% { transform: translate(0,-9px) rotate(0) scale(1); }
+  45% { transform: translate(0,-4px) rotate(-5deg) scale(1.08,.92); }
+  100% { transform: translate(0,-3px) rotate(-3deg) scale(1); }
+}
+@keyframes bot-dust { from { opacity: 0; transform: scale(.2); } to { opacity: .85; transform: translate(-3px,-5px) scale(1); } }
+@keyframes bot-dust-fade { from { opacity: .85; transform: translate(-3px,-5px) scale(1); } to { opacity: 0; transform: translate(-10px,-15px) scale(1.5); } }
+@keyframes bot-snap-word { from { opacity: 0; scale: .6; } to { opacity: 1; scale: 1; } }
+@keyframes bot-snap-word-fade { 0%,55% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .helper-bot .bot-study-arm, .helper-bot .bot-study-book, .helper-bot .bot-snap-label, .helper-bot .bot-snap-dust { opacity: 0 !important; animation: none !important; transition: none !important; }
+  .helper-bot .bot-pack-flap, .helper-bot .bot-study-gaze { transform: none !important; animation: none !important; transition: none !important; }
+}

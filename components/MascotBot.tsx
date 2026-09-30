@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Search, X } from "lucide-react";
 import { AppCategory, type FilterKey, type Locale } from "@/types/app";
+import { BOT_STUDY_BEATS, type BotStudyPhase } from "@/lib/bot-study";
+import "./bot-study.css";
 
 interface MascotBotProps {
   locale: Locale;
@@ -43,6 +45,8 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
   const [showGreeting, setShowGreeting] = useState(false);
   const [lookingAtUser, setLookingAtUser] = useState(false);
   const [blinking, setBlinking] = useState(false);
+  const [studyPhase, setStudyPhase] = useState<BotStudyPhase>("idle");
+  const studying = useRef(false);
   const svgRef = useRef<SVGSVGElement>(null);
   const faceRef = useRef<SVGGElement>(null);
   const leftPupilRef = useRef<SVGGElement>(null);
@@ -80,13 +84,48 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
   useEffect(() => () => { if (spinTimer.current) clearTimeout(spinTimer.current); }, []);
 
   useEffect(() => {
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let beat = 0;
+    const allowed = () => !open && !searching && !document.hidden && !motion.matches;
+    const enterBeat = () => {
+      const current = BOT_STUDY_BEATS[beat];
+      studying.current = current.phase !== "idle";
+      setStudyPhase(current.phase);
+      wakeGaze.current();
+      timer = setTimeout(() => {
+        if (!allowed()) { reset(); return; }
+        beat = (beat + 1) % BOT_STUDY_BEATS.length;
+        enterBeat();
+      }, current.duration);
+    };
+    const reset = () => {
+      clearTimeout(timer);
+      beat = 0;
+      studying.current = false;
+      setStudyPhase("idle");
+      wakeGaze.current();
+      if (allowed()) enterBeat();
+    };
+    reset();
+    document.addEventListener("visibilitychange", reset);
+    motion.addEventListener("change", reset);
+    return () => {
+      clearTimeout(timer);
+      studying.current = false;
+      document.removeEventListener("visibilitychange", reset);
+      motion.removeEventListener("change", reset);
+    };
+  }, [open, searching]);
+
+  useEffect(() => {
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
 
     const draw = () => {
       frame = 0;
-      const goal = directLook.current ? centered() : targetGaze.current;
+      const goal = directLook.current || studying.current ? centered() : targetGaze.current;
       let movement = 0;
       for (const eye of ["left", "right"] as const) {
         const current = currentGaze.current[eye];
@@ -120,7 +159,7 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
       return { x: Math.cos(angle) * distance, y: Math.sin(angle) * distance };
     };
     const followPointer = (event: PointerEvent) => {
-      if (!finePointer.matches || reducedMotion.matches || event.pointerType !== "mouse") return;
+      if (!finePointer.matches || reducedMotion.matches || studying.current || event.pointerType !== "mouse") return;
       const rect = svgRef.current?.getBoundingClientRect();
       if (!rect) return;
       targetGaze.current = {
@@ -157,6 +196,7 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
     };
     const schedule = () => later(glance, 6000 + Math.random() * 4000);
     const glance = () => {
+      if (studying.current || document.hidden || window.matchMedia("(prefers-reduced-motion: reduce)").matches) { schedule(); return; }
       directLook.current = true;
       setLookingAtUser(true);
       wakeGaze.current();
@@ -184,7 +224,7 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
     spinTimer.current = setTimeout(() => setSpinning(false), 650);
   };
 
-  return <div className={`helper-bot fixed left-6 bottom-8 z-50 ${searching ? "is-searching" : ""} ${lookingAtUser ? "bot-looking" : ""}`}>
+  return <div data-study-phase={studyPhase} className={`helper-bot fixed right-6 bottom-8 z-50 ${searching ? "is-searching" : ""} ${lookingAtUser && studyPhase === "idle" ? "bot-looking" : ""}`}>
     {showGreeting && !searching && !open && <div className="bot-bubble bot-greeting" role="status" lang="km"><p>សួស្តី</p></div>}
     {showBubble && searching && !open && <div className="bot-bubble rounded-2xl border border-cyan-500/30 bg-slate-900/90 p-3 text-cyan-200 shadow-lg backdrop-blur-md" role="status">
       <span className="bot-bubble-label">KHMERONE // SEARCH</span>
@@ -206,6 +246,13 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
           <linearGradient id="bot-face" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#142b43"/><stop offset="1" stopColor="#081523"/></linearGradient>
           <filter id="bot-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3"/></filter>
         </defs>
+        <g className="bot-backpack">
+          <image href="/bot-study/backpack.webp" x="78" y="38" width="35" height="47" />
+          <g className="bot-pack-flap">
+            <image href="/bot-study/backpack.webp" x="78" y="38" width="35" height="47" clipPath="url(#bot-pack-top)" />
+          </g>
+        </g>
+        <defs><clipPath id="bot-pack-top"><rect x="78" y="38" width="35" height="25" /></clipPath></defs>
         <path d="M56 24V11" fill="none" stroke="var(--accent-primary)" strokeWidth="3" strokeLinecap="round"/>
         <circle className="bot-antenna-glow" cx="56" cy="8" r="8" fill="var(--accent-primary)" filter="url(#bot-glow)"/>
         <circle className="bot-antenna-tip" cx="56" cy="8" r="4" fill="var(--accent-primary)"/>
@@ -218,12 +265,12 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
           <ellipse cx="71.5" cy="54" rx="9" ry="10" fill="var(--accent-primary)" opacity=".34" filter="url(#bot-glow)"/>
           <circle cx="40.5" cy="54" r="9" fill="#102638" stroke="var(--accent-primary)" strokeWidth="1.4"/>
           <circle cx="71.5" cy="54" r="9" fill="#102638" stroke="var(--accent-primary)" strokeWidth="1.4"/>
-          <g className={`bot-gaze ${blinking ? "bot-gaze-blinking" : ""}`}>
+          <g className="bot-study-gaze"><g className={`bot-gaze ${blinking && studyPhase === "idle" ? "bot-gaze-blinking" : ""}`}>
             <g ref={leftPupilRef} className="bot-pupil"><circle cx="40.5" cy="54" r="3.5" fill="var(--accent-primary)"/><circle cx="39.5" cy="52.8" r="1" fill="#fff" opacity=".9"/></g>
             <g ref={rightPupilRef} className="bot-pupil"><circle cx="71.5" cy="54" r="3.5" fill="var(--accent-primary)"/><circle cx="70.5" cy="52.8" r="1" fill="#fff" opacity=".9"/></g>
             <path className="bot-blink-line" d="M35 54h11m20 0h11" fill="none" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round"/>
-          </g>
-          <path className="bot-mouth" d="M45 69Q56 78 67 69" fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round"/>
+          </g></g>
+          <path className="bot-mouth" d={studyPhase === "snap" || studyPhase === "satisfied" ? "M52 71a4 4 0 1 0 8 0a4 4 0 1 0-8 0" : "M45 69Q56 78 67 69"} fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round"/>
         </g>
         <g transform="rotate(-9 56 26)">
           <path d="M26 32Q29 14 52 12Q75 11 84 27L82 35Q56 30 29 37Z" fill="#875632" stroke="#c18a55" strokeWidth="1.8" strokeLinejoin="round"/>
@@ -246,6 +293,26 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
         <text x="43" y="117.3" fill="#f8fafc" fontFamily="system-ui, sans-serif" fontSize="10" fontWeight="800" textAnchor="middle">bot</text>
         <path d="M40 124v3m32-3v3" stroke="var(--accent-primary)" strokeWidth="4" strokeLinecap="round"/>
         <path className="bot-spark" d="M9 29v6m-3-3h6M99 20v6m-3-3h6" fill="none" stroke="var(--accent-primary)" strokeWidth="1.6" strokeLinecap="round"/>
+        <g className="bot-study-arm bot-study-arm-left"><image href="/bot-study/arm-left.webp" x="-3" y="64" width="37" height="36" /></g>
+        <g className="bot-study-arm bot-study-arm-right"><image href="/bot-study/arm-right.webp" x="78" y="64" width="37" height="36" /></g>
+        <g className="bot-study-book">
+          <g className="bot-book-closed">
+            <image href="/bot-study/book-closed.webp" x="34" y="68" width="46" height="54" />
+            <g transform="rotate(-8 57 91)" fill="#ffe4a0" textAnchor="middle" fontFamily="Georgia, serif" fontWeight="700" letterSpacing=".25">
+              <text x="58" y="86" fontSize="4.2">QUANTUM</text>
+              <text x="58" y="92" fontSize="3.6">MECHANICS</text>
+            </g>
+          </g>
+          <g className="bot-book-open">
+            <image href="/bot-study/book-open.webp" x="16" y="69" width="80" height="48" />
+            <g fill="#624322" textAnchor="middle" fontFamily="Georgia, serif" fontSize="4.1" fontWeight="700">
+              <text x="38" y="88" transform="rotate(7 38 88)">E=mc²</text>
+              <text x="75" y="94" transform="rotate(-7 75 94)">Ĥψ=Eψ</text>
+            </g>
+          </g>
+        </g>
+        <g className="bot-snap-dust"><image href="/bot-study/dust.webp" x="-4" y="65" width="28" height="24" /></g>
+        <text className="bot-snap-label" x="5" y="49" fill="#ffe8a5" stroke="#19364b" strokeWidth=".6" paintOrder="stroke" fontFamily="system-ui, sans-serif" fontSize="12" fontWeight="900" transform="rotate(-12 5 49)">snap!</text>
       </svg>
     </button>
   </div>;

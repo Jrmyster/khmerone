@@ -32,6 +32,8 @@ The `home` prop/attribute can point at the deployed portal address until a custo
 
 `components/HelperBot.tsx` is a reusable client component. Pass the current `locale`, search `query`, filtered `resultCount`, `onSelectFilter`, and `onFocusSearch`. It reacts to search text with a short bilingual bubble; tapping it spins the SVG avatar and opens category shortcuts. Its animation and glass styles are in `app/globals.css`, including mobile and reduced-motion rules.
 
+The homepage uses `components/MascotBot.tsx` in the bottom-right. Its original SVG character wears a teal backpack and repeats a textbook sequence: reach, retrieve, open, read for two seconds, snap shut, and stow. Beat durations live in `lib/bot-study.ts`; accessory motion lives in `components/bot-study.css`, with transparent high-resolution WebP artwork in `public/bot-study/`. One timeout advances the sequence, which resets to idle while shortcuts are open, search is active, the tab is hidden, or reduced motion is requested. All timers and listeners are cleared on unmount. Back-to-top sits on the left so both controls remain usable.
+
 ## Youth skill pathways
 
 The homepage includes a four-pathway skills dashboard, personal Cyber-XP badges, and proposed province-based crew concepts. Content and rules live in `data/engagement.ts` and `hooks/useCyberProgress.ts`. Read `docs/youth-engagement.md` for XP calculations, bilingual messaging, and the boundaries of the local-only crew prototype.
