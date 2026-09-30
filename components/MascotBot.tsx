@@ -69,7 +69,7 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => setShowGreeting(true));
-    const timer = setTimeout(() => setShowGreeting(false), 2500);
+    const timer = setTimeout(() => setShowGreeting(false), 3000);
     return () => { cancelAnimationFrame(frame); clearTimeout(timer); };
   }, []);
 
