@@ -1,46 +1,56 @@
 /* Accessories use the original character's SVG coordinates, so the rig scales
    with its desktop/mobile button. Motion never changes the button hit target. */
 .bot-backpack { transform: rotate(8deg); transform-origin: 91px 61px; }
-.bot-pack-flap { transform-origin: 96px 43px; transition: transform .55s ease; }
-.bot-study-arm { opacity: 0; transition: transform .65s cubic-bezier(.22,.8,.3,1), opacity .25s ease; }
+.bot-pack-flap { transform-origin: 96px 43px; transition: transform .12s ease; }
+.bot-study-arm { opacity: 0; transition: transform .12s cubic-bezier(.22,.8,.3,1), opacity .08s ease; }
 .bot-study-arm-left { transform-origin: 23px 66px; transform: translate(3px,-4px) scale(.25); }
 .bot-study-arm-right { transform-origin: 88px 66px; transform: translate(-3px,-4px) scale(.25); }
-.bot-study-book { opacity: 0; transform-origin: 56px 91px; transform: translate(40px,-36px) rotate(30deg) scale(.2); transition: transform .75s cubic-bezier(.22,.8,.3,1), opacity .25s ease; }
-.bot-book-closed, .bot-book-open { transform-origin: 56px 91px; transition: opacity .18s ease, transform .4s ease; }
+.bot-study-book { opacity: 0; transform-origin: 56px 91px; transform: translate(40px,-36px) rotate(30deg) scale(.2); transition: transform .12s ease, opacity .08s ease; }
+.bot-book-closed, .bot-book-open { transform-origin: 56px 91px; transition: opacity .12s ease, transform .12s ease; }
 .bot-book-open { opacity: 0; transform: scaleX(.04); }
 .bot-snap-dust, .bot-snap-label { opacity: 0; pointer-events: none; }
 .bot-snap-dust { transform-origin: 11px 77px; }
 .bot-study-gaze { transform-origin: 56px 54px; }
 
-.helper-bot[data-study-phase="reach"] .bot-pack-flap,
-.helper-bot[data-study-phase="retrieve"] .bot-pack-flap,
 .helper-bot[data-study-phase="return"] .bot-pack-flap { transform: translate(2px,-3px) rotate(-38deg); }
-.helper-bot:not([data-study-phase="idle"]):not([data-study-phase="settle"]) .bot-study-arm { opacity: 1; }
-.helper-bot[data-study-phase="reach"] .bot-study-arm-left,
+.helper-bot[data-study-phase="reading"] .bot-pack-flap { animation: bot-pack-retrieve .25s ease both; }
+.helper-bot:not([data-study-phase="idle"]) .bot-study-arm { opacity: 1; }
 .helper-bot[data-study-phase="return"] .bot-study-arm-left { transform: translate(41px,-19px) rotate(-60deg) scale(.8); }
-.helper-bot[data-study-phase="reach"] .bot-study-arm-right,
 .helper-bot[data-study-phase="return"] .bot-study-arm-right { transform: translate(8px,-16px) rotate(36deg) scale(.8); }
-.helper-bot:is([data-study-phase="retrieve"],[data-study-phase="open"],[data-study-phase="reading"],[data-study-phase="snap"],[data-study-phase="satisfied"]) .bot-study-arm-left { transform: translate(6px,5px) rotate(-15deg) scale(.8); }
-.helper-bot:is([data-study-phase="retrieve"],[data-study-phase="open"],[data-study-phase="reading"],[data-study-phase="snap"],[data-study-phase="satisfied"]) .bot-study-arm-right { transform: translate(-6px,5px) rotate(15deg) scale(.8); }
-.helper-bot:is([data-study-phase="retrieve"],[data-study-phase="open"],[data-study-phase="reading"],[data-study-phase="snap"],[data-study-phase="satisfied"]) .bot-study-book { opacity: 1; transform: translate(0,-3px) rotate(-3deg) scale(1); }
-.helper-bot:is([data-study-phase="open"],[data-study-phase="reading"]) .bot-study-book { transform: translate(0,-9px) rotate(0) scale(1); }
-.helper-bot:is([data-study-phase="open"],[data-study-phase="reading"]) .bot-book-open { opacity: 1; transform: scaleX(1); }
-.helper-bot:is([data-study-phase="open"],[data-study-phase="reading"]) .bot-book-closed { opacity: 0; transform: scaleX(.04); }
+.helper-bot:is([data-study-phase="reading"],[data-study-phase="snap"],[data-study-phase="satisfied"]) .bot-study-arm-left { transform: translate(6px,5px) rotate(-15deg) scale(.8); }
+.helper-bot:is([data-study-phase="reading"],[data-study-phase="snap"],[data-study-phase="satisfied"]) .bot-study-arm-right { transform: translate(-6px,5px) rotate(15deg) scale(.8); }
+.helper-bot[data-study-phase="reading"] .bot-study-arm-left { animation: bot-arm-retrieve-left .2s ease both; }
+.helper-bot[data-study-phase="reading"] .bot-study-arm-right { animation: bot-arm-retrieve-right .2s ease both; }
+.helper-bot:is([data-study-phase="reading"],[data-study-phase="snap"],[data-study-phase="satisfied"]) .bot-study-book { opacity: 1; transform: translate(0,-3px) rotate(-3deg) scale(1); }
+.helper-bot[data-study-phase="reading"] .bot-study-book { transform: translate(0,-9px) rotate(0) scale(1); animation: bot-book-retrieve .2s ease-out both; }
+.helper-bot[data-study-phase="reading"] .bot-book-open { opacity: 1; transform: scaleX(1); }
+.helper-bot[data-study-phase="reading"] .bot-book-closed { opacity: 0; transform: scaleX(.04); }
 .helper-bot[data-study-phase="reading"] .bot-study-gaze { animation: bot-study-scan 2s linear both; }
 .helper-bot[data-study-phase="reading"] .bot-pupil circle:first-child { transform-box: fill-box; transform-origin: center; transform: scaleY(.68); }
 .helper-bot[data-study-phase="reading"] .bot-mouth { opacity: .4; }
 .helper-bot[data-study-phase="snap"] .bot-book-open { transition-duration: .12s; transform: scaleX(.02); }
 .helper-bot[data-study-phase="snap"] .bot-book-closed { transition-duration: .12s; }
-.helper-bot[data-study-phase="snap"] .bot-study-book { animation: bot-book-snap .18s ease-out both; }
-.helper-bot[data-study-phase="snap"] .bot-snap-dust { animation: bot-dust .18s ease-out both; }
-.helper-bot[data-study-phase="satisfied"] .bot-snap-dust { animation: bot-dust-fade .65s ease-out both; }
-.helper-bot:is([data-study-phase="snap"],[data-study-phase="satisfied"]) .bot-snap-label { opacity: 1; }
-.helper-bot[data-study-phase="snap"] .bot-snap-label { animation: bot-snap-word .18s ease-out both; }
-.helper-bot[data-study-phase="satisfied"] .bot-snap-label { animation: bot-snap-word-fade .65s ease-in both; }
-.helper-bot[data-study-phase="satisfied"] .bot-study-gaze { transform: scale(1.13); transition: transform .18s ease; }
+.helper-bot[data-study-phase="snap"] .bot-study-book { animation: bot-book-snap .12s ease-out both; }
+.helper-bot[data-study-phase="snap"] .bot-snap-dust { animation: bot-dust .12s ease-out both; }
+.helper-bot[data-study-phase="satisfied"] .bot-snap-dust { opacity: .85; transform: translate(-3px,-5px) scale(1); }
+.helper-bot[data-study-phase="return"] .bot-snap-dust { animation: bot-dust-fade .28s ease-out both; }
+.helper-bot:is([data-study-phase="snap"],[data-study-phase="satisfied"],[data-study-phase="return"]) .bot-snap-label { opacity: 1; }
+.helper-bot[data-study-phase="snap"] .bot-snap-label { animation: bot-snap-word .12s ease-out both; }
+.helper-bot[data-study-phase="return"] .bot-snap-label { animation: bot-snap-word-fade .28s ease-in both; }
+.helper-bot[data-study-phase="satisfied"] .bot-study-gaze { transform: scale(1.13); transition: transform .08s ease; }
 .helper-bot[data-study-phase="satisfied"] .bot-study-book { transform: translate(0,-2px) rotate(-9deg) scale(1); }
-.helper-bot[data-study-phase="return"] .bot-study-book { opacity: 0; transform: translate(40px,-36px) rotate(30deg) scale(.2); transition: transform .8s ease-in-out, opacity .2s .6s ease; }
-.helper-bot[data-study-phase="settle"] .bot-study-arm { transition-duration: .4s; }
+.helper-bot[data-study-phase="return"] .bot-study-book { opacity: 0; transform: translate(40px,-36px) rotate(30deg) scale(.2); transition: transform .22s ease-in-out, opacity .06s .16s ease; }
+.helper-bot[data-study-phase="return"] .bot-study-arm-left { animation: bot-arm-stow-left .28s ease-in-out both; }
+.helper-bot[data-study-phase="return"] .bot-study-arm-right { animation: bot-arm-stow-right .28s ease-in-out both; }
+.helper-bot[data-study-phase="return"] .bot-pack-flap { animation: bot-pack-stow .28s ease-in-out both; }
+
+@keyframes bot-pack-retrieve { 0%,100% { transform: none; } 25%,65% { transform: translate(2px,-3px) rotate(-38deg); } }
+@keyframes bot-book-retrieve { from { opacity: 0; transform: translate(40px,-36px) rotate(30deg) scale(.2); } to { opacity: 1; transform: translate(0,-9px) rotate(0) scale(1); } }
+@keyframes bot-arm-retrieve-left { from { opacity: 0; transform: translate(41px,-19px) rotate(-60deg) scale(.8); } to { opacity: 1; transform: translate(6px,5px) rotate(-15deg) scale(.8); } }
+@keyframes bot-arm-retrieve-right { from { opacity: 0; transform: translate(8px,-16px) rotate(36deg) scale(.8); } to { opacity: 1; transform: translate(-6px,5px) rotate(15deg) scale(.8); } }
+@keyframes bot-arm-stow-left { 0% { transform: translate(6px,5px) rotate(-15deg) scale(.8); } 65% { opacity: 1; transform: translate(41px,-19px) rotate(-60deg) scale(.8); } 100% { opacity: 0; transform: translate(3px,-4px) scale(.25); } }
+@keyframes bot-arm-stow-right { 0% { transform: translate(-6px,5px) rotate(15deg) scale(.8); } 65% { opacity: 1; transform: translate(8px,-16px) rotate(36deg) scale(.8); } 100% { opacity: 0; transform: translate(-3px,-4px) scale(.25); } }
+@keyframes bot-pack-stow { 0%,65% { transform: translate(2px,-3px) rotate(-38deg); } 100% { transform: none; } }
 
 @keyframes bot-study-scan {
   0%,100% { transform: translate(0,2px); }

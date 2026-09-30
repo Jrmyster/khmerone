@@ -1,14 +1,12 @@
-/** One timer advances these beats. Hidden tabs and reduced motion reset to idle. */
+/** Start-to-start interval; the final 8.5 seconds are happy floating idle. */
+export const BOT_STUDY_INTERVAL = 11000;
+
 export const BOT_STUDY_BEATS = [
-  { phase: "idle", duration: 8000 },
-  { phase: "reach", duration: 650 },
-  { phase: "retrieve", duration: 750 },
-  { phase: "open", duration: 450 },
   { phase: "reading", duration: 2000 },
-  { phase: "snap", duration: 180 },
-  { phase: "satisfied", duration: 650 },
-  { phase: "return", duration: 900 },
-  { phase: "settle", duration: 450 },
+  { phase: "snap", duration: 120 },
+  { phase: "satisfied", duration: 100 },
+  { phase: "return", duration: 280 },
+  { phase: "idle", duration: 8500 },
 ] as const;
 
 export type BotStudyPhase = typeof BOT_STUDY_BEATS[number]["phase"];

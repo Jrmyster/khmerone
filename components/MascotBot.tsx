@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Search, X } from "lucide-react";
 import { AppCategory, type FilterKey, type Locale } from "@/types/app";
-import { BOT_STUDY_BEATS, type BotStudyPhase } from "@/lib/bot-study";
+import { BOT_STUDY_BEATS, BOT_STUDY_INTERVAL, type BotStudyPhase } from "@/lib/bot-study";
 import "./bot-study.css";
 
 interface MascotBotProps {
@@ -85,36 +85,51 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
 
   useEffect(() => {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    let beat = 0;
+    const timers = new Set<ReturnType<typeof setTimeout>>();
+    let interval: ReturnType<typeof setInterval> | undefined;
     const allowed = () => !open && !searching && !document.hidden && !motion.matches;
-    const enterBeat = () => {
-      const current = BOT_STUDY_BEATS[beat];
-      studying.current = current.phase !== "idle";
-      setStudyPhase(current.phase);
-      wakeGaze.current();
-      timer = setTimeout(() => {
-        if (!allowed()) { reset(); return; }
-        beat = (beat + 1) % BOT_STUDY_BEATS.length;
-        enterBeat();
-      }, current.duration);
+    const clearSequence = () => {
+      for (const timer of timers) clearTimeout(timer);
+      timers.clear();
     };
-    const reset = () => {
-      clearTimeout(timer);
-      beat = 0;
-      studying.current = false;
-      setStudyPhase("idle");
+    const showPhase = (phase: BotStudyPhase) => {
+      studying.current = phase !== "idle";
+      setStudyPhase(phase);
       wakeGaze.current();
-      if (allowed()) enterBeat();
     };
-    reset();
-    document.addEventListener("visibilitychange", reset);
-    motion.addEventListener("change", reset);
+    const triggerAnimationSequence = () => {
+      clearSequence();
+      if (!allowed()) { restart(); return; }
+      showPhase(BOT_STUDY_BEATS[0].phase);
+      let elapsed = 0;
+      for (let index = 1; index < BOT_STUDY_BEATS.length; index++) {
+        elapsed += BOT_STUDY_BEATS[index - 1].duration;
+        const phase = BOT_STUDY_BEATS[index].phase;
+        const timer = setTimeout(() => {
+          timers.delete(timer);
+          if (allowed()) showPhase(phase);
+          else restart();
+        }, elapsed);
+        timers.add(timer);
+      }
+    };
+    const restart = () => {
+      clearInterval(interval);
+      clearSequence();
+      if (allowed()) {
+        triggerAnimationSequence();
+        interval = setInterval(triggerAnimationSequence, BOT_STUDY_INTERVAL);
+      } else showPhase("idle");
+    };
+    restart();
+    document.addEventListener("visibilitychange", restart);
+    motion.addEventListener("change", restart);
     return () => {
-      clearTimeout(timer);
+      clearInterval(interval);
+      clearSequence();
       studying.current = false;
-      document.removeEventListener("visibilitychange", reset);
-      motion.removeEventListener("change", reset);
+      document.removeEventListener("visibilitychange", restart);
+      motion.removeEventListener("change", restart);
     };
   }, [open, searching]);
 
