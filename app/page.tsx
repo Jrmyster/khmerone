@@ -13,7 +13,7 @@ import { KhmerOneBar } from "@/components/KhmerOneBar";
 import { MascotBot } from "@/components/MascotBot";
 import { CambodiaTomorrowBanner } from "@/components/CambodiaTomorrowBanner";
 import { BottomFloatingSearch } from "@/components/BottomFloatingSearch";
-import { DynamicSearchPrompt, useRotatingSearchPrompt } from "@/components/DynamicSearchBar";
+import { DynamicSearchPrompt, useRotatingSearchPrompt, useSearchDismissal } from "@/components/DynamicSearchBar";
 import type { SearchPrompt } from "@/data/searchPrompts";
 import { PowerSkillsDashboard } from "@/components/PowerSkillsDashboard";
 import { CrewDirectory } from "@/components/CrewDirectory";
@@ -107,6 +107,7 @@ export default function Home() {
   const [settingsReady, setSettingsReady] = useState(false);
   const [query, setQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
+  const { searchOpen, openSearch, closeSearch, dismissSearch } = useSearchDismissal(query, setQuery, setSearchFocused);
   const [filter, setFilter] = useState<FilterKey>("all");
   const [grade, setGrade] = useState<GradeLevel | "all">("all");
   const [promoDismissed, setPromoDismissed] = useState(false);
@@ -186,6 +187,7 @@ export default function Home() {
   }, [query, filter, grade]);
   const pathwayMatches = useMemo(() => query.trim() ? searchSkillPathways(pathways, query) : [], [query]);
   const crewMatches = useMemo(() => query.trim() ? searchCrewConcepts(crewConcepts, query) : [], [query]);
+  const showRelatedSearch = searchOpen && (pathwayMatches.length > 0 || crewMatches.length > 0);
 
   const reset = () => { setQuery(""); setFilter("all"); setGrade("all"); };
   const openBrandHome = () => {
@@ -194,6 +196,7 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   };
   const selectSearchPrompt = (selected: SearchPrompt) => {
+    openSearch();
     setQuery(selected.query);
     setFilter("all");
     setGrade("all");
@@ -223,12 +226,26 @@ export default function Home() {
 
       <section id="directory" className="directory wrap" aria-labelledby="directory-title">
         <div className="directory-toolbar">
-          <div className="search-field"><button type="button" className="search-focus-button" aria-label={t.searchLabel} onClick={() => searchRef.current?.focus()}><Search size={21} aria-hidden="true" /></button><div className="search-input-wrap"><input ref={searchRef} type="search" aria-label={t.searchLabel} placeholder={searchFocused ? t.search : ""} value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && isKhmerOneAlias(query)) { e.preventDefault(); e.currentTarget.blur(); openBrandHome(); } }} onFocus={() => setSearchFocused(true)} onBlur={() => setSearchFocused(false)} />{!query && !searchFocused && <DynamicSearchPrompt locale={locale} prompt={prompt} fading={fading} onSelect={selectSearchPrompt} />}</div>{query && <button className="clear-button" aria-label={t.clear} onClick={() => setQuery("")}><X size={17} /></button>}</div>
+          <div className="search-field" data-search-surface>
+            <button type="button" className="search-focus-button" aria-label={t.searchLabel} onClick={() => searchRef.current?.focus()}><Search size={21} aria-hidden="true" /></button>
+            <div className="search-input-wrap">
+              <input ref={searchRef} type="search" aria-label={t.searchLabel} placeholder={searchFocused ? t.search : ""} value={query}
+                onChange={(e) => { setQuery(e.target.value); openSearch(); }}
+                onKeyDown={(e) => {
+                  if (e.key !== "Enter") return;
+                  if (!query.trim()) { e.preventDefault(); dismissSearch(); }
+                  else if (isKhmerOneAlias(query)) { e.preventDefault(); dismissSearch(); openBrandHome(); }
+                }}
+                onFocus={() => { setSearchFocused(true); openSearch(); }} onBlur={() => setSearchFocused(false)} />
+              {!query && !searchFocused && <DynamicSearchPrompt locale={locale} prompt={prompt} fading={fading} onSelect={selectSearchPrompt} />}
+            </div>
+            {(query || searchFocused || searchOpen) && <button type="button" className="clear-button" aria-label={t.clear} onClick={dismissSearch}><X size={17} aria-hidden="true" /></button>}
+          </div>
           <label className="grade-field"><SlidersHorizontal size={18} aria-hidden="true" /><select aria-label={t.grade} value={grade} onChange={(e) => setGrade(e.target.value as GradeLevel | "all")}><option value="all">{t.grade}</option>{(Object.keys(gradeLabels) as GradeLevel[]).map((key) => <option key={key} value={key}>{gradeLabels[key][locale]}</option>)}</select></label>
         </div>
         <div className="filter-row" role="group" aria-label={t.browse}>{filters.map(({ key, label }) => <button key={key} type="button" className={`filter-chip ${filter === key ? "active" : ""}`} aria-pressed={filter === key} onClick={() => setFilter(key)}>{label[locale]}</button>)}</div>
         <div className="directory-heading"><div><span className="section-index">03 / {t.browse}</span><h2 id="directory-title">{t.all}</h2></div><span className="result-count" aria-live="polite">{results.length} {results.length === 1 ? t.app : t.apps}</span></div>
-        {(pathwayMatches.length > 0 || crewMatches.length > 0) && <div className="related-search-results" aria-live="polite">
+        {showRelatedSearch && <div className="related-search-results" data-search-surface onClick={(event) => { if (event.target instanceof Element && event.target.closest("a")) closeSearch(); }} aria-live="polite">
           {pathwayMatches.length > 0 && <div><h3>{t.matchingPaths}</h3><div className="related-search-links">{pathwayMatches.map((pathway) => <a href={`#pathway-${pathway.id}`} key={pathway.id}>{pathway.title[locale]} <ArrowUpRight size={15} aria-hidden="true" /></a>)}</div></div>}
           {crewMatches.length > 0 && <div><h3>{t.matchingCrews}</h3><div className="related-search-links">{crewMatches.map((crew) => <a href={`#crew-${crew.id}`} key={crew.id}>{crew.title[locale]} <ArrowUpRight size={15} aria-hidden="true" /></a>)}</div></div>}
         </div>}
@@ -241,7 +258,7 @@ export default function Home() {
             {app.notice && <aside className="health-notice" aria-label={t.healthNotice}><TriangleAlert size={18} aria-hidden="true" /><div><strong>{t.healthNotice}</strong><p>{app.notice[locale]}</p></div></aside>}
             <div className="card-bottom">{app.url ? <a className="launch-button" href={app.url} target="_blank" rel="noopener noreferrer" onClick={() => cyber.exploreApp(app.id)} aria-label={`${t.launch}: ${app.title[locale]}`}>{t.launch}<ArrowUpRight size={18} aria-hidden="true" /></a> : <span className="pending-button" title={t.linkInfo} aria-label={`${app.title[locale]}: ${t.linkInfo}`}>{t.pending}</span>}</div>
           </article>;
-        })}</div> : pathwayMatches.length || crewMatches.length ? <p className="related-only-note">{t.noAppMatches}</p> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>}
+        })}</div> : showRelatedSearch ? <p className="related-only-note">{t.noAppMatches}</p> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>}
       </section>
       <FuturePerspectiveBanner locale={locale} />
       <section className="museum-feature wrap" aria-label={t.museumConcept}>
@@ -260,7 +277,7 @@ export default function Home() {
     </main>
     <MascotBot locale={locale} query={query} resultCount={results.length} onSelectFilter={(nextFilter) => { setQuery(""); setGrade("all"); setFilter(nextFilter); document.getElementById("directory")?.scrollIntoView({ behavior: "smooth", block: "start" }); }} onFocusSearch={() => { searchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); searchRef.current?.focus(); }} />
     <footer className="footer wrap"><div className="footer-rule" /><div><span className="footer-brand">KhmerOne<span>.com</span></span><p>{t.footer}</p></div><span className="footer-note"><Check size={16} />{t.network}</span></footer>
-    <BottomFloatingSearch locale={locale} query={query} prompt={prompt} fading={fading} searchFocused={searchFocused} onFocusChange={setSearchFocused} onSelectPrompt={selectSearchPrompt} onBrandAlias={openBrandHome} onQueryChange={(value) => { setQuery(value); if (value) { setFilter("all"); setGrade("all"); } }} />
+    <BottomFloatingSearch locale={locale} query={query} prompt={prompt} fading={fading} searchFocused={searchFocused} searchOpen={searchOpen} onDismiss={dismissSearch} onFocusChange={(focused) => { setSearchFocused(focused); if (focused) openSearch(); }} onSelectPrompt={selectSearchPrompt} onBrandAlias={openBrandHome} onQueryChange={(value) => { setQuery(value); openSearch(); if (value) { setFilter("all"); setGrade("all"); } }} />
     <BackToTopButton locale={locale} />
     <CambodiaTomorrowBanner locale={locale} visible={promoVisible} onDismiss={() => setPromoDismissed(true)} />
   </div>;
