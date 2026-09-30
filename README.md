@@ -13,7 +13,7 @@ npm run dev
 
 Edit `data/apps.ts` to update translations, grade levels, descriptions and links. The registry includes the app addresses supplied by the project owner. The portal opens external apps in a new tab, since many sites block iframes. Chhouk Baby carries a bilingual notice that its medical information is pending government review and directs visitors to consult a licensed doctor about their baby's health.
 
-`offlineReady` describes the child app itself. The portal's service worker caches its own shell and `/api/catalog` metadata after a successful visit; it cannot make external apps available offline.
+`offlineReady` describes the child app itself. The portal's service worker caches only explicitly allowlisted public images after they are viewed. It does not cache navigation HTML, API responses, or private payloads, and it cannot make the portal homepage or external apps available offline.
 
 ## Network bar in child apps
 

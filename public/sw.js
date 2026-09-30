@@ -1,32 +1,72 @@
-const CACHE = "khmerone-v38";
-const CORE = ["/", "/api/catalog", "/manifest.webmanifest", "/favicon.svg", "/cambodia-tomorrow-poster-320.webp"];
+const CACHE = "khmerone-public-v41";
+const PUBLIC_IMAGES = new Set([
+  "/favicon.svg",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/cambodia-tomorrow-poster-320.webp",
+  "/cambodia-tomorrow-poster-896.webp",
+  "/museum-of-obsolete-systems.webp",
+]);
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(CORE)).then(() => self.skipWaiting()));
+  event.waitUntil(self.skipWaiting());
 });
+
 self.addEventListener("activate", (event) => {
-  event.waitUntil(Promise.all([
-    caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)))),
-    self.clients.claim(),
-  ]));
+  event.waitUntil((async () => {
+    const names = await caches.keys();
+    await Promise.all(
+      names
+        .filter((name) => name.startsWith("khmerone-") && name !== CACHE)
+        .map((name) => caches.delete(name))
+    );
+    await self.clients.claim();
+  })());
 });
+
 self.addEventListener("fetch", (event) => {
   const request = event.request;
-  if (request.method !== "GET" || new URL(request.url).origin !== self.location.origin) return;
-  if (request.mode === "navigate") {
-    event.respondWith(fetch(request).then((response) => {
-      if (response.ok) { const copy = response.clone(); caches.open(CACHE).then((cache) => cache.put("/", copy)); }
-      return response;
-    }).catch(async () => (await caches.match("/")) || Response.error()));
-    return;
-  }
-  event.respondWith(caches.match(request).then((cached) => {
-    const refresh = fetch(request).then((response) => {
-      if (response.ok && (request.url.includes("/_next/") || request.url.includes("/assets/") || CORE.includes(new URL(request.url).pathname) || ["/museum-of-obsolete-systems.webp", "/cambodia-tomorrow-poster-896.webp"].includes(new URL(request.url).pathname))) {
-        const copy = response.clone(); caches.open(CACHE).then((cache) => cache.put(request, copy));
+  const url = new URL(request.url);
+
+  if (
+    request.method !== "GET" ||
+    url.origin !== self.location.origin ||
+    url.search ||
+    request.mode === "navigate" ||
+    request.headers.has("Authorization") ||
+    request.headers.has("Range") ||
+    !PUBLIC_IMAGES.has(url.pathname)
+  ) return;
+
+  event.respondWith((async () => {
+    let cache;
+    try {
+      cache = await caches.open(CACHE);
+      const cached = await cache.match(request);
+      if (cached) return cached;
+    } catch {
+      // Continue through network if storage is unavailable
+    }
+
+    const response = await fetch(request);
+    const cacheControl = response.headers.get("Cache-Control") || "";
+    const contentType = response.headers.get("Content-Type") || "";
+
+    if (
+      cache &&
+      response.status === 200 &&
+      !response.redirected &&
+      response.type === "basic" &&
+      contentType.toLowerCase().startsWith("image/") &&
+      !/\b(private|no-store)\b/i.test(cacheControl)
+    ) {
+      try {
+        await cache.put(request, response.clone());
+      } catch {
+        // Continue serving response even if cache put fails
       }
-      return response;
-    }).catch(() => cached || Response.error());
-    return cached || refresh;
-  }));
+    }
+
+    return response;
+  })());
 });

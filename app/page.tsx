@@ -26,6 +26,14 @@ import { rainbowAccents, themeColor, themePresets, type AccentId, type ThemeId }
 import { useCyberProgress } from "@/hooks/useCyberProgress";
 import { isKhmerOneAlias } from "@/lib/khmerUtils";
 
+function readSetting(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
 const icons: Record<AppEntry["icon"], LucideIcon> = {
   school: GraduationCap, anatomy: HeartPulse, finance: Coins, language: Languages,
   exam: ClipboardCheck, baby: Baby, world: Globe2, peace: BookOpenText, speed: Zap,
@@ -111,9 +119,9 @@ export default function Home() {
   const { prompt, fading } = useRotatingSearchPrompt(query, searchFocused);
 
   useEffect(() => {
-    const savedLocale = localStorage.getItem("khmerone-locale");
-    const savedTheme = localStorage.getItem("khmerone-theme-v3") ?? localStorage.getItem("khmerone-theme-v2");
-    const savedAccent = localStorage.getItem("khmerone-accent-v2") ?? localStorage.getItem("khmerone-accent-v1");
+    const savedLocale = readSetting("khmerone-locale");
+    const savedTheme = readSetting("khmerone-theme-v3") ?? readSetting("khmerone-theme-v2");
+    const savedAccent = readSetting("khmerone-accent-v2") ?? readSetting("khmerone-accent-v1");
     const frame = requestAnimationFrame(() => {
       if (savedLocale === "km" || savedLocale === "en") setLocale(savedLocale);
       if (savedTheme === "dark") setTheme("cyberpunk");
@@ -137,9 +145,13 @@ export default function Home() {
     document.documentElement.dataset.theme = theme;
     document.documentElement.dataset.accent = accent;
     if (settingsReady) {
-      localStorage.setItem("khmerone-locale", locale);
-      localStorage.setItem("khmerone-theme-v3", theme);
-      localStorage.setItem("khmerone-accent-v2", accent);
+      try {
+        localStorage.setItem("khmerone-locale", locale);
+        localStorage.setItem("khmerone-theme-v3", theme);
+        localStorage.setItem("khmerone-accent-v2", accent);
+      } catch {
+        // Keep settings usable for the current session when storage is unavailable.
+      }
     }
   }, [locale, theme, accent, settingsReady]);
 
