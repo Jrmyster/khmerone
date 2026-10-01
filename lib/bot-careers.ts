@@ -1,5 +1,5 @@
-export type BotCareerStage = "idle" | "drill" | "weld" | "textbook" | "doctor";
-export type BotCareerPhase = "idle" | "retrieve" | "active" | "snap" | "stow";
+export type BotCareerStage = "idle" | "drill" | "weld" | "textbook" | "doctor" | "telescope";
+export type BotCareerPhase = "idle" | "retrieve" | "extend" | "active" | "snap" | "collapse" | "stow";
 export interface BotCareerBeat {
   stage: BotCareerStage;
   phase: BotCareerPhase;
@@ -24,7 +24,12 @@ export const BOT_CAREER_BEATS: readonly BotCareerBeat[] = [
   { stage: "doctor", phase: "retrieve", duration: 450 },
   { stage: "doctor", phase: "active", duration: 4000 },
   { stage: "doctor", phase: "stow", duration: 450 },
-  { stage: "idle", phase: "idle", duration: 750 },
+  { stage: "telescope", phase: "retrieve", duration: 450 },
+  { stage: "telescope", phase: "extend", duration: 400 },
+  { stage: "telescope", phase: "active", duration: 3000 },
+  { stage: "telescope", phase: "collapse", duration: 400 },
+  { stage: "telescope", phase: "stow", duration: 450 },
+  { stage: "idle", phase: "idle", duration: 1000 },
 ];
 
 export const BOT_CAREER_INITIAL_IDLE = 3000;

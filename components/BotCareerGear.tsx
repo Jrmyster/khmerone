@@ -5,6 +5,7 @@ export function BotCareerGear() {
       <linearGradient id="bot-tool-metal" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#e0f2fe"/><stop offset=".45" stopColor="#64748b"/><stop offset=".65" stopColor="#dbeafe"/><stop offset="1" stopColor="#334155"/></linearGradient>
       <linearGradient id="bot-torch-fire" x1="0" y1="1" x2="0" y2="0"><stop stopColor="#38bdf8"/><stop offset=".4" stopColor="#e0f2fe"/><stop offset=".7" stopColor="#fb923c"/><stop offset="1" stopColor="#fbbf24" stopOpacity=".3"/></linearGradient>
       <linearGradient id="bot-coat-white" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#fff"/><stop offset="1" stopColor="#cbd5e1"/></linearGradient>
+      <linearGradient id="bot-telescope-brass" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#fef08a"/><stop offset=".45" stopColor="#d97706"/><stop offset=".7" stopColor="#fbbf24"/><stop offset="1" stopColor="#875632"/></linearGradient>
     </defs>
 
     <g className="bot-career-arm bot-career-arm-left"><image href="/bot-study/arm-left.webp" x="-3" y="64" width="37" height="36" /></g>
@@ -76,6 +77,31 @@ export function BotCareerGear() {
       <circle cx="56" cy="-10" r="9" fill="#102638" stroke="#7dd3fc" strokeWidth="1.5"/>
       <path d="M56-15v10m-5-5h10" stroke="#34d399" strokeWidth="3" strokeLinecap="round"/>
       <path d="M72-10h4l2-3 3 6 2-3h6" fill="none" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round"/>
+    </g>
+
+    <g className="bot-career-tool bot-telescope">
+      <g className="bot-telescope-rig">
+        {/* The eyepiece pivots around the right eye at (71.5, 54). */}
+        <path d="M68 51h12v6H68Z" fill="#0e7490" stroke="#7dd3fc" strokeWidth="1.3"/>
+        <ellipse cx="68" cy="54" rx="2" ry="4" fill="#061423" stroke="#38bdf8"/>
+        <rect x="78" y="47" width="22" height="14" rx="3" fill="url(#bot-telescope-brass)" stroke="#fef08a" strokeWidth="1.4"/>
+        <path d="M83 48v12m5-12v12" stroke="#7dd3fc" strokeWidth="2"/>
+        <path d="M80 50h15" stroke="#fef9c3" strokeWidth="1" opacity=".8"/>
+        <g className="bot-telescope-tube">
+          <rect x="95" y="46" width="10" height="16" rx="2" fill="#0284c7" stroke="#7dd3fc" strokeWidth="1.4"/>
+          <ellipse cx="105" cy="54" rx="3" ry="10" fill="#18334b" stroke="#fbbf24" strokeWidth="2"/>
+          <ellipse cx="105.5" cy="54" rx="1.7" ry="7.5" fill="#38bdf8"/>
+          <path d="M105 49v5" stroke="#e0f2fe" strokeWidth="1.2" strokeLinecap="round"/>
+          <g className="bot-telescope-stars" fill="#e0f2fe" stroke="#7dd3fc" strokeWidth=".7">
+            <path className="bot-scope-star" d="M105 27l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5Z"/>
+            <path className="bot-scope-star bot-scope-star-second" d="M114 36l1 3 3 1-3 1-1 3-1-3-3-1 3-1Z"/>
+            <circle className="bot-scope-star bot-scope-star-third" cx="112" cy="24" r="1.4" fill="#fbbf24" stroke="none"/>
+          </g>
+        </g>
+        {/* A hand supports the instrument while it tilts toward the sky. */}
+        <path d="M83 68Q85 63 90 61" fill="none" stroke="var(--accent-primary)" strokeWidth="4" strokeLinecap="round"/>
+        <circle cx="90" cy="62" r="3" fill="#18334b" stroke="#7dd3fc" strokeWidth="1.2"/>
+      </g>
     </g>
   </>;
 }

@@ -72,7 +72,7 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
   const t = words[locale];
   const onCareerBeat = useCallback((beat: BotCareerBeat) => {
     studying.current = beat.phase !== "idle";
-    // Flights may start only between complete four-profession cycles.
+    // Flights may start only between complete five-profession cycles.
     flightReady.current = beat.stage === "idle";
     wakeGaze.current();
     if (flightReady.current && pendingFlight.current) tryFlight.current();
@@ -344,10 +344,11 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
           <circle cx="40.5" cy="54" r="9" fill="#102638" stroke="var(--accent-primary)" strokeWidth="1.4"/>
           <circle cx="71.5" cy="54" r="9" fill="#102638" stroke="var(--accent-primary)" strokeWidth="1.4"/>
           <g className="bot-career-gaze"><g className={`bot-gaze ${blinking && career.phase === "idle" ? "bot-gaze-blinking" : ""}`}>
-            <g ref={leftPupilRef} className="bot-pupil"><circle cx="40.5" cy="54" r="3.5" fill="var(--accent-primary)"/><circle cx="39.5" cy="52.8" r="1" fill="#fff" opacity=".9"/></g>
+            <g ref={leftPupilRef} className="bot-pupil bot-pupil-left"><circle cx="40.5" cy="54" r="3.5" fill="var(--accent-primary)"/><circle cx="39.5" cy="52.8" r="1" fill="#fff" opacity=".9"/></g>
             <g ref={rightPupilRef} className="bot-pupil"><circle cx="71.5" cy="54" r="3.5" fill="var(--accent-primary)"/><circle cx="70.5" cy="52.8" r="1" fill="#fff" opacity=".9"/></g>
             <path className="bot-blink-line" d="M35 54h11m20 0h11" fill="none" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round"/>
           </g></g>
+          <path className="bot-telescope-wink" d="M35 54Q40.5 57 46 54" fill="none" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round"/>
           <path className="bot-mouth" d={career.phase === "snap" ? "M52 71a4 4 0 1 0 8 0a4 4 0 1 0-8 0" : "M45 69Q56 78 67 69"} fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round"/>
         </g>
         <g transform="rotate(-9 56 26)">

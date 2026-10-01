@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { startBotCareerSequence } from "../lib/bot-careers.ts";
 
-test("all four professions play twice in order, with full activity and idle durations", (t) => {
+test("all five professions play twice in order, with full activity and idle durations", (t) => {
   t.mock.timers.enable({ apis: ["setTimeout", "Date"], now: 0 });
   const seen = [];
   const dispose = startBotCareerSequence(beat => seen.push({ ...beat, time: Date.now() }));
@@ -12,7 +12,9 @@ test("all four professions play twice in order, with full activity and idle dura
     ["drill", "retrieve", 450], ["drill", "active", 2000], ["drill", "stow", 450], ["drill", "idle", 3000],
     ["weld", "retrieve", 600], ["weld", "active", 2500], ["weld", "stow", 600], ["weld", "idle", 3000],
     ["textbook", "retrieve", 450], ["textbook", "active", 2000], ["textbook", "snap", 300], ["textbook", "stow", 450], ["textbook", "idle", 3000],
-    ["doctor", "retrieve", 450], ["doctor", "active", 4000], ["doctor", "stow", 450], ["idle", "idle", 750],
+    ["doctor", "retrieve", 450], ["doctor", "active", 4000], ["doctor", "stow", 450],
+    ["telescope", "retrieve", 450], ["telescope", "extend", 400], ["telescope", "active", 3000], ["telescope", "collapse", 400], ["telescope", "stow", 450],
+    ["idle", "idle", 1000],
   ];
   let elapsed = 0;
   for (const [stage, phase, duration] of [...expected, ...expected.slice(1)]) {
@@ -26,12 +28,12 @@ test("all four professions play twice in order, with full activity and idle dura
   }
 });
 
-test("unmount or pause during the doctor pose cancels all future stage callbacks", (t) => {
+for (const stage of ["doctor", "telescope"]) test(`unmount or pause during ${stage} cancels all future stage callbacks`, (t) => {
   t.mock.timers.enable({ apis: ["setTimeout"] });
   let latest;
   let count = 0;
   const dispose = startBotCareerSequence(beat => { latest = beat; count++; });
-  while (latest.stage !== "doctor" || latest.phase !== "active") t.mock.timers.tick(latest.duration);
+  while (latest.stage !== stage || latest.phase !== "active") t.mock.timers.tick(latest.duration);
   t.mock.timers.tick(1500);
   dispose();
   dispose();

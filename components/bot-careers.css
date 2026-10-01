@@ -63,6 +63,23 @@
 .helper-bot[data-career-stage="doctor"][data-career-phase="stow"] .bot-doctor-outfit { animation: bot-career-coat .45s ease-in reverse both; }
 .helper-bot[data-career-stage="doctor"][data-career-phase="active"] .bot-doctor-pulse { animation: bot-career-heartbeat 1s ease-in-out infinite; }
 
+/* Extend and aim first, then hold the eyepiece at the eye for all 3000ms. */
+.bot-telescope-rig { transform-origin: 71.5px 54px; transition: transform .4s ease; }
+.bot-telescope-tube { transform: translateX(-6px); transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+.bot-telescope-stars, .bot-telescope-wink { opacity: 0; pointer-events: none; }
+.helper-bot[data-career-stage="telescope"][data-career-phase="retrieve"] .bot-telescope { animation: bot-telescope-retrieve .45s ease-out both; }
+.helper-bot[data-career-stage="telescope"]:is([data-career-phase="extend"],[data-career-phase="active"],[data-career-phase="collapse"]) .bot-telescope { opacity: 1; transform: none; transition: transform .4s ease; }
+.helper-bot[data-career-stage="telescope"]:is([data-career-phase="extend"],[data-career-phase="active"]) .bot-telescope-rig { transform: rotate(-24deg); }
+.helper-bot[data-career-stage="telescope"]:is([data-career-phase="extend"],[data-career-phase="active"]) .bot-telescope-tube { transform: translateX(3px); }
+.helper-bot[data-career-stage="telescope"][data-career-phase="active"] .bot-telescope-stars { opacity: 1; }
+.helper-bot[data-career-stage="telescope"][data-career-phase="active"] .bot-scope-star { transform-box: fill-box; transform-origin: center; animation: bot-telescope-star 1.4s ease-in-out infinite; }
+.helper-bot[data-career-stage="telescope"][data-career-phase="active"] .bot-scope-star-second { animation-delay: -.5s; }
+.helper-bot[data-career-stage="telescope"][data-career-phase="active"] .bot-scope-star-third { animation-delay: -.9s; }
+.helper-bot[data-career-stage="telescope"][data-career-phase="active"] .bot-pupil-left { opacity: 0; }
+.helper-bot[data-career-stage="telescope"][data-career-phase="active"] .bot-telescope-wink { opacity: 1; }
+.helper-bot[data-career-stage="telescope"][data-career-phase="collapse"] .bot-telescope { transform: translate(0,10px); }
+.helper-bot[data-career-stage="telescope"][data-career-phase="stow"] .bot-telescope { animation: bot-telescope-retrieve .45s ease-in reverse both; }
+
 @keyframes bot-career-reach { from { transform: translate(41px,-19px) rotate(-60deg) scale(.8); } to { transform: translate(6px,5px) rotate(-15deg) scale(.8); } }
 @keyframes bot-career-pack { 0%,100% { transform: none; } 25%,65% { transform: translate(2px,-3px) rotate(-38deg); } }
 @keyframes bot-career-retrieve { from { opacity: 0; transform: translate(40px,-36px) rotate(30deg) scale(.2); } 20% { opacity: 1; } to { opacity: 1; transform: none; } }
@@ -75,9 +92,14 @@
 @keyframes bot-career-snap-pop { 0% { opacity: 0; transform: scale(.5) rotate(-10deg); } 35%,70% { opacity: 1; transform: scale(1.1) rotate(-10deg); } 100% { opacity: 0; transform: translate(0,-4px) scale(1) rotate(-10deg); } }
 @keyframes bot-career-coat { from { opacity: 0; transform: translate(0,8px) scale(.8); } to { opacity: 1; transform: none; } }
 @keyframes bot-career-heartbeat { 0%,100% { opacity: .75; transform: scale(1); filter: drop-shadow(0 0 2px #34d399); } 20%,40% { opacity: 1; transform: scale(1.08); filter: drop-shadow(0 0 5px #34d399); } 30%,60% { opacity: .9; transform: scale(1); } }
+@keyframes bot-telescope-retrieve { from { opacity: 0; transform: translate(26px,-10px) rotate(30deg) scale(.2); } 20% { opacity: 1; } to { opacity: 1; transform: translate(0,10px); } }
+@keyframes bot-telescope-star { 0%,100% { opacity: .25; transform: translateY(0) scale(.8); } 50% { opacity: 1; transform: translateY(-2px) scale(1.1); } }
 
 @media (prefers-reduced-motion: reduce) {
   .helper-bot .bot-career-tool, .helper-bot .bot-career-arm, .helper-bot .bot-welding-mask,
   .helper-bot .bot-doctor-outfit, .helper-bot .bot-doctor-pulse, .helper-bot .bot-snap-badge { opacity: 0 !important; animation: none !important; transition: none !important; }
   .helper-bot .bot-pack-flap, .helper-bot .bot-career-gaze { transform: none !important; animation: none !important; }
+  .helper-bot .bot-telescope-rig, .helper-bot .bot-telescope-tube, .helper-bot .bot-scope-star { animation: none !important; transition: none !important; }
+  .helper-bot .bot-telescope-stars, .helper-bot .bot-telescope-wink { opacity: 0 !important; }
+  .helper-bot .bot-pupil-left { opacity: 1; }
 }
