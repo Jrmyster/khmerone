@@ -160,4 +160,26 @@ export const apps: AppEntry[] = [
     tags: ["peace", "game theory", "conflict", "nonviolence", "សន្តិភាព"],
     icon: "peace", url: "https://warisobsolete.com/", offlineReady: false,
   },
+  {
+    id: "khmercancer",
+    title: { en: "KhmerCancer", km: "KhmerCancer" },
+    category: AppCategory.Health,
+    categoryLabel: { en: "Community health", km: "សុខភាពសហគមន៍" },
+    tagline: { en: "Accessible cancer awareness and education in Khmer.", km: "ចំណេះដឹង និងការអប់រំអំពីជំងឺមហារីកជាភាសាខ្មែរ ដែលងាយស្រួលប្រើប្រាស់។" },
+    description: { en: "Bilingual educational resources covering cancer prevention, early detection, risk factors, and health guidance tailored for Cambodian communities.", km: "ធនធានអប់រំពីរភាសាអំពីការបង្ការជំងឺមហារីក ការរកឃើញជំងឺឱ្យបានឆាប់ កត្តាហានិភ័យ និងការណែនាំអំពីសុខភាពសម្រាប់សហគមន៍កម្ពុជា។" },
+    audience: { en: "High school students & adult learners", km: "សិស្សវិទ្យាល័យ និងអ្នកសិក្សាពេញវ័យ" },
+    grades: ["high-school", "vocational-adult"],
+    hasBilingualToggle: true,
+    features: [
+      { en: "Cancer prevention & risk factors", km: "ការបង្ការជំងឺមហារីក និងកត្តាហានិភ័យ" },
+      { en: "Early detection awareness", km: "ចំណេះដឹងអំពីការរកឃើញជំងឺឱ្យបានឆាប់" },
+      { en: "Khmer / English resources", km: "ធនធានជាភាសាខ្មែរ / អង់គ្លេស" },
+    ],
+    tags: ["cancer", "prevention", "early detection", "risk factors", "bilingual", "community health", "មហារីក", "ជំងឺមហារីក"],
+    notice: {
+      en: "Medical information is for educational purposes only. Consult a licensed doctor for personal diagnosis or treatment options.",
+      km: "ព័ត៌មានវេជ្ជសាស្ត្រនេះសម្រាប់គោលបំណងអប់រំតែប៉ុណ្ណោះ។ សូមពិគ្រោះជាមួយវេជ្ជបណ្ឌិតមានអាជ្ញាបណ្ណសម្រាប់ការធ្វើរោគវិនិច្ឆ័យផ្ទាល់ខ្លួន ឬជម្រើសនៃការព្យាបាល។",
+    },
+    icon: "cancer", url: "https://khmercancer.com/", offlineReady: false,
+  },
 ];

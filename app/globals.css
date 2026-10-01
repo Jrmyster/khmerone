@@ -306,7 +306,7 @@ h1, h2, h3, p { margin: 0; }
 .app-card:hover::after, .pathway-card:hover::after, .crew-card:hover::after { opacity: .9; filter: drop-shadow(0 0 5px rgba(16,185,129,.35)); }
 .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; }
 .app-icon { width: 58px; height: 58px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 14px; background: var(--cyan-soft); color: var(--cyan); }
-.icon-anatomy, .icon-baby { border-color: rgba(251, 191, 36, .28); background: rgba(245, 158, 11, .11); color: var(--amber); }
+.icon-anatomy, .icon-baby, .icon-cancer { border-color: rgba(251, 191, 36, .28); background: rgba(245, 158, 11, .11); color: var(--amber); }
 .icon-finance { border-color: rgba(52, 211, 153, .27); background: rgba(16, 185, 129, .1); color: var(--emerald); }
 .icon-world { background: color-mix(in srgb, var(--accent-primary) 11%, transparent); }
 .icon-peace { border-color: rgba(251, 191, 36, .28); background: rgba(245, 158, 11, .1); color: var(--amber); }

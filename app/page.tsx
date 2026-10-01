@@ -37,7 +37,7 @@ function readSetting(key: string): string | null {
 
 const icons: Record<AppEntry["icon"], LucideIcon> = {
   school: GraduationCap, anatomy: HeartPulse, finance: Coins, language: Languages,
-  exam: ClipboardCheck, baby: Baby, world: Globe2, peace: BookOpenText, speed: Zap,
+  exam: ClipboardCheck, baby: Baby, world: Globe2, peace: BookOpenText, speed: Zap, cancer: HeartPulse,
 };
 
 const filters: { key: FilterKey; label: Record<Locale, string> }[] = [
@@ -61,7 +61,7 @@ const copy = {
     empty: "No apps match your search.", reset: "Clear filters",
     offline: "Offline ready", launch: "Open app", pending: "Link pending",
     linkInfo: "A public link has not been added yet.",
-    network: "Nine learning spaces. One starting point.",
+    network: "Ten learning spaces. One starting point.",
     healthNotice: "Health notice",
     matchingPaths: "Matching skill paths", matchingCrews: "Matching crews",
     noAppMatches: "No app cards match this search. Explore the related results above.",
@@ -82,7 +82,7 @@ const copy = {
     empty: "រកមិនឃើញកម្មវិធីដែលត្រូវនឹងការស្វែងរកទេ។", reset: "លុបតម្រង",
     offline: "អាចប្រើក្រៅបណ្ដាញ", launch: "បើកកម្មវិធី", pending: "រង់ចាំតំណ",
     linkInfo: "មិនទាន់មានតំណសាធារណៈទេ។",
-    network: "កន្លែងសិក្សាប្រាំបួន។ ចាប់ផ្ដើមពីទីនេះ។",
+    network: "កន្លែងសិក្សាដប់។ ចាប់ផ្ដើមពីទីនេះ។",
     healthNotice: "សេចក្ដីជូនដំណឹងអំពីសុខភាព",
     matchingPaths: "ជំនាញដែលត្រូវនឹងការស្វែងរក", matchingCrews: "ក្រុមដែលត្រូវនឹងការស្វែងរក",
     noAppMatches: "គ្មានកម្មវិធីដែលត្រូវនឹងការស្វែងរកទេ។ សូមមើលលទ្ធផលពាក់ព័ន្ធខាងលើ។",
