@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Kantumruy_Pro, Moul } from "next/font/google";
 import { CosmicJungleBackground } from "@/components/CosmicJungleBackground";
+import { BackgroundAudio } from "@/src/components/BackgroundAudio";
 import "./globals.css";
 
 const kantumruy = Kantumruy_Pro({ subsets: ["khmer", "latin"], display: "swap", variable: "--font-kantumruy" });
@@ -21,5 +22,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { width: "device-width", initialScale: 1, maximumScale: 5, viewportFit: "cover", themeColor: "#0f172a" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" data-theme="cyberpunk" data-accent="default"><body className={`${kantumruy.variable} ${moul.variable}`}><CosmicJungleBackground />{children}</body></html>;
+  return <html lang="en" data-theme="cyberpunk" data-accent="default"><body className={`${kantumruy.variable} ${moul.variable}`}><CosmicJungleBackground />{children}<BackgroundAudio /></body></html>;
 }

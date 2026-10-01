@@ -842,3 +842,26 @@ h1, h2, h3, p { margin: 0; }
   .promo-active .back-to-top { bottom: calc(206px + env(safe-area-inset-bottom)); }
 }
 :root.mobile-keyboard-open .back-to-top { display: none; }
+
+/* Ambient audio stays clear of the mascot, bottom search, and device safe areas. */
+.background-audio { position: fixed; right: calc(24px + env(safe-area-inset-right)); bottom: calc(194px + env(safe-area-inset-bottom)); z-index: 49; }
+.background-audio-button { width: 48px; height: 48px; display: grid; place-items: center; border: 1px solid var(--line-strong); border-radius: 50%; background: var(--surface-strong); color: var(--muted); box-shadow: 0 8px 24px rgba(0,0,0,.25); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.background-audio-button:hover, .background-audio-button.is-playing { color: var(--cyan); border-color: var(--cyan); box-shadow: var(--hover-glow); }
+.background-audio-button:active { transform: scale(.95); }
+.background-audio-error { position: absolute; right: 58px; bottom: 0; width: min(250px, calc(100vw - 98px)); padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface-strong); color: var(--text); font-size: 15px; line-height: 1.65; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+.background-audio-loading { animation: ambient-audio-spin 1s linear infinite; }
+@keyframes ambient-audio-spin { to { transform: rotate(360deg); } }
+body:has(.site-shell.promo-active) .background-audio { bottom: calc(320px + env(safe-area-inset-bottom)); }
+body:has(.bot-drawer) .background-audio { visibility: hidden; }
+@media (max-width: 900px) {
+  body:has(.site-shell.promo-active) .background-audio { bottom: calc(352px + env(safe-area-inset-bottom)); }
+  body:has(.site-shell.has-floating-search) .background-audio { bottom: calc(286px + env(safe-area-inset-bottom)); }
+  body:has(.site-shell.has-floating-search.promo-active) .background-audio { bottom: calc(447px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 680px) {
+  .background-audio { right: calc(16px + env(safe-area-inset-right)); bottom: calc(138px + env(safe-area-inset-bottom)); }
+  body:has(.site-shell.promo-active) .background-audio { bottom: calc(258px + env(safe-area-inset-bottom)); }
+  body:has(.site-shell.has-floating-search) .background-audio { bottom: calc(217px + env(safe-area-inset-bottom)); }
+  body:has(.site-shell.has-floating-search.promo-active) .background-audio { bottom: calc(339px + env(safe-area-inset-bottom)); }
+}
+@media (prefers-reduced-motion: reduce) { .background-audio-loading { animation: none; } }
