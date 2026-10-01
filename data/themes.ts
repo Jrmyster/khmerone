@@ -1,5 +1,6 @@
 export const themePresets = [
   { id: "cyberpunk", en: "Cyberpunk Neon", km: "សាយប័រផាំង នីអុង", background: "#0b1329", color: "#38bdf8", mode: "dark" },
+  { id: "khmer-sunrise", en: "Khmer Sunrise", km: "ព្រះអាទិត្យរះខ្មែរ", background: "#101127", color: "#ffb703", mode: "dark" },
   { id: "dracula", en: "Dracula", km: "ដ្រាគូឡា", background: "#282a36", color: "#ff79c6", mode: "dark" },
   { id: "nord", en: "Nord Frost", km: "ន័រដ ទឹកកក", background: "#2e3440", color: "#88c0d0", mode: "dark" },
   { id: "matrix", en: "Matrix Code", km: "ម៉ាទ្រីក កូដ", background: "#050805", color: "#22c55e", mode: "dark" },

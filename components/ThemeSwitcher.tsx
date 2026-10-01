@@ -10,6 +10,7 @@ interface ThemeSwitcherProps {
   theme: ThemeId;
   accent: AccentId;
   onAccentChange: (accent: AccentId) => void;
+  onThemeChange: (theme: ThemeId) => void;
 }
 
 const paintPositions = [
@@ -22,7 +23,7 @@ const paintPositions = [
   { x: 19, y: 57 },
 ] as const;
 
-export function ThemeSwitcher({ locale, theme, accent, onAccentChange }: ThemeSwitcherProps) {
+export function ThemeSwitcher({ locale, theme, accent, onAccentChange, onThemeChange }: ThemeSwitcherProps) {
   const [open, setOpen] = useState(false);
   const controlRef = useRef<HTMLDivElement>(null);
   const t = locale === "km" ? {
@@ -55,6 +56,10 @@ export function ThemeSwitcher({ locale, theme, accent, onAccentChange }: ThemeSw
     {open &&
       <div className="theme-picker" id="theme-picker" role="dialog" aria-label={t.button}>
         <div className="theme-picker-head"><div className="theme-picker-heading"><strong>{t.title}</strong></div><button type="button" className="theme-picker-close" aria-label={t.close} onClick={() => { setOpen(false); controlRef.current?.querySelector<HTMLButtonElement>(".theme-trigger")?.focus(); }}><X size={18} aria-hidden="true" /></button></div>
+        <div className="background-mode-picker" role="group" aria-label={locale === "km" ? "ផ្ទៃខាងក្រោយ" : "Background"}>
+          <button type="button" aria-pressed={theme === "cyberpunk"} onClick={() => onThemeChange("cyberpunk")}>{locale === "km" ? "លំហអាកាស" : "Cosmic"}</button>
+          <button type="button" aria-pressed={theme === "khmer-sunrise"} onClick={() => onThemeChange("khmer-sunrise")}>{locale === "km" ? "ព្រះអាទិត្យរះខ្មែរ" : "Khmer Sunrise"}</button>
+        </div>
         <div className="theme-picker-section" role="group" aria-label={t.accents}>
           <div className="palette-wheel">
             <svg className="wood-palette-art" viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">

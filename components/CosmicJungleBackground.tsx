@@ -55,20 +55,20 @@ function EdgeVine({ side }: { side: "left" | "right" }) {
   const leaf = `jungle-leaf-${side}`;
   return <svg className={`cyber-jungle-vine cyber-jungle-vine-${side}`} viewBox="0 0 180 900" preserveAspectRatio="none" aria-hidden="true">
     <defs>
-      <linearGradient id={stem} x1="0" x2="1" y1="0" y2="1"><stop stopColor="#38bdf8" /><stop offset=".48" stopColor="#10b981" /><stop offset="1" stopColor="#38bdf8" /></linearGradient>
-      <linearGradient id={leaf} x1="0" x2="1" y1="1" y2="0"><stop stopColor="#047857" /><stop offset=".65" stopColor="#10b981" /><stop offset="1" stopColor="#f59e0b" /></linearGradient>
+      <linearGradient id={stem} x1="0" x2="0" y1="0" y2="1"><stop stopColor="var(--vine-cool, #38bdf8)" /><stop offset=".48" stopColor="#10b981" /><stop offset="1" stopColor="var(--vine-dawn, #38bdf8)" /></linearGradient>
+      <linearGradient id={leaf} x1="0" x2="1" y1="1" y2="0"><stop stopColor="#047857" /><stop offset=".65" stopColor="var(--leaf-dew, #10b981)" /><stop offset="1" stopColor="var(--leaf-light, #f59e0b)" /></linearGradient>
     </defs>
     <g className="cyber-jungle-vine-lines" fill="none" stroke={`url(#${stem})`} strokeLinecap="round">
       <path d="M-16 -24 C74 50 7 119 63 203 S22 318 60 416 S12 563 69 690 S27 798 83 931" strokeWidth="2.4" />
       <path d="M-9 68 C64 43 105 61 138 1 M49 217 C104 186 127 148 149 130 M42 360 C91 356 127 319 151 280 M54 540 C100 501 120 486 151 473 M49 725 C97 725 126 688 154 656 M65 851 C113 837 122 805 161 788" strokeWidth="1.2" />
       <path d="M8 128 H37 M61 288 H109 M27 446 H53 M64 625 H113 M53 768 H92" strokeWidth=".8" strokeDasharray="3 6" />
     </g>
-    <g className="cyber-jungle-leaves" fill={`url(#${leaf})`} stroke="#38bdf8" strokeWidth=".7">
+    <g className="cyber-jungle-leaves" fill={`url(#${leaf})`} stroke="var(--vine-dawn, #38bdf8)" strokeWidth=".7">
       <path d="M63 195 Q86 165 111 167 Q99 190 63 195Z" /><path d="M48 344 Q86 310 118 318 Q100 345 48 344Z" />
       <path d="M68 413 Q85 438 112 437 Q94 410 68 413Z" /><path d="M56 539 Q79 512 111 519 Q91 541 56 539Z" />
       <path d="M70 688 Q92 663 121 670 Q101 693 70 688Z" /><path d="M65 850 Q86 818 119 820 Q101 847 65 850Z" />
     </g>
-    <g className="cyber-jungle-nodes" fill="#f59e0b" stroke="#38bdf8" strokeWidth="1.4">
+    <g className="cyber-jungle-nodes" fill="var(--leaf-light, #f59e0b)" stroke="var(--vine-dawn, #38bdf8)" strokeWidth="1.4">
       <circle cx="138" cy="1" r="3" /><circle cx="149" cy="130" r="3" /><circle cx="151" cy="280" r="2.5" />
       <circle cx="151" cy="473" r="3" /><circle cx="154" cy="656" r="2.5" /><circle cx="161" cy="788" r="3" />
     </g>
@@ -211,6 +211,8 @@ export function CosmicJungleBackground() {
 
   return <div ref={layerRef} className="cosmic-jungle-background" aria-hidden="true">
     <canvas ref={nebulaRef} className="cosmic-jungle-nebula" />
+    <div className="khmer-sunrise-horizon" />
+    <div className="khmer-sunrise-rays" />
     <canvas ref={particleRef} className="cosmic-jungle-particles" />
     <div className="cyber-jungle-grid" />
     <div className="cyber-jungle-mist" />
