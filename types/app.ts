@@ -12,7 +12,7 @@ export enum AppCategory {
 }
 
 export type GradeLevel = "primary" | "lower-secondary" | "high-school" | "vocational-adult";
-export type AppIcon = "school" | "anatomy" | "finance" | "language" | "exam" | "baby" | "world" | "peace" | "speed" | "cancer";
+export type AppIcon = "school" | "anatomy" | "finance" | "language" | "exam" | "baby" | "world" | "peace" | "speed" | "cancer" | "lab";
 
 export interface AppEntry {
   id: string;

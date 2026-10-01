@@ -182,4 +182,23 @@ export const apps: AppEntry[] = [
     },
     icon: "cancer", url: "https://khmercancer.com/", offlineReady: false,
   },
+  {
+    id: "khmer-lab-tech",
+    title: { en: "Khmer Lab Tech", km: "មន្ទីរពិសោធន៍បច្ចេកវិទ្យាខ្មែរ" },
+    category: AppCategory.Stem,
+    categoryLabel: { en: "STEM & engineering", km: "ស្ទែម និងវិស្វកម្ម" },
+    tagline: { en: "Interactive computer hardware & electrical engineering simulator.", km: "ឧបករណ៍ក្លែងធ្វើអន្តរកម្មសម្រាប់ផ្នែកកុំព្យូទ័រ និងវិស្វកម្មអគ្គិសនី។" },
+    description: { en: "Bilingual hands-on tools for Khmer teenagers to explore PC components, binary logic gates, and introductory circuit design.", km: "ឧបករណ៍សិក្សាអនុវត្តពីរភាសាសម្រាប់យុវវ័យខ្មែរ ដើម្បីស្វែងយល់ពីផ្នែកកុំព្យូទ័រ សៀគ្វីតក្កវិទ្យាប្រព័ន្ធគោលពីរ និងការរចនាសៀគ្វីអគ្គិសនីកម្រិតដំបូង។" },
+    audience: { en: "Lower secondary, high school & adult learners", km: "សិស្សអនុវិទ្យាល័យ វិទ្យាល័យ និងអ្នកសិក្សាពេញវ័យ" },
+    grades: ["lower-secondary", "high-school", "vocational-adult"],
+    hasBilingualToggle: true,
+    features: [
+      { en: "Interactive PC component map", km: "ផែនទីផ្នែកកុំព្យូទ័រអន្តរកម្ម" },
+      { en: "Binary counter & logic gates", km: "ឧបករណ៍រាប់ប្រព័ន្ធគោលពីរ និងសៀគ្វីតក្កវិទ្យា" },
+      { en: "Ohm's law circuit simulator", km: "ឧបករណ៍ក្លែងធ្វើសៀគ្វីតាមច្បាប់អូម" },
+      { en: "Build-your-first-PC challenge", km: "លំហាត់ដំឡើងកុំព្យូទ័រដំបូងរបស់អ្នក" },
+    ],
+    tags: ["hardware", "PC components", "CPU", "RAM", "GPU", "binary", "logic gates", "circuits", "voltage", "current", "resistance", "computer engineering", "electrical engineering", "STEM", "Khmer Tech Lab", "កុំព្យូទ័រ", "អគ្គិសនី"],
+    icon: "lab", url: "https://khmer-tech-lab.jrmyster7.chatgpt.site/", offlineReady: false,
+  },
 ];
