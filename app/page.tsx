@@ -53,9 +53,12 @@ const filters: { key: FilterKey; label: Record<Locale, string> }[] = [
 
 const copy = {
   en: {
-    eyebrow: "YOUR NEXT MOVE STARTS HERE", title: "Build skills. Shape your future.",
-    intro: "Try small challenges, discover useful tools, and find a crew for ideas worth building.",
-    power: "Unlock Your Power", explore: "Explore apps",
+    eyebrow: "FREE LEARNING. CAMBODIAN POSSIBILITIES.",
+    title: "Khmer One: Free Digital Education & STEM Tools for Cambodia",
+    intro: "Khmer One is a centralized, offline-ready educational portal delivering bilingual tools in STEM, health, computer engineering, financial literacy, and women's enterprise. Designed specifically for Cambodian teenagers, students, and educators to learn, build, and thrive.",
+    explore: "Explore Educational Apps", mission: "About the Mission",
+    missionBody: "Our mission is to make practical education easier to access across Cambodia. Khmer One brings specialized learning apps together in one place, so students and educators can discover a subject, practice a skill, and build something useful for their community.",
+    missionOffline: "Look for the Offline ready badge in the directory to find tools that support learning without a connection.",
     search: "Search apps, topics or grade levels", searchLabel: "Search learning apps",
     clear: "Clear search", grade: "Any grade level", browse: "Explore the network",
     apps: "apps", app: "app", all: "All learning apps",
@@ -74,9 +77,12 @@ const copy = {
     themeDark: "Switch to dark mode", themeLight: "Switch to light mode", language: "Switch language",
   },
   km: {
-    eyebrow: "ជំហានបន្ទាប់ចាប់ផ្ដើមនៅទីនេះ", title: "បង្កើនជំនាញ។ បង្កើតអនាគតរបស់អ្នក។",
-    intro: "សាកល្បងលំហាត់ខ្លីៗ ស្វែងរកឧបករណ៍មានប្រយោជន៍ និងក្រុមសម្រាប់គំនិតដែលអ្នកចង់បង្កើត។",
-    power: "ពង្រឹងសមត្ថភាពរបស់អ្នក", explore: "ស្វែងរកកម្មវិធី",
+    eyebrow: "ការសិក្សាឥតគិតថ្លៃ។ ឱកាសសម្រាប់កម្ពុជា។",
+    title: "ខ្មែរវ័ន៖ មជ្ឈមណ្ឌលសិក្សាឌីជីថល និងបច្ចេកវិទ្យាសម្រាប់យុវជនកម្ពុជា",
+    intro: "ខ្មែរវ័ន គឺជាច្រកទ្វារអប់រំឌីជីថលដែលផ្តល់នូវឧបករណ៍សិក្សាពីភាសា វិទ្យាសាស្ត្រ សុខភាព វិស្វកម្មកុំព្យូទ័រ និងការអប់រំអាជីវកម្ម។ ត្រូវបានបង្កើតឡើងជាពិសេសសម្រាប់សិស្សានុសិស្ស និងគ្រូបង្រៀននៅកម្ពុជា។",
+    explore: "ស្វែងរកកម្មវិធីសិក្សា", mission: "អំពីបេសកកម្ម",
+    missionBody: "បេសកកម្មរបស់យើងគឺធ្វើឱ្យការអប់រំជាក់ស្ដែងកាន់តែងាយស្រួលទទួលបាននៅទូទាំងកម្ពុជា។ ខ្មែរវ័ន ប្រមូលផ្ដុំកម្មវិធីសិក្សាជំនាញនៅកន្លែងតែមួយ ដើម្បីឱ្យសិស្ស និងគ្រូបង្រៀនអាចស្វែងយល់មុខវិជ្ជា អនុវត្តជំនាញ និងបង្កើតអ្វីដែលមានប្រយោជន៍សម្រាប់សហគមន៍។",
+    missionOffline: "សូមរកមើលស្លាក «អាចប្រើក្រៅបណ្ដាញ» ក្នុងបញ្ជីកម្មវិធី ដើម្បីស្វែងរកឧបករណ៍ដែលគាំទ្រការសិក្សាដោយគ្មានអ៊ីនធឺណិត។",
     search: "ស្វែងរកកម្មវិធី ប្រធានបទ ឬកម្រិតថ្នាក់", searchLabel: "ស្វែងរកកម្មវិធីសិក្សា",
     clear: "លុបពាក្យស្វែងរក", grade: "គ្រប់កម្រិតថ្នាក់", browse: "ស្វែងយល់ពីបណ្ដាញ",
     apps: "កម្មវិធី", app: "កម្មវិធី", all: "កម្មវិធីសិក្សាទាំងអស់",
@@ -95,6 +101,14 @@ const copy = {
     themeDark: "ប្ដូរទៅផ្ទៃងងឹត", themeLight: "ប្ដូរទៅផ្ទៃភ្លឺ", language: "ប្ដូរភាសា",
   },
 };
+
+const heroBadges = [
+  { symbol: "🇰🇭", en: "Bilingual (Khmer / English)", km: "ពីរភាសា (ខ្មែរ / អង់គ្លេស)" },
+  { symbol: "⚡", en: "Offline-Ready Tools", km: "ឧបករណ៍អាចប្រើក្រៅបណ្ដាញ" },
+  { symbol: "🔬", en: "STEM & Computer Engineering", km: "ស្ទែម និងវិស្វកម្មកុំព្យូទ័រ" },
+  { symbol: "🏥", en: "Community Health & Literacy", km: "សុខភាព និងចំណេះដឹងសហគមន៍" },
+  { symbol: "💡", en: "Women's Enterprise", km: "សហគ្រិនភាពស្ត្រី" },
+];
 
 function matchesFilter(app: AppEntry, filter: FilterKey) {
   return filter === "all" || app.category === filter ||
@@ -218,8 +232,16 @@ export default function Home() {
     <main>
       <section className="hero wrap" aria-labelledby="hero-title">
         <div className="hero-panel">
-          <div className="hero-copy"><div className="eyebrow"><span className="eyebrow-line" />{t.eyebrow}</div><h1 id="hero-title">{t.title}</h1><p>{t.intro}</p><div className="hero-actions"><a className="hero-primary" href="#power-skills">{t.power}<ArrowUpRight size={18} aria-hidden="true" /></a><a className="hero-secondary" href="#directory">{t.explore}</a></div></div>
-          <div className="hero-decoration" aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="orbit-center"><BookOpenText strokeWidth={1.6} size={44} /></div><span className="orbit-node node-one"><HeartPulse size={19} /></span><span className="orbit-node node-two"><Globe2 size={19} /></span><span className="orbit-node node-three"><Languages size={19} /></span></div>
+          <div className="hero-copy">
+            <div className="eyebrow"><span className="eyebrow-line" aria-hidden="true" />{t.eyebrow}</div>
+            <h1 id="hero-title">{t.title}</h1>
+            <p>{t.intro}</p>
+            <ul className="hero-badges">{heroBadges.map((badge) => <li key={badge.en}><span aria-hidden="true">{badge.symbol}</span><span>{badge[locale]}</span></li>)}</ul>
+            <div className="hero-actions">
+              <a className="hero-primary" href="#apps">{t.explore}<ArrowUpRight size={18} aria-hidden="true" /></a>
+              <a className="hero-secondary" href="#mission">{t.mission}</a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -229,6 +251,7 @@ export default function Home() {
       <DengueHealthNotice locale={locale} />
 
       <section id="directory" className="directory wrap" aria-labelledby="directory-title">
+        <span id="apps" className="section-anchor" aria-hidden="true" />
         <div className="directory-toolbar">
           <div className="search-field" data-search-surface>
             <button type="button" className="search-focus-button" aria-label={t.searchLabel} onClick={() => searchRef.current?.focus()}><Search size={21} aria-hidden="true" /></button>
@@ -263,6 +286,12 @@ export default function Home() {
             <div className="card-bottom">{app.url ? <a className="launch-button" href={app.url} target="_blank" rel="noopener noreferrer" onClick={() => cyber.exploreApp(app.id)} aria-label={`${t.launch}: ${app.title[locale]}`}>{t.launch}<ArrowUpRight size={18} aria-hidden="true" /></a> : <span className="pending-button" title={t.linkInfo} aria-label={`${app.title[locale]}: ${t.linkInfo}`}>{t.pending}</span>}</div>
           </article>;
         })}</div> : showRelatedSearch ? <p className="related-only-note">{t.noAppMatches}</p> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>}
+      </section>
+      <section id="mission" className="mission-section wrap" aria-labelledby="mission-title">
+        <div className="mission-card">
+          <span className="mission-icon" aria-hidden="true"><GraduationCap size={28} /></span>
+          <div><h2 id="mission-title">{t.mission}</h2><p>{t.missionBody}</p><p className="mission-offline"><WifiOff size={18} aria-hidden="true" /><span>{t.missionOffline}</span></p></div>
+        </div>
       </section>
       <FuturePerspectiveBanner locale={locale} />
       <section className="museum-feature wrap" aria-label={t.museumConcept}>

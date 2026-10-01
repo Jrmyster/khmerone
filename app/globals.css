@@ -233,25 +233,30 @@ h1, h2, h3, p { margin: 0; }
 @media (prefers-reduced-motion: reduce) { .palette-wheel, .paint-dollop.selected::after, .paint-dollop-core::after { animation: none; } .paint-dollop { transition: none; } }
 
 .hero { padding-top: 7px; padding-bottom: 30px; }
-.hero-panel { min-height: 256px; position: relative; display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 22px 46px; overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: linear-gradient(112deg, color-mix(in srgb, var(--accent-primary) 11%, transparent), transparent 50%), var(--surface); box-shadow: var(--glass-shadow); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.hero-panel { min-height: 400px; position: relative; display: flex; align-items: center; padding: 32px 46px; overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--accent-primary) 14%, transparent), transparent 60%), linear-gradient(112deg, color-mix(in srgb, var(--accent-primary) 7%, transparent), transparent 50%), var(--surface-strong); box-shadow: var(--glass-shadow); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
 .hero-panel::after { content: ""; position: absolute; top: 17px; right: 17px; width: 31px; height: 31px; border-top: 1px solid var(--cyan); border-right: 1px solid var(--cyan); opacity: .55; }
-.hero-copy { max-width: 760px; position: relative; z-index: 1; padding: 20px 0; }
+.hero-copy { width: 100%; max-width: 980px; position: relative; z-index: 1; }
 .eyebrow, .section-index { color: var(--amber); font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
 .eyebrow { display: flex; align-items: center; gap: 12px; }
-.eyebrow-line { width: 28px; height: 2px; background: var(--cyan); box-shadow: 0 0 10px color-mix(in srgb, var(--accent-primary) 45%, transparent); }
-.hero h1 { margin: 13px 0 13px; font-size: clamp(36px, 4.8vw, 62px); line-height: 1.15; letter-spacing: -.045em; font-weight: 800; color: var(--text); text-shadow: 0 0 13px color-mix(in srgb, var(--accent-primary) 19%, transparent); }
-.hero p { max-width: 620px; color: var(--muted); font-size: 18px; line-height: 1.55; }
-.khmer .hero h1 { letter-spacing: 0; line-height: 1.42; font-size: clamp(30px, 4vw, 50px); }
-.hero-decoration { width: 280px; height: 220px; position: relative; flex: none; margin-right: 12px; }
-.orbit { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); border: 1px solid var(--line); border-radius: 50%; }
-.orbit-one { width: 154px; height: 154px; }
-.orbit-two { width: 224px; height: 224px; border-style: dashed; }
-.orbit-center, .orbit-node { position: absolute; display: grid; place-items: center; border: 1px solid var(--line-strong); border-radius: 50%; background: var(--surface-strong); color: var(--cyan); box-shadow: 0 0 20px color-mix(in srgb, var(--accent-primary) 12%, transparent); }
-.orbit-center { width: 90px; height: 90px; left: calc(50% - 45px); top: calc(50% - 45px); }
-.orbit-node { width: 43px; height: 43px; color: var(--amber); }
-.node-one { left: 9px; top: 37px; }
-.node-two { right: 9px; top: 34px; }
-.node-three { right: 35px; bottom: 1px; }
+.eyebrow-line { width: 28px; height: 2px; flex: none; background: var(--cyan); box-shadow: 0 0 10px color-mix(in srgb, var(--accent-primary) 45%, transparent); }
+.hero h1 { max-width: 940px; margin: 16px 0; font-size: clamp(28px, 3.5vw, 46px); line-height: 1.18; letter-spacing: -.035em; font-weight: 800; color: var(--text); text-wrap: balance; text-shadow: 0 0 13px color-mix(in srgb, var(--accent-primary) 19%, transparent); }
+.hero p { max-width: 870px; color: var(--muted); font-size: 17px; line-height: 1.65; }
+.khmer .hero h1 { letter-spacing: 0; line-height: 1.5; font-size: clamp(26px, 3vw, 39px); }
+.khmer .hero .eyebrow { letter-spacing: 0; line-height: 1.7; }
+.hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; }
+.hero-badges li { display: flex; align-items: center; gap: 7px; max-width: 100%; padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--text); font-size: 13px; font-weight: 600; line-height: 1.5; }
+.hero-badges li > span:first-child { flex: none; }
+.khmer .hero-badges li { font-size: 15px; line-height: 1.7; }
+.directory { position: relative; }
+.section-anchor { position: absolute; top: 0; left: 0; scroll-margin-top: 22px; }
+.mission-section { scroll-margin-top: 24px; padding-bottom: 30px; }
+.mission-card { display: flex; align-items: flex-start; gap: 18px; padding: 28px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface-strong); box-shadow: var(--glass-shadow); }
+.mission-icon { display: grid; place-items: center; flex: none; width: 52px; height: 52px; border: 1px solid var(--line); border-radius: 14px; background: var(--cyan-soft); color: var(--cyan); }
+.mission-card h2 { margin-bottom: 10px; color: var(--text); font-size: 25px; line-height: 1.4; }
+.mission-card p { max-width: 880px; color: var(--muted); font-size: 16px; line-height: 1.7; }
+.mission-card .mission-offline { display: flex; align-items: flex-start; gap: 10px; margin-top: 16px; }
+.mission-offline svg { flex: none; margin-top: 4px; color: var(--cyan); }
+.khmer .mission-card h2, .khmer .mission-card p { letter-spacing: 0; line-height: 1.7; }
 
 .directory { padding-bottom: 58px; }
 .directory-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 12px; }
@@ -407,9 +412,6 @@ h1, h2, h3, p { margin: 0; }
   .app-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .app-card { min-height: 415px; padding: 24px; }
 }
-@media (max-width: 950px) {
-  .hero-decoration { transform: scale(.8); margin-right: -20px; }
-}
 @media (max-width: 680px) {
   .wrap { padding-left: 18px; padding-right: 18px; }
   .main-header { height: 70px; }
@@ -421,9 +423,15 @@ h1, h2, h3, p { margin: 0; }
   .hero { padding-top: 4px; padding-bottom: 25px; }
   .hero-panel { min-height: 0; padding: 26px 22px; }
   .hero-copy { padding: 0; }
-  .hero-decoration { display: none; }
-  .hero h1 { font-size: 38px; }
+  .hero h1 { font-size: 28px; }
   .hero p { font-size: 16px; }
+  .hero-badges { gap: 7px; margin-top: 18px; }
+  .hero-badges li { padding: 6px 10px; font-size: 12px; }
+  .hero-actions a { flex: 1 1 100%; }
+  .mission-card { display: block; padding: 22px 18px; }
+  .mission-icon { margin-bottom: 14px; }
+  .mission-card h2 { font-size: 23px; }
+  .mission-card p { font-size: 15px; }
   .directory-toolbar { grid-template-columns: 1fr; }
   .grade-field { min-height: 52px; }
   .filter-row { flex-wrap: nowrap; overflow-x: auto; margin: 16px -18px 28px; padding: 0 18px 4px; scrollbar-width: none; }
@@ -439,7 +447,7 @@ h1, h2, h3, p { margin: 0; }
 }
 @media (max-width: 390px) {
   .language-button span { font-size: 13px; }
-  .hero h1 { font-size: 33px; }
+  .hero h1 { font-size: 26px; }
   .directory-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -800,7 +808,7 @@ h1, h2, h3, p { margin: 0; }
   .brand { font-size: 18px; gap: 6px; }
   .angkor-icon { width: 37px; height: 34px; }
   .language-button { right: 12px; gap: 5px; padding: 0 7px; }
-  .hero h1 { font-size: 31px; }
+  .hero h1 { font-size: 24px; }
   .movie-promo-inner { grid-template-columns: 46px minmax(0, 1fr) 44px; gap: 6px; }
   .movie-poster { width: 46px; height: 72px; }
 }
