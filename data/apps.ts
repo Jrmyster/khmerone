@@ -220,4 +220,23 @@ export const apps: AppEntry[] = [
     tags: ["Srey Samrath", "Srey Enterprise", "ស្រីសមត្ថភាព", "women", "girls", "STEM", "mentorship", "role models", "logic", "micro-business", "cashflow", "profit", "pricing", "KHR", "USD", "KHQR", "digital marketing", "scholarships", "business", "អាជីវកម្ម", "ស្ត្រី"],
     icon: "enterprise", url: "https://srey-enterprise.jaredrobertw.workers.dev/", offlineReady: true,
   },
+  {
+    id: "teacher-toolkit",
+    title: { en: "Teacher Toolkit Cambodia", km: "ឧបករណ៍ជំនួយគ្រូបង្រៀនកម្ពុជា" },
+    category: AppCategory.Utilities,
+    categoryLabel: { en: "Teaching & classroom tools", km: "ឧបករណ៍បង្រៀន និងថ្នាក់រៀន" },
+    tagline: { en: "Create, adapt, and print bilingual classroom materials.", km: "បង្កើត កែសម្រួល និងបោះពុម្ពសម្ភារៈក្នុងថ្នាក់ពីរភាសា។" },
+    description: { en: "Editable lesson plans, worksheets, quizzes, rubrics, and low-resource activities for English, mathematics, and science. Save drafts locally and download the toolkit for offline use.", km: "ផែនការមេរៀន សន្លឹកកិច្ចការ សំណួរតេស្ត តារាងវាយតម្លៃ និងសកម្មភាពប្រើសម្ភារៈតិច សម្រាប់ភាសាអង់គ្លេស គណិតវិទ្យា និងវិទ្យាសាស្ត្រ។ រក្សាទុកសេចក្ដីព្រាងលើឧបករណ៍ និងទាញយកឧបករណ៍សម្រាប់ប្រើក្រៅបណ្ដាញ។" },
+    audience: { en: "Teachers, educators & volunteers", km: "គ្រូបង្រៀន អ្នកអប់រំ និងអ្នកស្ម័គ្រចិត្ត" },
+    grades: ["primary", "lower-secondary", "high-school", "vocational-adult"],
+    gradeBadge: { en: "For teachers · all grades", km: "សម្រាប់គ្រូ · គ្រប់ថ្នាក់" },
+    hasBilingualToggle: true,
+    features: [
+      { en: "Five editable resource types", km: "ធនធានប្រាំប្រភេទដែលអាចកែសម្រួលបាន" },
+      { en: "Print / Save as PDF and answer keys", km: "បោះពុម្ព / រក្សាទុកជា PDF និងចម្លើយ" },
+      { en: "Local drafts and offline download", km: "សេចក្ដីព្រាងលើឧបករណ៍ និងការទាញយកក្រៅបណ្ដាញ" },
+    ],
+    tags: ["teacher", "toolkit", "lesson plans", "worksheets", "quizzes", "rubrics", "classroom", "English", "mathematics", "science", "present simple", "school vocabulary", "fractions", "percentages", "circuits", "Ohm's law", "water cycle", "print", "PDF", "offline", "គ្រូបង្រៀន", "ផែនការមេរៀន", "សន្លឹកកិច្ចការ"],
+    icon: "school", url: "/teacher-toolkit", offlineReady: true,
+  },
 ];

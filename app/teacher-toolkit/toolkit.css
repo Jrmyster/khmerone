@@ -1,0 +1,81 @@
+.toolkit-shell { position: relative; z-index: 1; min-height: 100dvh; color: var(--text); background: color-mix(in srgb, var(--canvas) 92%, transparent); }
+.toolkit-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 90px; padding-top: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.toolkit-home { display: flex; align-items: center; gap: 10px; color: var(--text); font-size: 20px; font-weight: 800; text-decoration: none; }
+.toolkit-home > svg { color: var(--amber); flex: none; }
+.toolkit-home small { display: block; color: var(--muted); font-size: 13px; line-height: 1.6; font-weight: 500; }
+.toolkit-header-controls, .toolkit-language { display: flex; align-items: center; gap: 8px; }
+.toolkit-header-controls .background-audio-button { padding: 0; display: grid; }
+.toolkit-language { gap: 3px; padding: 3px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.toolkit-shell button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 9px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-strong); color: var(--text); font-size: 14px; font-weight: 700; }
+.toolkit-shell button:hover { border-color: var(--cyan); box-shadow: var(--hover-glow); }
+.toolkit-shell button:active { transform: scale(.97); }
+.toolkit-shell button:disabled { opacity: .6; cursor: wait; }
+.toolkit-language button { min-width: 48px; padding: 6px 9px; border: 0; background: transparent; }
+.toolkit-shell button[aria-pressed="true"] { color: var(--cyan); border-color: var(--cyan); background: var(--cyan-soft); }
+.toolkit-main { padding-top: 30px; padding-bottom: 36px; }
+.toolkit-kicker { color: var(--amber); font-size: 14px; font-weight: 700; }
+.toolkit-intro h1 { margin: 10px 0; max-width: 850px; font-size: clamp(28px, 3.5vw, 42px); line-height: 1.3; letter-spacing: -.025em; }
+.toolkit-intro p { max-width: 800px; font-size: 16px; line-height: 1.7; color: var(--muted); }
+.toolkit-workspace { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 24px; margin-top: 26px; align-items: start; }
+.toolkit-setup { padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface-strong); }
+.toolkit-setup h2, .toolkit-output-toolbar h2 { display: flex; align-items: center; gap: 9px; font-size: 19px; line-height: 1.5; }
+.toolkit-setup h2 { margin-bottom: 20px; }
+.toolkit-setup label { display: grid; gap: 7px; margin-bottom: 16px; min-width: 0; }
+.toolkit-setup label > span, .toolkit-editor > span { font-size: 14px; font-weight: 700; }
+.toolkit-setup :is(input, select, textarea), .toolkit-editor textarea { width: 100%; min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--text); font: inherit; font-size: 16px; line-height: 1.65; }
+.toolkit-setup textarea, .toolkit-editor textarea { resize: vertical; }
+.toolkit-setup input::placeholder, .toolkit-setup textarea::placeholder { color: var(--muted); opacity: 1; }
+.toolkit-setup option { color: var(--text); background: var(--surface-strong); }
+.toolkit-setup label small, .toolkit-small { color: var(--muted); font-size: 13px; line-height: 1.65; }
+.toolkit-fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.toolkit-save { display: flex; align-items: flex-start; gap: 7px; color: var(--cyan); font-size: 14px; line-height: 1.6; margin-top: 20px; }
+.toolkit-save svg { flex: none; margin-top: 3px; }
+.toolkit-small { margin-top: 7px; }
+.toolkit-offline { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+.toolkit-offline > svg { color: var(--amber); margin-bottom: 7px; }
+.toolkit-offline p { color: var(--muted); font-size: 14px; line-height: 1.65; }
+.toolkit-offline button { width: 100%; margin: 12px 0 8px; }
+.toolkit-offline p[role="status"] { color: var(--cyan); }
+.toolkit-output { min-width: 0; }
+.toolkit-resource-picker { padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface-strong); }
+.toolkit-resource-picker h2 { margin-bottom: 12px; font-size: 16px; }
+.toolkit-resource-picker > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.toolkit-output-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin: 22px 0 14px; }
+.toolkit-output-toolbar > div { display: flex; gap: 8px; flex-wrap: wrap; }
+.toolkit-custom-note { margin: 0 0 12px; padding: 12px; border-left: 3px solid var(--amber); background: var(--surface); color: var(--muted); font-size: 14px; line-height: 1.7; }
+.toolkit-editor { display: grid; gap: 8px; margin-bottom: 18px; }
+.toolkit-paper { background: #fff; color: #182631; padding: clamp(20px, 3vw, 38px); border-radius: 6px; border: 1px solid #d7dfe6; box-shadow: 0 12px 32px rgba(0,0,0,.2); }
+.toolkit-paper-header { border-bottom: 2px solid #0d6974; padding-bottom: 18px; margin-bottom: 24px; }
+.toolkit-paper-header > span { color: #0d6974; font-size: 12px; line-height: 1.7; font-weight: 800; }
+.toolkit-paper h2 { margin: 10px 0; font-size: 26px; line-height: 1.45; overflow-wrap: anywhere; }
+.toolkit-paper-header p { font-size: 14px; line-height: 1.7; color: #44586a; }
+.toolkit-paper-body, .toolkit-answer-key > div { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 16px; line-height: 1.8; }
+.toolkit-paper footer { margin-top: 28px; padding-top: 12px; border-top: 1px solid #d7dfe6; color: #44586a; font-size: 12px; line-height: 1.7; }
+.toolkit-answer-key { margin-top: 34px; padding-top: 20px; border-top: 2px solid #0d6974; }
+.toolkit-answer-key h3 { font-size: 22px; line-height: 1.6; }
+.toolkit-answer-key > p { color: #44586a; font-size: 14px; line-height: 1.7; margin: 8px 0 18px; }
+.toolkit-export-controls { margin-top: 20px; }
+.toolkit-answer-toggle { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 15px; cursor: pointer; }
+.toolkit-answer-toggle input { width: 20px; height: 20px; accent-color: var(--cyan-action); }
+.toolkit-export-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.toolkit-shell .toolkit-primary { background: var(--accent-gradient); color: var(--cyan-ink); border-color: var(--cyan-action); }
+.toolkit-export-controls > p { margin-top: 12px; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.toolkit-footer { margin-top: 30px; display: flex; gap: 20px; justify-content: space-between; align-items: flex-start; border-top: 1px solid var(--line); padding-top: 20px; }
+.toolkit-footer p { max-width: 870px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.toolkit-footer a { min-height: 44px; display: inline-flex; align-items: center; color: var(--cyan); white-space: nowrap; }
+.toolkit-spinner { animation: ambient-audio-spin 1s linear infinite; }
+.toolkit-shell.khmer :is(h1,h2,h3,p,label,button) { letter-spacing: 0; line-height: 1.7; }
+.toolkit-shell.khmer .toolkit-paper-body, .toolkit-shell.khmer .toolkit-answer-key > div { line-height: 1.95; }
+@media (max-width: 880px) { .toolkit-workspace { grid-template-columns: 1fr; } .toolkit-setup { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; } .toolkit-setup > :is(h2,.toolkit-save,.toolkit-small,.toolkit-offline) { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .toolkit-header { flex-wrap: wrap; gap: 12px; } .toolkit-header-controls { margin-left: auto; } .toolkit-main { padding-top: 22px; } .toolkit-setup { display: block; padding: 18px; } .toolkit-paper h2 { font-size: 23px; } .toolkit-resource-picker > div { display: grid; grid-template-columns: 1fr 1fr; } .toolkit-resource-picker button { padding: 8px; } .toolkit-export-actions button { width: 100%; } .toolkit-footer { flex-direction: column; gap: 8px; } }
+@media print {
+  @page { size: A4; margin: 16mm; }
+  html, body { background: #fff !important; color: #182631 !important; }
+  body > :not(.toolkit-shell), .cosmic-jungle-background, .background-audio, .toolkit-header, .toolkit-intro, .toolkit-setup, .toolkit-resource-picker, .toolkit-output-toolbar, .toolkit-custom-note, .toolkit-editor, .toolkit-export-controls, .toolkit-footer { display: none !important; }
+  .toolkit-shell, .toolkit-main, .toolkit-workspace, .toolkit-output { display: block; background: #fff; margin: 0; padding: 0; width: 100%; max-width: none; min-height: 0; }
+  .toolkit-paper { border: 0; border-radius: 0; padding: 0; box-shadow: none; }
+  .toolkit-paper-header { break-after: avoid; }
+  .toolkit-paper h2, .toolkit-answer-key h3 { break-after: avoid; }
+  .toolkit-answer-key { break-before: page; }
+  .toolkit-paper-body, .toolkit-answer-key > div { font-size: 11pt; }
+}
