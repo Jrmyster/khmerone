@@ -368,8 +368,8 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
         <path d="M57 105L64 105L67 118L61 123L56 119Z" fill="#b91c1c" stroke="#f87171" strokeWidth="1" strokeLinejoin="round"/>
         <path d="M54 101L58 98L64 101L62 107L57 107Z" fill="#ef4444" stroke="#fca5a5" strokeWidth="1" strokeLinejoin="round"/>
         <path d="M60 108L63 118" stroke="#fca5a5" strokeWidth="1" opacity=".75"/>
-        <rect x="31" y="106" width="24" height="15" rx="4" fill="#fbbf24" stroke="#fde68a" strokeWidth="1"/>
-        <text x="43" y="116" fill="#0b2131" fontFamily="system-ui, sans-serif" fontSize="6.5" fontWeight="800" textAnchor="middle" textLength="20" lengthAdjust="spacingAndGlyphs">Rasmey</text>
+        <rect x="25" y="104" width="32" height="18" rx="4" fill="#fbbf24" stroke="#fde68a" strokeWidth="1"/>
+        <text x="41" y="116" fill="#0b2131" fontFamily="system-ui, sans-serif" fontSize="8.5" fontWeight="800" textAnchor="middle" textLength="28" lengthAdjust="spacingAndGlyphs">Rasmey</text>
         <path d="M40 124v3m32-3v3" stroke="var(--accent-primary)" strokeWidth="4" strokeLinecap="round"/>
         <path className="bot-spark" d="M9 29v6m-3-3h6M99 20v6m-3-3h6" fill="none" stroke="var(--accent-primary)" strokeWidth="1.6" strokeLinecap="round"/>
         <BotCareerGear />

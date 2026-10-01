@@ -69,8 +69,8 @@ export function BotCareerGear() {
       <path d="M41 94Q35 111 45 114Q55 111 49 99M69 94Q76 108 68 112L65 119" fill="none" stroke="#0e7490" strokeWidth="2" strokeLinecap="round"/>
       <circle cx="65" cy="120" r="4" fill="url(#bot-tool-metal)" stroke="#38bdf8" strokeWidth="1.5"/>
       <circle cx="41" cy="94" r="1.5" fill="#334155"/><circle cx="69" cy="94" r="1.5" fill="#334155"/>
-      <rect x="29" y="113" width="20" height="10" rx="2" fill="#fbbf24" stroke="#fde68a"/>
-      <text x="39" y="120" fill="#0b2131" fontFamily="system-ui, sans-serif" fontSize="5.5" fontWeight="800" textAnchor="middle" textLength="16" lengthAdjust="spacingAndGlyphs">Rasmey</text>
+      <rect x="26" y="111" width="28" height="13" rx="2" fill="#fbbf24" stroke="#fde68a"/>
+      <text x="40" y="120" fill="#0b2131" fontFamily="system-ui, sans-serif" fontSize="7.8" fontWeight="800" textAnchor="middle" textLength="24" lengthAdjust="spacingAndGlyphs">Rasmey</text>
       <path d="M73 115h7v8h-7Z" fill="none" stroke="#94a3b8"/>
     </g>
     <g className="bot-doctor-pulse">

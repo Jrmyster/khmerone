@@ -17,15 +17,15 @@
 .bot-flying .bot-jet-particle { animation: bot-thrust-particle .55s linear infinite; }
 .bot-flying .bot-jet-particle-second { animation-delay: -.18s; }
 .bot-flying .bot-jet-particle-third { animation-delay: -.36s; }
-.helper-bot[data-side="left"] .bot-bubble, .helper-bot[data-side="left"] .bot-drawer { right: auto; left: 102px; }
+.helper-bot[data-side="left"] .bot-bubble, .helper-bot[data-side="left"] .bot-drawer { right: auto; left: calc(var(--bot-width) - 10px); }
 body:has(.helper-bot[data-side="left"]) .back-to-top { left: auto; right: calc(20px + env(safe-area-inset-right)); }
 /* Keep the existing floating search clear throughout the whole horizontal trip. */
 @media (min-width: 901px) {
-  .has-floating-search .helper-bot { bottom: calc(94px + env(safe-area-inset-bottom)); }
-  .has-floating-search.promo-active .helper-bot { bottom: calc(220px + env(safe-area-inset-bottom)); }
+  .has-floating-search .helper-bot { bottom: calc(118px + env(safe-area-inset-bottom)); }
+  .has-floating-search.promo-active .helper-bot { bottom: calc(244px + env(safe-area-inset-bottom)); }
 }
 @media (max-width: 680px) {
-  .bot-flight-boundary { left: calc(12px + env(safe-area-inset-left)); right: calc(12px + env(safe-area-inset-right)); }
+  .bot-flight-boundary { left: calc(16px + env(safe-area-inset-left)); right: calc(16px + env(safe-area-inset-right)); }
   .helper-bot[data-side="left"] .bot-bubble, .helper-bot[data-side="left"] .bot-drawer { left: 0; right: auto; }
   body:has(.helper-bot[data-side="left"]) .back-to-top { right: calc(16px + env(safe-area-inset-right)); }
 }
