@@ -60,17 +60,23 @@ self.addEventListener("fetch", (event) => {
   if (request.method === "GET" && url.origin === self.location.origin && request.mode === "navigate" && url.pathname.replace(/\/$/, "") === "/teacher-toolkit" && !request.headers.has("Authorization")) {
     event.respondWith((async () => {
       try { const response = await fetch(request); if (response.ok) return response; } catch { /* Use the prepared copy. */ }
-      const cache = await caches.open(TOOLKIT_CACHE);
-      return await cache.match("/teacher-toolkit") || new Response("Open Teacher Toolkit while online and choose Make available offline first.", { status: 503, headers: { "Content-Type": "text/plain;charset=utf-8" } });
+      try {
+        const cache = await caches.open(TOOLKIT_CACHE);
+        const cached = await cache.match("/teacher-toolkit");
+        if (cached) return cached;
+      } catch { /* Storage may be unavailable. */ }
+      return new Response("Open Teacher Toolkit while online and choose Make available offline first.", { status: 503, headers: { "Content-Type": "text/plain;charset=utf-8" } });
     })());
     return;
   }
 
   if (request.method === "GET" && url.origin === self.location.origin && !url.search && isToolkitAsset(url.pathname) && !request.headers.has("Authorization") && !request.headers.has("Range")) {
     event.respondWith((async () => {
-      const cache = await caches.open(TOOLKIT_CACHE);
-      const cached = await cache.match(request);
-      if (cached) return cached;
+      try {
+        const cache = await caches.open(TOOLKIT_CACHE);
+        const cached = await cache.match(request);
+        if (cached) return cached;
+      } catch { /* Online use must still work when cache storage is blocked. */ }
       return fetch(request);
     })());
     return;

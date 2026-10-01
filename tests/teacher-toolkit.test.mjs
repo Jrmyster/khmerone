@@ -99,3 +99,11 @@ test("offline preparation stores its HTML only after all assets succeed", async 
     }
   }
 });
+
+test("static scripts continue loading online when cache storage is blocked", async () => {
+  const harness = workerHarness();
+  harness.context.caches.open = async () => { throw new Error("storage blocked"); };
+  let response;
+  harness.handlers.fetch({ request: { url: "https://example.test/assets/app.js", method: "GET", mode: "cors", headers: new Headers() }, respondWith: (promise) => { response = promise; } });
+  assert.equal(await (await response).text(), "asset");
+});
