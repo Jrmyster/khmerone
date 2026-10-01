@@ -199,7 +199,7 @@ export const apps: AppEntry[] = [
       { en: "Build-your-first-PC challenge", km: "លំហាត់ដំឡើងកុំព្យូទ័រដំបូងរបស់អ្នក" },
     ],
     tags: ["hardware", "PC components", "CPU", "RAM", "GPU", "binary", "logic gates", "circuits", "voltage", "current", "resistance", "computer engineering", "electrical engineering", "STEM", "Khmer Tech Lab", "កុំព្យូទ័រ", "អគ្គិសនី"],
-    icon: "lab", url: "https://khmer-tech-lab.jrmyster7.chatgpt.site/", offlineReady: false,
+    icon: "lab", url: "https://khmerlabtech.jaredrobertw.workers.dev/", offlineReady: false,
   },
   {
     id: "srey-enterprise",
@@ -218,6 +218,6 @@ export const apps: AppEntry[] = [
       { en: "Offline lessons & locally saved progress", km: "មេរៀនក្រៅបណ្ដាញ និងការរក្សាទុកវឌ្ឍនភាពនៅលើឧបករណ៍" },
     ],
     tags: ["Srey Samrath", "Srey Enterprise", "ស្រីសមត្ថភាព", "women", "girls", "STEM", "mentorship", "role models", "logic", "micro-business", "cashflow", "profit", "pricing", "KHR", "USD", "KHQR", "digital marketing", "scholarships", "business", "អាជីវកម្ម", "ស្ត្រី"],
-    icon: "enterprise", url: "https://srey-samrath.jrmyster7.chatgpt.site/", offlineReady: true,
+    icon: "enterprise", url: "https://srey-enterprise.jaredrobertw.workers.dev/", offlineReady: true,
   },
 ];
