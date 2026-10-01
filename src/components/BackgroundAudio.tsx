@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { LoaderCircle, Volume2, VolumeX } from "lucide-react";
 
 const STORAGE_KEY = "khmerone-background-audio";
@@ -8,15 +9,15 @@ const TARGET_VOLUME = 0.2;
 const FADE_SECONDS = 1.5;
 const labels = {
   en: {
-    play: "Play ambient music",
-    pause: "Pause ambient music",
+    play: "Play Ambient Music",
+    pause: "Mute",
     resume: "Resume ambient music",
     loading: "Cancel music loading",
     error: "Music could not start. Tap the music button to try again.",
   },
   km: {
     play: "បើកតន្ត្រីផ្ទៃខាងក្រោយ",
-    pause: "ផ្អាកតន្ត្រីផ្ទៃខាងក្រោយ",
+    pause: "បិទសំឡេង",
     resume: "បន្តតន្ត្រីផ្ទៃខាងក្រោយ",
     loading: "បោះបង់ការផ្ទុកតន្ត្រី",
     error:
@@ -37,6 +38,24 @@ export function BackgroundAudio() {
   const [preferredPlaying, setPreferredPlaying] = useState(false);
   const [error, setError] = useState(false);
   const [locale, setLocale] = useState<"en" | "km">("en");
+  const [controlHost, setControlHost] = useState<HTMLElement | null>(null);
+
+  // Only the control moves into the header. The audio element stays in the layout.
+  useEffect(() => {
+    let host: HTMLElement | null = null;
+    const syncHost = () => {
+      if (host?.isConnected) return;
+      const nextHost = document.getElementById("background-audio-controls");
+      if (nextHost !== host) {
+        host = nextHost;
+        setControlHost(nextHost);
+      }
+    };
+    syncHost();
+    const observer = new MutationObserver(syncHost);
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
 
   function cancelFade() {
     if (fadeRef.current !== null) cancelAnimationFrame(fadeRef.current);
@@ -179,25 +198,8 @@ export function BackgroundAudio() {
       : preferredPlaying
         ? t.resume
         : t.play;
-  return (
-    <div className="background-audio">
-      <audio
-        ref={audioRef}
-        src="/audio/buddhist-harmony.mp3"
-        loop={true}
-        preload="none"
-        muted={!playing && !loading}
-        hidden
-        onPause={() => {
-          if (audioRef.current?.paused && wantsPlayback.current) pause();
-        }}
-        onError={() => {
-          if (wantsPlayback.current) {
-            pause();
-            setError(true);
-          }
-        }}
-      />
+  const controls = (
+    <div className={`background-audio ${controlHost ? "is-header" : "is-fallback"}`}>
       <button
         type="button"
         className={`background-audio-button ${playing ? "is-playing" : ""}`}
@@ -231,4 +233,24 @@ export function BackgroundAudio() {
       )}
     </div>
   );
+  return <>
+    <audio
+      ref={audioRef}
+      src="/audio/buddhist-harmony.mp3"
+      loop={true}
+      preload="none"
+      muted={!playing && !loading}
+      hidden
+      onPause={() => {
+        if (audioRef.current?.paused && wantsPlayback.current) pause();
+      }}
+      onError={() => {
+        if (wantsPlayback.current) {
+          pause();
+          setError(true);
+        }
+      }}
+    />
+    {controlHost ? createPortal(controls, controlHost) : controls}
+  </>;
 }
