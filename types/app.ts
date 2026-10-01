@@ -9,10 +9,11 @@ export enum AppCategory {
   Simulations = "simulations",
   SocialStudies = "social-studies",
   Utilities = "utilities",
+  WomenEnterprise = "women-enterprise",
 }
 
 export type GradeLevel = "primary" | "lower-secondary" | "high-school" | "vocational-adult";
-export type AppIcon = "school" | "anatomy" | "finance" | "language" | "exam" | "baby" | "world" | "peace" | "speed" | "cancer" | "lab";
+export type AppIcon = "school" | "anatomy" | "finance" | "language" | "exam" | "baby" | "world" | "peace" | "speed" | "cancer" | "lab" | "enterprise";
 
 export interface AppEntry {
   id: string;

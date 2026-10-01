@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ArrowUpRight, Baby, BookOpenText, Check, ClipboardCheck, Coins, Cpu, Globe2, GraduationCap, HeartPulse, Languages, Search, SlidersHorizontal, TriangleAlert, WifiOff, X, Zap, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Baby, BookOpenText, Check, ClipboardCheck, Coins, Cpu, Globe2, GraduationCap, HeartPulse, Languages, Search, SlidersHorizontal, Sparkles, TriangleAlert, WifiOff, X, Zap, type LucideIcon } from "lucide-react";
 import { apps, gradeLabels } from "@/data/apps";
 import { crewConcepts, pathways } from "@/data/engagement";
 import { searchAppCatalog, searchCrewConcepts, searchSkillPathways } from "@/utils/search";
@@ -37,7 +37,7 @@ function readSetting(key: string): string | null {
 
 const icons: Record<AppEntry["icon"], LucideIcon> = {
   school: GraduationCap, anatomy: HeartPulse, finance: Coins, language: Languages,
-  exam: ClipboardCheck, baby: Baby, world: Globe2, peace: BookOpenText, speed: Zap, cancer: HeartPulse, lab: Cpu,
+  exam: ClipboardCheck, baby: Baby, world: Globe2, peace: BookOpenText, speed: Zap, cancer: HeartPulse, lab: Cpu, enterprise: Sparkles,
 };
 
 const filters: { key: FilterKey; label: Record<Locale, string> }[] = [
@@ -48,6 +48,7 @@ const filters: { key: FilterKey; label: Record<Locale, string> }[] = [
   { key: AppCategory.Finance, label: { en: "Financial literacy", km: "ហិរញ្ញវត្ថុ" } },
   { key: AppCategory.Simulations, label: { en: "Simulations", km: "ការក្លែងធ្វើ" } },
   { key: AppCategory.Utilities, label: { en: "Utilities", km: "ឧបករណ៍សិក្សា" } },
+  { key: AppCategory.WomenEnterprise, label: { en: "Women & enterprise", km: "ស្ត្រី និងសហគ្រិនភាព" } },
 ];
 
 const copy = {
@@ -61,7 +62,7 @@ const copy = {
     empty: "No apps match your search.", reset: "Clear filters",
     offline: "Offline ready", launch: "Open app", pending: "Link pending",
     linkInfo: "A public link has not been added yet.",
-    network: "Eleven learning spaces. One starting point.",
+    network: "Twelve learning spaces. One starting point.",
     healthNotice: "Health notice",
     matchingPaths: "Matching skill paths", matchingCrews: "Matching crews",
     noAppMatches: "No app cards match this search. Explore the related results above.",
@@ -82,7 +83,7 @@ const copy = {
     empty: "រកមិនឃើញកម្មវិធីដែលត្រូវនឹងការស្វែងរកទេ។", reset: "លុបតម្រង",
     offline: "អាចប្រើក្រៅបណ្ដាញ", launch: "បើកកម្មវិធី", pending: "រង់ចាំតំណ",
     linkInfo: "មិនទាន់មានតំណសាធារណៈទេ។",
-    network: "កន្លែងសិក្សាដប់មួយ។ ចាប់ផ្ដើមពីទីនេះ។",
+    network: "កន្លែងសិក្សាដប់ពីរ។ ចាប់ផ្ដើមពីទីនេះ។",
     healthNotice: "សេចក្ដីជូនដំណឹងអំពីសុខភាព",
     matchingPaths: "ជំនាញដែលត្រូវនឹងការស្វែងរក", matchingCrews: "ក្រុមដែលត្រូវនឹងការស្វែងរក",
     noAppMatches: "គ្មានកម្មវិធីដែលត្រូវនឹងការស្វែងរកទេ។ សូមមើលលទ្ធផលពាក់ព័ន្ធខាងលើ។",

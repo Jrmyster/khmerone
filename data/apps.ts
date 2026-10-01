@@ -201,4 +201,23 @@ export const apps: AppEntry[] = [
     tags: ["hardware", "PC components", "CPU", "RAM", "GPU", "binary", "logic gates", "circuits", "voltage", "current", "resistance", "computer engineering", "electrical engineering", "STEM", "Khmer Tech Lab", "កុំព្យូទ័រ", "អគ្គិសនី"],
     icon: "lab", url: "https://khmer-tech-lab.jrmyster7.chatgpt.site/", offlineReady: false,
   },
+  {
+    id: "srey-enterprise",
+    title: { en: "Srey Enterprise", km: "ស្រីសមត្ថភាព" },
+    category: AppCategory.WomenEnterprise,
+    categoryLabel: { en: "Women & enterprise", km: "ស្ត្រី និងសហគ្រិនភាព" },
+    tagline: { en: "Empowering young Cambodian women in STEM, digital tools, and business.", km: "ពង្រឹងសមត្ថភាពយុវនារីកម្ពុជាក្នុងវិស័យស្ទែម ឧបករណ៍ឌីជីថល និងអាជីវកម្ម។" },
+    description: { en: "A dual-track learning hub featuring interactive tech logic puzzles, female role model profiles, micro-business cashflow tools, and KHQR digital guides.", km: "មជ្ឈមណ្ឌលសិក្សាពីរផ្នែក មានល្បែងតក្កវិទ្យាបច្ចេកវិទ្យាអន្តរកម្ម ប្រវត្តិរូបស្ត្រីគំរូ ឧបករណ៍លំហូរសាច់ប្រាក់សម្រាប់អាជីវកម្មខ្នាតតូច និងមគ្គុទ្ទេសក៍ឌីជីថល KHQR។" },
+    audience: { en: "High school girls, vocational students & young women entrepreneurs", km: "សិស្សស្រីវិទ្យាល័យ សិស្សវិជ្ជាជីវៈ និងសហគ្រិនស្ត្រីវ័យក្មេង" },
+    grades: ["high-school", "vocational-adult"],
+    hasBilingualToggle: true,
+    features: [
+      { en: "STEM puzzles & female role models", km: "ល្បែងស្ទែម និងស្ត្រីគំរូ" },
+      { en: "Cashflow, profit & pricing calculators", km: "ឧបករណ៍គណនាលំហូរសាច់ប្រាក់ ប្រាក់ចំណេញ និងតម្លៃ" },
+      { en: "Digital marketing & KHQR guides", km: "មគ្គុទ្ទេសក៍ទីផ្សារឌីជីថល និង KHQR" },
+      { en: "Offline lessons & locally saved progress", km: "មេរៀនក្រៅបណ្ដាញ និងការរក្សាទុកវឌ្ឍនភាពនៅលើឧបករណ៍" },
+    ],
+    tags: ["Srey Samrath", "Srey Enterprise", "ស្រីសមត្ថភាព", "women", "girls", "STEM", "mentorship", "role models", "logic", "micro-business", "cashflow", "profit", "pricing", "KHR", "USD", "KHQR", "digital marketing", "scholarships", "business", "អាជីវកម្ម", "ស្ត្រី"],
+    icon: "enterprise", url: "https://srey-samrath.jrmyster7.chatgpt.site/", offlineReady: true,
+  },
 ];
