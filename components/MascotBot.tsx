@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Search, X } from "lucide-react";
 import { AppCategory, type FilterKey, type Locale } from "@/types/app";
-import { BOT_STUDY_BEATS, BOT_STUDY_INTERVAL, type BotStudyPhase } from "@/lib/bot-study";
+import { type BotCareerBeat } from "@/lib/bot-careers";
+import { useBotCareerLoop } from "@/hooks/useBotCareerLoop";
+import { BotCareerGear } from "@/components/BotCareerGear";
 import { BOT_FLIGHT_DURATION, BOT_FLIGHT_INTERVAL, type BotSide } from "@/lib/bot-flight";
-import "./bot-study.css";
+import "./bot-careers.css";
 import "./bot-flight.css";
 
 interface MascotBotProps {
@@ -47,7 +49,6 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
   const [showGreeting, setShowGreeting] = useState(false);
   const [lookingAtUser, setLookingAtUser] = useState(false);
   const [blinking, setBlinking] = useState(false);
-  const [studyPhase, setStudyPhase] = useState<BotStudyPhase>("idle");
   const [position, setPosition] = useState<BotSide>("right");
   const [isFlying, setIsFlying] = useState(false);
   const flying = useRef(false);
@@ -55,6 +56,9 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
   const boundaryRef = useRef<HTMLSpanElement>(null);
   const landFlight = useRef<() => void>(() => {});
   const studying = useRef(false);
+  const flightReady = useRef(true);
+  const pendingFlight = useRef(false);
+  const tryFlight = useRef<() => void>(() => {});
   const svgRef = useRef<SVGSVGElement>(null);
   const faceRef = useRef<SVGGElement>(null);
   const leftPupilRef = useRef<SVGGElement>(null);
@@ -66,6 +70,14 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
   const spinTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searching = query.trim().length > 0;
   const t = words[locale];
+  const onCareerBeat = useCallback((beat: BotCareerBeat) => {
+    studying.current = beat.phase !== "idle";
+    // Flights may start only between complete four-profession cycles.
+    flightReady.current = beat.stage === "idle";
+    wakeGaze.current();
+    if (flightReady.current && pendingFlight.current) tryFlight.current();
+  }, []);
+  const career = useBotCareerLoop(open || searching || isFlying, onCareerBeat);
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => setShowGreeting(true));
@@ -134,14 +146,16 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
     landFlight.current = land;
     const takeOff = () => {
       if (!allowed()) { restart(); return; }
+      if (flying.current) return;
+      if (!flightReady.current) { pendingFlight.current = true; return; }
       const bot = botRef.current;
       // Never move a control someone is hovering over or using with the keyboard.
       if (!bot || bot.matches(":hover") || bot.contains(document.activeElement)) return;
+      pendingFlight.current = false;
       clearTimeout(arrival);
       flying.current = true;
       setIsFlying(true);
       setPosition(current => current === "right" ? "left" : "right");
-      setStudyPhase("idle");
       setShowGreeting(false);
       setShowBubble(false);
       wakeGaze.current();
@@ -150,8 +164,10 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
     const restart = () => {
       clearInterval(interval);
       land();
+      pendingFlight.current = false;
       if (allowed()) interval = setInterval(takeOff, BOT_FLIGHT_INTERVAL);
     };
+    tryFlight.current = takeOff;
     restart();
     document.addEventListener("visibilitychange", restart);
     motion.addEventListener("change", restart);
@@ -161,62 +177,14 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
       clearInterval(interval);
       clearTimeout(arrival);
       flying.current = false;
+      pendingFlight.current = false;
+      tryFlight.current = () => {};
       landFlight.current = () => {};
       document.removeEventListener("visibilitychange", restart);
       motion.removeEventListener("change", restart);
       bot?.removeEventListener("focusin", land);
     };
   }, [open, searching]);
-
-  useEffect(() => {
-    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const timers = new Set<ReturnType<typeof setTimeout>>();
-    let interval: ReturnType<typeof setInterval> | undefined;
-    const allowed = () => !open && !searching && !isFlying && !flying.current && !document.hidden && !motion.matches;
-    const clearSequence = () => {
-      for (const timer of timers) clearTimeout(timer);
-      timers.clear();
-    };
-    const showPhase = (phase: BotStudyPhase) => {
-      studying.current = phase !== "idle";
-      setStudyPhase(phase);
-      wakeGaze.current();
-    };
-    const triggerAnimationSequence = () => {
-      clearSequence();
-      if (!allowed()) { restart(); return; }
-      showPhase(BOT_STUDY_BEATS[0].phase);
-      let elapsed = 0;
-      for (let index = 1; index < BOT_STUDY_BEATS.length; index++) {
-        elapsed += BOT_STUDY_BEATS[index - 1].duration;
-        const phase = BOT_STUDY_BEATS[index].phase;
-        const timer = setTimeout(() => {
-          timers.delete(timer);
-          if (allowed()) showPhase(phase);
-          else restart();
-        }, elapsed);
-        timers.add(timer);
-      }
-    };
-    const restart = () => {
-      clearInterval(interval);
-      clearSequence();
-      if (allowed()) {
-        triggerAnimationSequence();
-        interval = setInterval(triggerAnimationSequence, BOT_STUDY_INTERVAL);
-      } else showPhase("idle");
-    };
-    restart();
-    document.addEventListener("visibilitychange", restart);
-    motion.addEventListener("change", restart);
-    return () => {
-      clearInterval(interval);
-      clearSequence();
-      studying.current = false;
-      document.removeEventListener("visibilitychange", restart);
-      motion.removeEventListener("change", restart);
-    };
-  }, [open, searching, isFlying]);
 
   useEffect(() => {
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -325,7 +293,7 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
   };
 
   return <><span ref={boundaryRef} className="bot-flight-boundary" aria-hidden="true" />
-  <div ref={botRef} data-side={position} data-flying={isFlying} data-study-phase={studyPhase} className={`helper-bot fixed right-6 bottom-8 z-50 ${isFlying ? "bot-flying" : ""} ${searching ? "is-searching" : ""} ${lookingAtUser && studyPhase === "idle" && !isFlying ? "bot-looking" : ""}`}>
+  <div ref={botRef} data-side={position} data-flying={isFlying} data-career-stage={career.stage} data-career-phase={career.phase} className={`helper-bot fixed right-6 bottom-8 z-50 ${isFlying ? "bot-flying" : ""} ${searching ? "is-searching" : ""} ${lookingAtUser && career.phase === "idle" && !isFlying ? "bot-looking" : ""}`}>
     {showGreeting && !searching && !open && <div className="bot-bubble bot-greeting" role="status" lang="km"><p>សួស្តី</p></div>}
     {showBubble && searching && !open && <div className="bot-bubble rounded-2xl border border-cyan-500/30 bg-slate-900/90 p-3 text-cyan-200 shadow-lg backdrop-blur-md" role="status">
       <span className="bot-bubble-label">KHMERONE // SEARCH</span>
@@ -375,12 +343,12 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
           <ellipse cx="71.5" cy="54" rx="9" ry="10" fill="var(--accent-primary)" opacity=".34" filter="url(#bot-glow)"/>
           <circle cx="40.5" cy="54" r="9" fill="#102638" stroke="var(--accent-primary)" strokeWidth="1.4"/>
           <circle cx="71.5" cy="54" r="9" fill="#102638" stroke="var(--accent-primary)" strokeWidth="1.4"/>
-          <g className="bot-study-gaze"><g className={`bot-gaze ${blinking && studyPhase === "idle" ? "bot-gaze-blinking" : ""}`}>
+          <g className="bot-career-gaze"><g className={`bot-gaze ${blinking && career.phase === "idle" ? "bot-gaze-blinking" : ""}`}>
             <g ref={leftPupilRef} className="bot-pupil"><circle cx="40.5" cy="54" r="3.5" fill="var(--accent-primary)"/><circle cx="39.5" cy="52.8" r="1" fill="#fff" opacity=".9"/></g>
             <g ref={rightPupilRef} className="bot-pupil"><circle cx="71.5" cy="54" r="3.5" fill="var(--accent-primary)"/><circle cx="70.5" cy="52.8" r="1" fill="#fff" opacity=".9"/></g>
             <path className="bot-blink-line" d="M35 54h11m20 0h11" fill="none" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round"/>
           </g></g>
-          <path className="bot-mouth" d={studyPhase === "snap" || studyPhase === "satisfied" ? "M52 71a4 4 0 1 0 8 0a4 4 0 1 0-8 0" : "M45 69Q56 78 67 69"} fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round"/>
+          <path className="bot-mouth" d={career.phase === "snap" ? "M52 71a4 4 0 1 0 8 0a4 4 0 1 0-8 0" : "M45 69Q56 78 67 69"} fill="none" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round"/>
         </g>
         <g transform="rotate(-9 56 26)">
           <path d="M26 32Q29 14 52 12Q75 11 84 27L82 35Q56 30 29 37Z" fill="#875632" stroke="#c18a55" strokeWidth="1.8" strokeLinejoin="round"/>
@@ -403,26 +371,7 @@ export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusS
         <text x="43" y="117.3" fill="#f8fafc" fontFamily="system-ui, sans-serif" fontSize="10" fontWeight="800" textAnchor="middle">bot</text>
         <path d="M40 124v3m32-3v3" stroke="var(--accent-primary)" strokeWidth="4" strokeLinecap="round"/>
         <path className="bot-spark" d="M9 29v6m-3-3h6M99 20v6m-3-3h6" fill="none" stroke="var(--accent-primary)" strokeWidth="1.6" strokeLinecap="round"/>
-        <g className="bot-study-arm bot-study-arm-left"><image href="/bot-study/arm-left.webp" x="-3" y="64" width="37" height="36" /></g>
-        <g className="bot-study-arm bot-study-arm-right"><image href="/bot-study/arm-right.webp" x="78" y="64" width="37" height="36" /></g>
-        <g className="bot-study-book">
-          <g className="bot-book-closed">
-            <image href="/bot-study/book-closed.webp" x="34" y="68" width="46" height="54" />
-            <g transform="rotate(-8 57 91)" fill="#ffe4a0" textAnchor="middle" fontFamily="Georgia, serif" fontWeight="700" letterSpacing=".25">
-              <text x="58" y="86" fontSize="4.2">QUANTUM</text>
-              <text x="58" y="92" fontSize="3.6">MECHANICS</text>
-            </g>
-          </g>
-          <g className="bot-book-open">
-            <image href="/bot-study/book-open.webp" x="16" y="69" width="80" height="48" />
-            <g fill="#624322" textAnchor="middle" fontFamily="Georgia, serif" fontSize="4.1" fontWeight="700">
-              <text x="38" y="88" transform="rotate(7 38 88)">E=mc²</text>
-              <text x="75" y="94" transform="rotate(-7 75 94)">Ĥψ=Eψ</text>
-            </g>
-          </g>
-        </g>
-        <g className="bot-snap-dust"><image href="/bot-study/dust.webp" x="-4" y="65" width="28" height="24" /></g>
-        <text className="bot-snap-label" x="5" y="49" fill="#ffe8a5" stroke="#19364b" strokeWidth=".6" paintOrder="stroke" fontFamily="system-ui, sans-serif" fontSize="12" fontWeight="900" transform="rotate(-12 5 49)">snap!</text>
+        <BotCareerGear />
       </svg>
     </button>
   </div></>;

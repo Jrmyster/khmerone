@@ -1,0 +1,24 @@
+.dengue-notice { margin-top: 32px; margin-bottom: 28px; }
+.dengue-notice-card { position: relative; overflow: hidden; display: grid; grid-template-columns: 44px minmax(0,1fr); align-items: start; gap: 14px; padding: 20px; border: 1px solid color-mix(in srgb, var(--accent-primary) 40%, #34d399 20%); border-radius: 20px; background: var(--surface-strong); color: var(--text); box-shadow: 0 0 24px color-mix(in srgb, var(--accent-primary) 8%, transparent); }
+.dengue-notice-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at top left, rgba(16,185,129,.09), transparent 65%); }
+.dengue-notice-card > * { position: relative; }
+.dengue-notice-icon { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line-strong); border-radius: 13px; background: var(--cyan-soft); color: var(--cyan); }
+.dengue-notice-badge { display: block; margin-bottom: 6px; color: var(--cyan); font-size: 12px; font-weight: 800; line-height: 1.6; }
+.dengue-notice-copy h2 { margin: 0 0 8px; color: var(--text); font-size: clamp(18px,2vw,23px); line-height: 1.55; overflow-wrap: anywhere; }
+.dengue-notice-copy p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
+.dengue-notice-copy .dengue-notice-note { margin-top: 10px; color: var(--muted); font-size: 13px; }
+.khmer .dengue-notice-copy .dengue-notice-note { font-size: 15px; line-height: 1.8; }
+.dengue-notice-link { grid-column: 1 / -1; display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; padding: 12px 16px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--cyan-soft); color: var(--text); font-size: 15px; font-weight: 800; line-height: 1.6; text-decoration: none; text-align: center; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.dengue-notice-link svg { flex: none; color: var(--cyan); }
+.dengue-notice-link:hover { border-color: var(--cyan); box-shadow: var(--hover-glow); }
+.dengue-notice-link:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+.dengue-notice-link:active { transform: scale(.97); }
+@media (min-width: 960px) {
+  .dengue-notice-card { grid-template-columns: 48px minmax(0,1fr) minmax(220px,270px); align-items: center; gap: 22px; padding: 26px; }
+  .dengue-notice-link { grid-column: auto; }
+}
+@media (max-width: 380px) {
+  .dengue-notice-card { gap: 12px; padding: 16px; }
+  .dengue-notice-copy { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { .dengue-notice-link { transition: none; } }

@@ -19,6 +19,7 @@ import { PowerSkillsDashboard } from "@/components/PowerSkillsDashboard";
 import { CrewDirectory } from "@/components/CrewDirectory";
 import { DonationNotice } from "@/components/DonationNotice";
 import { FuturePerspectiveBanner } from "@/components/FuturePerspectiveBanner";
+import { DengueHealthNotice } from "@/components/DengueHealthNotice";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { AngkorWatIcon } from "@/components/AngkorWatIcon";
 import { BackToTopButton } from "@/components/BackToTopButton";
@@ -223,6 +224,8 @@ export default function Home() {
 
       <PowerSkillsDashboard locale={locale} progress={cyber.progress} status={cyber.status} ready={cyber.ready} onToggleStep={cyber.toggleStep} onExploreApp={cyber.exploreApp} />
       <CrewDirectory locale={locale} selectedId={cyber.progress.crewInterestId} onSelect={cyber.selectCrew} />
+
+      <DengueHealthNotice locale={locale} />
 
       <section id="directory" className="directory wrap" aria-labelledby="directory-title">
         <div className="directory-toolbar">

@@ -1,0 +1,83 @@
+/* The entire rig uses SVG coordinates and scales with the existing mobile bot. */
+.bot-backpack { transform: rotate(8deg); transform-origin: 91px 61px; }
+.bot-pack-flap { transform-origin: 96px 43px; }
+.bot-career-arm { opacity: 0; transition: transform .3s ease, opacity .2s ease; }
+.bot-career-arm-left { transform-origin: 23px 66px; transform: translate(3px,-4px) scale(.25); }
+.bot-career-arm-right { transform-origin: 88px 66px; transform: translate(-3px,-4px) scale(.25); }
+.bot-career-tool { opacity: 0; transform-origin: 56px 91px; transform: translate(40px,-36px) rotate(30deg) scale(.2); pointer-events: none; }
+.bot-career-gaze { transform-origin: 56px 54px; }
+.helper-bot:not([data-career-phase="idle"]) .bot-career-arm { opacity: 1; }
+.helper-bot:not([data-career-phase="idle"]) .bot-career-arm-left { transform: translate(6px,5px) rotate(-15deg) scale(.8); }
+.helper-bot:not([data-career-phase="idle"]) .bot-career-arm-right { transform: translate(-6px,5px) rotate(15deg) scale(.8); }
+.helper-bot[data-career-phase="retrieve"] .bot-career-arm-left { animation: bot-career-reach .45s ease both; }
+.helper-bot[data-career-phase="retrieve"] .bot-pack-flap { animation: bot-career-pack .45s ease both; }
+.helper-bot[data-career-phase="stow"] .bot-career-arm-left { animation: bot-career-reach .45s ease reverse both; }
+.helper-bot[data-career-phase="stow"] .bot-pack-flap { animation: bot-career-pack .45s ease reverse both; }
+
+.helper-bot[data-career-stage="drill"] .bot-drill,
+.helper-bot[data-career-stage="weld"] .bot-torch,
+.helper-bot[data-career-stage="textbook"] .bot-textbook { --gear-duration: .45s; }
+.helper-bot[data-career-stage="weld"] .bot-torch { --gear-duration: .6s; }
+.helper-bot[data-career-stage="drill"][data-career-phase="retrieve"] .bot-drill,
+.helper-bot[data-career-stage="weld"][data-career-phase="retrieve"] .bot-torch,
+.helper-bot[data-career-stage="textbook"][data-career-phase="retrieve"] .bot-textbook { animation: bot-career-retrieve var(--gear-duration) ease-out both; }
+.helper-bot[data-career-stage="drill"][data-career-phase="active"] .bot-drill,
+.helper-bot[data-career-stage="weld"][data-career-phase="active"] .bot-torch,
+.helper-bot[data-career-stage="textbook"]:is([data-career-phase="active"],[data-career-phase="snap"]) .bot-textbook { opacity: 1; transform: none; }
+.helper-bot[data-career-stage="drill"][data-career-phase="stow"] .bot-drill,
+.helper-bot[data-career-stage="weld"][data-career-phase="stow"] .bot-torch,
+.helper-bot[data-career-stage="textbook"][data-career-phase="stow"] .bot-textbook { animation: bot-career-retrieve var(--gear-duration) ease-in reverse both; }
+
+/* Drill rotation is around its horizontal shaft, rather than orbiting the tool. */
+.bot-drill-bit { transform-origin: 4px 93px; }
+.bot-drill-spark { opacity: 0; }
+.helper-bot[data-career-stage="drill"][data-career-phase="active"] .bot-drill-bit { animation: bot-career-drill .09s linear infinite; }
+.helper-bot[data-career-stage="drill"][data-career-phase="active"] .bot-drill-spark { animation: bot-career-spark .5s ease-out infinite; }
+.helper-bot[data-career-stage="drill"][data-career-phase="active"] .bot-spark-delayed { animation-delay: -.25s; }
+
+/* The front mask is down before the flame becomes visible, then flips up. */
+.bot-welding-mask { opacity: 0; transform-origin: 26px 34px; transform: rotate(-110deg) scaleY(.45); }
+.bot-torch-flame, .bot-weld-particles { opacity: 0; }
+.bot-torch-flame { transform-origin: 97px 80px; }
+.helper-bot[data-career-stage="weld"][data-career-phase="retrieve"] .bot-welding-mask { animation: bot-career-mask .6s ease-out both; }
+.helper-bot[data-career-stage="weld"][data-career-phase="active"] .bot-welding-mask { opacity: 1; transform: none; }
+.helper-bot[data-career-stage="weld"][data-career-phase="stow"] .bot-welding-mask { animation: bot-career-mask .6s ease-in reverse both; }
+.helper-bot[data-career-stage="weld"][data-career-phase="active"] .bot-torch-flame { animation: bot-career-flame .18s ease-in-out infinite alternate; }
+.helper-bot[data-career-stage="weld"][data-career-phase="active"] .bot-weld-particles { animation: bot-career-spark .65s ease-out infinite; }
+
+/* Existing leather textbook artwork retains its chemistry/physics detail. */
+.bot-book-open, .bot-book-closed { transform-origin: 56px 91px; transition: opacity .3s ease, transform .3s ease; }
+.bot-book-open { opacity: 0; transform: scaleX(.04); }
+.helper-bot[data-career-stage="textbook"]:is([data-career-phase="retrieve"],[data-career-phase="active"]) .bot-book-open { opacity: 1; transform: scaleX(1); }
+.helper-bot[data-career-stage="textbook"]:is([data-career-phase="retrieve"],[data-career-phase="active"]) .bot-book-closed { opacity: 0; transform: scaleX(.04); }
+.helper-bot[data-career-stage="textbook"][data-career-phase="active"] .bot-career-gaze { animation: bot-career-scan 2s linear both; }
+.helper-bot[data-career-stage="textbook"][data-career-phase="snap"] .bot-textbook { animation: bot-career-book-snap .3s ease-out both; }
+.bot-snap-badge { opacity: 0; transform-origin: 15px 48px; pointer-events: none; }
+.helper-bot[data-career-stage="textbook"][data-career-phase="snap"] .bot-snap-badge { animation: bot-career-snap-pop .3s ease-out both; }
+
+/* Coat and stethoscope stay fully equipped for the complete 4000ms active beat. */
+.bot-doctor-outfit { opacity: 0; transform-origin: 56px 108px; transform: translate(0,8px) scale(.8); }
+.bot-doctor-pulse { opacity: 0; transform-origin: 56px -10px; pointer-events: none; }
+.helper-bot[data-career-stage="doctor"][data-career-phase="retrieve"] .bot-doctor-outfit { animation: bot-career-coat .45s ease-out both; }
+.helper-bot[data-career-stage="doctor"][data-career-phase="active"] .bot-doctor-outfit { opacity: 1; transform: none; }
+.helper-bot[data-career-stage="doctor"][data-career-phase="stow"] .bot-doctor-outfit { animation: bot-career-coat .45s ease-in reverse both; }
+.helper-bot[data-career-stage="doctor"][data-career-phase="active"] .bot-doctor-pulse { animation: bot-career-heartbeat 1s ease-in-out infinite; }
+
+@keyframes bot-career-reach { from { transform: translate(41px,-19px) rotate(-60deg) scale(.8); } to { transform: translate(6px,5px) rotate(-15deg) scale(.8); } }
+@keyframes bot-career-pack { 0%,100% { transform: none; } 25%,65% { transform: translate(2px,-3px) rotate(-38deg); } }
+@keyframes bot-career-retrieve { from { opacity: 0; transform: translate(40px,-36px) rotate(30deg) scale(.2); } 20% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes bot-career-drill { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(-1); } }
+@keyframes bot-career-spark { 0%,100% { opacity: 0; transform: translate(0,0); } 20% { opacity: .85; } 80% { opacity: 0; transform: translate(-2px,-5px); } }
+@keyframes bot-career-mask { from { opacity: 0; transform: rotate(-110deg) scaleY(.45); } 15% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes bot-career-flame { from { opacity: .8; transform: scale(.9,.85); } to { opacity: 1; transform: scale(1.05,1.1); } }
+@keyframes bot-career-scan { 0%,100% { transform: translate(0,2px); } 15%,45%,80% { transform: translate(-2px,2px); } 38%,72%,95% { transform: translate(2px,3px); } }
+@keyframes bot-career-book-snap { 0% { transform: none; } 45% { transform: translate(0,4px) rotate(-5deg) scale(1.08,.92); } 100% { transform: translate(0,3px) rotate(-3deg); } }
+@keyframes bot-career-snap-pop { 0% { opacity: 0; transform: scale(.5) rotate(-10deg); } 35%,70% { opacity: 1; transform: scale(1.1) rotate(-10deg); } 100% { opacity: 0; transform: translate(0,-4px) scale(1) rotate(-10deg); } }
+@keyframes bot-career-coat { from { opacity: 0; transform: translate(0,8px) scale(.8); } to { opacity: 1; transform: none; } }
+@keyframes bot-career-heartbeat { 0%,100% { opacity: .75; transform: scale(1); filter: drop-shadow(0 0 2px #34d399); } 20%,40% { opacity: 1; transform: scale(1.08); filter: drop-shadow(0 0 5px #34d399); } 30%,60% { opacity: .9; transform: scale(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .helper-bot .bot-career-tool, .helper-bot .bot-career-arm, .helper-bot .bot-welding-mask,
+  .helper-bot .bot-doctor-outfit, .helper-bot .bot-doctor-pulse, .helper-bot .bot-snap-badge { opacity: 0 !important; animation: none !important; transition: none !important; }
+  .helper-bot .bot-pack-flap, .helper-bot .bot-career-gaze { transform: none !important; animation: none !important; }
+}
