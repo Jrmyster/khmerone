@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="km">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#10253b" />
+    <meta
+      name="description"
+      content="An interactive Khmer and English four-stroke engine laboratory for Khmer One."
+    />
+    <title>Khmer One · Four-stroke engine lab</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b766e'/%3E%3Cpath d='M9 7v18m0-9L23 7M13 14l10 11' stroke='white' stroke-width='3' fill='none'/%3E%3C/svg%3E"
+    />
+    <!-- Optional web font. System Khmer fonts remain the fallback. No model or texture downloads. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #182d40;
+        --muted: #536579;
+        --line: #dbe3e9;
+        --teal: #087970;
+        --paper: #f3f6f8;
+        --intake: #47bdeb;
+        --compression: #bc9afa;
+        --power: #ffb15e;
+        --exhaust: #ff7886;
+        font-family: Inter, "Noto Sans Khmer", "Khmer OS System", system-ui, sans-serif;
+        font-size: 16px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.65;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button,
+      select {
+        cursor: pointer;
+      }
+      button {
+        min-height: 44px;
+        border: 1px solid var(--line);
+        background: white;
+        color: var(--ink);
+        border-radius: 8px;
+        padding: 8px 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-weight: 600;
+      }
+      button:hover {
+        background: #edf4f6;
+        border-color: #a3b6c6;
+      }
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      a:focus-visible,
+      [tabindex]:focus-visible {
+        outline: 3px solid #138a81;
+        outline-offset: 3px;
+      }
+      button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      svg {
+        width: 19px;
+        height: 19px;
+        flex-shrink: 0;
+      }
+      a {
+        color: var(--teal);
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      .topbar {
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+      .topbar-inner {
+        max-width: 1500px;
+        margin: auto;
+        padding: 17px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-size: 18px;
+        font-weight: 700;
+      }
+      .brand-icon {
+        background: var(--teal);
+        color: white;
+        border-radius: 9px;
+        width: 37px;
+        height: 37px;
+        display: grid;
+        place-items: center;
+      }
+      .brand-icon svg {
+        width: 24px;
+        height: 24px;
+      }
+      .brand small {
+        display: block;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        line-height: 1.2;
+      }
+      .languages {
+        display: flex;
+        border: 1px solid var(--line);
+        padding: 3px;
+        gap: 2px;
+        border-radius: 9px;
+      }
+      .languages button {
+        border: 0;
+        min-height: 36px;
+        padding: 4px 12px;
+        font-size: 14px;
+      }
+      .languages button[aria-pressed="true"] {
+        background: #e6f3f0;
+        color: #05685f;
+      }
+      main {
+        max-width: 1500px;
+        margin: auto;
+        padding: 26px 28px 22px;
+      }
+      .heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+      .eyebrow {
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--teal);
+        font-weight: 700;
+        margin: 0 0 6px;
+      }
+      h1 {
+        font-size: clamp(23px, 2.6vw, 32px);
+        line-height: 1.55;
+        letter-spacing: -0.02em;
+        margin: 0;
+        font-weight: 650;
+      }
+      .subtitle {
+        color: var(--muted);
+        font-size: 15px;
+        margin: 5px 0 0;
+      }
+      .lesson-tag {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 6px 11px;
+        font-size: 13px;
+        white-space: nowrap;
+        background: white;
+      }
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 8px 26px #10253b08;
+      }
+      .viewer-column {
+        min-width: 0;
+      }
+      .viewport {
+        position: relative;
+        height: 560px;
+        overflow: hidden;
+        background: radial-gradient(ellipse at 50% 35%, #25425a 0%, #152c43 55%, #0e2136 100%);
+        color: #e8f2fc;
+      }
+      .viewport canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+        outline-offset: -5px !important;
+      }
+      .viewport canvas:focus-visible {
+        outline: 3px solid #69dad2;
+      }
+      .viewer-top {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        top: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        pointer-events: none;
+      }
+      .model-label {
+        font-size: 13px;
+        color: #bfcedc;
+        line-height: 1.5;
+      }
+      .model-label strong {
+        font-size: 14px;
+        color: white;
+        display: block;
+      }
+      .view-buttons {
+        display: flex;
+        gap: 6px;
+        pointer-events: auto;
+      }
+      .view-buttons button {
+        min-height: 36px;
+        padding: 6px 9px;
+        background: #1c344b;
+        color: #e8f2fc;
+        border-color: #3e566c;
+        font-size: 13px;
+      }
+      .view-buttons button[aria-pressed="true"] {
+        background: #2b5366;
+        border-color: #6cd2cb;
+      }
+      .stroke-pill {
+        position: absolute;
+        top: 82px;
+        left: 20px;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 6px 12px;
+        border: 1px solid #52718b66;
+        border-radius: 30px;
+        background: #0c2034c9;
+        font-size: 14px;
+        pointer-events: none;
+      }
+      .stroke-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--intake);
+      }
+      .angle {
+        font-variant-numeric: tabular-nums;
+        color: #b9c9d9;
+        font-size: 13px;
+        border-left: 1px solid #4b6174;
+        padding-left: 9px;
+      }
+      .legend {
+        position: absolute;
+        bottom: 52px;
+        left: 20px;
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        font-size: 12px;
+        color: #d0dcea;
+        pointer-events: none;
+      }
+      .legend span {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+      .legend i {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .canvas-help {
+        position: absolute;
+        bottom: 16px;
+        left: 20px;
+        right: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 12px;
+        color: #b6c8d8;
+        pointer-events: none;
+      }
+      .axis {
+        display: flex;
+        gap: 9px;
+        font-weight: 700;
+      }
+      .axis b:nth-child(1) {
+        color: #fc9598;
+      }
+      .axis b:nth-child(2) {
+        color: #94d5ad;
+      }
+      .axis b:nth-child(3) {
+        color: #8abdeb;
+      }
+      .labels-layer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .part-label {
+        position: absolute;
+        display: none;
+        min-height: 30px;
+        max-width: 170px;
+        background: #0e2338e8;
+        border-color: #46657c;
+        border-radius: 5px;
+        color: #e9f5fc;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 3px 8px;
+        white-space: nowrap;
+        transform: translate(-50%, -50%);
+        pointer-events: auto;
+      }
+      .part-label[aria-pressed="true"] {
+        border-color: #8ae8dc;
+        color: #a5f8ec;
+      }
+      .loading {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        background: #10253bef;
+        padding: 30px;
+        text-align: center;
+        z-index: 5;
+      }
+      .loading[hidden] {
+        display: none;
+      }
+      .loading p {
+        max-width: 420px;
+        margin: 0;
+        color: #cedce8;
+      }
+      .loading strong {
+        font-size: 20px;
+      }
+      .loading a {
+        color: #9de5df;
+      }
+      .spinner {
+        width: 30px;
+        height: 30px;
+        border: 3px solid #4b667e;
+        border-top-color: #74d3cb;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .controls {
+        padding: 18px 20px;
+        background: white;
+        border-top: 1px solid var(--line);
+      }
+      .play-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .primary {
+        background: var(--teal);
+        color: white;
+        border-color: var(--teal);
+        min-width: 111px;
+      }
+      .primary:hover {
+        background: #06685f;
+        color: white;
+        border-color: #06685f;
+      }
+      .speed {
+        display: flex;
+        gap: 9px;
+        align-items: center;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      select {
+        min-height: 40px;
+        padding: 5px 25px 5px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: white;
+        color: var(--ink);
+      }
+      .motion-state {
+        margin-left: auto;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .range-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-top: 18px;
+      }
+      .range-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 14px;
+        margin-bottom: 7px;
+      }
+      .range-heading output {
+        font-size: 13px;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+      input[type="range"] {
+        display: block;
+        width: 100%;
+        height: 24px;
+        margin: 0;
+        accent-color: var(--teal);
+        cursor: pointer;
+      }
+      .range-ends {
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 2px;
+      }
+      .inspector {
+        padding: 21px;
+        border-left: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+      .section-label {
+        font-size: 12px;
+        letter-spacing: 0.09em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin: 0 0 14px;
+        font-weight: 650;
+      }
+      .part-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+      .part-button {
+        justify-content: flex-start;
+        text-align: left;
+        min-height: 46px;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 7px 9px;
+        line-height: 1.6;
+        background: #f9fbfc;
+      }
+      .part-button .swatch {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        background: var(--part-color);
+      }
+      .part-button[aria-pressed="true"] {
+        background: #e9f5f1;
+        border-color: #3b9b8c;
+        color: #075f55;
+      }
+      .part-detail {
+        margin-top: 23px;
+        border-top: 1px solid var(--line);
+        padding-top: 20px;
+      }
+      .part-number {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--teal);
+        font-weight: 650;
+        margin-bottom: 10px;
+      }
+      .part-number span {
+        width: 24px;
+        height: 24px;
+        border: 1px solid #bfded7;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 23px;
+      }
+      h2 {
+        font-size: 23px;
+        line-height: 1.6;
+        margin: 0;
+        overflow-wrap: anywhere;
+      }
+      .english-name {
+        margin: 1px 0 15px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--muted);
+      }
+      .description {
+        font-size: 15px;
+        line-height: 1.9;
+        margin: 0 0 14px;
+      }
+      .description[lang="en"] {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .part-note {
+        margin: 15px 0 0;
+        font-size: 13px;
+        padding: 10px 12px;
+        border-left: 3px solid var(--teal);
+        background: #f1f7f6;
+        color: #315c58;
+      }
+      .inspect-hint {
+        margin-top: auto;
+        padding-top: 19px;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .cycle {
+        margin-top: 21px;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .cycle-top {
+        padding: 17px 20px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .cycle-top h2 {
+        font-size: 17px;
+      }
+      .cycle-top span {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .strokes {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        padding: 0 12px;
+        gap: 7px;
+      }
+      .stroke-button {
+        justify-content: flex-start;
+        gap: 11px;
+        border: 1px solid transparent;
+        background: #f5f7f9;
+        border-radius: 7px;
+        padding: 9px 11px;
+        font-size: 14px;
+      }
+      .stroke-button .step-number {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        border: 1px solid #c2ced9;
+        display: grid;
+        place-items: center;
+        font-size: 12px;
+      }
+      .stroke-button small {
+        display: block;
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--muted);
+      }
+      .stroke-button[aria-pressed="true"] {
+        border-color: var(--stroke);
+        background: var(--tint);
+      }
+      .stroke-button[aria-pressed="true"] .step-number {
+        background: var(--stroke);
+        border-color: var(--stroke);
+        color: #163045;
+      }
+      .stroke-text {
+        padding: 15px 20px 19px;
+        font-size: 15px;
+        display: flex;
+        gap: 22px;
+        align-items: flex-start;
+      }
+      .stroke-text p {
+        margin: 0;
+        flex: 1;
+      }
+      .valve-status {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+        flex-shrink: 0;
+      }
+      .valve-status span {
+        background: #eff3f6;
+        border-radius: 5px;
+        font-size: 12px;
+        padding: 5px 9px;
+        color: #3b5369;
+      }
+      .valve-status span.open {
+        background: #dff2fc;
+        color: #175875;
+      }
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 15px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .footer p {
+        margin: 0;
+      }
+      .footer details {
+        text-align: right;
+        max-width: 530px;
+      }
+      .footer summary {
+        cursor: pointer;
+        color: var(--teal);
+      }
+      .footer details p {
+        text-align: left;
+        margin-top: 6px;
+      }
+      .footer a {
+        white-space: nowrap;
+      }
+      @media (min-width: 1500px) {
+        .viewport {
+          height: 610px;
+        }
+      }
+      @media (max-width: 1100px) {
+        .workspace {
+          grid-template-columns: minmax(0, 1fr) 290px;
+        }
+        main {
+          padding: 22px 20px;
+        }
+        .inspector {
+          padding: 17px;
+        }
+        .viewport {
+          height: 560px;
+        }
+        .view-buttons button span {
+          display: none;
+        }
+        .part-button {
+          font-size: 12px;
+        }
+        .motion-state {
+          display: none;
+        }
+        .stroke-text {
+          flex-direction: column;
+          gap: 11px;
+        }
+      }
+      @media (max-width: 820px) {
+        .topbar-inner {
+          padding: 13px 18px;
+        }
+        main {
+          padding: 20px 16px;
+        }
+        .workspace {
+          grid-template-columns: 1fr;
+        }
+        .viewport {
+          height: 510px;
+        }
+        .inspector {
+          border-left: 0;
+          border-top: 1px solid var(--line);
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
+        .inspector .section-label {
+          grid-column: 1;
+        }
+        .part-list {
+          grid-column: 1;
+        }
+        .part-detail {
+          grid-column: 2;
+          grid-row: 1/4;
+          margin: 0;
+          border-top: 0;
+          border-left: 1px solid var(--line);
+          padding: 0 0 0 20px;
+        }
+        .inspect-hint {
+          grid-column: 1;
+          padding-top: 0;
+          margin: 0;
+        }
+        .lesson-tag {
+          display: none;
+        }
+        .strokes {
+          gap: 5px;
+        }
+        .stroke-button {
+          padding: 8px;
+          font-size: 13px;
+          gap: 7px;
+        }
+        .stroke-button small {
+          font-size: 12px;
+        }
+        .footer {
+          flex-direction: column;
+          gap: 6px;
+        }
+        .footer details {
+          text-align: left;
+          max-width: none;
+        }
+      }
+      @media (max-width: 540px) {
+        main {
+          padding: 16px 10px;
+        }
+        .topbar-inner {
+          padding: 12px;
+        }
+        .brand {
+          font-size: 16px;
+        }
+        .brand small {
+          font-size: 10px;
+        }
+        .languages button {
+          padding: 4px 9px;
+        }
+        .heading {
+          margin-bottom: 14px;
+        }
+        h1 {
+          font-size: 23px;
+        }
+        .subtitle {
+          font-size: 14px;
+        }
+        .viewport {
+          height: 445px;
+        }
+        .viewer-top {
+          left: 12px;
+          right: 12px;
+          top: 12px;
+        }
+        .stroke-pill {
+          left: 12px;
+          top: 76px;
+        }
+        .controls {
+          padding: 15px;
+        }
+        .range-row {
+          grid-template-columns: 1fr;
+          gap: 13px;
+        }
+        .canvas-help {
+          left: 12px;
+          right: 12px;
+          font-size: 11px;
+        }
+        .canvas-help .axis {
+          display: none;
+        }
+        .legend {
+          left: 12px;
+          gap: 10px;
+        }
+        .inspector {
+          display: block;
+          padding: 17px;
+        }
+        .part-detail {
+          margin-top: 18px;
+          border-left: 0;
+          border-top: 1px solid var(--line);
+          padding: 17px 0 0;
+        }
+        .part-button {
+          font-size: 14px;
+        }
+        .inspect-hint {
+          display: none;
+        }
+        .strokes {
+          grid-template-columns: 1fr 1fr;
+        }
+        .cycle-top {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 2px;
+        }
+        .stroke-text {
+          font-size: 14px;
+        }
+        .part-label {
+          font-size: 11px;
+          max-width: 140px;
+        }
+        .model-label {
+          max-width: 160px;
+          font-size: 12px;
+        }
+        .model-label strong {
+          font-size: 13px;
+        }
+        .play-row {
+          gap: 8px;
+        }
+        .speed {
+          margin-left: auto;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .spinner {
+          animation: none;
+        }
+      }
+    </style>
+    <!-- Core and addons MUST use the same pinned release. -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/#power-skills" aria-label="Back to Khmer One / ត្រឡប់ទៅ Khmer One" style="color:inherit;text-decoration:none">
+          <span class="brand-icon" aria-hidden="true"
+            ><svg viewBox="0 0 32 32" fill="none">
+              <path d="M9 6v20M9 16 24 6M14 13l10 13" stroke="currentColor" stroke-width="3" /></svg
+          ></span>
+          <div>Khmer One<small data-i18n="brandSub">បន្ទប់ពិសោធន៍អន្តរកម្ម</small></div>
+        </a>
+        <div class="languages" role="group" aria-label="Language / ភាសា">
+          <button id="lang-km" lang="km" aria-pressed="true">ខ្មែរ</button
+          ><button id="lang-en" lang="en" aria-pressed="false">English</button>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="heading">
+        <div>
+          <p class="eyebrow" data-i18n="eyebrow">រូបវិទ្យា · មេកានិច</p>
+          <h1 data-i18n="title">ស្វែងយល់ពីម៉ាស៊ីន ៤ វគ្គ</h1>
+          <p class="subtitle" data-i18n="subtitle">
+            បង្វិលម៉ូដែល ជ្រើសរើសគ្រឿងបន្លាស់ និងស្វែងយល់ពីវដ្តនីមួយៗ។
+          </p>
+        </div>
+        <span class="lesson-tag" data-i18n="lessonTag">ម៉ូដែល 3D អន្តរកម្ម</span>
+      </div>
+      <div class="workspace">
+        <section class="viewer-column" aria-label="3D engine and simulation controls">
+          <div id="viewport" class="viewport">
+            <div class="viewer-top">
+              <div class="model-label">
+                <strong data-i18n="modelTitle">ម៉ាស៊ីនសាំងស៊ីឡាំងមួយ</strong
+                ><span data-i18n="modelSubtitle">ទិដ្ឋភាពកាត់ · គំរូសម្រាប់ការសិក្សា</span>
+              </div>
+              <div class="view-buttons">
+                <button id="labels" aria-pressed="false">
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+                    <path d="M3 5h11l7 7-9 9-9-9Z" />
+                    <circle cx="7.5" cy="9.5" r="1.5" /></svg
+                  ><span data-i18n="labels">ស្លាកឈ្មោះ</span></button
+                ><button id="reset">
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+                    <path d="M4 10a8 8 0 1 1 1 8M4 4v6h6" /></svg
+                  ><span data-i18n="reset">កំណត់ទិដ្ឋភាពឡើងវិញ</span>
+                </button>
+              </div>
+            </div>
+            <div class="stroke-pill">
+              <i class="stroke-dot" id="stroke-dot"></i><span id="stroke-name">វគ្គស្រូប</span
+              ><span id="crank-angle" class="angle">0° / 720°</span>
+            </div>
+            <div id="labels-layer" class="labels-layer"></div>
+            <div class="legend">
+              <span
+                ><i style="background: var(--intake)"></i
+                ><span data-i18n="mixture">ល្បាយខ្យល់ និងឥន្ធនៈ</span></span
+              ><span
+                ><i style="background: var(--power)"></i
+                ><span data-i18n="combustion">ការឆេះ</span></span
+              ><span
+                ><i style="background: var(--exhaust)"></i
+                ><span data-i18n="spentGas">ឧស្ម័នបញ្ចេញ</span></span
+              >
+            </div>
+            <div class="canvas-help">
+              <span data-i18n="canvasHelp"
+                >អូសដើម្បីបង្វិល · រមូរដើម្បីពង្រីក · ចុចលើគ្រឿងបន្លាស់</span
+              ><span class="axis" aria-hidden="true"><b>X</b><b>Y</b><b>Z</b></span>
+            </div>
+            <div id="loading" class="loading" role="status">
+              <div class="spinner"></div>
+              <strong data-i18n="loading">កំពុងរៀបចំម៉ាស៊ីន…</strong>
+              <p data-i18n="loadingHint">
+                កំពុងផ្ទុកបណ្ណាល័យ 3D។ ត្រូវការអ៊ីនធឺណិតនៅពេលផ្ទុកដំបូង។
+              </p>
+            </div>
+          </div>
+          <div class="controls">
+            <div class="play-row">
+              <button id="play" class="primary">
+                <span id="play-symbol" aria-hidden="true">▶</span
+                ><span id="play-text">ចាប់ផ្ដើម</span></button
+              ><button id="next" data-i18n="next">វគ្គបន្ទាប់</button
+              ><label class="speed"
+                ><span data-i18n="speed">ល្បឿន</span
+                ><select id="speed">
+                  <option value="0.25">0.25×</option>
+                  <option value="0.5">0.5×</option>
+                  <option value="1" selected>1×</option>
+                  <option value="1.5">1.5×</option>
+                  <option value="2">2×</option>
+                </select></label
+              ><span class="motion-state" data-i18n="teachingSpeed">ល្បឿនយឺតសម្រាប់ការសិក្សា</span>
+            </div>
+            <div class="range-row">
+              <div>
+                <div class="range-heading">
+                  <label for="timeline" data-i18n="cyclePosition">ទីតាំងក្នុងវដ្ត</label
+                  ><output id="timeline-value" for="timeline">0°</output>
+                </div>
+                <input id="timeline" type="range" min="0" max="720" step="1" value="0" />
+                <div class="range-ends"><span>0°</span><span>360°</span><span>720°</span></div>
+              </div>
+              <div>
+                <div class="range-heading">
+                  <label for="explode" data-i18n="explode">ទិដ្ឋភាពបំបែក</label
+                  ><output id="explode-value" for="explode">0%</output>
+                </div>
+                <input id="explode" type="range" min="0" max="100" step="1" value="0" />
+                <div class="range-ends">
+                  <span data-i18n="assembled">ផ្គុំរួច</span
+                  ><span data-i18n="separated">បំបែកចេញ</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <aside class="inspector" aria-label="Engine part information">
+          <p class="section-label" data-i18n="exploreParts">ស្វែងយល់ពីគ្រឿងបន្លាស់</p>
+          <div
+            class="part-list"
+            id="part-list"
+            role="group"
+            aria-label="Select an engine part"
+          ></div>
+          <div class="part-detail">
+            <div class="part-number">
+              <span id="part-index">02</span
+              ><b data-i18n="selectedPart">គ្រឿងបន្លាស់ដែលបានជ្រើសរើស</b>
+            </div>
+            <h2 id="part-km" lang="km">ពិស្តុង</h2>
+            <p id="part-en" class="english-name" lang="en">Piston</p>
+            <p id="part-description-km" class="description" lang="km"></p>
+            <p id="part-description-en" class="description" lang="en"></p>
+            <p id="part-note" class="part-note"></p>
+          </div>
+          <p class="inspect-hint" data-i18n="inspectHint">
+            ចុចលើម៉ូដែល ឬជ្រើសរើសឈ្មោះខាងលើ។ អូសដោយម្រាមដៃមួយដើម្បីបង្វិល
+            និងប្រើម្រាមដៃពីរដើម្បីពង្រីក ឬផ្លាស់ទី។
+          </p>
+        </aside>
+      </div>
+      <section class="cycle" aria-label="Four-stroke cycle">
+        <div class="cycle-top">
+          <h2 data-i18n="cycleTitle">វដ្តម៉ាស៊ីន ៤ វគ្គ</h2>
+          <span data-i18n="cycleSummary">៤ វគ្គ · អ័ក្សក្រឡឹងបង្វិល ២ ជុំ · ៧២០°</span>
+        </div>
+        <div id="strokes" class="strokes" role="group" aria-label="Select a stroke"></div>
+        <div class="stroke-text">
+          <p id="stroke-description"></p>
+          <div class="valve-status">
+            <span id="intake-status"></span><span id="exhaust-status"></span>
+          </div>
+        </div>
+      </section>
+      <footer class="footer">
+        <p data-i18n="footerNote">
+          បង្កើតសម្រាប់ការសិក្សា · ម៉ូដែលបង្ហាញគោលការណ៍ មិនមែនទំហំជាក់ស្ដែង
+        </p>
+        <details>
+          <summary data-i18n="modelNotes">អំពីម៉ូដែលនេះ និងប្រភព</summary>
+          <p data-i18n="modelNotesBody">
+            នេះជាម៉ាស៊ីនសាំងបញ្ឆេះដោយផ្កាភ្លើង។ វ៉ាល់បើកតែក្នុងវគ្គស្រូប និងបញ្ចេញ
+            ដោយមិនបង្ហាញការត្រួតស៊ីគ្នានៃវ៉ាល់។ ប្រព័ន្ធជំរុញអ័ក្សកាម ការធ្វើឱ្យត្រជាក់
+            និងប្រេងរំអិលត្រូវបានលុបចេញដើម្បីឱ្យងាយយល់។ ពណ៌ឧស្ម័នជាជំនួយក្នុងការសិក្សា។
+          </p>
+          <p>
+            <a
+              href="https://www.grc.nasa.gov/www/k-12/airplane/otto.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              >NASA · Ideal Otto cycle</a
+            >
+            ·
+            <a
+              href="https://threejs.org/docs/pages/OrbitControls.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Three.js · OrbitControls</a
+            >
+          </p>
+        </details>
+      </footer>
+      <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+    </main>
+    <noscript
+      ><p style="padding: 24px">
+        Please enable JavaScript to use this 3D laboratory. សូមបើក JavaScript
+        ដើម្បីប្រើបន្ទប់ពិសោធន៍ 3D។
+      </p></noscript
+    >
+    <script type="module">
+      /* Khmer One engine lab — one file, no build step, no external 3D assets.
+   Units are illustrative. θ=0 is intake TDC; a complete cycle is 4π.
+   Parts have separate assembly groups and mechanical transforms, so explosion
+   never changes the connecting-rod length or the animation's crank geometry. */
+      const $ = (id) => document.getElementById(id);
+      const TAU = 2 * Math.PI,
+        CYCLE = 4 * Math.PI;
+      const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const text = {
+        en: {
+          brandSub: "INTERACTIVE LABORATORIES",
+          eyebrow: "Physics · Mechanics",
+          title: "Inside a four-stroke engine",
+          subtitle: "Rotate the model, explore its parts, and follow every stroke.",
+          lessonTag: "Interactive 3D model",
+          modelTitle: "Single-cylinder petrol engine",
+          modelSubtitle: "Open cutaway · Learning model",
+          labels: "Labels",
+          reset: "Reset view",
+          mixture: "Air–fuel mixture",
+          combustion: "Combustion",
+          spentGas: "Exhaust gas",
+          canvasHelp: "Drag to orbit · Scroll to zoom · Click a part",
+          loading: "Preparing your engine…",
+          loadingHint: "Loading the 3D library. An internet connection is needed on first load.",
+          play: "Play",
+          pause: "Pause",
+          next: "Next stroke",
+          speed: "Speed",
+          teachingSpeed: "Slowed down for learning",
+          cyclePosition: "Cycle position",
+          explode: "Exploded view",
+          assembled: "Assembled",
+          separated: "Separated",
+          exploreParts: "Explore the components",
+          selectedPart: "SELECTED COMPONENT",
+          inspectHint:
+            "Click the model or choose a part above. One finger rotates; two fingers zoom and pan. With a mouse, right-drag to pan.",
+          cycleTitle: "The four-stroke cycle",
+          cycleSummary: "4 strokes · 2 crankshaft turns · 720°",
+          footerNote: "Built for learning · Illustrative geometry, not to scale",
+          modelNotes: "Model notes & sources",
+          modelNotesBody:
+            "This is a spark-ignition petrol engine. Idealized valves open only during intake and exhaust, with no valve overlap. The camshaft drive, cooling and lubrication are omitted for clarity. Gas colors are teaching aids; the cam lobes and followers are schematic.",
+          intake: "Intake",
+          exhaust: "Exhaust",
+          open: "open",
+          closed: "closed",
+          canvasLabel:
+            "Interactive 3D engine. Drag to rotate, scroll to zoom, right-drag or use arrow keys to pan. Use the component buttons for keyboard selection.",
+          loadError: "The 3D model could not start.",
+          loadErrorHint:
+            "Check your internet connection and WebGL support, then reload. Part explanations remain available below.",
+          reload: "Reload model",
+          explodedNote:
+            "Separated parts show assembly relationships. Gas and flow indicators are hidden while exploded.",
+          pistonDirection: "Piston",
+          up: "up",
+          down: "down",
+          tdc: "top dead center",
+          bdc: "bottom dead center",
+        },
+        km: {
+          brandSub: "បន្ទប់ពិសោធន៍អន្តរកម្ម",
+          eyebrow: "រូបវិទ្យា · មេកានិច",
+          title: "ស្វែងយល់ពីម៉ាស៊ីន ៤ វគ្គ",
+          subtitle: "បង្វិលម៉ូដែល ជ្រើសរើសគ្រឿងបន្លាស់ និងស្វែងយល់ពីវដ្តនីមួយៗ។",
+          lessonTag: "ម៉ូដែល 3D អន្តរកម្ម",
+          modelTitle: "ម៉ាស៊ីនសាំងស៊ីឡាំងមួយ",
+          modelSubtitle: "ទិដ្ឋភាពកាត់ · គំរូសម្រាប់ការសិក្សា",
+          labels: "ស្លាកឈ្មោះ",
+          reset: "កំណត់ទិដ្ឋភាពឡើងវិញ",
+          mixture: "ល្បាយខ្យល់ និងឥន្ធនៈ",
+          combustion: "ការឆេះ",
+          spentGas: "ឧស្ម័នបញ្ចេញ",
+          canvasHelp: "អូសដើម្បីបង្វិល · រមូរដើម្បីពង្រីក · ចុចលើគ្រឿងបន្លាស់",
+          loading: "កំពុងរៀបចំម៉ាស៊ីន…",
+          loadingHint: "កំពុងផ្ទុកបណ្ណាល័យ 3D។ ត្រូវការអ៊ីនធឺណិតនៅពេលផ្ទុកដំបូង។",
+          play: "ចាប់ផ្ដើម",
+          pause: "ផ្អាក",
+          next: "វគ្គបន្ទាប់",
+          speed: "ល្បឿន",
+          teachingSpeed: "ល្បឿនយឺតសម្រាប់ការសិក្សា",
+          cyclePosition: "ទីតាំងក្នុងវដ្ត",
+          explode: "ទិដ្ឋភាពបំបែក",
+          assembled: "ផ្គុំរួច",
+          separated: "បំបែកចេញ",
+          exploreParts: "ស្វែងយល់ពីគ្រឿងបន្លាស់",
+          selectedPart: "គ្រឿងបន្លាស់ដែលបានជ្រើសរើស",
+          inspectHint:
+            "ចុចលើម៉ូដែល ឬជ្រើសរើសឈ្មោះខាងលើ។ អូសដោយម្រាមដៃមួយដើម្បីបង្វិល និងប្រើម្រាមដៃពីរដើម្បីពង្រីក ឬផ្លាស់ទី។",
+          cycleTitle: "វដ្តម៉ាស៊ីន ៤ វគ្គ",
+          cycleSummary: "៤ វគ្គ · អ័ក្សក្រឡឹងបង្វិល ២ ជុំ · ៧២០°",
+          footerNote: "បង្កើតសម្រាប់ការសិក្សា · ម៉ូដែលបង្ហាញគោលការណ៍ មិនមែនទំហំជាក់ស្ដែង",
+          modelNotes: "អំពីម៉ូដែលនេះ និងប្រភព",
+          modelNotesBody:
+            "នេះជាម៉ាស៊ីនសាំងបញ្ឆេះដោយផ្កាភ្លើង។ វ៉ាល់បើកតែក្នុងវគ្គស្រូប និងបញ្ចេញ ដោយមិនបង្ហាញការត្រួតស៊ីគ្នានៃវ៉ាល់។ ប្រព័ន្ធជំរុញអ័ក្សកាម ការធ្វើឱ្យត្រជាក់ និងប្រេងរំអិលត្រូវបានលុបចេញដើម្បីឱ្យងាយយល់។ ពណ៌ឧស្ម័នជាជំនួយក្នុងការសិក្សា ហើយអ័ក្សកាម និងប្រព័ន្ធជំរុញវ៉ាល់ជាគំរូសាមញ្ញ។",
+          intake: "ស្រូប",
+          exhaust: "បញ្ចេញ",
+          open: "បើក",
+          closed: "បិទ",
+          canvasLabel:
+            "ម៉ូដែលម៉ាស៊ីន 3D។ អូសដើម្បីបង្វិល រមូរដើម្បីពង្រីក និងប្រើគ្រាប់ចុចព្រួញដើម្បីផ្លាស់ទី។ ប្រើប៊ូតុងឈ្មោះដើម្បីជ្រើសរើសគ្រឿងបន្លាស់។",
+          loadError: "មិនអាចចាប់ផ្ដើមម៉ូដែល 3D បានទេ។",
+          loadErrorHint:
+            "សូមពិនិត្យអ៊ីនធឺណិត និងការគាំទ្រ WebGL រួចផ្ទុកឡើងវិញ។ ការពន្យល់អំពីគ្រឿងបន្លាស់នៅតែអាចអានបាន។",
+          reload: "ផ្ទុកម៉ូដែលឡើងវិញ",
+          explodedNote:
+            "គ្រឿងបន្លាស់បំបែកចេញដើម្បីបង្ហាញរបៀបផ្គុំ។ ពណ៌ឧស្ម័ន និងព្រួញត្រូវបានលាក់នៅពេលបំបែក។",
+          pistonDirection: "ពិស្តុង",
+          up: "ឡើង",
+          down: "ចុះ",
+          tdc: "ចំណុចស្លាប់លើ",
+          bdc: "ចំណុចស្លាប់ក្រោម",
+        },
+      };
+      const PARTS = [
+        {
+          id: "block",
+          km: "ប្លុកម៉ាស៊ីន / ស៊ីឡាំង",
+          shortKm: "ស៊ីឡាំង",
+          en: "Engine block / cylinder",
+          shortEn: "Cylinder block",
+          color: "#8a9dae",
+          kmDesc:
+            "ប្លុកម៉ាស៊ីនទ្រទ្រង់គ្រឿងបន្លាស់សំខាន់ៗ។ ស៊ីឡាំងជាបន្ទប់ដែលពិស្តុងធ្វើចលនាឡើងចុះ ហើយទប់សម្ពាធពីការឆេះ។",
+          enDesc:
+            "The block supports the engine components. Its cylinder guides the piston and contains the pressure produced by combustion.",
+          noteKm: "ផ្នែកខាងមុខត្រូវបានកាត់ចេញ ដើម្បីឱ្យឃើញគ្រឿងបន្លាស់ខាងក្នុង។",
+          noteEn: "The front is cut away so you can see the moving parts.",
+        },
+        {
+          id: "piston",
+          km: "ពិស្តុង",
+          en: "Piston",
+          color: "#d9e6ef",
+          kmDesc:
+            "ពិស្តុងផ្លាស់ទីឡើងចុះក្នុងស៊ីឡាំង។ វាស្រូបល្បាយខ្យល់ និងឥន្ធនៈ បង្ហាប់ល្បាយ ទទួលកម្លាំងពីការឆេះ និងរុញឧស្ម័នចេញ។",
+          enDesc:
+            "The piston slides inside the cylinder. It draws in and compresses the mixture, receives the force of combustion, and pushes out exhaust gas.",
+          noteKm: "ពិស្តុងធ្វើដំណើរ ៤ ដង ក្នុងមួយវដ្តពេញលេញ។",
+          noteEn: "Four piston strokes make one complete engine cycle.",
+        },
+        {
+          id: "rod",
+          km: "ដងតភ្ជាប់",
+          en: "Connecting rod",
+          color: "#ddbc80",
+          kmDesc:
+            "ដងតភ្ជាប់ភ្ជាប់ពិស្តុងទៅអ័ក្សក្រឡឹង។ វាបញ្ជូនកម្លាំងពីពិស្តុង ហើយជួយបម្លែងចលនាឡើងចុះទៅជាចលនាបង្វិល។",
+          enDesc:
+            "The connecting rod links the piston to the crankshaft. It transfers force and helps convert reciprocating motion into rotation.",
+          noteKm: "សន្លាក់នៅចុងទាំងពីរអនុញ្ញាតឱ្យដងផ្អៀង ខណៈពិស្តុងនៅតែធ្វើចលនាត្រង់។",
+          noteEn: "Both ends pivot while the piston stays on the cylinder axis.",
+        },
+        {
+          id: "crank",
+          km: "អ័ក្សក្រឡឹង",
+          en: "Crankshaft",
+          color: "#7997b4",
+          kmDesc:
+            "អ័ក្សក្រឡឹងបម្លែងកម្លាំងដែលបញ្ជូនតាមដងតភ្ជាប់ទៅជាកម្លាំងបង្វិល។ កម្លាំងនេះអាចប្រើដើម្បីបង្វិលកង់ ឬដំណើរការម៉ាស៊ីនផ្សេងទៀត។",
+          enDesc:
+            "The crankshaft converts the force transmitted through the connecting rod into torque that can drive wheels or other machinery.",
+          noteKm: "អ័ក្សក្រឡឹងបង្វិល ២ ជុំ (៧២០°) ក្នុងមួយវដ្ត។",
+          noteEn: "The crankshaft turns twice (720°) per complete cycle.",
+        },
+        {
+          id: "intake",
+          km: "វ៉ាល់ស្រូប",
+          en: "Intake valve",
+          color: "#47bdeb",
+          kmDesc:
+            "វ៉ាល់ស្រូបបើកដើម្បីឱ្យល្បាយខ្យល់ និងឥន្ធនៈចូលស៊ីឡាំងនៅវគ្គស្រូប។ វាបិទក្នុងវគ្គបង្ហាប់ និងវគ្គបង្កើតកម្លាំង ដើម្បីទប់សម្ពាធ។",
+          enDesc:
+            "The intake valve admits the air–fuel mixture during the intake stroke. It closes during compression and power to seal the cylinder.",
+          noteKm: "ក្នុងគំរូនេះ វ៉ាល់ស្រូបបើកតែក្នុងចន្លោះ ០°–១៨០°។",
+          noteEn: "In this idealized model, intake opens only between 0° and 180°.",
+        },
+        {
+          id: "exhaust",
+          km: "វ៉ាល់បញ្ចេញ",
+          en: "Exhaust valve",
+          color: "#ff7886",
+          kmDesc: "វ៉ាល់បញ្ចេញបើកក្នុងវគ្គបញ្ចេញ។ ពិស្តុងឡើងលើ ហើយរុញឧស្ម័នដែលបានឆេះចេញពីស៊ីឡាំង។",
+          enDesc:
+            "The exhaust valve opens during the exhaust stroke. The rising piston pushes the burned gases out of the cylinder.",
+          noteKm: "ក្នុងគំរូនេះ វ៉ាល់បញ្ចេញបើកតែក្នុងចន្លោះ ៥៤០°–៧២០°។",
+          noteEn: "In this idealized model, exhaust opens only between 540° and 720°.",
+        },
+        {
+          id: "spark",
+          km: "ប៊ូស៊ី",
+          en: "Spark plug",
+          color: "#f5dc91",
+          kmDesc:
+            "ប៊ូស៊ីបង្កើតផ្កាភ្លើងនៅចុងវគ្គបង្ហាប់ ដើម្បីបញ្ឆេះល្បាយខ្យល់ និងឥន្ធនៈ។ ឧស្ម័នក្តៅរីកមាឌ ហើយរុញពិស្តុងចុះ។",
+          enDesc:
+            "The spark plug ignites the compressed air–fuel mixture near the end of compression. The hot expanding gases push the piston down.",
+          noteKm: "គំរូបង្ហាញការបញ្ឆេះនៅ ៣៦០°។ ម៉ាស៊ីនពិតអាចបញ្ឆេះមុនចំណុចនេះ។",
+          noteEn: "Ignition is shown at 360°. Real engines can ignite before this point.",
+        },
+        {
+          id: "cam",
+          km: "អ័ក្សកាម",
+          en: "Camshaft",
+          color: "#a9b6cd",
+          kmDesc:
+            "អ័ក្សកាមគ្រប់គ្រងពេលបើក និងបិទវ៉ាល់។ ផ្នែកប៉ោងរបស់កាមរុញវ៉ាល់ឱ្យបើក ហើយស្ព្រីងជួយឱ្យវ៉ាល់បិទវិញ។",
+          enDesc:
+            "The camshaft times the valves. Its lobes push the valves open, and springs return them to the closed position.",
+          noteKm: "អ័ក្សកាមបង្វិល ១ ជុំ ខណៈអ័ក្សក្រឡឹងបង្វិល ២ ជុំ។",
+          noteEn: "The camshaft makes one turn for every two crankshaft turns.",
+        },
+      ];
+      const STROKES = [
+        {
+          en: "Intake",
+          km: "វគ្គស្រូប",
+          color: "#47bdeb",
+          tint: "#e7f6fc",
+          enDesc:
+            "The piston moves down. The intake valve opens and the air–fuel mixture enters the cylinder; the exhaust valve stays closed.",
+          kmDesc:
+            "ពិស្តុងចុះក្រោម។ វ៉ាល់ស្រូបបើក ដើម្បីឱ្យល្បាយខ្យល់ និងឥន្ធនៈចូលស៊ីឡាំង ខណៈវ៉ាល់បញ្ចេញបិទ។",
+        },
+        {
+          en: "Compression",
+          km: "វគ្គបង្ហាប់",
+          color: "#bc9afa",
+          tint: "#f1ecfd",
+          enDesc:
+            "The piston rises with both valves closed, compressing the mixture. At the end of this stroke, the spark plug ignites it.",
+          kmDesc:
+            "ពិស្តុងឡើងលើ ហើយវ៉ាល់ទាំងពីរបិទ ដើម្បីបង្ហាប់ល្បាយ។ នៅចុងវគ្គនេះ ប៊ូស៊ីបញ្ឆេះល្បាយ។",
+        },
+        {
+          en: "Power",
+          km: "វគ្គបង្កើតកម្លាំង",
+          color: "#ffb15e",
+          tint: "#fff2e2",
+          enDesc:
+            "Both valves stay closed. Combustion produces hot expanding gas that pushes the piston down and turns the crankshaft.",
+          kmDesc:
+            "វ៉ាល់ទាំងពីរបិទ។ ការឆេះបង្កើតឧស្ម័នក្តៅដែលរីកមាឌ រុញពិស្តុងចុះ និងធ្វើឱ្យអ័ក្សក្រឡឹងបង្វិល។",
+        },
+        {
+          en: "Exhaust",
+          km: "វគ្គបញ្ចេញ",
+          color: "#ff7886",
+          tint: "#fff0f2",
+          enDesc:
+            "The exhaust valve opens and the piston rises, pushing burned gases out. The intake valve stays closed. The cycle then repeats.",
+          kmDesc:
+            "វ៉ាល់បញ្ចេញបើក ហើយពិស្តុងឡើងលើ ដើម្បីរុញឧស្ម័នដែលបានឆេះចេញ។ វ៉ាល់ស្រូបបិទ។ បន្ទាប់មក វដ្តចាប់ផ្ដើមឡើងវិញ។",
+        },
+      ];
+      const state = {
+        lang: new URLSearchParams(location.search).get("lang") === "en" ? "en" : "km",
+        playing: false,
+        theta: 0,
+        speed: 1,
+        explode: 0,
+        explodeTarget: 0,
+        selected: "piston",
+        labels: false,
+        ready: false,
+      };
+      let THREE,
+        renderer,
+        scene,
+        camera,
+        controls,
+        focus = null,
+        lastTime = 0,
+        lastUI = 0,
+        frameId;
+      let needsRender = true,
+        renderedTheta = NaN,
+        renderedExplosion = NaN;
+      const partGroups = new Map(),
+        buttons = new Map(),
+        labelButtons = new Map(),
+        pickables = [];
+      const t = (key) => text[state.lang][key];
+      const motion = { r: 0.82, l: 2.65, crankY: -1.1, headY: 2.99, pistonHalf: 0.28 };
+      /* Exact slider-crank solution: rod length stays constant at every crank angle. */
+      function cyclePose(theta) {
+        const a = ((theta % CYCLE) + CYCLE) % CYCLE;
+        const crankX = motion.r * Math.sin(a);
+        const crankY = motion.crankY + motion.r * Math.cos(a);
+        const pistonY = crankY + Math.sqrt(motion.l ** 2 - crankX ** 2);
+        const stroke = Math.min(3, Math.floor(a / Math.PI));
+        const lift = stroke === 0 || stroke === 3 ? 0.26 * Math.sin(a % Math.PI) ** 2 : 0;
+        return {
+          angle: a,
+          crankX,
+          crankY,
+          pistonY,
+          stroke,
+          intakeLift: stroke === 0 ? lift : 0,
+          exhaustLift: stroke === 3 ? lift : 0,
+          camAngle: a / 2,
+        };
+      }
+      function buildUI() {
+        for (const [index, p] of PARTS.entries()) {
+          const b = document.createElement("button");
+          b.className = "part-button";
+          b.dataset.part = p.id;
+          b.style.setProperty("--part-color", p.color);
+          b.innerHTML = '<span class="swatch" aria-hidden="true"></span><span></span>';
+          b.addEventListener("click", () => selectPart(p.id));
+          $("part-list").append(b);
+          buttons.set(p.id, b);
+          const label = document.createElement("button");
+          label.className = "part-label";
+          label.addEventListener("click", () => selectPart(p.id));
+          $("labels-layer").append(label);
+          labelButtons.set(p.id, label);
+        }
+        for (const [i, s] of STROKES.entries()) {
+          const b = document.createElement("button");
+          b.className = "stroke-button";
+          b.dataset.stroke = i;
+          b.style.setProperty("--stroke", s.color);
+          b.style.setProperty("--tint", s.tint);
+          b.innerHTML =
+            '<span class="step-number">' +
+            (i + 1) +
+            '</span><span><span class="stroke-title"></span><small>' +
+            i * 180 +
+            "°–" +
+            (i + 1) * 180 +
+            "°</small></span>";
+          b.addEventListener("click", () => {
+            setPlaying(false);
+            state.theta = i * Math.PI;
+            updateEngine();
+            refreshCycle();
+          });
+          $("strokes").append(b);
+        }
+        $("lang-en").addEventListener("click", () => setLanguage("en"));
+        $("lang-km").addEventListener("click", () => setLanguage("km"));
+        $("play").addEventListener("click", () => setPlaying(!state.playing));
+        $("speed").addEventListener("change", (e) => {
+          state.speed = Number(e.target.value);
+        });
+        $("timeline").addEventListener("input", (e) => {
+          const degrees = Number(e.target.value);
+          setPlaying(false);
+          state.theta = (degrees * Math.PI) / 180;
+          updateEngine();
+          refreshCycle();
+        });
+        $("explode").addEventListener("input", (e) => {
+          state.explodeTarget = Number(e.target.value) / 100;
+          $("explode-value").value = e.target.value + "%";
+          frameAssembly(true);
+        });
+        $("next").addEventListener("click", () => {
+          setPlaying(false);
+          state.theta = ((cyclePose(state.theta).stroke + 1) % 4) * Math.PI;
+          updateEngine();
+          refreshCycle();
+        });
+        $("labels").addEventListener("click", () => {
+          state.labels = !state.labels;
+          needsRender = true;
+          $("labels").setAttribute("aria-pressed", String(state.labels));
+        });
+        $("reset").addEventListener("click", resetCamera);
+        document.addEventListener("visibilitychange", () => {
+          lastTime = 0;
+          if (document.hidden) {
+            cancelAnimationFrame(frameId);
+          } else if (state.ready) {
+            frameId = requestAnimationFrame(animate);
+          }
+        });
+        setLanguage(state.lang);
+      }
+      function setLanguage(lang) {
+        state.lang = lang;
+        needsRender = true;
+        document.documentElement.lang = lang;
+        document.title =
+          lang === "km" ? "Khmer One · ម៉ាស៊ីន ៤ វគ្គ" : "Khmer One · Four-stroke engine lab";
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+        for (const p of PARTS) {
+          buttons.get(p.id).lastElementChild.textContent =
+            lang === "km" ? p.shortKm || p.km : p.shortEn || p.en;
+          labelButtons.get(p.id).textContent =
+            lang === "km" ? p.shortKm || p.km : p.shortEn || p.en;
+        }
+        document.querySelectorAll(".stroke-button").forEach((b, i) => {
+          b.querySelector(".stroke-title").textContent = STROKES[i][lang];
+        });
+        $("lang-km").setAttribute("aria-pressed", String(lang === "km"));
+        $("lang-en").setAttribute("aria-pressed", String(lang === "en"));
+        $("labels").setAttribute("aria-label", t("labels"));
+        $("reset").setAttribute("aria-label", t("reset"));
+        $("speed").setAttribute("aria-label", t("speed"));
+        if (renderer) renderer.domElement.setAttribute("aria-label", t("canvasLabel"));
+        refreshPart();
+        refreshPlay();
+        refreshCycle();
+      }
+      function refreshPart() {
+        const p = PARTS.find((p) => p.id === state.selected),
+          index = PARTS.indexOf(p);
+        $("part-index").textContent = String(index + 1).padStart(2, "0");
+        $("part-km").textContent = p.km;
+        $("part-en").textContent = p.en;
+        $("part-description-km").textContent = p.kmDesc;
+        $("part-description-en").textContent = p.enDesc;
+        $("part-note").textContent = p[state.lang === "km" ? "noteKm" : "noteEn"];
+        for (const q of PARTS) {
+          const active = q.id === state.selected;
+          buttons.get(q.id).setAttribute("aria-pressed", String(active));
+          labelButtons.get(q.id).setAttribute("aria-pressed", String(active));
+        }
+      }
+      function refreshPlay() {
+        $("play-symbol").textContent = state.playing ? "Ⅱ" : "▶";
+        $("play-text").textContent = t(state.playing ? "pause" : "play");
+        $("play").setAttribute("aria-pressed", String(state.playing));
+      }
+      function setPlaying(value) {
+        if (!state.ready && value) return;
+        state.playing = value;
+        lastTime = 0;
+        refreshPlay();
+        refreshCycle();
+      }
+      function refreshCycle() {
+        const pose = cyclePose(state.theta),
+          s = STROKES[pose.stroke],
+          degrees = Math.round((state.theta * 180) / Math.PI);
+        $("stroke-name").textContent = s[state.lang];
+        $("stroke-dot").style.background = s.color;
+        $("crank-angle").textContent = degrees + "° / 720°";
+        $("timeline").value = degrees;
+        $("timeline-value").value = degrees + "°";
+        $("timeline").setAttribute("aria-valuetext", degrees + "°, " + s[state.lang]);
+        $("stroke-description").textContent = s[state.lang === "km" ? "kmDesc" : "enDesc"];
+        for (const [id, open] of [
+          ["intake-status", pose.intakeLift > 0.002],
+          ["exhaust-status", pose.exhaustLift > 0.002],
+        ]) {
+          const name = id.startsWith("intake") ? "intake" : "exhaust";
+          $(id).textContent = t(name) + " · " + t(open ? "open" : "closed");
+          $(id).classList.toggle("open", open);
+        }
+        document
+          .querySelectorAll(".stroke-button")
+          .forEach((b, i) => b.setAttribute("aria-pressed", String(i === pose.stroke)));
+      }
+      function selectPart(id, moveFocus = true) {
+        state.selected = id;
+        needsRender = true;
+        refreshPart();
+        const p = PARTS.find((p) => p.id === id);
+        $("announcement").textContent = p.km + " — " + p.en;
+        for (const [key, group] of partGroups) {
+          group.traverse((obj) => {
+            if (obj.isMesh && obj.material.emissive) {
+              obj.material.emissive.setHex(key === id ? 0x126f68 : 0);
+              obj.material.emissiveIntensity = key === id ? 0.55 : 0;
+            }
+          });
+        }
+        if (moveFocus && state.ready) {
+          const target = partAnchor(id);
+          focus = {
+            from: controls.target.clone(),
+            to: target,
+            start: performance.now(),
+            duration: reducedMotion ? 0 : 520,
+          };
+        }
+      }
+      function frameAssembly(smooth) {
+        if (!state.ready) return;
+        needsRender = true;
+        const e = state.explodeTarget;
+        const target = new THREE.Vector3(0, 1.18 + e * 1.25, e * 0.45);
+        const position = new THREE.Vector3(6.8, 4.1 - 1.18, 10.8)
+          .multiplyScalar(1 + e * 0.28)
+          .add(target);
+        if (smooth && !reducedMotion) {
+          focus = {
+            from: controls.target.clone(),
+            to: target,
+            fromPosition: camera.position.clone(),
+            toPosition: position,
+            start: performance.now(),
+            duration: 650,
+          };
+        } else {
+          focus = null;
+          controls.target.copy(target);
+          camera.position.copy(position);
+          controls.update();
+        }
+      }
+      function resetCamera() {
+        frameAssembly(false);
+      }
+
+      let piston,
+        crank,
+        rod,
+        intake,
+        exhaust,
+        cam,
+        gas,
+        sparkGlow,
+        sparkLight,
+        intakeFlow,
+        exhaustFlow,
+        followers;
+      function material(color, metalness = 0.5, roughness = 0.38) {
+        return new THREE.MeshStandardMaterial({ color, metalness, roughness });
+      }
+      function mesh(geometry, mat, parent, x = 0, y = 0, z = 0) {
+        const o = new THREE.Mesh(geometry, mat);
+        o.position.set(x, y, z);
+        parent.add(o);
+        return o;
+      }
+      function cylinder(radius, height, mat, parent, x = 0, y = 0, z = 0, segments = 24) {
+        return mesh(
+          new THREE.CylinderGeometry(radius, radius, height, segments),
+          mat,
+          parent,
+          x,
+          y,
+          z,
+        );
+      }
+      function axle(radius, length, mat, parent, x = 0, y = 0, z = 0) {
+        const a = cylinder(radius, length, mat, parent, x, y, z);
+        a.rotation.x = Math.PI / 2;
+        return a;
+      }
+      function box(x, y, z, mat, parent, px = 0, py = 0, pz = 0) {
+        return mesh(new THREE.BoxGeometry(x, y, z), mat, parent, px, py, pz);
+      }
+      function torus(radius, tube, mat, parent, x = 0, y = 0, z = 0, axis = "z") {
+        const o = mesh(new THREE.TorusGeometry(radius, tube, 8, 32), mat, parent, x, y, z);
+        if (axis === "y") o.rotation.x = Math.PI / 2;
+        return o;
+      }
+      function createPart(id, offset) {
+        const g = new THREE.Group();
+        g.userData.part = id;
+        g.userData.offset = new THREE.Vector3(...offset);
+        scene.add(g);
+        partGroups.set(id, g);
+        return g;
+      }
+      function registerPicking() {
+        for (const [id, g] of partGroups) {
+          g.traverse((o) => {
+            if (o.isMesh) {
+              o.userData.part = id;
+              o.material = o.material.clone();
+              pickables.push(o);
+            }
+          });
+        }
+      }
+
+      function buildEngine() {
+        const steel = material("#b9cbd9", 0.7),
+          dark = material("#526e88", 0.72),
+          aluminum = material("#a9becc", 0.65),
+          gold = material("#c4a06c", 0.7),
+          blue = material("#55c3e8", 0.45),
+          red = material("#f58891", 0.4),
+          ceramic = material("#ede9db", 0.08, 0.25),
+          camSteel = material("#a4b4cf", 0.66);
+        // Open rear half of the cylinder: solid walls with an exposed front section.
+        const block = createPart("block", [0, 0, -1.65]);
+        mesh(
+          new THREE.CylinderGeometry(1.04, 1.04, 2.4, 32, 1, true, Math.PI / 2, Math.PI),
+          aluminum,
+          block,
+          0,
+          1.85,
+          0,
+        );
+        mesh(
+          new THREE.CylinderGeometry(0.96, 0.96, 2.4, 32, 1, true, Math.PI / 2, Math.PI),
+          dark,
+          block,
+          0,
+          1.85,
+          0,
+        ).material.side = THREE.DoubleSide;
+        for (let i = 0; i < 8; i++) {
+          const fin = mesh(
+            new THREE.RingGeometry(1.025, 1.2, 32, 1, Math.PI, Math.PI),
+            aluminum,
+            block,
+            0,
+            0.79 + i * 0.29,
+            0,
+          );
+          fin.rotation.x = Math.PI / 2;
+          fin.material.side = THREE.DoubleSide;
+        }
+        // The head is open at the front; side posts and rear cap support the valves.
+        box(2.3, 0.2, 0.83, aluminum, block, 0, 3.1, -0.65);
+        for (const x of [-1.05, 1.05]) {
+          box(0.19, 2.68, 0.26, dark, block, x, 1.74, -0.17);
+          box(0.35, 0.2, 1.14, aluminum, block, x, 3.1, 0);
+          for (const y of [0.49, 3.24]) cylinder(0.08, 0.12, gold, block, x, y, -0.15, 6);
+        }
+        box(2.5, 0.17, 1.3, dark, block, 0, -2.09, -0.28);
+        box(2.3, 2.35, 0.22, dark, block, 0, -0.86, -0.83);
+        for (const x of [-0.88, 0.88]) box(0.26, 0.47, 0.66, aluminum, block, x, -1.1, -0.3);
+        // Inlet/outlet ports are blue/red and part of their respective valve assemblies.
+        const intakePart = createPart("intake", [-1.5, 1.3, 0]),
+          exhaustPart = createPart("exhaust", [1.5, 1.3, 0]);
+        for (const [group, x, mat] of [
+          [intakePart, -0.48, blue],
+          [exhaustPart, 0.48, red],
+        ]) {
+          const port = cylinder(0.16, 0.76, mat, group, x * 2.1, 2.91, -0.29);
+          port.rotation.z = Math.PI / 2;
+          torus(0.16, 0.035, steel, group, x * 2.85, 2.91, -0.29).rotation.y = Math.PI / 2;
+        }
+        intake = new THREE.Group();
+        intakePart.add(intake);
+        exhaust = new THREE.Group();
+        exhaustPart.add(exhaust);
+        const valve = (g, x, mat) => {
+          cylinder(0.23, 0.08, mat, g, x, 2.96, 0);
+          cylinder(0.046, 0.91, steel, g, x, 3.42, 0, 12);
+          cylinder(0.14, 0.09, mat, g, x, 3.85, 0);
+        };
+        valve(intake, -0.48, blue);
+        valve(exhaust, 0.48, red);
+        // Lightweight procedural helical valve springs, compressed with valve lift.
+        const springs = [];
+        for (const [g, x] of [
+          [intakePart, -0.48],
+          [exhaustPart, 0.48],
+        ]) {
+          const points = [];
+          for (let i = 0; i <= 96; i++) {
+            const u = i / 96,
+              angle = u * TAU * 5;
+            points.push(
+              new THREE.Vector3(0.095 * Math.cos(angle), u * 0.46, 0.095 * Math.sin(angle)),
+            );
+          }
+          const spring = mesh(
+            new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points), 96, 0.018, 5, false),
+            steel,
+            g,
+            x,
+            3.28,
+            0,
+          );
+          springs.push(spring);
+        }
+        intake.userData.spring = springs[0];
+        exhaust.userData.spring = springs[1];
+        const pistonPart = createPart("piston", [0, 0.65, 1.95]);
+        piston = new THREE.Group();
+        pistonPart.add(piston);
+        cylinder(0.89, 0.56, steel, piston);
+        for (const y of [0.1, 0.18, 0.23]) torus(0.894, 0.019, dark, piston, 0, y, 0, "y");
+        axle(0.11, 1.92, gold, piston, 0, -0.09, 0);
+        // Crank rotation axis is Z. The crankpin lies exactly r from that axis.
+        const crankPart = createPart("crank", [0, -0.4, 1.1]);
+        crank = new THREE.Group();
+        crank.position.y = motion.crankY;
+        crankPart.add(crank);
+        axle(0.17, 2.3, steel, crank);
+        axle(0.12, 0.96, gold, crank, 0, motion.r, 0);
+        for (const z of [-0.44, 0.44]) {
+          box(0.33, motion.r, 0.14, dark, crank, 0, motion.r / 2, z);
+          axle(0.32, 0.17, dark, crank, 0, -0.31, z);
+          axle(0.23, 0.17, steel, crank, 0, motion.r, z);
+        }
+        const flywheel = axle(0.85, 0.16, dark, crank, 0, 0, -1.13);
+        torus(0.76, 0.052, steel, crank, 0, 0, -1.23);
+        for (let i = 0; i < 6; i++) {
+          const a = (i * TAU) / 6;
+          axle(0.075, 0.19, gold, crank, 0.58 * Math.cos(a), 0.58 * Math.sin(a), -1.15);
+        }
+        flywheel.userData.role = "flywheel";
+        const rodPart = createPart("rod", [0, 0, 2.85]);
+        rod = new THREE.Group();
+        rodPart.add(rod);
+        box(0.19, motion.l, 0.18, gold, rod);
+        box(0.08, motion.l - 0.3, 0.21, dark, rod);
+        for (const y of [-motion.l / 2, motion.l / 2]) {
+          torus(y < 0 ? 0.19 : 0.14, 0.049, gold, rod, 0, y, 0.02);
+          axle(0.065, 0.25, steel, rod, 0, y, 0);
+        }
+        const sparkPart = createPart("spark", [0, 2.0, 0.95]);
+        cylinder(0.1, 0.34, steel, sparkPart, 0, 3.2, 0.36, 16);
+        cylinder(0.14, 0.15, gold, sparkPart, 0, 3.43, 0.36, 6);
+        cylinder(0.095, 0.41, ceramic, sparkPart, 0, 3.7, 0.36, 16);
+        for (let i = 0; i < 5; i++)
+          torus(0.095, 0.016, ceramic, sparkPart, 0, 3.56 + i * 0.061, 0.36, "y");
+        cylinder(0.055, 0.15, steel, sparkPart, 0, 3.97, 0.36, 12);
+        cylinder(0.028, 0.15, steel, sparkPart, 0, 2.99, 0.36, 10);
+        box(0.022, 0.08, 0.085, steel, sparkPart, 0.05, 2.96, 0.36);
+        const camPart = createPart("cam", [0, 2.8, 0]);
+        cam = new THREE.Group();
+        cam.position.y = 4.18;
+        camPart.add(cam);
+        const shaft = cylinder(0.09, 2.4, camSteel, cam);
+        shaft.rotation.z = Math.PI / 2;
+        // Schematic radial lobes: relative timing matches maximum valve lift.
+        function lobe(x, center) {
+          const shape = new THREE.Shape();
+          for (let i = 0; i <= 64; i++) {
+            const a = (i * TAU) / 64;
+            let d = Math.atan2(Math.sin(a - center), Math.cos(a - center));
+            const rr = 0.23 + 0.19 * Math.exp(-((d / 0.42) ** 2));
+            const z = rr * Math.sin(a),
+              y = -rr * Math.cos(a);
+            if (i === 0) shape.moveTo(-z, y);
+            else shape.lineTo(-z, y);
+          }
+          shape.closePath();
+          const o = mesh(
+            new THREE.ExtrudeGeometry(shape, {
+              depth: 0.15,
+              bevelEnabled: false,
+              curveSegments: 1,
+            }),
+            camSteel,
+            cam,
+            x - 0.075,
+            0,
+            0,
+          );
+          o.rotation.y = Math.PI / 2;
+        }
+        lobe(-0.48, Math.PI / 4);
+        lobe(0.48, (7 * Math.PI) / 4);
+        const timingWheel = cylinder(0.28, 0.1, camSteel, cam, 1.2, 0, 0);
+        timingWheel.rotation.z = Math.PI / 2;
+        followers = [intake, exhaust];
+        // Translucent gas occupies only the space above the piston, never a solid part.
+        gas = mesh(
+          new THREE.CylinderGeometry(0.84, 0.84, 1, 28),
+          new THREE.MeshBasicMaterial({
+            color: STROKES[0].color,
+            transparent: true,
+            opacity: 0.13,
+            depthWrite: false,
+            side: THREE.DoubleSide,
+          }),
+          scene,
+        );
+        sparkGlow = mesh(
+          new THREE.SphereGeometry(0.13, 10, 8),
+          new THREE.MeshBasicMaterial({ color: "#ffed9d", transparent: true, depthWrite: false }),
+          scene,
+          0,
+          2.9,
+          0.36,
+        );
+        sparkGlow.visible = false;
+        sparkLight = new THREE.PointLight("#ffc65d", 0, 4);
+        sparkLight.position.set(0, 2.8, 0.3);
+        scene.add(sparkLight);
+        intakeFlow = new THREE.ArrowHelper(
+          new THREE.Vector3(1, 0, 0),
+          new THREE.Vector3(-1.9, 2.92, 0.12),
+          1.28,
+          0x47bdeb,
+          0.17,
+          0.11,
+        );
+        scene.add(intakeFlow);
+        exhaustFlow = new THREE.ArrowHelper(
+          new THREE.Vector3(1, 0, 0),
+          new THREE.Vector3(0.72, 2.92, 0.12),
+          1.28,
+          0xff7886,
+          0.17,
+          0.11,
+        );
+        scene.add(exhaustFlow);
+        registerPicking();
+        selectPart(state.selected, false);
+      }
+
+      function updateEngine() {
+        if (!piston) return;
+        if (renderedTheta === state.theta && renderedExplosion === state.explode) return;
+        renderedTheta = state.theta;
+        renderedExplosion = state.explode;
+        needsRender = true;
+        const pose = cyclePose(state.theta);
+        piston.position.y = pose.pistonY;
+        crank.rotation.z = -pose.angle;
+        rod.position.set(pose.crankX / 2, (pose.pistonY + pose.crankY) / 2, 0);
+        rod.rotation.z = Math.atan2(pose.crankX, pose.pistonY - pose.crankY);
+        intake.position.y = -pose.intakeLift;
+        exhaust.position.y = -pose.exhaustLift;
+        intake.userData.spring.scale.y = 1 - pose.intakeLift / 0.46;
+        exhaust.userData.spring.scale.y = 1 - pose.exhaustLift / 0.46;
+        cam.rotation.x = pose.camAngle;
+        for (const g of partGroups.values())
+          g.position.copy(g.userData.offset).multiplyScalar(state.explode);
+        const top = pose.pistonY + motion.pistonHalf,
+          height = Math.max(0.015, motion.headY - top);
+        gas.position.y = (top + motion.headY) / 2;
+        gas.scale.y = height;
+        gas.material.color.set(STROKES[pose.stroke].color);
+        gas.material.opacity = pose.stroke === 2 ? 0.28 : 0.13;
+        gas.visible = state.explode < 0.03;
+        const nearIgnition = Math.abs(pose.angle - TAU) < 0.15;
+        sparkGlow.visible = nearIgnition && state.explode < 0.03;
+        const intensity = Math.max(0, 1 - Math.abs(pose.angle - TAU) / 0.15);
+        sparkGlow.scale.setScalar(0.7 + intensity * 1.5);
+        sparkLight.intensity = sparkGlow.visible ? intensity * 2 : 0;
+        intakeFlow.visible = pose.intakeLift > 0.01 && state.explode < 0.03;
+        exhaustFlow.visible = pose.exhaustLift > 0.01 && state.explode < 0.03;
+      }
+
+      const anchors = {
+        block: [-1.12, 1.9, -0.3],
+        piston: [0, 0, 0.9],
+        rod: [0, 0, 0.19],
+        crank: [0.32, -1.1, 0.5],
+        intake: [-0.48, 3.47, 0],
+        exhaust: [0.48, 3.47, 0],
+        spark: [0, 3.66, 0.36],
+        cam: [0.75, 4.18, 0],
+      };
+      function partAnchor(id) {
+        const v = new THREE.Vector3(...anchors[id]);
+        if (id === "piston") v.y = piston.position.y;
+        if (id === "rod") {
+          v.x = rod.position.x;
+          v.y = rod.position.y;
+        }
+        if (id === "intake") v.y += intake.position.y;
+        if (id === "exhaust") v.y += exhaust.position.y;
+        return v.add(partGroups.get(id).position);
+      }
+      function updateLabels() {
+        const w = $("viewport").clientWidth,
+          h = $("viewport").clientHeight;
+        for (const p of PARTS) {
+          const el = labelButtons.get(p.id);
+          if (!state.labels) {
+            el.style.display = "none";
+            continue;
+          }
+          const projected = partAnchor(p.id).project(camera);
+          const visible =
+            projected.z > -1 &&
+            projected.z < 1 &&
+            Math.abs(projected.x) < 0.9 &&
+            Math.abs(projected.y) < 0.85;
+          el.style.display = visible ? "block" : "none";
+          if (visible) {
+            el.style.left = ((projected.x + 1) / 2) * w + "px";
+            el.style.top = ((-projected.y + 1) / 2) * h + "px";
+          }
+        }
+      }
+      function setupPicking() {
+        const raycaster = new THREE.Raycaster(),
+          pointer = new THREE.Vector2(),
+          canvas = renderer.domElement;
+        let down = null,
+          maxMove = 0,
+          pointerCount = 0;
+        function hits(e) {
+          const r = canvas.getBoundingClientRect();
+          pointer.set(
+            ((e.clientX - r.left) / r.width) * 2 - 1,
+            (-(e.clientY - r.top) / r.height) * 2 + 1,
+          );
+          scene.updateMatrixWorld(true);
+          raycaster.setFromCamera(pointer, camera);
+          return raycaster.intersectObjects(pickables, false);
+        }
+        canvas.addEventListener("pointerdown", (e) => {
+          pointerCount++;
+          if (e.isPrimary && e.button === 0) {
+            down = { x: e.clientX, y: e.clientY, id: e.pointerId };
+            maxMove = 0;
+          } else down = null;
+        });
+        canvas.addEventListener("pointermove", (e) => {
+          if (down) maxMove = Math.max(maxMove, Math.hypot(e.clientX - down.x, e.clientY - down.y));
+          if (e.pointerType === "mouse" && !e.buttons)
+            canvas.style.cursor = hits(e).length ? "pointer" : "grab";
+        });
+        canvas.addEventListener("pointerup", (e) => {
+          if (down && e.pointerId === down.id && pointerCount === 1 && maxMove < 6) {
+            const hit = hits(e)[0];
+            if (hit) selectPart(hit.object.userData.part);
+          }
+          pointerCount = Math.max(0, pointerCount - 1);
+          down = null;
+        });
+        canvas.addEventListener("pointercancel", () => {
+          down = null;
+          pointerCount = 0;
+        });
+        controls.addEventListener("start", () => {
+          focus = null;
+        });
+        controls.listenToKeyEvents(canvas);
+        canvas.addEventListener("keydown", (e) => {
+          if (e.code === "Space") {
+            e.preventDefault();
+            setPlaying(!state.playing);
+          } else if (e.key.toLowerCase() === "r") {
+            resetCamera();
+          }
+        });
+      }
+      function resize() {
+        const w = $("viewport").clientWidth,
+          h = $("viewport").clientHeight;
+        if (!w || !h) return;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        needsRender = true;
+      }
+      function animate(now) {
+        if (document.hidden || !state.ready) return;
+        const dt = lastTime ? Math.min((now - lastTime) / 1000, 0.05) : 0;
+        lastTime = now;
+        if (state.playing) state.theta = (state.theta + (dt * state.speed * Math.PI) / 2) % CYCLE; // 1× = one 720° cycle in eight seconds.
+        state.explode = reducedMotion
+          ? state.explodeTarget
+          : THREE.MathUtils.damp(state.explode, state.explodeTarget, 8, dt);
+        if (Math.abs(state.explode - state.explodeTarget) < 0.0001)
+          state.explode = state.explodeTarget;
+        updateEngine();
+        if (focus) {
+          needsRender = true;
+          const u = focus.duration ? Math.min(1, (now - focus.start) / focus.duration) : 1;
+          const eased = u * u * (3 - 2 * u);
+          const next = focus.from.clone().lerp(focus.to, eased);
+          if (focus.toPosition) {
+            camera.position.copy(focus.fromPosition).lerp(focus.toPosition, eased);
+          } else {
+            camera.position.add(next.clone().sub(controls.target));
+          }
+          controls.target.copy(next);
+          if (u === 1) focus = null;
+        }
+        const cameraChanged = controls.update();
+        // A paused, stationary model does not repeatedly submit GPU frames.
+        if (needsRender || cameraChanged) {
+          updateLabels();
+          renderer.render(scene, camera);
+          needsRender = false;
+        }
+        if (state.playing && now - lastUI > 80) {
+          refreshCycle();
+          lastUI = now;
+        }
+        frameId = requestAnimationFrame(animate);
+      }
+      function showFailure(error) {
+        console.error("Engine lab initialization:", error);
+        state.ready = false;
+        state.playing = false;
+        refreshPlay();
+        cancelAnimationFrame(frameId);
+        const overlay = $("loading");
+        overlay.hidden = false;
+        overlay.replaceChildren();
+        const title = document.createElement("strong"),
+          hint = document.createElement("p"),
+          retry = document.createElement("button");
+        title.textContent = t("loadError");
+        hint.textContent = t("loadErrorHint");
+        retry.textContent = t("reload");
+        title.dataset.i18n = "loadError";
+        hint.dataset.i18n = "loadErrorHint";
+        retry.dataset.i18n = "reload";
+        retry.addEventListener("click", () => location.reload());
+        overlay.append(title, hint, retry);
+        for (const id of ["play", "next", "timeline", "explode", "speed", "reset", "labels"])
+          $(id).disabled = true;
+      }
+      buildUI();
+      try {
+        // Dynamic imports let the UI show a useful error if a CDN or WebGL is unavailable.
+        const imports = Promise.all([
+          import("three"),
+          import("three/addons/controls/OrbitControls.js"),
+        ]);
+        let timeout;
+        const timeoutPromise = new Promise((_, reject) => {
+          timeout = setTimeout(() => reject(new Error("3D library load timed out")), 20000);
+        });
+        let modules;
+        try {
+          modules = await Promise.race([imports, timeoutPromise]);
+        } finally {
+          clearTimeout(timeout);
+        }
+        THREE = modules[0];
+        const { OrbitControls } = modules[1];
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(39, 1, 0.1, 100);
+        camera.position.set(6.8, 4.1, 10.8);
+        renderer = new THREE.WebGLRenderer({
+          antialias: true,
+          alpha: true,
+          powerPreference: "low-power",
+        });
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.35;
+        const canvas = renderer.domElement;
+        canvas.tabIndex = 0;
+        canvas.setAttribute("role", "img");
+        canvas.setAttribute("aria-label", t("canvasLabel"));
+        canvas.style.cursor = "grab";
+        $("viewport").prepend(canvas);
+        controls = new OrbitControls(camera, canvas);
+        controls.target.set(0, 1.18, 0);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.08;
+        controls.minDistance = 4.5;
+        controls.maxDistance = 28;
+        controls.maxPolarAngle = Math.PI * 0.88;
+        controls.update();
+        controls.saveState();
+        scene.add(new THREE.HemisphereLight("#e2f1ff", "#677a80", 2.8));
+        const key = new THREE.DirectionalLight("#ffffff", 3.3);
+        key.position.set(3, 6, 6);
+        scene.add(key);
+        const rim = new THREE.DirectionalLight("#8cbded", 2.2);
+        rim.position.set(-4, 3, -4);
+        scene.add(rim);
+        const floor = new THREE.GridHelper(18, 36, 0x536d81, 0x314b61);
+        floor.position.y = -2.24;
+        floor.material.transparent = true;
+        floor.material.opacity = 0.22;
+        scene.add(floor);
+        buildEngine();
+        setupPicking();
+        new ResizeObserver(resize).observe($("viewport"));
+        resize();
+        updateEngine();
+        canvas.addEventListener("webglcontextlost", (e) => {
+          e.preventDefault();
+          showFailure(new Error("WebGL context lost"));
+        });
+        state.ready = true;
+        $("loading").hidden = true;
+        frameId = requestAnimationFrame(animate);
+        // Deliberately start paused: learners choose when motion begins.
+      } catch (error) {
+        showFailure(error);
+      }
+    </script>
+  </body>
+</html>

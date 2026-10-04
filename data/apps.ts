@@ -9,6 +9,24 @@ export const gradeLabels: Record<GradeLevel, LocalizedText> = {
 
 export const apps: AppEntry[] = [
   {
+    id: "engine-lab",
+    title: { en: "Four-Stroke Engine Lab", km: "បន្ទប់ពិសោធន៍ម៉ាស៊ីន ៤ វគ្គ" },
+    category: AppCategory.Simulations,
+    categoryLabel: { en: "Physics & mechanical engineering", km: "រូបវិទ្យា និងវិស្វកម្មមេកានិច" },
+    tagline: { en: "See how a four-stroke engine works, from the inside.", km: "ស្វែងយល់ពីរបៀបដំណើរការរបស់ម៉ាស៊ីន ៤ វគ្គពីខាងក្នុង។" },
+    description: { en: "Rotate a 3D cutaway engine, select its components, and follow intake, compression, power, and exhaust. Pause, change speed, scrub the cycle, or separate the parts in an exploded view.", km: "បង្វិលម៉ូដែលម៉ាស៊ីន 3D ជ្រើសរើសគ្រឿងបន្លាស់ និងតាមដានវគ្គស្រូប បង្ហាប់ បង្កើតកម្លាំង និងបញ្ចេញ។ ផ្អាក ប្ដូរល្បឿន ជ្រើសទីតាំងក្នុងវដ្ត ឬបំបែកគ្រឿងបន្លាស់ដើម្បីសិក្សា។" },
+    audience: { en: "High school, university & vocational students", km: "សិស្សវិទ្យាល័យ និស្សិតសាកលវិទ្យាល័យ និងអ្នកសិក្សាវិជ្ជាជីវៈ" },
+    grades: ["high-school", "vocational-adult"],
+    hasBilingualToggle: true,
+    features: [
+      { en: "Eight selectable 3D engine components", km: "គ្រឿងបន្លាស់ម៉ាស៊ីន 3D ចំនួន ៨ ដែលអាចជ្រើសរើសបាន" },
+      { en: "Synchronized 720° cycle and exploded view", km: "វដ្ត ៧២០° និងទិដ្ឋភាពបំបែកគ្រឿងបន្លាស់" },
+      { en: "Khmer and English explanations", km: "ការពន្យល់ជាភាសាខ្មែរ និងអង់គ្លេស" },
+    ],
+    tags: ["engine", "four stroke", "4 stroke", "mechanics", "mechanical engineering", "physics", "STEM", "3D", "piston", "crankshaft", "camshaft", "combustion", "intake", "compression", "power", "exhaust", "ម៉ាស៊ីន", "ពិស្តុង", "រូបវិទ្យា"],
+    icon: "lab", url: "/engine-lab.html", offlineReady: false,
+  },
+  {
     id: "school-connect-cambodia",
     title: { en: "School Connect Cambodia", km: "ជួយសាលា" },
     category: AppCategory.Stem,

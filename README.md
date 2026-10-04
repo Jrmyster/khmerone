@@ -11,6 +11,8 @@ npm run dev
 
 ## Registry and launch links
 
+The **Four-Stroke Engine Lab** is hosted directly at `/engine-lab.html`, with a bilingual directory entry and a launch card in Fast-Track Power Skills. Its complete HTML/CSS/JavaScript source is `public/engine-lab.html`; usage and mechanical model notes are in `docs/engine-lab.md`. It uses pinned Three.js CDN modules, so its directory entry does not claim offline support.
+
 Edit `data/apps.ts` to update translations, grade levels, descriptions and links. The registry includes the app addresses supplied by the project owner. The portal opens external apps in a new tab, since many sites block iframes. Chhouk Baby carries a bilingual notice that its medical information is pending government review and directs visitors to consult a licensed doctor about their baby's health.
 
 `offlineReady` describes the child app itself. The portal's service worker caches only explicitly allowlisted public images after they are viewed. It does not cache navigation HTML, API responses, or private payloads, and it cannot make the portal homepage or external apps available offline.

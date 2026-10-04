@@ -33,6 +33,7 @@ interface Props {
 
 export function PowerSkillsDashboard({ locale, progress, status, ready, onToggleStep, onExploreApp }: Props) {
   const t = text[locale];
+  const engineLab = apps.find((app) => app.id === "engine-lab");
   return <section id="power-skills" className="power-skills wrap" aria-labelledby="power-skills-title">
     <div className="skills-header"><div><span className="section-index">{t.index}</span><h2 id="power-skills-title">{t.title}</h2><p>{t.intro}</p></div></div>
     <div className="skill-layout">
@@ -73,5 +74,11 @@ export function PowerSkillsDashboard({ locale, progress, status, ready, onToggle
         </article>;
       })}</div>
     </div>
+    {engineLab?.url && <article className="pathway-card" style={{ marginTop: 18 }} aria-labelledby="engine-lab-title">
+      <div className="pathway-top"><span className="pathway-icon"><Cpu size={22} aria-hidden="true" /></span><span className="pathway-index">{locale === "km" ? "មេកានិច · ម៉ូដែល 3D អន្តរកម្ម" : "MECHANICS · INTERACTIVE 3D LAB"}</span></div>
+      <h3 id="engine-lab-title">{engineLab.title[locale]}</h3>
+      <p className="pathway-promise" style={{ minHeight: 0 }}>{engineLab.tagline[locale]}</p>
+      <a className="pathway-resource" href={`${engineLab.url}?lang=${locale}`} target="_blank" rel="noopener noreferrer" onClick={() => onExploreApp(engineLab.id)}>{locale === "km" ? "បើកបន្ទប់ពិសោធន៍ម៉ាស៊ីន" : "Open the engine lab"} <ExternalLink size={15} aria-hidden="true" /></a>
+    </article>}
   </section>;
 }
