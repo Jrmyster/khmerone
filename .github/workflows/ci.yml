@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Lint, tests, and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      # Read the exact pnpm version from package.json's packageManager field.
+      - uses: pnpm/action-setup@v6
+      - name: Install dependencies
+        id: install
+        run: pnpm install --frozen-lockfile
+      # Run every check even if another check fails, but never after a failed install.
+      - name: Lint
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm run lint
+      - name: Tests
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        # bot-careers imports .ts directly; the flag also supports Node 22.13.0.
+        run: node --experimental-strip-types --test tests/*.test.mjs
+      - name: Build
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm run build
