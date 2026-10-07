@@ -595,7 +595,7 @@ h1, h2, h3, p { margin: 0; }
 .pathway-resource { min-height: 44px; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 14px; color: var(--cyan); font-size: 14px; font-weight: 800; text-decoration: none; overflow-wrap: anywhere; }
 .pathway-resource:hover { text-decoration: underline; }
 
-.history-guide { padding-bottom: 62px; scroll-margin-top: 22px; }
+.history-guide { padding-bottom: 62px; scroll-margin-top: 112px; }
 .history-guide-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 28px; }
 .history-guide-copy { min-width: 0; }
 .history-guide-card .pathway-top { justify-content: flex-start; align-items: center; }
