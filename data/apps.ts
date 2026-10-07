@@ -94,7 +94,7 @@ export const apps: AppEntry[] = [
       { en: "Khmer / English language toggle", km: "ប្ដូរភាសាខ្មែរ / អង់គ្លេស" },
     ],
     tags: ["ear", "hearing", "anatomy", "sound", "biology", "3D", "deaf", "hard of hearing", "accessibility", "captions", "ត្រចៀក", "ការស្តាប់", "រលកសំឡេង", "ថ្លង់"],
-    icon: "anatomy", url: "https://khmer-ear-anatomy-lab.jrmyster7.chatgpt.site/", offlineReady: false,
+    icon: "anatomy", url: "https://khmer-ear-anatomy.jaredrobertw.workers.dev/", offlineReady: false,
   },
   {
     id: "finlitkh",
