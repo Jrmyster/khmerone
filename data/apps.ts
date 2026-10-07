@@ -9,6 +9,23 @@ export const gradeLabels: Record<GradeLevel, LocalizedText> = {
 
 export const apps: AppEntry[] = [
   {
+    id: "computer-engineering",
+    title: { en: "Computer Engineering & Code", km: "វិស្វកម្មកុំព្យូទ័រ និងកូដ" },
+    category: AppCategory.Stem,
+    categoryLabel: { en: "STEM & engineering", km: "ស្ទែម និងវិស្វកម្ម" },
+    tagline: { en: "Explore logic gates and write your first code.", km: "ស្វែងយល់ទ្វារឡូជីខល និងសរសេរកូដដំបូងរបស់អ្នក។" },
+    description: { en: "Toggle binary switches, explore AND, OR, NOT, NAND and XOR truth tables, and learn HTML, CSS, JavaScript and Python through bilingual examples.", km: "ប្ដូរកុងតាក់ប៊ីត ស្វែងយល់តារាងតម្លៃពិត AND, OR, NOT, NAND និង XOR ហើយរៀន HTML, CSS, JavaScript និង Python តាមឧទាហរណ៍ពីរភាសា។" },
+    audience: { en: "Secondary students & beginner programmers", km: "សិស្សមធ្យមសិក្សា និងអ្នកចាប់ផ្ដើមសរសេរកម្មវិធី" },
+    grades: ["lower-secondary", "high-school", "vocational-adult"],
+    hasBilingualToggle: true,
+    features: [
+      { en: "Live logic gates and truth tables", km: "ទ្វារឡូជីខល និងតារាងតម្លៃពិតអន្តរកម្ម" },
+      { en: "Highlighted, copyable code examples", km: "ឧទាហរណ៍កូដបន្លិចពណ៌ និងអាចចម្លងបាន" },
+    ],
+    tags: ["computer engineering", "digital logic", "AND", "OR", "NOT", "NAND", "XOR", "binary", "HTML", "CSS", "JavaScript", "Python", "programming", "ទ្វារឡូជីខល", "កូដ"],
+    icon: "lab", url: "/computer-engineering", offlineReady: false,
+  },
+  {
     id: "engine-lab",
     title: { en: "Four-Stroke Engine Lab", km: "បន្ទប់ពិសោធន៍ម៉ាស៊ីន ៤ វគ្គ" },
     category: AppCategory.Simulations,

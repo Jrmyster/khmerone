@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { BriefcaseBusiness, Check, Code2, Cpu, ExternalLink, LockKeyhole, Video, Zap, type LucideIcon } from "lucide-react";
 import { apps } from "@/data/apps";
 import { pathways } from "@/data/engagement";
@@ -70,6 +71,7 @@ export function PowerSkillsDashboard({ locale, progress, status, ready, onToggle
               <span className="step-copy"><strong>{step.title[locale]}</strong><small>{step.detail[locale]}</small></span>
             </label>;
           })}</div>
+          {(pathway.id === "web" || pathway.id === "hardware") && <Link className="pathway-resource" href="/computer-engineering">{locale === "km" ? "សាកទ្វារឡូជីខល និងមូលដ្ឋានកូដ" : "Try logic gates & coding basics"} <Code2 size={15} aria-hidden="true" /></Link>}
           {related?.url && <a className="pathway-resource" href={related.url} target="_blank" rel="noopener noreferrer" onClick={() => onExploreApp(related.id)}>{t.resource}: {related.title[locale]} <ExternalLink size={15} aria-hidden="true" /></a>}
         </article>;
       })}</div>
