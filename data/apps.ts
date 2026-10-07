@@ -180,6 +180,23 @@ export const apps: AppEntry[] = [
     icon: "speed", url: "https://fastandfaster.netlify.app/", offlineReady: true,
   },
   {
+    id: "khmer-history-guide",
+    title: { en: "Khmer History Guide", km: "មគ្គុទ្ទេសក៍ប្រវត្តិសាស្ត្រខ្មែរ" },
+    category: AppCategory.SocialStudies,
+    categoryLabel: { en: "Cambodian history & culture", km: "ប្រវត្តិសាស្ត្រ និងវប្បធម៌កម្ពុជា" },
+    tagline: { en: "Explore Cambodia from prehistory to the modern kingdom.", km: "ស្វែងយល់អំពីកម្ពុជាពីសម័យបុរេប្រវត្តិដល់ព្រះរាជាណាចក្រសម័យទំនើប។" },
+    description: { en: "An English-language, 55-page historical guide covering eleven eras of Khmer civilization: rulers, wars, religion, architecture, engineering, and everyday life. Read online or download the PDF for offline reading.", km: "មគ្គុទ្ទេសក៍ប្រវត្តិសាស្ត្រជាភាសាអង់គ្លេស ៥៥ ទំព័រ គ្របដណ្ដប់សម័យទាំង ១១ នៃអរិយធម៌ខ្មែរ៖ អ្នកដឹកនាំ សង្គ្រាម សាសនា ស្ថាបត្យកម្ម វិស្វកម្ម និងជីវិតប្រចាំថ្ងៃ។ អានតាមអ៊ីនធឺណិត ឬទាញយក PDF ដើម្បីអានក្រៅបណ្ដាញ។" },
+    audience: { en: "High school students, teachers & curious readers", km: "សិស្សវិទ្យាល័យ គ្រូបង្រៀន និងអ្នកចូលចិត្តអាន" },
+    grades: ["high-school", "vocational-adult"],
+    hasBilingualToggle: false,
+    features: [
+      { en: "Eleven historical eras and linked sources", km: "សម័យប្រវត្តិសាស្ត្រទាំង ១១ និងប្រភពឯកសារ" },
+      { en: "Downloadable PDF with chronology and glossary", km: "PDF អាចទាញយកបាន ជាមួយកាលប្បវត្តិ និងសទ្ទានុក្រម" },
+    ],
+    tags: ["history", "Khmer history", "Cambodia", "culture", "Angkor", "Angkor Wat", "Funan", "Chenla", "civilization", "PDF", "English", "ប្រវត្តិសាស្ត្រ", "ខ្មែរ", "កម្ពុជា", "អង្គរ", "វប្បធម៌"],
+    icon: "peace", url: "https://cambodia-khmer-history-guide.jaredrobertw.workers.dev/", offlineReady: false,
+  },
+  {
     id: "war-is-dumb",
     title: { en: "War is Dumb", km: "សង្គ្រាមគឺមិនឆ្លាត" },
     category: AppCategory.SocialStudies,

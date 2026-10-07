@@ -16,6 +16,7 @@ import { BottomFloatingSearch } from "@/components/BottomFloatingSearch";
 import { DynamicSearchPrompt, useRotatingSearchPrompt, useSearchDismissal } from "@/components/DynamicSearchBar";
 import type { SearchPrompt } from "@/data/searchPrompts";
 import { PowerSkillsDashboard } from "@/components/PowerSkillsDashboard";
+import { KhmerHistoryGuideCard } from "@/components/KhmerHistoryGuideCard";
 import { CrewDirectory } from "@/components/CrewDirectory";
 import { DonationNotice } from "@/components/DonationNotice";
 import { FuturePerspectiveBanner } from "@/components/FuturePerspectiveBanner";
@@ -47,6 +48,7 @@ const filters: { key: FilterKey; label: Record<Locale, string> }[] = [
   { key: AppCategory.Languages, label: { en: "Languages", km: "ភាសា" } },
   { key: AppCategory.Finance, label: { en: "Financial literacy", km: "ហិរញ្ញវត្ថុ" } },
   { key: AppCategory.Simulations, label: { en: "Simulations", km: "ការក្លែងធ្វើ" } },
+  { key: AppCategory.SocialStudies, label: { en: "History & society", km: "ប្រវត្តិសាស្ត្រ និងសង្គម" } },
   { key: AppCategory.Utilities, label: { en: "Utilities", km: "ឧបករណ៍សិក្សា" } },
   { key: AppCategory.WomenEnterprise, label: { en: "Women & enterprise", km: "ស្ត្រី និងសហគ្រិនភាព" } },
 ];
@@ -247,6 +249,7 @@ export default function Home() {
       </section>
 
       <PowerSkillsDashboard locale={locale} progress={cyber.progress} status={cyber.status} ready={cyber.ready} onToggleStep={cyber.toggleStep} onExploreApp={cyber.exploreApp} />
+      <KhmerHistoryGuideCard locale={locale} onExploreApp={cyber.exploreApp} />
       <CrewDirectory locale={locale} selectedId={cyber.progress.crewInterestId} onSelect={cyber.selectCrew} />
 
       <DengueHealthNotice locale={locale} />
