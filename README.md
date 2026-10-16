@@ -11,6 +11,12 @@ npm run dev
 
 ## Registry and launch links
 
+The **Chess Lab** at `/chess` adds Khmer/English lessons, practice puzzles,
+3D and keyboard-friendly 2D boards, browser-based computer play, and local
+progress connected to the Chess & Strategic Thinking pathway. Use the page's
+offline preparation button to download its public learning assets. See
+`docs/chess-lab.md` for architecture, engine licensing, and validation.
+
 The **Four-Stroke Engine Lab** is hosted directly at `/engine-lab.html`, with a bilingual directory entry and a launch card in Fast-Track Power Skills. Its complete HTML/CSS/JavaScript source is `public/engine-lab.html`; usage and mechanical model notes are in `docs/engine-lab.md`. It uses pinned Three.js CDN modules, so its directory entry does not claim offline support.
 
 Edit `data/apps.ts` to update translations, grade levels, descriptions and links. The registry includes the app addresses supplied by the project owner. The portal opens external apps in a new tab, since many sites block iframes. Chhouk Baby carries a bilingual notice that its medical information is pending government review and directs visitors to consult a licensed doctor about their baby's health.

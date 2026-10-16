@@ -35,7 +35,7 @@ jobs:
       - name: Tests
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         # bot-careers imports .ts directly; the flag also supports Node 22.13.0.
-        run: node --experimental-strip-types --test tests/*.test.mjs
+        run: pnpm run test
       - name: Build
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: pnpm run build

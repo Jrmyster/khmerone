@@ -30,6 +30,7 @@ export function TeacherToolkit() {
 
   useEffect(() => {
     mounted.current = true;
+    const frame = requestAnimationFrame(() => {
     try {
       const draft = parseToolkitDraft(localStorage.getItem(TOOLKIT_DRAFT_KEY));
       setSettings(draft.settings); setKind(draft.kind); setEdits(draft.edits);
@@ -47,7 +48,8 @@ export function TeacherToolkit() {
         if (cached && mounted.current) setOfflineState("ready");
       }).catch(() => {});
     } else setOfflineState("unsupported");
-    return () => { mounted.current = false; };
+    });
+    return () => { cancelAnimationFrame(frame); mounted.current = false; };
   }, []);
 
   useEffect(() => {
@@ -58,7 +60,7 @@ export function TeacherToolkit() {
 
   useEffect(() => {
     if (!ready) return;
-    setSaveState("saving");
+    const frame = requestAnimationFrame(() => setSaveState("saving"));
     const timer = window.setTimeout(() => {
       try {
         localStorage.setItem(TOOLKIT_DRAFT_KEY, JSON.stringify({ settings, kind, edits }));
@@ -66,6 +68,7 @@ export function TeacherToolkit() {
       } catch { setSaveState("error"); }
     }, 350);
     return () => {
+      cancelAnimationFrame(frame);
       window.clearTimeout(timer);
       // Keep the final edit when navigating away before the debounce completes.
       try { localStorage.setItem(TOOLKIT_DRAFT_KEY, JSON.stringify({ settings, kind, edits })); } catch { /* No storage available. */ }
