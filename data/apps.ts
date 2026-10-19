@@ -9,6 +9,24 @@ export const gradeLabels: Record<GradeLevel, LocalizedText> = {
 
 export const apps: AppEntry[] = [
   {
+    id: "chess",
+    title: { en: "Khmer One Chess Lab", km: "បន្ទប់រៀនអុកខ្មែរវ័ន" },
+    category: AppCategory.Simulations,
+    categoryLabel: { en: "Chess & strategic thinking", km: "អុក និងការគិតយុទ្ធសាស្ត្រ" },
+    tagline: { en: "Learn a move. Discover a new way to think.", km: "រៀនការដើរ។ រកឃើញវិធីគិតថ្មី។" },
+    description: { en: "Learn international chess in Khmer or English with ten interactive lessons, four beginner puzzles, a 3D/2D board, and computer or same-device play. Save progress and prepare the lab for offline use.", km: "រៀនអុកអន្តរជាតិជាភាសាខ្មែរ ឬអង់គ្លេស ជាមួយមេរៀនអន្តរកម្មដប់ លំហាត់ដំបូងបួន ក្ដារ 3D/2D និងការលេងជាមួយកុំព្យូទ័រ ឬលើឧបករណ៍តែមួយ។ រក្សាទុកវឌ្ឍនភាព និងត្រៀមប្រើក្រៅបណ្ដាញ។" },
+    audience: { en: "Beginners, students & families", km: "អ្នកចាប់ផ្ដើម សិស្ស និងគ្រួសារ" },
+    grades: ["primary", "lower-secondary", "high-school", "vocational-adult"],
+    hasBilingualToggle: true,
+    features: [
+      { en: "Interactive Khmer and English chess lessons", km: "មេរៀនអុកអន្តរកម្មជាភាសាខ្មែរ និងអង់គ្លេស" },
+      { en: "3D board, keyboard-friendly 2D view and legal moves", km: "ក្ដារ 3D ទិដ្ឋភាព 2D សម្រាប់ក្ដារចុច និងការដើរស្របច្បាប់" },
+      { en: "Computer play, practice puzzles and local progress", km: "លេងជាមួយកុំព្យូទ័រ លំហាត់អនុវត្ត និងវឌ្ឍនភាពលើឧបករណ៍" },
+    ],
+    tags: ["chess", "strategy", "logic", "puzzles", "3D", "Stockfish", "អុក", "យុទ្ធសាស្ត្រ", "លំហាត់"],
+    icon: "lab", url: "/chess", offlineReady: true,
+  },
+  {
     id: "computer-engineering",
     title: { en: "Computer Engineering & Code", km: "វិស្វកម្មកុំព្យូទ័រ និងកូដ" },
     category: AppCategory.Stem,

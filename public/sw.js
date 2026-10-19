@@ -1,6 +1,8 @@
 const CACHE = "khmerone-public-v42";
 const TOOLKIT_CACHE = "khmerone-teacher-toolkit-v1";
+const CHESS_CACHE = "khmerone-chess-v1";
 const isToolkitAsset = (path) => /^(\/assets\/|\/_next\/static\/).+\.(js|css|woff2?|ttf)$/.test(path);
+const isChessAsset = (path) => isToolkitAsset(path) || /^\/chess\/[\w.-]+\.(js|wasm|txt)$/.test(path);
 const PUBLIC_IMAGES = new Set([
   "/favicon.svg",
   "/icon-192.png",
@@ -19,7 +21,7 @@ self.addEventListener("activate", (event) => {
     const names = await caches.keys();
     await Promise.all(
       names
-        .filter((name) => name.startsWith("khmerone-") && name !== CACHE && name !== TOOLKIT_CACHE)
+        .filter((name) => name.startsWith("khmerone-") && name !== CACHE && name !== TOOLKIT_CACHE && name !== CHESS_CACHE)
         .map((name) => caches.delete(name))
     );
     await self.clients.claim();
@@ -27,6 +29,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("message", (event) => {
+  if (event.data?.type === "PREPARE_CHESS") { prepareChess(event); return; }
   if (event.data?.type !== "PREPARE_TEACHER_TOOLKIT" || !event.ports[0]) return;
   event.waitUntil((async () => {
     try {
@@ -53,9 +56,62 @@ self.addEventListener("message", (event) => {
   })());
 });
 
+function prepareChess(event) {
+  if (event.data?.type !== "PREPARE_CHESS" || !event.ports[0]) return;
+  event.waitUntil((async () => {
+    try {
+      const response = await fetch("/chess-offline-assets.json", { cache: "reload", credentials: "omit" });
+      if (!response.ok) throw new Error("Manifest unavailable");
+      const manifest = await response.json();
+      if (!Array.isArray(manifest.assets) || !manifest.assets.length || manifest.assets.length > 400 || manifest.assets.some((path) => typeof path !== "string" || !isChessAsset(path) || path.includes("..") || path.includes("?"))) throw new Error("Invalid asset manifest");
+      const cache = await caches.open(CHESS_CACHE);
+      const queue = [...manifest.assets];
+      await Promise.all(Array.from({ length: Math.min(6, queue.length) }, async () => {
+        while (queue.length) {
+          const path = queue.shift();
+          const asset = await fetch(path, { credentials: "omit", cache: "reload" });
+          if (!asset.ok || asset.redirected || /\b(private|no-store)\b/i.test(asset.headers.get("Cache-Control") || "")) throw new Error("Asset download failed");
+          await cache.put(path, asset);
+        }
+      }));
+      const page = await fetch("/chess", { credentials: "omit", cache: "reload" });
+      // This specific, public route contains no server-side user data. Like the
+      // toolkit, it may have framework no-store headers despite its public shell.
+      // Fetch without credentials, and never generalize this to other pages.
+      if (!page.ok || page.redirected || !(page.headers.get("Content-Type") || "").includes("text/html")) throw new Error("Chess page unavailable");
+      // Store the public page last, only after its assets have downloaded.
+      await cache.put("/chess", page);
+      event.ports[0].postMessage({ ok: true });
+    } catch { event.ports[0].postMessage({ ok: false }); }
+  })());
+}
+
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   const url = new URL(request.url);
+
+  if (request.method === "GET" && url.origin === self.location.origin && request.mode === "navigate" && url.pathname.replace(/\/$/, "") === "/chess" && !request.headers.has("Authorization")) {
+    event.respondWith((async () => {
+      try { const response = await fetch(request); if (response.ok) return response; } catch { /* Use the prepared public page. */ }
+      const cached = await (await caches.open(CHESS_CACHE)).match("/chess");
+      return cached || new Response("Open Chess Lab online and choose Make available offline first.", { status: 503, headers: { "Content-Type": "text/plain;charset=utf-8" } });
+    })());
+    return;
+  }
+
+  if (request.method === "GET" && url.origin === self.location.origin && !url.search && isChessAsset(url.pathname) && !request.headers.has("Authorization") && !request.headers.has("Range")) {
+    event.respondWith((async () => {
+      try {
+        const cached = await (await caches.open(CHESS_CACHE)).match(request);
+        if (cached) return cached;
+        // Shared framework assets may also belong to the prepared toolkit.
+        const toolkit = await (await caches.open(TOOLKIT_CACHE)).match(request);
+        if (toolkit) return toolkit;
+      } catch { /* Continue online when cache storage is blocked. */ }
+      return fetch(request);
+    })());
+    return;
+  }
 
   if (request.method === "GET" && url.origin === self.location.origin && request.mode === "navigate" && url.pathname.replace(/\/$/, "") === "/teacher-toolkit" && !request.headers.has("Authorization")) {
     event.respondWith((async () => {

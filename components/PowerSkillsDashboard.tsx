@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { BriefcaseBusiness, Check, Code2, Cpu, ExternalLink, LockKeyhole, Video, Zap, type LucideIcon } from "lucide-react";
+import { BriefcaseBusiness, Check, Code2, Cpu, Crown, ExternalLink, LockKeyhole, Video, Zap, type LucideIcon } from "lucide-react";
 import { apps } from "@/data/apps";
 import { pathways } from "@/data/engagement";
 import type { Locale } from "@/types/app";
 import type { CyberProgress, SkillPathway } from "@/types/engagement";
 
-const icons: Record<SkillPathway["icon"], LucideIcon> = { video: Video, code: Code2, cpu: Cpu, briefcase: BriefcaseBusiness };
+const icons: Record<SkillPathway["icon"], LucideIcon> = { video: Video, code: Code2, cpu: Cpu, briefcase: BriefcaseBusiness, chess: Crown };
 const badges = [
   { key: "apprentice", name: { en: "Digital Apprentice", km: "អ្នកហាត់ការឌីជីថល" }, how: { en: "Take your first step", km: "ចាប់ផ្ដើមជំហានដំបូង" } },
   { key: "runner", name: { en: "Code Runner", km: "អ្នកសាកកូដ" }, how: { en: "Finish Web & App Basics", km: "បញ្ចប់មូលដ្ឋានគេហទំព័រ" } },
@@ -72,7 +72,7 @@ export function PowerSkillsDashboard({ locale, progress, status, ready, onToggle
             </label>;
           })}</div>
           {(pathway.id === "web" || pathway.id === "hardware") && <Link className="pathway-resource" href="/computer-engineering">{locale === "km" ? "សាកទ្វារឡូជីខល និងមូលដ្ឋានកូដ" : "Try logic gates & coding basics"} <Code2 size={15} aria-hidden="true" /></Link>}
-          {related?.url && <a className="pathway-resource" href={related.url} target="_blank" rel="noopener noreferrer" onClick={() => onExploreApp(related.id)}>{t.resource}: {related.title[locale]} <ExternalLink size={15} aria-hidden="true" /></a>}
+          {related?.url && <a className="pathway-resource" href={`${related.url}${related.url.startsWith("/") ? `?lang=${locale}` : ""}`} target="_blank" rel="noopener noreferrer" onClick={() => onExploreApp(related.id)}>{t.resource}: {related.title[locale]} <ExternalLink size={15} aria-hidden="true" /></a>}
         </article>;
       })}</div>
     </div>

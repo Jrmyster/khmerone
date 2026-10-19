@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { apps } from "@/data/apps";
 import { crewConcepts, pathways } from "@/data/engagement";
 import type { CyberProgress } from "@/types/engagement";
@@ -71,5 +71,10 @@ export function useCyberProgress() {
     setProgress((current) => ({ ...current, crewInterestId: current.crewInterestId === id ? null : id }));
   };
 
-  return { progress, status, ready, exploreApp, toggleStep, selectCrew };
+  const completeStep = useCallback((id: string) => {
+    if (!stepIds.has(id)) return;
+    setProgress((current) => current.completedStepIds.includes(id) ? current : { ...current, completedStepIds: [...current.completedStepIds, id] });
+  }, []);
+
+  return { progress, status, ready, exploreApp, toggleStep, selectCrew, completeStep };
 }

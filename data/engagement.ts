@@ -2,6 +2,16 @@ import type { CrewConcept, SkillPathway } from "@/types/engagement";
 
 export const pathways: SkillPathway[] = [
   {
+    id: "chess", icon: "chess", minutes: 15,
+    title: { en: "Chess & Strategic Thinking", km: "អុក និងការគិតយុទ្ធសាស្ត្រ" },
+    promise: { en: "Explore a piece, solve a puzzle, and make your next move.", km: "ស្វែងយល់កូនអុក ដោះស្រាយលំហាត់ និងរកការដើរបន្ទាប់។" },
+    steps: [
+      { id: "chess-move", title: { en: "Learn a piece's movement", km: "រៀនរបៀបដើរកូនអុក" }, detail: { en: "Complete a guided exercise on the interactive chessboard.", km: "បញ្ចប់លំហាត់ណែនាំលើក្ដារអុកអន្តរកម្ម។" } },
+      { id: "chess-puzzle", title: { en: "Solve a chess puzzle", km: "ដោះស្រាយលំហាត់អុក" }, detail: { en: "Find a capture, a fork, or checkmate. Hints are welcome.", km: "រកការចាប់ ការគំរាមពីរគោលដៅ ឬការឈ្នះ។ អាចប្រើជំនួយបាន។" } },
+      { id: "chess-game", title: { en: "Finish a friendly game", km: "បញ្ចប់ការប្រកួតមិត្តភាព" }, detail: { en: "Play the computer or a friend on the same device, without a clock.", km: "លេងជាមួយកុំព្យូទ័រ ឬមិត្តលើឧបករណ៍តែមួយ ដោយគ្មាននាឡិកា។" } },
+    ], relatedAppId: "chess",
+  },
+  {
     id: "media", icon: "video", minutes: 20,
     title: { en: "Digital Media & Content", km: "មេឌៀឌីជីថល និងការបង្កើតមាតិកា" },
     promise: { en: "Tell a useful story with the phone you have.", km: "ប្រាប់រឿងមានប្រយោជន៍ដោយប្រើទូរស័ព្ទដែលអ្នកមាន។" },

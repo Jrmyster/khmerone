@@ -97,21 +97,21 @@ export function BackgroundAudio() {
       audio.muted = true;
       audio.volume = 0;
     }
-    try {
-      setPreferredPlaying(localStorage.getItem(STORAGE_KEY) === "unmuted");
-    } catch {
-      /* Default to paused. */
-    }
     // Home owns the language switch; the persistent player observes its locale.
     const updateLocale = () =>
       setLocale(document.documentElement.lang === "km" ? "km" : "en");
-    updateLocale();
+    const initialFrame = requestAnimationFrame(() => {
+      try { setPreferredPlaying(localStorage.getItem(STORAGE_KEY) === "unmuted"); }
+      catch { /* Default to paused. */ }
+      updateLocale();
+    });
     const observer = new MutationObserver(updateLocale);
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["lang"],
     });
     return () => {
+      cancelAnimationFrame(initialFrame);
       observer.disconnect();
       wantsPlayback.current = false;
       operationRef.current += 1;
