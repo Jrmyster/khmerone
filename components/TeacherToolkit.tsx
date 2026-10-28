@@ -32,6 +32,7 @@ export function TeacherToolkit() {
     mounted.current = true;
     try {
       const draft = parseToolkitDraft(localStorage.getItem(TOOLKIT_DRAFT_KEY));
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Restore the existing toolkit draft after browser hydration.
       setSettings(draft.settings); setKind(draft.kind); setEdits(draft.edits);
       const lang = localStorage.getItem("khmerone-locale");
       if (lang === "km" || lang === "en") setLocale(lang);
@@ -58,6 +59,7 @@ export function TeacherToolkit() {
 
   useEffect(() => {
     if (!ready) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Show the status of the debounced external storage write below.
     setSaveState("saving");
     const timer = window.setTimeout(() => {
       try {

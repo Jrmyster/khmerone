@@ -7,7 +7,34 @@ export const gradeLabels: Record<GradeLevel, LocalizedText> = {
   "vocational-adult": { en: "Vocational / adult", km: "វិជ្ជាជីវៈ / មនុស្សពេញវ័យ" },
 };
 
+import { learningTools, bi } from "./learning";
+
 export const apps: AppEntry[] = [
+  ...learningTools.map((tool): AppEntry => ({
+    id: `learning-${tool.id}`, title: tool.title, category: tool.id === "dictionary" ? AppCategory.Stem : ["speaking", "stories", "translation"].includes(tool.id) ? AppCategory.Languages : AppCategory.Utilities,
+    categoryLabel: bi("Learning studio", "កន្លែងសិក្សា"), tagline: tool.summary, description: tool.summary,
+    audience: bi("Learners & teachers", "អ្នករៀន និងគ្រូ"), grades: ["primary", "lower-secondary", "high-school", "vocational-adult"],
+    features: [tool.tag, bi("Khmer and English interface", "ផ្ទាំងប្រើប្រាស់ជាខ្មែរ និងអង់គ្លេស")], hasBilingualToggle: true,
+    tags: ["learning studio", tool.id, "Khmer", "English"], icon: tool.id === "dictionary" ? "lab" : tool.id === "exchange" ? "school" : "language",
+    url: `/learning/${tool.id}`, offlineReady: false,
+  })),
+  {
+    id: "teacher-audio",
+    title: { en: "Khmer Teacher Audio Maker", km: "កម្មវិធីបង្កើតសំឡេងសម្រាប់គ្រូ" },
+    category: AppCategory.Utilities,
+    categoryLabel: { en: "Teaching tools", km: "ឧបករណ៍សម្រាប់ការបង្រៀន" },
+    tagline: { en: "Turn Khmer classroom text into an MP3.", km: "បម្លែងអត្ថបទមេរៀនភាសាខ្មែរទៅជា MP3។" },
+    description: { en: "Choose Sreymom or Piseth, set the speaking speed, and listen to or download your lesson. Includes classroom templates; no account needed.", km: "ជ្រើសរើសសំឡេងស្រីមុំ ឬពិសិដ្ឋ កំណត់ល្បឿនអាន រួចស្តាប់ ឬទាញយកមេរៀន។ មានគំរូសម្រាប់ថ្នាក់រៀន និងមិនត្រូវការគណនី។" },
+    audience: { en: "Teachers & Khmer learners", km: "គ្រូបង្រៀន និងអ្នករៀនភាសាខ្មែរ" },
+    grades: ["primary", "lower-secondary", "high-school", "vocational-adult"],
+    hasBilingualToggle: true,
+    features: [
+      { en: "Two Khmer voices and slower speech", km: "សំឡេងខ្មែរពីរ និងល្បឿនអានយឺត" },
+      { en: "Listen and download MP3", km: "ស្តាប់ និងទាញយក MP3" },
+    ],
+    tags: ["teacher", "audio", "Khmer", "MP3", "speech", "Sreymom", "Piseth", "គ្រូ", "សំឡេង"],
+    icon: "language", url: "/teacher-audio", offlineReady: false,
+  },
   {
     id: "computer-engineering",
     title: { en: "Computer Engineering & Code", km: "វិស្វកម្មកុំព្យូទ័រ និងកូដ" },

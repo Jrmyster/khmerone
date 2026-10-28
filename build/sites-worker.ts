@@ -1,9 +1,17 @@
 import handler from "vinext/server/fetch-handler";
 import { runWithConnectorBinding } from "../lib/connector-context";
 import type { ConnectorBinding } from "../lib/connector-contract.mjs";
+import { handleTeacherAudio } from "../lib/teacher-audio-server";
+
+import { handleLearning } from "../lib/learning/server";
+export { QuizRoom } from "../lib/learning/quiz-room";
 
 export default {
   fetch(request: Request, env: Cloudflare.Env, ctx: ExecutionContext<{ CONNECTORS?: ConnectorBinding }>) {
+    if (new URL(request.url).pathname.replace(/\/$/, "") === "/api/teacher-audio") {
+      return handleTeacherAudio(request, env);
+    }
+    if (new URL(request.url).pathname.startsWith("/api/learning/")) return handleLearning(request, env);
     let binding = ctx.props?.CONNECTORS;
     // Local preview emulates the same request-scoped capability. This branch and
     // the auxiliary service binding are absent from production builds.

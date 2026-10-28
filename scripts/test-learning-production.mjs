@@ -1,0 +1,19 @@
+// Checks server rendering in the real Workers runtime after `pnpm build`.
+// No browser, microphone, live Azure request or remote Cloudflare write is involved.
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {realpathSync,readdirSync} from 'node:fs';
+import {resolve} from 'node:path';
+const require=createRequire(realpathSync('node_modules/wrangler/package.json'));
+const {Miniflare}=require('miniflare');
+const root=resolve('dist/server');
+const files=['index.js',...readdirSync(root,{recursive:true}).filter(f=>/\.(m?js)$/.test(f)&&f!=='index.js')];
+const mf=new Miniflare({modules:files.map(f=>({type:'ESModule',path:resolve(root,f)})),modulesRoot:root,compatibilityDate:'2026-05-15',compatibilityFlags:['nodejs_compat'],durableObjects:{QUIZ_ROOMS:{className:'QuizRoom',useSQLite:true}}});
+const pages={'/learning':'Small discoveries.','/learning/dictionary':'Talking STEM Dictionary','/learning/speaking':'English Speaking Practice','/learning/quiz-maker':'Listening Quiz Maker','/learning/stories':'Bilingual Story Library','/learning/announcements':'School Announcement Maker','/learning/translation':'Lesson Translation Workbench','/learning/live-quiz':'Live Classroom Quiz','/learning/exchange':'School Connect Exchange','/teacher-audio':'teacher-audio-shell'};
+try{
+ for(const [path,expected] of Object.entries(pages)){
+  const response=await mf.dispatchFetch('https://khmerone.test'+path);
+  assert.equal(response.status,200,path);const html=await response.text();assert.ok(html.includes(expected),`${path}: expected visible content`);assert.ok(!html.includes('Internal Server Error'),path);console.log(`PASS ${path}`);
+ }
+ const missing=await mf.dispatchFetch('https://khmerone.test/learning/not-a-tool');assert.equal(missing.status,404);await missing.body?.cancel();console.log('PASS unknown tool returns 404');
+}finally{await mf.dispose();}
