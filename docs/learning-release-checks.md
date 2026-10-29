@@ -30,13 +30,19 @@ Includes Cloudflare resource setup and post-deployment verification scripts. The
 
 Speech, translation and assessment provider responses in automated tests are mocks. These tests verify request formatting and response handling, not the user's live Azure resources.
 
-## Still required before calling the production rollout complete
+## Deployment and audio correction (2026-10-29)
 
-1. Authenticate Wrangler to the user's Cloudflare account. `wrangler whoami` reported **not authenticated** in this workspace. No production deployment was attempted.
-2. Provision/bind the D1 database and private R2 bucket and apply the migration with `pnpm run setup:learning`.
-3. Add the Translator key/region and editor secret, build and deploy using [the deployment guide](learning-deployment.md). Existing Speech secrets must remain on the Worker.
-4. Test one real operation against each live Azure service, a two-device quiz, and an approved resource attachment. Confirm quotas and budget alerts in the user's accounts.
-5. Complete desktop/mobile browser checks, keyboard use, downloads and real microphone recording. The managed preview service returned a URL but refused connections; a local execution-profile repair did not restore the browser route. Browser visual and interactive QA is therefore **unverified**. Server-rendering checks are not a replacement for these checks.
-6. Ask a Khmer teacher to review the seed definitions, translations and templates. The interface marks these as drafts and does not claim teacher approval.
+The owner deployed the learning suite to `khmerone.jaredrobertw.workers.dev`, version `5f015eb5-8a88-443a-ac73-acb498fd6207`. D1, R2, Durable Objects, rate limiters, and the new Translator/editor secrets are configured. Page and configuration checks passed.
 
-The new features are implemented in source. They have not been activated at the user's production Cloudflare address by this release preparation.
+Live acceptance checks then found two failures: learning speech returned `502` with `provider_http_400`, and translation returned `provider_configuration`. The learning speech request omitted Azure's required `User-Agent`; the original Audio Maker already sends it. This patch restores that header. The Workers-runtime provider mock now rejects missing application headers and covers all four learning voices at both speeds. The regression failed before the fix and passed afterward. All 41 tests, TypeScript, lint, the production build, production page rendering, and the deployment dry run passed with the fix.
+
+The correction is prepared for deployment from the owner's authenticated PowerShell session. Live audio success after the correction remains to be checked. The translation credential rejection is a separate unresolved configuration issue; see the troubleshooting steps in [the deployment guide](learning-deployment.md).
+
+`verify:learning` now labels binding checks CONFIGURED, rather than READY. Its optional `--services` mode makes real English/Khmer audio and translation requests and requires nonempty results.
+
+## Remaining acceptance checks
+
+1. Publish the correction and run `pnpm run verify:learning --services`. Verify the existing Translator resource's key and region if authentication is still rejected. Listen to the generated audio and review the translation separately.
+2. Test real pronunciation feedback, a two-device quiz, and an approved resource attachment.
+3. Complete desktop/mobile browser checks, keyboard use, downloads and real microphone recording. Browser visual and interactive QA remains **unverified**. Server-rendering checks are not a replacement for these checks.
+4. Ask a Khmer teacher to review the seed definitions, translations and templates. The interface marks these as drafts and does not claim teacher approval.

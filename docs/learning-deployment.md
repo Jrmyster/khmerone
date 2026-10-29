@@ -41,7 +41,9 @@ pnpm run deploy:cloudflare
 pnpm run verify:learning
 ```
 
-The deployment creates the SQLite Durable Object class for quizzes and binds the rate limiters. Do not delete or rename the `learning-v1` migration in later releases. Check `/learning` at the existing Cloudflare address. A READY status verifies bindings, not an end-to-end Azure operation.
+The deployment creates the SQLite Durable Object class for quizzes and binds the rate limiters. Do not delete or rename the `learning-v1` migration in later releases. Check `/learning` at the existing Cloudflare address. A CONFIGURED status only verifies that bindings exist. It does not validate Azure credentials or generate audio.
+
+Run `pnpm run verify:learning --services` to also generate two short clips (English and Khmer) and one English-to-Khmer translation. These three calls use your Azure quota. PASS confirms a nonempty result; listen to clips in the browser and review translation quality separately.
 
 ## 4. Confirm real services
 
@@ -60,6 +62,8 @@ Exchange listings persist until rejected or removed by the owner. Room data is d
 
 ## Troubleshooting and rollback
 
+- **Dictionary audio returns 502 / provider_http_400**: rebuild and deploy the latest source. The learning speech request must include Azure's required `User-Agent` header, just like the original Audio Maker. The October 29 fix adds it and a regression check in the Workers runtime.
+- **Translation rejects the site connection**: open the existing Translator resource's **Keys and Endpoint**, copy its key with the copy button, and save it again with `pnpm exec wrangler secret put AZURE_TRANSLATOR_KEY --config dist/server/wrangler.json`. Save the exact resource region with the corresponding `AZURE_TRANSLATOR_REGION` command (for Southeast Asia, use `southeastasia`). Paste values only when prompted, without quotation marks. Do not create a second resource or replace the Speech key. If rejection continues, check the resource's subscription and network-access settings in Azure.
 - **Translation needs setup**: check both Translator secrets and its exact region. The Speech resource and Translator resource are separate.
 - **Exchange unavailable**: rerun setup in the correct account, rebuild and redeploy so the D1 binding is included. Check that the migration applied.
 - **Microphone denied**: use the browser's site settings to allow it. Some embedded browsers require opening the site in Safari, Edge or Chrome.

@@ -42,6 +42,8 @@ test('real workerd: two-player room isolation, D1 moderation, private R2 files, 
  assert.equal((await (await call('resources')).json()).items[0].title,'Test resource');
  const published=await call(`files/${file.id}`);assert.equal(published.status,200);assert.match(published.headers.get('Content-Disposition'),/^attachment/);assert.equal(await published.text(),'A safe test lesson.');
  await call('moderate',{id,status:'rejected'},secret);assert.equal((await call(`files/${file.id}`)).status,404);
- const speech=await call('speech',{text:'សួស្តី',language:'km',speed:'normal'});assert.equal(speech.status,200);assert.equal((await speech.arrayBuffer()).byteLength,4);
+ for(const [language,voices] of Object.entries({km:['km-KH-SreymomNeural','km-KH-PisethNeural'],en:['en-US-JennyNeural','en-US-GuyNeural']}))for(const voice of voices)for(const speed of ['normal','slower']){
+  const speech=await call('speech',{text:language==='km'?'សួស្តី':'Cell.',language,voice,speed});assert.equal(speech.status,200,`${voice} ${speed}`);assert.equal((await speech.arrayBuffer()).byteLength,4);
+ }
  const original=await mf.dispatchFetch('https://khmerone.test/api/teacher-audio',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:'សួស្តី',voice:'km-KH-SreymomNeural',speed:'normal'})});assert.equal(original.status,200);
 });
