@@ -51,9 +51,10 @@ export function KhmerOneBar({ locale = "en", homeUrl = "https://khmerone.com/", 
     `}</style>
     <div className="khmerone-network-inner">
       <span className="khmerone-network-brand"><span className="khmerone-network-mark">◆</span> KHMERONE <span style={{ opacity: .72, fontWeight: 500 }}>NETWORK</span></span>
+      <a className="khmerone-network-link" href={homeUrl.startsWith('/') ? '/search' : new URL('/search', homeUrl).href}>{locale === 'en' ? 'Search' : 'ស្វែងរក'}</a>
       <a className="khmerone-network-link" href={homeUrl} aria-label={label}>{linkText} <span aria-hidden="true">↗</span></a>
       <button type="button" className="khmerone-network-toggle" aria-label={menuLabel} aria-controls="khmerone-network-menu" aria-expanded={open} onClick={() => setOpen((value) => !value)}>{locale === "km" ? "ម៉ឺនុយ" : "Menu"}<ChevronDown size={16} aria-hidden="true" /></button>
     </div>
-    {open && <div className="khmerone-network-menu" id="khmerone-network-menu"><a href={homeUrl} onClick={() => setOpen(false)}>{linkText} <span aria-hidden="true">↗</span></a></div>}
+    {open && <div className="khmerone-network-menu" id="khmerone-network-menu"><a href={homeUrl.startsWith('/') ? '/search' : new URL('/search', homeUrl).href}>{locale === 'en' ? 'Search' : 'ស្វែងរក'}</a><a href={homeUrl} onClick={() => setOpen(false)}>{linkText} <span aria-hidden="true">↗</span></a></div>}
   </nav>;
 }

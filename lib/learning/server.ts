@@ -68,6 +68,21 @@ export async function handleLearning(request: Request, env: LearningEnv, fetcher
             const pending = url.searchParams.get('review') === '1';
             if (pending)
                 await requireEditor(request, env.LEARNING_ADMIN_KEY);
+            // Search reads only approved content, with a stable cursor instead of a
+            // silent 200-listing limit. Review queues never enter this public index.
+            if (!pending && url.searchParams.get('index') === '1') {
+                const after = url.searchParams.get('after') || '';
+                if (after && !/^[a-f0-9-]{36}$/.test(after)) throw new HttpError(400, 'invalid_input');
+                const result = await env.LEARNING_DB.prepare("SELECT id,title,school,province,kind,subject,description,url,lat,lng,attachment_id AS attachmentId,status,created_at AS createdAt FROM learning_resources WHERE status='approved' AND id > ? ORDER BY id LIMIT 201").bind(after).all();
+                const items = result.results.slice(0, 200);
+                return json({ items, nextCursor: result.results.length > 200 ? items[items.length - 1].id : null });
+            }
+            const resourceId = url.searchParams.get('id');
+            if (!pending && resourceId) {
+                if (!/^[a-f0-9-]{36}$/.test(resourceId)) throw new HttpError(400, 'invalid_input');
+                const result = await env.LEARNING_DB.prepare("SELECT id,title,school,province,kind,subject,description,url,lat,lng,attachment_id AS attachmentId,status,created_at AS createdAt FROM learning_resources WHERE status='approved' AND id=?").bind(resourceId).all();
+                return json({ items: result.results });
+            }
             const result = await env.LEARNING_DB.prepare('SELECT id,title,school,province,kind,subject,description,url,lat,lng,attachment_id AS attachmentId,status,created_at AS createdAt FROM learning_resources WHERE status = ? ORDER BY created_at DESC LIMIT 200').bind(pending ? 'pending' : 'approved').all();
             return json({ items: result.results });
         }

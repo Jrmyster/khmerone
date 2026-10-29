@@ -34,6 +34,8 @@ export function TeacherToolkit() {
       const draft = parseToolkitDraft(localStorage.getItem(TOOLKIT_DRAFT_KEY));
       // eslint-disable-next-line react-hooks/set-state-in-effect -- Restore the existing toolkit draft after browser hydration.
       setSettings(draft.settings); setKind(draft.kind); setEdits(draft.edits);
+      const requestedUnit = new URLSearchParams(window.location.search).get('unit');
+      if (toolkitUnits.some(unit => unit.id === requestedUnit)) setSettings({ ...draft.settings, unitId: requestedUnit!, title: '', objective: '' });
       const lang = localStorage.getItem("khmerone-locale");
       if (lang === "km" || lang === "en") setLocale(lang);
       const theme = localStorage.getItem("khmerone-theme-v3");
@@ -92,7 +94,7 @@ export function TeacherToolkit() {
   return <div className={`toolkit-shell ${locale === "km" ? "khmer" : "english"}`}>
     <header className="toolkit-header wrap">
       <Link href="/" className="toolkit-home"><BookOpenText size={24} aria-hidden="true" /><span>{t.home}<small>{t.name}</small></span></Link>
-      <div className="toolkit-header-controls"><div id="background-audio-controls" className="audio-header-slot" /><div className="toolkit-language" role="group" aria-label={locale === "km" ? "ភាសា" : "Language"}>{(["km", "en"] as Locale[]).map((lang) => <button type="button" key={lang} aria-pressed={locale === lang} onClick={() => { setLocale(lang); setEditing(false); }}><Languages size={15} aria-hidden="true" />{lang.toUpperCase()}</button>)}</div></div>
+      <div className="toolkit-header-controls"><a href="/search">{locale === "en" ? "Search" : "ស្វែងរក"}</a><div id="background-audio-controls" className="audio-header-slot" /><div className="toolkit-language" role="group" aria-label={locale === "km" ? "ភាសា" : "Language"}>{(["km", "en"] as Locale[]).map((lang) => <button type="button" key={lang} aria-pressed={locale === lang} onClick={() => { setLocale(lang); setEditing(false); }}><Languages size={15} aria-hidden="true" />{lang.toUpperCase()}</button>)}</div></div>
     </header>
     <main className="toolkit-main wrap">
       <section className="toolkit-intro" aria-labelledby="toolkit-title"><span className="toolkit-kicker">{t.name}</span><h1 id="toolkit-title">{t.tagline}</h1><p>{t.intro}</p></section>

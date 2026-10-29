@@ -11,6 +11,7 @@ const files=['index.js',...readdirSync(root,{recursive:true}).filter(f=>/\.(m?js
 const mf=new Miniflare({modules:files.map(f=>({type:'ESModule',path:resolve(root,f)})),modulesRoot:root,compatibilityDate:'2026-05-15',compatibilityFlags:['nodejs_compat'],durableObjects:{QUIZ_ROOMS:{className:'QuizRoom',useSQLite:true}}});
 const pages={'/learning':'Small discoveries.','/learning/dictionary':'Talking STEM Dictionary','/learning/speaking':'English Speaking Practice','/learning/quiz-maker':'Listening Quiz Maker','/learning/stories':'Bilingual Story Library','/learning/announcements':'School Announcement Maker','/learning/translation':'Lesson Translation Workbench','/learning/live-quiz':'Live Classroom Quiz','/learning/exchange':'School Connect Exchange','/teacher-audio':'teacher-audio-shell'};
 try{
+ const search=await mf.dispatchFetch('https://khmerone.test/search?q=photosynthesis');assert.equal(search.status,200);assert.ok((await search.text()).includes('Search Khmer One'));console.log('PASS /search');
  for(const [path,expected] of Object.entries(pages)){
   const response=await mf.dispatchFetch('https://khmerone.test'+path);
   assert.equal(response.status,200,path);const html=await response.text();assert.ok(html.includes(expected),`${path}: expected visible content`);assert.ok(!html.includes('Internal Server Error'),path);console.log(`PASS ${path}`);

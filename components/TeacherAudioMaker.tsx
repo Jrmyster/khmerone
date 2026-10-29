@@ -88,6 +88,7 @@ export function TeacherAudioMaker() {
 
   return <div className="teacher-audio-shell" lang={locale}>
     <header className="ta-header">
+      <a href="/search" className="ta-home">{locale === 'en' ? 'Search' : 'ស្វែងរក'}</a>
       <a href="/" className="ta-home"><ArrowLeft size={18} aria-hidden="true" />{t.home}</a>
       <div className="ta-languages" role="group" aria-label="ភាសា / Language">
         <button type="button" lang="km" aria-pressed={locale === "km"} onClick={() => setLocale("km")}>ខ្មែរ</button>

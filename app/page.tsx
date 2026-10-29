@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ArrowUpRight, Baby, BookOpenText, Check, ClipboardCheck, Coins, Cpu, Globe2, GraduationCap, HeartPulse, Languages, Search, SlidersHorizontal, Sparkles, TriangleAlert, WifiOff, X, Zap, type LucideIcon } from "lucide-react";
 import { apps, gradeLabels } from "@/data/apps";
 import { crewConcepts, pathways } from "@/data/engagement";
-import { searchAppCatalog, searchCrewConcepts, searchSkillPathways } from "@/utils/search";
+import { searchCrewConcepts, searchSkillPathways } from "@/utils/search";
 import { AppCategory, type AppEntry, type FilterKey, type GradeLevel, type Locale } from "@/types/app";
 import { KhmerOneBar } from "@/components/KhmerOneBar";
 import { MascotBot } from "@/components/MascotBot";
@@ -27,6 +27,8 @@ import { BackToTopButton } from "@/components/BackToTopButton";
 import { rainbowAccents, themeColor, themePresets, type AccentId, type ThemeId } from "@/data/themes";
 import { useCyberProgress } from "@/hooks/useCyberProgress";
 import { isKhmerOneAlias } from "@/lib/khmerUtils";
+import { searchSite, searchSiteApps, siteSearchDocuments } from "@/data/siteSearch";
+import { SearchResults, SearchResourceStatus, usePublishedSearch } from "@/components/SiteSearch";
 
 function readSetting(key: string): string | null {
   try {
@@ -61,7 +63,7 @@ const copy = {
     explore: "Explore Educational Apps", mission: "About the Mission",
     missionBody: "Our mission is to make practical education easier to access across Cambodia. Khmer One brings specialized learning apps together in one place, so students and educators can discover a subject, practice a skill, and build something useful for their community.",
     missionOffline: "Look for the Offline ready badge in the directory to find tools that support learning without a connection.",
-    search: "Search apps, topics or grade levels", searchLabel: "Search learning apps",
+    search: "Search apps, words, stories or lessons", searchLabel: "Search Khmer One content",
     clear: "Clear search", grade: "Any grade level", browse: "Explore the network",
     apps: "apps", app: "app", all: "All learning apps",
     empty: "No apps match your search.", reset: "Clear filters",
@@ -124,6 +126,7 @@ export default function Home() {
   const [accent, setAccent] = useState<AccentId>("default");
   const [settingsReady, setSettingsReady] = useState(false);
   const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query);
   const [searchFocused, setSearchFocused] = useState(false);
   const { searchOpen, openSearch, closeSearch, dismissSearch } = useSearchDismissal(query, setQuery, setSearchFocused);
   const [filter, setFilter] = useState<FilterKey>("all");
@@ -199,10 +202,15 @@ export default function Home() {
   }, []);
 
   const t = copy[locale];
+  const publishedSearch = usePublishedSearch(Boolean(query.trim()));
+  const indexedMatches = useMemo(() => searchSite(deferredQuery, [...siteSearchDocuments, ...publishedSearch.documents]), [deferredQuery, publishedSearch.documents]);
+  const contentMatches = useMemo(() => indexedMatches
+    .filter(item => !['app', 'pathway', 'crew'].includes(item.kind))
+    .filter(item => (filter === 'all' || !item.category || item.category === filter || (filter === AppCategory.Simulations && item.category === AppCategory.SocialStudies)) && (grade === 'all' || !item.grades || item.grades.includes(grade))), [indexedMatches, filter, grade]);
   const results = useMemo(() => {
-    return searchAppCatalog(apps, query).filter((app) =>
+    return searchSiteApps(deferredQuery, apps, indexedMatches).filter((app) =>
       matchesFilter(app, filter) && (grade === "all" || app.grades.includes(grade)));
-  }, [query, filter, grade]);
+  }, [deferredQuery, indexedMatches, filter, grade]);
   const pathwayMatches = useMemo(() => query.trim() ? searchSkillPathways(pathways, query) : [], [query]);
   const crewMatches = useMemo(() => query.trim() ? searchCrewConcepts(crewConcepts, query) : [], [query]);
   const showRelatedSearch = searchOpen && (pathwayMatches.length > 0 || crewMatches.length > 0);
@@ -260,7 +268,7 @@ export default function Home() {
           <div className="search-field" data-search-surface>
             <button type="button" className="search-focus-button" aria-label={t.searchLabel} onClick={() => searchRef.current?.focus()}><Search size={21} aria-hidden="true" /></button>
             <div className="search-input-wrap">
-              <input ref={searchRef} type="search" aria-label={t.searchLabel} placeholder={searchFocused ? t.search : ""} value={query}
+              <input ref={searchRef} type="search" maxLength={240} aria-label={t.searchLabel} placeholder={searchFocused ? t.search : ""} value={query}
                 onChange={(e) => { setQuery(e.target.value); openSearch(); }}
                 onKeyDown={(e) => {
                   if (e.key !== "Enter") return;
@@ -280,6 +288,7 @@ export default function Home() {
           {pathwayMatches.length > 0 && <div><h3>{t.matchingPaths}</h3><div className="related-search-links">{pathwayMatches.map((pathway) => <a href={`#pathway-${pathway.id}`} key={pathway.id}>{pathway.title[locale]} <ArrowUpRight size={15} aria-hidden="true" /></a>)}</div></div>}
           {crewMatches.length > 0 && <div><h3>{t.matchingCrews}</h3><div className="related-search-links">{crewMatches.map((crew) => <a href={`#crew-${crew.id}`} key={crew.id}>{crew.title[locale]} <ArrowUpRight size={15} aria-hidden="true" /></a>)}</div></div>}
         </div>}
+        {query.trim() && <section className="site-search-inline" data-search-surface aria-label={locale === 'en' ? 'Matching content' : 'មាតិកាត្រូវគ្នា'}><h2>{locale === 'en' ? 'Words, lessons & pages' : 'ពាក្យ មេរៀន និងទំព័រ'}</h2><SearchResourceStatus status={publishedSearch.status} locale={locale}/><SearchResults key={query + filter + grade} results={contentMatches} query={query} locale={locale} preview/><a className="site-search-more" href={`/search?q=${encodeURIComponent(query)}`}>{locale === 'en' ? 'Search everything in Khmer One' : 'ស្វែងរកក្នុងខ្មែរ វ័នទាំងមូល'} <ArrowUpRight size={16}/></a></section>}
         {results.length ? <div className="app-grid">{results.map((app, index) => {
           const Icon = icons[app.icon];
           return <article className="app-card" key={app.id}>
@@ -289,7 +298,7 @@ export default function Home() {
             {app.notice && <aside className="health-notice" aria-label={t.healthNotice}><TriangleAlert size={18} aria-hidden="true" /><div><strong>{t.healthNotice}</strong><p>{app.notice[locale]}</p></div></aside>}
             <div className="card-bottom">{app.url ? <a className="launch-button" href={app.url} target="_blank" rel="noopener noreferrer" onClick={() => cyber.exploreApp(app.id)} aria-label={`${t.launch}: ${app.title[locale]}`}>{t.launch}<ArrowUpRight size={18} aria-hidden="true" /></a> : <span className="pending-button" title={t.linkInfo} aria-label={`${app.title[locale]}: ${t.linkInfo}`}>{t.pending}</span>}</div>
           </article>;
-        })}</div> : showRelatedSearch ? <p className="related-only-note">{t.noAppMatches}</p> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>}
+        })}</div> : showRelatedSearch || contentMatches.length > 0 ? <p className="related-only-note">{t.noAppMatches}</p> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>}
       </section>
       <section id="mission" className="mission-section wrap" aria-labelledby="mission-title">
         <div className="mission-card">

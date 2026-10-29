@@ -42,6 +42,20 @@ test('real workerd: two-player room isolation, D1 moderation, private R2 files, 
  assert.equal((await (await call('resources')).json()).items[0].title,'Test resource');
  const published=await call(`files/${file.id}`);assert.equal(published.status,200);assert.match(published.headers.get('Content-Disposition'),/^attachment/);assert.equal(await published.text(),'A safe test lesson.');
  await call('moderate',{id,status:'rejected'},secret);assert.equal((await call(`files/${file.id}`)).status,404);
+ // A full public search crosses the old 200-row cap without exposing the review queue.
+ const ids=Array.from({length:201},(_,i)=>`00000000-0000-4000-8000-${String(i).padStart(12,'0')}`);
+ const insert=db.prepare('INSERT INTO learning_resources(id,title,school,province,kind,subject,description,url,lat,lng,status,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)');
+ for(let i=0;i<ids.length;i+=50)await db.batch(ids.slice(i,i+50).map(id=>insert.bind(id,'Published microscope','Test school','Kampot','equipment','Biology','Observe cells','',null,null,'approved','2026-10-29T00:00:00Z')));
+ const pendingId='ffffffff-ffff-4fff-8fff-ffffffffffff';
+ await insert.bind(pendingId,'PRIVATE DRAFT','Test school','Kampot','equipment','Biology','Private review text','',null,null,'pending','2026-10-29T00:00:00Z').run();
+ const firstPage=await(await call('resources?index=1')).json();assert.equal(firstPage.items.length,200);assert.ok(firstPage.nextCursor);
+ const lastPage=await(await call('resources?index=1&after='+firstPage.nextCursor)).json();assert.equal(lastPage.items.length,1);assert.equal(lastPage.nextCursor,null);
+ assert.equal(new Set([...firstPage.items,...lastPage.items].map(item=>item.id)).size,201);
+ assert.ok([...firstPage.items,...lastPage.items].every(item=>item.status==='approved'));
+ assert.deepEqual((await(await call('resources?id='+pendingId)).json()).items,[]);
+ assert.equal((await(await call('resources?id='+ids[200])).json()).items[0].id,ids[200]);
+ assert.equal((await call('resources?index=1&review=1')).status,401);
+ assert.equal((await call('resources?index=1&after=bad-cursor')).status,400);
  for(const [language,voices] of Object.entries({km:['km-KH-SreymomNeural','km-KH-PisethNeural'],en:['en-US-JennyNeural','en-US-GuyNeural']}))for(const voice of voices)for(const speed of ['normal','slower']){
   const speech=await call('speech',{text:language==='km'?'សួស្តី':'Cell.',language,voice,speed});assert.equal(speech.status,200,`${voice} ${speed}`);assert.equal((await speech.arrayBuffer()).byteLength,4);
  }

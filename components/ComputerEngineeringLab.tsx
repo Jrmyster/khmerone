@@ -59,6 +59,15 @@ export function ComputerEngineeringLab() {
   const coding = codingLessons[language];
   const labApp = apps.find((app) => app.id === "khmer-lab-tech");
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const selectedGate = params.get('gate');
+    const selectedLanguage = params.get('language');
+    if (gateIds.includes(selectedGate as GateId)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Restore the lesson requested by a search result.
+      setGate(selectedGate as GateId); setSection('logic');
+    } else if (languageIds.includes(selectedLanguage as ProgrammingId)) { setLanguage(selectedLanguage as ProgrammingId); setSection('programming'); }
+  }, []);
   useEffect(() => { document.documentElement.lang = locale; }, [locale]);
   useEffect(() => {
     if (copyState !== "copied") return;
@@ -87,7 +96,7 @@ export function ComputerEngineeringLab() {
     <a href="#ce-main" className="ce-skip">{t.back}</a>
     <header className="ce-header">
       <Link href="/" className="ce-brand"><Cpu size={25} aria-hidden="true" /><span>Khmer One<small>{t.name}</small></span></Link>
-      <div className="ce-header-actions"><div id="background-audio-controls" className="audio-header-slot" /><div className="ce-language" role="group" aria-label={t.language}>{(["km", "en"] as Locale[]).map((lang) => <button type="button" key={lang} onClick={() => changeLocale(lang)} aria-pressed={locale === lang}><Languages size={15} aria-hidden="true" />{lang.toUpperCase()}</button>)}</div></div>
+      <div className="ce-header-actions"><a href="/search">{locale === 'en' ? 'Search' : 'ស្វែងរក'}</a><div id="background-audio-controls" className="audio-header-slot" /><div className="ce-language" role="group" aria-label={t.language}>{(["km", "en"] as Locale[]).map((lang) => <button type="button" key={lang} onClick={() => changeLocale(lang)} aria-pressed={locale === lang}><Languages size={15} aria-hidden="true" />{lang.toUpperCase()}</button>)}</div></div>
     </header>
     <main id="ce-main" className="ce-main">
       <section className="ce-hero" aria-labelledby="ce-title">

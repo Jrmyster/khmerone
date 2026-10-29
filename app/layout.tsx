@@ -3,6 +3,7 @@ import { Kantumruy_Pro, Moul } from "next/font/google";
 import { CosmicJungleBackground } from "@/components/CosmicJungleBackground";
 import { BackgroundAudio } from "@/src/components/BackgroundAudio";
 import "./globals.css";
+import "./search/search.css";
 
 const kantumruy = Kantumruy_Pro({ subsets: ["khmer", "latin"], display: "swap", variable: "--font-kantumruy" });
 const moul = Moul({ subsets: ["khmer"], weight: "400", display: "swap", variable: "--font-moul" });
