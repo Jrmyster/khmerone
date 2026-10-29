@@ -115,6 +115,10 @@
         justify-content: space-between;
         gap: 16px;
       }
+      .topbar-inner { flex-wrap: wrap; }
+      .home-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 12px; border: 1px solid var(--teal); border-radius: 9px; color: var(--teal); text-decoration: none; font-weight: 600; }
+      .home-link:hover { background: #eef7f4; }
+      .home-link:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
       .brand {
         display: flex;
         align-items: center;
@@ -912,13 +916,14 @@
   <body>
     <header class="topbar">
       <div class="topbar-inner">
-        <a class="brand" href="/#power-skills" aria-label="Back to Khmer One / ត្រឡប់ទៅ Khmer One" style="color:inherit;text-decoration:none">
+        <a class="brand" href="/" aria-label="Back to Khmer One / ត្រឡប់ទៅ Khmer One" style="color:inherit;text-decoration:none">
           <span class="brand-icon" aria-hidden="true"
             ><svg viewBox="0 0 32 32" fill="none">
               <path d="M9 6v20M9 16 24 6M14 13l10 13" stroke="currentColor" stroke-width="3" /></svg
           ></span>
           <div>Khmer One<small data-i18n="brandSub">បន្ទប់ពិសោធន៍អន្តរកម្ម</small></div>
         </a>
+        <a class="home-link" href="/"><span aria-hidden="true">←</span><span data-i18n="home">ទំព័រដើមខ្មែរ វ័ន</span></a>
         <div class="languages" role="group" aria-label="Language / ភាសា">
           <button id="lang-km" lang="km" aria-pressed="true">ខ្មែរ</button
           ><button id="lang-en" lang="en" aria-pressed="false">English</button>
@@ -1124,6 +1129,7 @@
       const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
       const text = {
         en: {
+          home: "Khmer One home",
           brandSub: "INTERACTIVE LABORATORIES",
           eyebrow: "Physics · Mechanics",
           title: "Inside a four-stroke engine",
@@ -1177,6 +1183,7 @@
           bdc: "bottom dead center",
         },
         km: {
+          home: "ទំព័រដើមខ្មែរ វ័ន",
           brandSub: "បន្ទប់ពិសោធន៍អន្តរកម្ម",
           eyebrow: "រូបវិទ្យា · មេកានិច",
           title: "ស្វែងយល់ពីម៉ាស៊ីន ៤ វគ្គ",

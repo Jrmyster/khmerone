@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { BookOpenText, Check, Download, FileText, Languages, LoaderCircle, Pencil, Printer, RotateCcw, WifiOff } from "lucide-react";
 import { buildTeachingResource, defaultToolkitSettings, resourceKinds, resourceLabels, subjectLabels, subjects, toolkitUnits, type ResourceKind, type ToolkitSettings } from "@/data/teacherToolkit";
 import { toolkitCopy } from "@/locales/teacherToolkit";
@@ -93,7 +92,7 @@ export function TeacherToolkit() {
 
   return <div className={`toolkit-shell ${locale === "km" ? "khmer" : "english"}`}>
     <header className="toolkit-header wrap">
-      <Link href="/" className="toolkit-home"><BookOpenText size={24} aria-hidden="true" /><span>{t.home}<small>{t.name}</small></span></Link>
+      <a href="/" className="toolkit-home"><BookOpenText size={24} aria-hidden="true" /><span>{t.home}<small>{t.name}</small></span></a>
       <div className="toolkit-header-controls"><a href="/search">{locale === "en" ? "Search" : "ស្វែងរក"}</a><div id="background-audio-controls" className="audio-header-slot" /><div className="toolkit-language" role="group" aria-label={locale === "km" ? "ភាសា" : "Language"}>{(["km", "en"] as Locale[]).map((lang) => <button type="button" key={lang} aria-pressed={locale === lang} onClick={() => { setLocale(lang); setEditing(false); }}><Languages size={15} aria-hidden="true" />{lang.toUpperCase()}</button>)}</div></div>
     </header>
     <main className="toolkit-main wrap">
@@ -127,7 +126,7 @@ export function TeacherToolkit() {
           <div className="toolkit-export-controls">{document.answerKey && <label className="toolkit-answer-toggle"><input type="checkbox" checked={showAnswers} onChange={(event) => setShowAnswers(event.target.checked)} /><span>{t.answers}</span></label>}<div className="toolkit-export-actions"><button type="button" className="toolkit-primary" onClick={() => window.print()}><Printer size={19} aria-hidden="true" />{t.print}</button><button type="button" onClick={download}><Download size={19} aria-hidden="true" />{t.download}</button></div><p>{t.printTip}</p></div>
         </section>
       </div>
-      <footer className="toolkit-footer"><p>{t.starterNote}</p><Link href="/">{t.home}</Link></footer>
+      <footer className="toolkit-footer"><p>{t.starterNote}</p><a href="/">{t.home}</a></footer>
     </main>
   </div>;
 }

@@ -80,7 +80,7 @@ export function SiteSearch() {
   const results = useMemo(() => searchSite(deferredQuery, [...siteSearchDocuments, ...published.documents]), [deferredQuery, published.documents]);
   const filtered = kind === 'all' ? results : results.filter(result => result.kind === kind);
   return <main className="site-search-page" lang={locale}>
-    <header><a href="/">← Khmer One</a><a href="/learning">{tr(locale, 'Learning studio', 'កន្លែងសិក្សា')}</a><button type="button" onClick={() => { const next = locale === 'en' ? 'km' : 'en'; setLocale(next); try { localStorage.setItem('khmerone-locale', next); } catch { /* Session still works. */ } }}>{locale === 'en' ? 'ខ្មែរ' : 'English'}</button></header>
+    <header><a className="site-search-home" href="/"><span aria-hidden="true">←</span> {tr(locale, 'Khmer One home', 'ទំព័រដើមខ្មែរ វ័ន')}</a><a href="/learning">{tr(locale, 'Learning studio', 'កន្លែងសិក្សា')}</a><button type="button" onClick={() => { const next = locale === 'en' ? 'km' : 'en'; setLocale(next); try { localStorage.setItem('khmerone-locale', next); } catch { /* Session still works. */ } }}>{locale === 'en' ? 'ខ្មែរ' : 'English'}</button></header>
     <h1>{tr(locale, 'Search Khmer One', 'ស្វែងរកក្នុងខ្មែរ វ័ន')}</h1>
     <p>{tr(locale, 'Find a word, a lesson, a story or your next learning tool.', 'ស្វែងរកពាក្យ មេរៀន រឿង ឬឧបករណ៍សិក្សា។')}</p>
     <form role="search" className="site-search-form" onSubmit={event => event.preventDefault()}>

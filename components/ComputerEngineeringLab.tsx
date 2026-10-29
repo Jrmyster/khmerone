@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Binary, Check, Code2, Copy, Cpu, Languages, Lightbulb, RotateCcw } from "lucide-react";
 import { codingLessons, gateLessons, languageIds, type ProgrammingId } from "@/data/computerEngineering";
 import { engineeringCopy } from "@/locales/computerEngineering";
@@ -95,7 +94,7 @@ export function ComputerEngineeringLab() {
   return <div className="ce-shell" lang={locale}>
     <a href="#ce-main" className="ce-skip">{t.back}</a>
     <header className="ce-header">
-      <Link href="/" className="ce-brand"><Cpu size={25} aria-hidden="true" /><span>Khmer One<small>{t.name}</small></span></Link>
+      <a href="/" className="ce-brand"><Cpu size={25} aria-hidden="true" /><span>{t.home}<small>{t.name}</small></span></a>
       <div className="ce-header-actions"><a href="/search">{locale === 'en' ? 'Search' : 'ស្វែងរក'}</a><div id="background-audio-controls" className="audio-header-slot" /><div className="ce-language" role="group" aria-label={t.language}>{(["km", "en"] as Locale[]).map((lang) => <button type="button" key={lang} onClick={() => changeLocale(lang)} aria-pressed={locale === lang}><Languages size={15} aria-hidden="true" />{lang.toUpperCase()}</button>)}</div></div>
     </header>
     <main id="ce-main" className="ce-main">
@@ -135,7 +134,7 @@ export function ComputerEngineeringLab() {
           </div>
         </div>
       </section>}
-      <footer className="ce-footer"><p>{t.footer}</p><div><Link href="/"><ArrowLeft size={17} aria-hidden="true" />{t.home}</Link>{labApp?.url && <a href={labApp.url} target="_blank" rel="noopener noreferrer">{t.next}<ArrowUpRight size={17} aria-hidden="true" /></a>}</div></footer>
+      <footer className="ce-footer"><p>{t.footer}</p><div><a href="/"><ArrowLeft size={17} aria-hidden="true" />{t.home}</a>{labApp?.url && <a href={labApp.url} target="_blank" rel="noopener noreferrer">{t.next}<ArrowUpRight size={17} aria-hidden="true" /></a>}</div></footer>
     </main>
   </div>;
 }
