@@ -111,6 +111,8 @@ export function BackgroundAudio() {
     updateLocale();
     const pauseForNarration = () => onNarrationStart();
     window.addEventListener("khmerone:narration-start", pauseForNarration);
+    const dataPreferenceChanged = () => { if (document.documentElement.dataset.lowData === "true") { onNarrationStart(); audio?.removeAttribute("src"); audio?.load(); } };
+    window.addEventListener("khmerone:data-change", dataPreferenceChanged);
     const observer = new MutationObserver(updateLocale);
     observer.observe(document.documentElement, {
       attributes: true,
@@ -120,6 +122,7 @@ export function BackgroundAudio() {
       observer.disconnect();
       wantsPlayback.current = false;
       window.removeEventListener("khmerone:narration-start", pauseForNarration);
+      window.removeEventListener("khmerone:data-change", dataPreferenceChanged);
       operationRef.current += 1;
       if (fadeRef.current !== null) cancelAnimationFrame(fadeRef.current);
       audio?.pause();
@@ -141,6 +144,7 @@ export function BackgroundAudio() {
       return;
     }
 
+    if (!audio.getAttribute("src")) audio.src = "/audio/buddhist-harmony.mp3";
     wantsPlayback.current = true;
     const operation = ++operationRef.current;
     setLoading(true);
@@ -242,7 +246,6 @@ export function BackgroundAudio() {
   return <>
     <audio
       ref={audioRef}
-      src="/audio/buddhist-harmony.mp3"
       loop={true}
       preload="none"
       muted={!playing && !loading}

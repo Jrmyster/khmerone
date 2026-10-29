@@ -10,7 +10,7 @@ async function collect(directory) {
     if (entry.isDirectory()) assets.push(...await collect(path));
     else {
       const url = "/" + relative(root, path).split(sep).join("/");
-      if (/^(\/assets\/|\/_next\/static\/).+\.(js|css|woff2?|ttf)$/.test(url)) assets.push(url);
+      if (["/site-experience.js", "/site-experience.css"].includes(url) || /^(\/assets\/|\/_next\/static\/).+\.(js|css|woff2?|ttf)$/.test(url)) assets.push(url);
     }
   }
   return assets;

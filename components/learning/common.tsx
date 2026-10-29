@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
+import { ContentReview } from '@/components/shared/ContentReview';
 import { Download, Play, LoaderCircle } from 'lucide-react';
 import { api, download } from '@/lib/learning/browser';
 import { voices, isQuiz, scoreQuiz, type Language, type Quiz } from '@/lib/learning/contracts';
@@ -11,7 +12,7 @@ export function Notice({ children, error = false }: {
     children: React.ReactNode;
     error?: boolean;
 }) { return <p className={`learn-notice ${error ? 'is-error' : ''}`} role={error ? 'alert' : 'status'}>{children}</p>; }
-export function ReviewNote({ lang }: LangProps) { return <p className="learn-fine">{tr(lang, 'Khmer starter text is a draft. A teacher should review it before classroom use.', 'អត្ថបទខ្មែរដំបូងជាសេចក្ដីព្រាង។ គ្រូគួរពិនិត្យមុនប្រើក្នុងថ្នាក់។')}</p>; }
+export function ReviewNote({ lang }: LangProps) { return <ContentReview lang={lang}/>; }
 // Browser storage is unavailable during SSR. Hydrate once, then report persistence errors.
 /* eslint-disable react-hooks/set-state-in-effect */
 export function useLocal<T>(key: string, initial: T, valid: (x: unknown) => boolean): [
@@ -65,7 +66,7 @@ function AudioControls({ text, language, lang = language, name = 'khmerone-audio
         if (sequence.current === n)
             setBusy(false);
     } }
-    return <div className="learn-audio"><div className="learn-row"><label>{tr(lang, 'Voice', 'សំឡេង')}<select value={choice} onChange={e => {setChoice(+e.target.value);clearResult();}}><option value={0}>{language === 'km' ? 'Sreymom · ស្រីមុំ' : 'Jenny'}</option><option value={1}>{language === 'km' ? 'Piseth · ពិសិដ្ឋ' : 'James'}</option></select></label><label>{tr(lang, 'Speed', 'ល្បឿន')}<select value={speed} onChange={e => {setSpeed(e.target.value);clearResult();}}><option value="normal">{tr(lang, 'Normal', 'ធម្មតា')}</option><option value="slower">{tr(lang, 'Slower', 'យឺត')}</option></select></label><button className="learn-primary" onClick={generate} disabled={busy || !text.trim() || text.length > 2000}>{busy ? <LoaderCircle className="learn-spin" size={17}/> : <Play size={17}/>} {tr(lang, busy ? 'Creating audio…' : 'Create audio', busy ? 'កំពុងបង្កើតសំឡេង…' : 'បង្កើតសំឡេង')}</button></div>{error && <Notice error>{error}</Notice>}{url && <div className="learn-row"><audio ref={audio} controls src={url} onPlay={() => window.dispatchEvent(new Event('khmerone:narration-start'))}/><a className="learn-button" href={url} download={`${name}.mp3`}><Download size={16}/>{tr(lang, 'Download MP3', 'ទាញយក MP3')}</a></div>}</div>;
+    return <div className="learn-audio"><div className="learn-row"><label>{tr(lang, 'Voice', 'សំឡេង')}<select value={choice} onChange={e => {setChoice(+e.target.value);clearResult();}}><option value={0}>{language === 'km' ? 'Sreymom · ស្រីមុំ' : 'Jenny'}</option><option value={1}>{language === 'km' ? 'Piseth · ពិសិដ្ឋ' : 'James'}</option></select></label><label>{tr(lang, 'Speed', 'ល្បឿន')}<select value={speed} onChange={e => {setSpeed(e.target.value);clearResult();}}><option value="normal">{tr(lang, 'Normal', 'ធម្មតា')}</option><option value="slower">{tr(lang, 'Slower', 'យឺត')}</option></select></label><button className="learn-primary" onClick={generate} disabled={busy || !text.trim() || text.length > 2000}>{busy ? <LoaderCircle className="learn-spin" size={17}/> : <Play size={17}/>} {tr(lang, busy ? 'Creating audio…' : 'Create audio', busy ? 'កំពុងបង្កើតសំឡេង…' : 'បង្កើតសំឡេង')}</button></div>{error && <Notice error>{error}</Notice>}{url && <div className="learn-row"><audio preload="none" ref={audio} controls src={url} onPlay={() => window.dispatchEvent(new Event('khmerone:narration-start'))}/><a className="learn-button" href={url} download={`${name}.mp3`}><Download size={16}/>{tr(lang, 'Download MP3', 'ទាញយក MP3')}</a></div>}</div>;
 }
 export function QuizEditor({ quiz, onChange, lang }: LangProps & {
     quiz: Quiz;

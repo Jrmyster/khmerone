@@ -1,6 +1,8 @@
+/* eslint-disable @next/next/no-css-tags -- Shared stylesheet also serves the standalone HTML tool. */
 import type { Metadata, Viewport } from "next";
 import { Kantumruy_Pro, Moul } from "next/font/google";
-import { CosmicJungleBackground } from "@/components/CosmicJungleBackground";
+import { OptionalScenery } from "@/components/shared/OptionalScenery";
+import { SiteNavigation } from "@/components/shared/SiteNavigation";
 import { BackgroundAudio } from "@/src/components/BackgroundAudio";
 import "./globals.css";
 import "./search/search.css";
@@ -23,5 +25,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { width: "device-width", initialScale: 1, maximumScale: 5, viewportFit: "cover", themeColor: "#0f172a" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" data-theme="cyberpunk" data-accent="default"><body className={`${kantumruy.variable} ${moul.variable}`}><CosmicJungleBackground />{children}<BackgroundAudio /></body></html>;
+  return <html suppressHydrationWarning lang="en" data-theme="cyberpunk" data-accent="default"><head><link rel="stylesheet" href="/site-experience.css" /><script src="/site-experience.js" defer /></head><body className={`${kantumruy.variable} ${moul.variable}`}><SiteNavigation /><OptionalScenery />{children}<footer aria-label="Khmer interface review" style={{maxWidth:1200,margin:"16px auto",padding:"0 16px"}}><p className="ko-review">Khmer interface text · Not teacher-reviewed<small lang="km">អត្ថបទខ្មែរនៃចំណុចប្រទាក់មិនទាន់បានពិនិត្យដោយគ្រូ។</small></p></footer><BackgroundAudio /></body></html>;
 }

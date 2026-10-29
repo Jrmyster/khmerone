@@ -1,4 +1,5 @@
 "use client";
+import { useLowData } from "@/hooks/useLowData";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Search, X } from "lucide-react";
@@ -42,7 +43,8 @@ type Point = { x: number; y: number };
 type Gaze = { left: Point; right: Point };
 const centered = (): Gaze => ({ left: { x: 0, y: 0 }, right: { x: 0, y: 0 } });
 
-export function MascotBot({ locale, query, resultCount, onSelectFilter, onFocusSearch }: MascotBotProps) {
+export function MascotBot(props: MascotBotProps) { return useLowData() ? null : <FullMascotBot {...props} />; }
+function FullMascotBot({ locale, query, resultCount, onSelectFilter, onFocusSearch }: MascotBotProps) {
   const [open, setOpen] = useState(false);
   const [spinning, setSpinning] = useState(false);
   const [showBubble, setShowBubble] = useState(false);

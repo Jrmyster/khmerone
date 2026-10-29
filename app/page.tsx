@@ -2,14 +2,13 @@
 
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { DecorativeImage as Image } from "@/components/shared/DecorativeImage";
 import { useRouter } from "next/navigation";
 import { ArrowUpRight, Baby, BookOpenText, Check, ClipboardCheck, Coins, Cpu, Globe2, GraduationCap, HeartPulse, Languages, Search, SlidersHorizontal, Sparkles, TriangleAlert, WifiOff, X, Zap, type LucideIcon } from "lucide-react";
 import { apps, gradeLabels } from "@/data/apps";
 import { crewConcepts, pathways } from "@/data/engagement";
 import { searchCrewConcepts, searchSkillPathways } from "@/utils/search";
 import { AppCategory, type AppEntry, type FilterKey, type GradeLevel, type Locale } from "@/types/app";
-import { KhmerOneBar } from "@/components/KhmerOneBar";
 import { MascotBot } from "@/components/MascotBot";
 import { CambodiaTomorrowBanner } from "@/components/CambodiaTomorrowBanner";
 import { BottomFloatingSearch } from "@/components/BottomFloatingSearch";
@@ -24,7 +23,7 @@ import { DengueHealthNotice } from "@/components/DengueHealthNotice";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { AngkorWatIcon } from "@/components/AngkorWatIcon";
 import { BackToTopButton } from "@/components/BackToTopButton";
-import { rainbowAccents, themeColor, themePresets, type AccentId, type ThemeId } from "@/data/themes";
+import { rainbowAccents, themePresets, type AccentId, type ThemeId } from "@/data/themes";
 import { useCyberProgress } from "@/hooks/useCyberProgress";
 import { isKhmerOneAlias } from "@/lib/khmerUtils";
 import { searchSite, searchSiteApps, siteSearchDocuments } from "@/data/siteSearch";
@@ -230,7 +229,6 @@ export default function Home() {
   };
 
   return <div className={`site-shell has-floating-search ${locale === "km" ? "khmer" : "english"} ${promoVisible ? "promo-active" : ""}`}>
-    <KhmerOneBar locale={locale} dark={themePresets.find((item) => item.id === theme)?.mode === "dark"} accentColor={themeColor(theme, accent)} homeUrl="/#directory" />
     <header className="main-header wrap">
       <Link className="brand" href="/" aria-label="KhmerOne home"><AngkorWatIcon /><span className="brand-lockup"><span className="brand-title">Khmer<span className="brand-accent">One</span><small>.com</small></span><span className="brand-khmer" lang="km">ខ្មែរ វ័ន</span></span></Link>
       <div className="header-actions">

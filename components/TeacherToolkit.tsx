@@ -1,4 +1,5 @@
 "use client";
+import { ContentReview } from "@/components/shared/ContentReview";
 
 import { useEffect, useRef, useState } from "react";
 import { BookOpenText, Check, Download, FileText, Languages, LoaderCircle, Pencil, Printer, RotateCcw, WifiOff } from "lucide-react";
@@ -45,7 +46,7 @@ export function TeacherToolkit() {
     setReady(true);
     if ("serviceWorker" in navigator) {
       void navigator.serviceWorker.register("/sw.js").catch(() => {});
-      void caches.open("khmerone-teacher-toolkit-v1").then((cache) => cache.match("/teacher-toolkit")).then((cached) => {
+      void caches.open("khmerone-teacher-toolkit-v2").then((cache) => cache.match("/teacher-toolkit")).then((cached) => {
         if (cached && mounted.current) setOfflineState("ready");
       }).catch(() => {});
     } else setOfflineState("unsupported");
@@ -78,7 +79,7 @@ export function TeacherToolkit() {
   const update = <K extends keyof ToolkitSettings>(key: K, value: ToolkitSettings[K]) => setSettings((previous) => ({ ...previous, [key]: value }));
   const restore = () => setEdits((previous) => { const next = { ...previous }; delete next[editKey]; delete next[`${editKey}:answers`]; return next; });
   const download = () => {
-    const output = [document.title, resourceLabels[kind][locale], `${t.grade} ${settings.grade} · ${subjectLabels[unit.subject][locale]} · ${settings.duration} ${t.minutes}`, body, ...(showAnswers && document.answerKey ? [t.answerTitle, answerKey] : []), t.pageNote].join("\n\n");
+    const output = ["Khmer content: not teacher-reviewed. Check before classroom use.", document.title, resourceLabels[kind][locale], `${t.grade} ${settings.grade} · ${subjectLabels[unit.subject][locale]} · ${settings.duration} ${t.minutes}`, body, ...(showAnswers && document.answerKey ? [t.answerTitle, answerKey] : []), t.pageNote].join("\n\n");
     const url = URL.createObjectURL(new Blob(["\uFEFF", output], { type: "text/plain;charset=utf-8" }));
     const link = window.document.createElement("a");
     link.href = url; link.download = `teacher-toolkit-${unit.id}-${kind}-${locale}.txt`; link.click();
@@ -117,7 +118,7 @@ export function TeacherToolkit() {
           {isCustomized && <p className="toolkit-custom-note"><strong>{t.custom}.</strong> {t.editNote}</p>}
           {editing && <label className="toolkit-editor"><span>{t.body}</span><textarea rows={18} value={body} maxLength={16000} onChange={(event) => setEdits((previous) => ({ ...previous, [editKey]: event.target.value }))} /></label>}
           {editing && document.answerKey && <label className="toolkit-editor"><span>{t.answerTitle}</span><textarea rows={8} value={answerKey} maxLength={16000} onChange={(event) => setEdits((previous) => ({ ...previous, [`${editKey}:answers`]: event.target.value }))} /></label>}
-          <article className="toolkit-paper" lang={locale}>
+          <article className="toolkit-paper" lang={locale}><ContentReview lang={locale} contentId={`toolkit:${editKey}`} text={locale === "km" ? [document.title,body,answerKey].join("\n") : ""} />
             <header className="toolkit-paper-header"><span>KHMER ONE / {t.name}</span><h2>{document.title}</h2><p>{resourceLabels[kind][locale]} · {t.grade} {settings.grade} · {subjectLabels[unit.subject][locale]} · {settings.duration} {t.minutes} · {settings.students} {t.learners}</p></header>
             <div className="toolkit-paper-body">{body}</div>
             {showAnswers && document.answerKey && <section className="toolkit-answer-key"><h3>{t.answerTitle}</h3><p>{t.answerNote}</p><div>{answerKey}</div></section>}

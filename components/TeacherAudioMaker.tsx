@@ -1,4 +1,5 @@
 "use client";
+import { ContentReview } from "@/components/shared/ContentReview";
 
 import { useEffect, useRef, useState } from "react";
 
@@ -116,7 +117,7 @@ export function TeacherAudioMaker() {
           <h2 id="ta-preview-title">{t.preview}</h2>
           <div className="ta-listening-art" aria-hidden="true"><Headphones size={44} strokeWidth={1.4} /><div className="ta-wave">{[14, 30, 46, 24, 58, 38, 18, 46, 30, 16, 34, 52, 24].map((height, index) => <span key={index} style={{ height }} />)}</div></div>
           <div role="status" aria-live="polite"><h3>{busy ? t.generating : result ? t.ready : t.empty}</h3>{!result && !busy && <p>{t.emptyHint}</p>}</div>
-          {result && <><audio key={result.url} controls preload="metadata" src={result.url} aria-label={t.preview} onPlay={() => window.dispatchEvent(new Event("khmerone:narration-start"))} onError={() => setError("playback")} /><a className="ta-download" href={result.url} download={result.filename}><Download size={19} aria-hidden="true" />{t.download}</a></>}
+          {result && <><ContentReview lang={locale}/><audio key={result.url} controls preload="none" src={result.url} aria-label={t.preview} onPlay={() => window.dispatchEvent(new Event("khmerone:narration-start"))} onError={() => setError("playback")} /><a className="ta-download" href={result.url} download={result.filename}><Download size={19} aria-hidden="true" />{t.download}</a></>}
           <p className="ta-review">{t.review}</p>
           <a href="/teacher-toolkit" className="ta-toolkit">{t.toolkit} →</a>
         </aside>

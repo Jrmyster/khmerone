@@ -59,6 +59,7 @@ async function pageText(file, route, seen = new Set()) {
   return fields;
 }
 for (const file of (await readdir('app', { recursive: true })).map(normalizedPath).filter(file => /(^|\/)page\.tsx$/.test(file)).sort()) {
+  if (file === 'feedback-inbox/page.tsx') continue; // Private editor utility, never a public search destination.
   if (file.includes('[brandAlias]')) continue; // Aliases resolve to the already indexed home page.
   const route = '/' + file.replace(/(^|\/)page\.tsx$/, '');
   const routes = route === '/learning/[tool]' ? Object.keys(toolComponents).map(tool => '/learning/' + tool) : [route];
@@ -73,7 +74,7 @@ for (const file of (await readdir('app', { recursive: true })).map(normalizedPat
   }
 }
 for (const file of (await readdir('public', { recursive: true })).filter(file => file.endsWith('.html')).sort()) {
-  const html = await readFile('public/' + file, 'utf8');
+  const html = (await readFile('public/' + file, 'utf8')).replace(/<!-- ko-navigation -->[^]*?<!-- \/ko-navigation -->/g, ''); // Shared controls are not lesson text.
   const text = decode(html.replace(/<!--[^]*?-->/g, ' ').replace(/<(script|style)\b[^>]*>[^]*?<\/\1>/gi, ' ').replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').trim();
   const fields = [text];
   // The engine lab stores both languages in JavaScript objects. Index their text

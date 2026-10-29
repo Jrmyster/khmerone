@@ -36,6 +36,7 @@ test('every catalog app, local page and public HTML page has a search destinatio
   const destinations = new Set(documents.map(document => new URL(document.href, 'https://khmerone.test').pathname));
   for (const file of await readdir('app', { recursive: true })) {
     const normalized = file.replace(/\\/g, '/');
+    if (normalized === 'feedback-inbox/page.tsx') { assert.ok(!destinations.has('/feedback-inbox')); continue; }
     if (!/(^|\/)page\.tsx$/.test(normalized) || normalized.includes('[brandAlias]')) continue;
     if (normalized.includes('[tool]')) { for (const tool of learningTools) assert.ok(destinations.has('/learning/' + tool.id), tool.id); }
     else assert.ok(destinations.has('/' + normalized.replace(/(^|\/)page\.tsx$/, '')), normalized);

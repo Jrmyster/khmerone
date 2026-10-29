@@ -1,3 +1,4 @@
+import { feedbackRead, feedbackWrite, feedbackResolve } from './feedback.ts';
 import { isText, isResource, isQuiz, voices } from './contracts.ts';
 import { json, readJson, sameOrigin, requireEditor, HttpError, digest, randomToken, readBytes } from './http.ts';
 export type LearningEnv = {
@@ -43,6 +44,7 @@ export async function handleLearning(request: Request, env: LearningEnv, fetcher
         sameOrigin(request);
         if (path === 'status' && request.method === 'GET')
             return json({ speech: !!(env.AZURE_SPEECH_KEY && env.AZURE_SPEECH_REGION && env.LEARNING_RATE_LIMITER), translation: !!(env.AZURE_TRANSLATOR_KEY && env.AZURE_TRANSLATOR_REGION && env.LEARNING_RATE_LIMITER), rooms: !!(env.QUIZ_ROOMS && env.LEARNING_RATE_LIMITER && env.ROOM_RATE_LIMITER), exchange: !!env.LEARNING_DB, uploads: !!(env.LEARNING_DB && env.LEARNING_FILES), editor: !!(env.LEARNING_ADMIN_KEY && env.LEARNING_ADMIN_KEY.length >= 32) });
+        if (path === 'feedback' && request.method === 'GET') return await feedbackRead(request, env.LEARNING_DB, env.LEARNING_ADMIN_KEY);
         if (path.startsWith('rooms/')) {
             if (!env.QUIZ_ROOMS)
                 throw new HttpError(503, 'rooms_not_configured');
@@ -107,6 +109,8 @@ export async function handleLearning(request: Request, env: LearningEnv, fetcher
             throw new HttpError(405, 'method_not_allowed');
         await paid(request, env);
         const b = object(await readJson(request, path === 'assess' || path === 'files' ? 3000000 : path === 'rooms' ? 100000 : 24000));
+        if (path === 'feedback') return await feedbackWrite(b, env.LEARNING_DB);
+        if (path === 'feedback/resolve') return await feedbackResolve(request, b, env.LEARNING_DB, env.LEARNING_ADMIN_KEY);
         if (path === 'speech') {
             if (!isText(b.text, 2000) || !['en', 'km'].includes(String(b.language)) || !['normal', 'slower'].includes(String(b.speed)))
                 throw new HttpError(400, 'invalid_input');

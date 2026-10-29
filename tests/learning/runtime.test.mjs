@@ -13,7 +13,17 @@ test('real workerd: two-player room isolation, D1 moderation, private R2 files, 
  const mf=new Miniflare({modules:true,modulesRoot:temp,scriptPath:outfile,compatibilityDate:'2026-05-15',compatibilityFlags:['nodejs_compat'],durableObjects:{QUIZ_ROOMS:{className:'QuizRoom',useSQLite:true}},d1Databases:['LEARNING_DB'],r2Buckets:['LEARNING_FILES'],bindings:{LEARNING_ADMIN_KEY:secret,AZURE_SPEECH_KEY:'runtime-test-key',AZURE_SPEECH_REGION:'southeastasia'}});
  t.after(async()=>{await mf.dispose();await rm(temp,{recursive:true,force:true});});
  const db=await mf.getD1Database('LEARNING_DB');const schema=await readFile('migrations/0001_learning.sql','utf8');for(const sql of schema.split(';').filter(s=>s.trim()))await db.prepare(sql).run();
+ const feedbackSchema=await readFile('migrations/0002_feedback.sql','utf8');for(const sql of feedbackSchema.split(';').filter(s=>s.trim()))await db.prepare(sql).run();
  const call=(path,body,token)=>mf.dispatchFetch('https://khmerone.test/api/learning/'+path,{method:body===undefined?'GET':'POST',headers:{'Content-Type':'application/json',Origin:'https://khmerone.test',...(token?{Authorization:`Bearer ${token}`}:{})},body:body===undefined?undefined:JSON.stringify(body)});
+ const report={id:crypto.randomUUID(),category:'translation',page:'/learning/dictionary?term=stem-1',message:'Please check the Khmer definition.'};
+ assert.equal((await call('feedback',report)).status,201);
+ assert.equal((await call('feedback',report)).status,201);
+ assert.equal((await call('feedback')).status,401);
+ assert.equal((await call('feedback/resolve',{id:report.id})).status,401);
+ const inbox=await(await call('feedback',undefined,secret)).json();assert.equal(inbox.items.length,1);assert.equal(inbox.items[0].message,report.message);
+ assert.equal((await call('feedback',{...report,id:crypto.randomUUID(),page:'//evil.test'})).status,400);
+ assert.equal((await call('feedback/resolve',{id:report.id},secret)).status,200);
+ assert.equal((await(await call('feedback',undefined,secret)).json()).items.length,0);
  const quiz={title:'Runtime quiz',language:'en',passage:'Listen.',questions:[{prompt:'Two plus two?',options:['3','4'],correct:1}]};
  const created=await call('rooms',{quiz});assert.equal(created.status,201);const host=await created.json();assert.match(host.code,/^[A-Z2-9]{8}$/);
  const a=await (await call(`rooms/${host.code}/join`,{name:'A'})).json(),b=await (await call(`rooms/${host.code}/join`,{name:'B'})).json();
