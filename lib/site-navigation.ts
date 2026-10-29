@@ -1,5 +1,6 @@
 // Used by both the React layout and the standalone Engine Lab build.
 export const builtInTools = [
+  ['Keyboard Garden', 'រៀនវាយអក្សរ', '/typing'],
   ['Learning studio', 'កន្លែងសិក្សា', '/learning'],
   ['STEM dictionary', 'វចនានុក្រម STEM', '/learning/dictionary'],
   ['Speaking practice', 'ហាត់និយាយ', '/learning/speaking'],

@@ -10,6 +10,16 @@ export const gradeLabels: Record<GradeLevel, LocalizedText> = {
 import { learningTools, bi } from "./learning";
 
 export const apps: AppEntry[] = [
+  {
+    id: 'typing-garden', title: bi('Keyboard Garden · English typing', 'ល្បែងរៀនវាយអក្សរអង់គ្លេស'),
+    category: AppCategory.Languages, categoryLabel: bi('English & computer skills', 'ភាសាអង់គ្លេស និងកុំព្យូទ័រ'),
+    tagline: bi('Grow a garden, one word at a time.', 'ដាំសួន ដោយវាយម្ដងមួយពាក្យ។'),
+    description: bi('Learn to use an English keyboard with letters, short words, school vocabulary and simple sentences. Follow key hints, fix mistakes with Backspace and earn stars without a timer.', 'រៀនប្រើក្ដារចុចអង់គ្លេស តាមអក្សរ ពាក្យខ្លីៗ ពាក្យនៅសាលា និងប្រយោគងាយៗ។ មានជំនួយគ្រាប់ចុច និងគ្មានកំណត់ពេល។'),
+    audience: bi('Children & keyboard beginners', 'កុមារ និងអ្នកចាប់ផ្ដើមប្រើក្ដារចុច'), grades: ['primary','lower-secondary'],
+    features: [bi('Four gentle practice stages', 'កម្រិតហាត់ចំនួនបួន'),bi('English and Khmer instructions', 'ការណែនាំជាអង់គ្លេស និងខ្មែរ')],
+    hasBilingualToggle: true, tags: ['typing','keyboard','English','QWERTY','computer','letters','words','game','children','Backspace','Shift','Space','វាយអក្សរ','ក្ដារចុច'],
+    icon: 'language', url: '/typing', offlineReady: false,
+  },
   ...learningTools.map((tool): AppEntry => ({
     id: `learning-${tool.id}`, title: tool.title, category: tool.id === "dictionary" ? AppCategory.Stem : ["speaking", "stories", "translation"].includes(tool.id) ? AppCategory.Languages : AppCategory.Utilities,
     categoryLabel: bi("Learning studio", "កន្លែងសិក្សា"), tagline: tool.summary, description: tool.summary,

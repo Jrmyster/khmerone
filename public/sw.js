@@ -1,4 +1,4 @@
-const CACHE = "khmerone-public-v43";
+const CACHE = "khmerone-public-v44";
 const TOOLKIT_CACHE = "khmerone-teacher-toolkit-v2";
 const isToolkitAsset = (path) => ["/site-experience.js", "/site-experience.css"].includes(path) || /^(\/assets\/|\/_next\/static\/).+\.(js|css|woff2?|ttf)$/.test(path);
 const PUBLIC_IMAGES = new Set([

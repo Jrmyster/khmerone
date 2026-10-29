@@ -1,3 +1,4 @@
+import { typingLessons } from '../lib/typing-game';
 import { apps, gradeLabels } from './apps';
 import { terms, stories, announcements, sampleQuiz, bi, subjectLabels } from './learning';
 import { pathways, crewConcepts } from './engagement';
@@ -56,6 +57,7 @@ export const siteSearchDocuments: SearchDocument[] = [
 for (const [path, extra] of [
   ['/computer-engineering', engineeringCopy], ['/teacher-toolkit', toolkitCopy], ['/teacher-audio', teacherAudioCopy],
   ['/learning/quiz-maker', sampleQuiz],
+  ['/typing', typingLessons],
 ] as const) {
   const document = siteSearchDocuments.find(document => document.href === path);
   if (document) document.fields.push(...textValues(extra));
