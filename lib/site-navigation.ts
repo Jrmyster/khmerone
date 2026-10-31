@@ -1,5 +1,6 @@
 // Used by both the React layout and the standalone Engine Lab build.
 export const builtInTools = [
+  ['Ministry of Interior', 'ក្រសួងមហាផ្ទៃ', '/interior'],
   ['Inspection & accountability', 'អធិការកិច្ច និងគណនេយ្យភាព', '/inspection'],
   ['International services', 'សេវាអន្តរជាតិ', '/international-services'],
   ['Community safety', 'សុវត្ថិភាពសហគមន៍', '/community-safety'],

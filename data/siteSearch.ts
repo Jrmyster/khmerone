@@ -1,3 +1,4 @@
+import { interiorTopics } from './interior';
 import { inspectionChannels, inspectionChecklist, inspectionFields, inspectionNotice } from './inspection';
 import { internationalGuides, internationalChecklist, missionContacts, internationalNotice } from './internationalServices';
 import { safetyTopics, safetyChecklist, mineSafety, safetyNotice } from './communitySafety';
@@ -38,6 +39,10 @@ function withParent(parentId: string, document: Omit<SearchDocument, 'category' 
 // Read directly from the content that renders the site; additions to these collections
 // are searchable on the next build without maintaining a second vocabulary list.
 export const siteSearchDocuments: SearchDocument[] = [
+  ...interiorTopics.map(topic => withParent('interior', {
+    id: `interior-${topic.id}`, href: `/interior#${topic.id}`, kind: 'page',
+    title: topic.title, summary: topic.question, fields: textValues(topic),
+  })),
   ...inspectionChannels.map(channel => withParent('inspection', { id: `inspection-${channel.id}`, href: `/inspection#channel-${channel.id}`, kind: 'page', title: channel.title, summary: channel.summary, fields: textValues(channel) })),
   ...internationalGuides.map(guide => withParent('international-services', { id: `international-${guide.id}`, href: `/international-services#guide-${guide.id}`, kind: 'page', title: guide.title, summary: guide.summary, fields: textValues(guide) })),
   ...safetyTopics.map(topic => withParent('community-safety', { id: `safety-${topic.id}`, href: `/community-safety#topic-${topic.id}`, kind: 'page', title: topic.title, summary: topic.summary, fields: textValues(topic) })),

@@ -11,6 +11,18 @@ import { learningTools, bi } from "./learning";
 
 export const apps: AppEntry[] = [
   {
+    id: 'interior', title: bi('Ministry of Interior Service Guide', 'មគ្គុទ្ទេសក៍សេវាក្រសួងមហាផ្ទៃ'),
+    category: AppCategory.Utilities, categoryLabel: bi('Local administration', 'រដ្ឋបាលមូលដ្ឋាន'),
+    tagline: bi('Know what to ask before travelling to an office.', 'ដឹងថាត្រូវសួរអ្វីខ្លះមុនធ្វើដំណើរទៅការិយាល័យ។'),
+    description: bi('Prepare for civil registration, Khmer ID cards and One Window services with official sources and a printable checklist.', 'ត្រៀមប្រើសេវាអត្រានុកូលដ្ឋាន អត្តសញ្ញាណប័ណ្ណ និងច្រកចេញចូលតែមួយ ដោយប្រើប្រភពផ្លូវការ និងបញ្ជីសំណួរសម្រាប់បោះពុម្ព។'),
+    audience: bi('Residents and families', 'ប្រជាពលរដ្ឋ និងគ្រួសារ'),
+    grades: ['primary', 'lower-secondary', 'high-school', 'vocational-adult'], gradeBadge: bi('All ages', 'គ្រប់វ័យ'), hasBilingualToggle: true,
+    features: [bi('Official service links', 'តំណសេវាផ្លូវការ'), bi('Printable visit checklist', 'បញ្ជីសំណួរសម្រាប់បោះពុម្ព')],
+    tags: ['Interior', 'civil registration', 'birth certificate', 'Khmer ID', 'OWSO', 'ក្រសួងមហាផ្ទៃ', 'សំបុត្រកំណើត'],
+    notice: bi('Confirm current requirements with the receiving office.', 'បញ្ជាក់តម្រូវការបច្ចុប្បន្នជាមួយការិយាល័យទទួលពាក្យ។'),
+    icon: 'world', url: '/interior', offlineReady: false,
+  },
+  {
     id: 'inspection', title: bi('Inspection & Service Accountability', 'អធិការកិច្ច និងគណនេយ្យភាពសេវា'),
     category: AppCategory.Utilities, categoryLabel: bi('Inspection & public services', 'អធិការកិច្ច និងសេវាសាធារណៈ'),
     tagline: bi('Clear facts. A useful record. A better next step.', 'ការពិតច្បាស់។ កំណត់ត្រាមានប្រយោជន៍។ ជំហានបន្ទាប់ប្រសើរ។'),
