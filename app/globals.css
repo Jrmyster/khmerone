@@ -318,8 +318,8 @@ h1, h2, h3, p { margin: 0; }
 .icon-speed { border-color: rgba(251, 191, 36, .42); background: rgba(245, 158, 11, .12); color: var(--amber); }
 .card-number { color: var(--amber); font-size: 13px; font-variant-numeric: tabular-nums; letter-spacing: .1em; }
 .category-label { color: var(--cyan); font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
-.card-content h3 { margin: 7px 0 8px; font-size: 23px; line-height: 1.32; letter-spacing: -.02em; }
-.khmer .card-content h3 { letter-spacing: 0; line-height: 1.55; }
+.card-content h4 { margin: 7px 0 8px; font-size: 23px; line-height: 1.32; letter-spacing: -.02em; }
+.khmer .card-content h4 { letter-spacing: 0; line-height: 1.55; }
 .card-tagline { margin-bottom: 9px; font-size: 15px; font-weight: 700; line-height: 1.55; }
 .card-description { color: var(--muted); font-size: 14px; line-height: 1.65; }
 .card-meta { margin-top: auto; padding-top: 20px; }
@@ -783,7 +783,7 @@ h1, h2, h3, p { margin: 0; }
 .clear-button, .floating-search-clear, .bot-close, .movie-dismiss, .movie-dialog-close { min-width: 44px; min-height: 44px; }
 .grade-field select, .crew-filters select { min-height: 44px; }
 .empty-state button, .related-search-links a, .museum-feature figcaption a, .tomorrow-feature figcaption a, .bot-search-shortcut, .bot-shortcuts button, .movie-watch, .movie-lore-button { min-height: 44px; }
-.app-card h3, .pathway-card h3, .crew-card h3, .hero h1, .movie-promo h2 { overflow-wrap: anywhere; }
+.app-card h4, .pathway-card h3, .crew-card h3, .hero h1, .movie-promo h2 { overflow-wrap: anywhere; }
 @media (hover: none) and (pointer: coarse) {
   .icon-button:active, .language-button:active, .filter-chip:active, .launch-button:active, .hero-actions a:active, .crew-card button:active, .movie-watch:active, .movie-lore-button:active, .bot-button:active { transform: scale(.95); }
 }
@@ -812,7 +812,7 @@ h1, h2, h3, p { margin: 0; }
   .khmer .step-copy strong, .khmer .step-copy small, .khmer .crew-card p,
   .khmer .crew-note, .khmer .donation-card p { font-size: max(15px, .9375rem); line-height: 1.7; }
   .khmer .hero h1, .khmer .directory-heading h2, .khmer .skills-header h2,
-  .khmer .crew-header h2, .khmer .card-content h3, .khmer .pathway-card h3,
+  .khmer .crew-header h2, .khmer .card-content h4, .khmer .pathway-card h3,
   .khmer .crew-card h3 { line-height: 1.65; letter-spacing: 0; overflow-wrap: anywhere; }
   .khmer .movie-promo h2 { line-height: 1.6; }
   .movie-promo-inner { grid-template-columns: 54px minmax(0, 1fr) 44px; }
@@ -892,3 +892,10 @@ h1, h2, h3, p { margin: 0; }
   .background-audio-button { backdrop-filter: none; -webkit-backdrop-filter: none; }
 }
 @media (prefers-reduced-motion: reduce) { .background-audio-loading { animation: none; } }
+
+.tool-directory-group {scroll-margin-top:100px;margin:30px 0 50px}
+.tool-directory-group > header {margin-bottom:18px}
+.tool-directory-group > header h3 {font-size:clamp(1.5rem,3vw,2.15rem);line-height:1.5}
+.tool-directory-group > header p {margin:.3rem 0 0}
+
+.tool-directory-group.group-empty:not(:target) { display:none; }

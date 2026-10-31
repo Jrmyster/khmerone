@@ -12,7 +12,7 @@ export function KhmerOneBar({ locale = "en", homeUrl = "https://khmerone.com/", 
   const navRef = useRef<HTMLElement>(null);
   const label = locale === "km" ? "ត្រឡប់ទៅ KhmerOne" : "Back to KhmerOne";
   const menuLabel = locale === "km" ? "បើកម៉ឺនុយបណ្ដាញ" : "Open network menu";
-  const linkText = locale === "km" ? "កម្មវិធីទាំងអស់" : "All apps";
+  const linkText = locale === "km" ? "ទំព័រដើមខ្មែរ វ័ន" : "Khmer One home";
   const colors = {
     "--network-bg": dark ? "#080e18" : "#e9f8fa",
     "--network-fg": dark ? "#c7e9f2" : "#06485c",
@@ -33,7 +33,8 @@ export function KhmerOneBar({ locale = "en", homeUrl = "https://khmerone.com/", 
     <style>{`
       .khmerone-network-bar{position:relative;z-index:60;background:var(--network-bg);color:var(--network-fg);border-bottom:1px solid var(--network-border);font:700 13px/1.4 var(--font-kantumruy),system-ui,sans-serif}
       .khmerone-network-inner{max-width:1184px;min-height:44px;margin:auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-      .khmerone-network-brand{font-weight:800;letter-spacing:.09em;white-space:nowrap}
+      .khmerone-network-brand{font-weight:800;letter-spacing:.09em;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;min-height:44px;color:inherit;text-decoration:none}
+      .khmerone-network-brand:focus-visible,.khmerone-network-link:focus-visible{outline:3px solid var(--network-accent);outline-offset:2px}
       .khmerone-network-mark{color:var(--network-accent)}
       .khmerone-network-link,.khmerone-network-toggle{min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:6px;color:var(--network-fg);font:inherit;text-decoration:none;white-space:nowrap}
       .khmerone-network-link:hover,.khmerone-network-toggle:hover{color:var(--network-accent)}
@@ -50,10 +51,11 @@ export function KhmerOneBar({ locale = "en", homeUrl = "https://khmerone.com/", 
       @media(max-width:350px){.khmerone-network-brand span:last-child{display:none}}
     `}</style>
     <div className="khmerone-network-inner">
-      <span className="khmerone-network-brand"><span className="khmerone-network-mark">◆</span> KHMERONE <span style={{ opacity: .72, fontWeight: 500 }}>NETWORK</span></span>
+      <a className="khmerone-network-brand" href={homeUrl} aria-label={label}><span className="khmerone-network-mark">◆</span> KHMERONE <span style={{ opacity: .72, fontWeight: 500 }}>NETWORK</span></a>
+      <a className="khmerone-network-link" href={homeUrl.startsWith('/') ? '/search' : new URL('/search', homeUrl).href}>{locale === 'en' ? 'Search' : 'ស្វែងរក'}</a>
       <a className="khmerone-network-link" href={homeUrl} aria-label={label}>{linkText} <span aria-hidden="true">↗</span></a>
       <button type="button" className="khmerone-network-toggle" aria-label={menuLabel} aria-controls="khmerone-network-menu" aria-expanded={open} onClick={() => setOpen((value) => !value)}>{locale === "km" ? "ម៉ឺនុយ" : "Menu"}<ChevronDown size={16} aria-hidden="true" /></button>
     </div>
-    {open && <div className="khmerone-network-menu" id="khmerone-network-menu"><a href={homeUrl} onClick={() => setOpen(false)}>{linkText} <span aria-hidden="true">↗</span></a></div>}
+    {open && <div className="khmerone-network-menu" id="khmerone-network-menu"><a href={homeUrl.startsWith('/') ? '/search' : new URL('/search', homeUrl).href}>{locale === 'en' ? 'Search' : 'ស្វែងរក'}</a><a href={homeUrl} onClick={() => setOpen(false)}>{linkText} <span aria-hidden="true">↗</span></a></div>}
   </nav>;
 }

@@ -6,6 +6,9 @@ export interface SearchPrompt {
 }
 
 export const rotatingSearchPrompts: SearchPrompt[] = [
+  { appId: 'learning-dictionary', en: 'Try: photosynthesis in English and Khmer', km: 'សាកល្បង៖ រស្មីសំយោគ ជាអង់គ្លេស និងខ្មែរ', query: 'photosynthesis' },
+  { appId: 'learning-translation', en: 'Try: translate an English lesson into Khmer', km: 'សាកល្បង៖ បកប្រែមេរៀនអង់គ្លេសជាខ្មែរ', query: 'lesson translation' },
+  { appId: 'learning-stories', en: 'Try: a seed in a cup', km: 'សាកល្បង៖ គ្រាប់ពូជក្នុងពែង', query: 'a seed in a cup' },
   {
     appId: "school-connect-cambodia",
     en: "Try: 'Explain Grade 10 Physics circuits & Ohm's law on School Connect Cambodia'",

@@ -26,7 +26,7 @@ export function BottomFloatingSearch({ locale, query, onQueryChange, prompt, fad
   const [keyboard, setKeyboard] = useState({ open: false, own: false, inset: 0 });
   const placeholder = locale === "km"
     ? "ស្វែងរកកម្មវិធី មេរៀន ឬឧបករណ៍..."
-    : "Search apps, subjects, or tools...";
+    : "Search apps, words, stories or lessons...";
   const label = locale === "km" ? "ស្វែងរកក្នុងបណ្ដាញ KhmerOne" : "Search the KhmerOne network";
   const clearLabel = locale === "km" ? "លុបពាក្យស្វែងរក" : "Clear search";
 
@@ -105,6 +105,7 @@ export function BottomFloatingSearch({ locale, query, onQueryChange, prompt, fad
       <div className="floating-search-input-wrap"><input
         ref={inputRef}
         type="search"
+        maxLength={240}
         value={query}
         onChange={(event) => {
           onQueryChange(event.target.value);

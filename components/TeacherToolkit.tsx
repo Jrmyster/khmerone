@@ -1,7 +1,7 @@
 "use client";
+import { ContentReview } from "@/components/shared/ContentReview";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { BookOpenText, Check, Download, FileText, Languages, LoaderCircle, Pencil, Printer, RotateCcw, WifiOff } from "lucide-react";
 import { buildTeachingResource, defaultToolkitSettings, resourceKinds, resourceLabels, subjectLabels, subjects, toolkitUnits, type ResourceKind, type ToolkitSettings } from "@/data/teacherToolkit";
 import { toolkitCopy } from "@/locales/teacherToolkit";
@@ -32,7 +32,10 @@ export function TeacherToolkit() {
     mounted.current = true;
     try {
       const draft = parseToolkitDraft(localStorage.getItem(TOOLKIT_DRAFT_KEY));
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Restore the existing toolkit draft after browser hydration.
       setSettings(draft.settings); setKind(draft.kind); setEdits(draft.edits);
+      const requestedUnit = new URLSearchParams(window.location.search).get('unit');
+      if (toolkitUnits.some(unit => unit.id === requestedUnit)) setSettings({ ...draft.settings, unitId: requestedUnit!, title: '', objective: '' });
       const lang = localStorage.getItem("khmerone-locale");
       if (lang === "km" || lang === "en") setLocale(lang);
       const theme = localStorage.getItem("khmerone-theme-v3");
@@ -43,7 +46,7 @@ export function TeacherToolkit() {
     setReady(true);
     if ("serviceWorker" in navigator) {
       void navigator.serviceWorker.register("/sw.js").catch(() => {});
-      void caches.open("khmerone-teacher-toolkit-v1").then((cache) => cache.match("/teacher-toolkit")).then((cached) => {
+      void caches.open("khmerone-teacher-toolkit-v2").then((cache) => cache.match("/teacher-toolkit")).then((cached) => {
         if (cached && mounted.current) setOfflineState("ready");
       }).catch(() => {});
     } else setOfflineState("unsupported");
@@ -58,6 +61,7 @@ export function TeacherToolkit() {
 
   useEffect(() => {
     if (!ready) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Show the status of the debounced external storage write below.
     setSaveState("saving");
     const timer = window.setTimeout(() => {
       try {
@@ -75,7 +79,7 @@ export function TeacherToolkit() {
   const update = <K extends keyof ToolkitSettings>(key: K, value: ToolkitSettings[K]) => setSettings((previous) => ({ ...previous, [key]: value }));
   const restore = () => setEdits((previous) => { const next = { ...previous }; delete next[editKey]; delete next[`${editKey}:answers`]; return next; });
   const download = () => {
-    const output = [document.title, resourceLabels[kind][locale], `${t.grade} ${settings.grade} · ${subjectLabels[unit.subject][locale]} · ${settings.duration} ${t.minutes}`, body, ...(showAnswers && document.answerKey ? [t.answerTitle, answerKey] : []), t.pageNote].join("\n\n");
+    const output = ["Khmer content: not teacher-reviewed. Check before classroom use.", document.title, resourceLabels[kind][locale], `${t.grade} ${settings.grade} · ${subjectLabels[unit.subject][locale]} · ${settings.duration} ${t.minutes}`, body, ...(showAnswers && document.answerKey ? [t.answerTitle, answerKey] : []), t.pageNote].join("\n\n");
     const url = URL.createObjectURL(new Blob(["\uFEFF", output], { type: "text/plain;charset=utf-8" }));
     const link = window.document.createElement("a");
     link.href = url; link.download = `teacher-toolkit-${unit.id}-${kind}-${locale}.txt`; link.click();
@@ -89,8 +93,8 @@ export function TeacherToolkit() {
 
   return <div className={`toolkit-shell ${locale === "km" ? "khmer" : "english"}`}>
     <header className="toolkit-header wrap">
-      <Link href="/" className="toolkit-home"><BookOpenText size={24} aria-hidden="true" /><span>{t.home}<small>{t.name}</small></span></Link>
-      <div className="toolkit-header-controls"><div id="background-audio-controls" className="audio-header-slot" /><div className="toolkit-language" role="group" aria-label={locale === "km" ? "ភាសា" : "Language"}>{(["km", "en"] as Locale[]).map((lang) => <button type="button" key={lang} aria-pressed={locale === lang} onClick={() => { setLocale(lang); setEditing(false); }}><Languages size={15} aria-hidden="true" />{lang.toUpperCase()}</button>)}</div></div>
+      <a href="/" className="toolkit-home"><BookOpenText size={24} aria-hidden="true" /><span>{t.home}<small>{t.name}</small></span></a>
+      <div className="toolkit-header-controls"><a href="/search">{locale === "en" ? "Search" : "ស្វែងរក"}</a><div id="background-audio-controls" className="audio-header-slot" /><div className="toolkit-language" role="group" aria-label={locale === "km" ? "ភាសា" : "Language"}>{(["km", "en"] as Locale[]).map((lang) => <button type="button" key={lang} aria-pressed={locale === lang} onClick={() => { setLocale(lang); setEditing(false); }}><Languages size={15} aria-hidden="true" />{lang.toUpperCase()}</button>)}</div></div>
     </header>
     <main className="toolkit-main wrap">
       <section className="toolkit-intro" aria-labelledby="toolkit-title"><span className="toolkit-kicker">{t.name}</span><h1 id="toolkit-title">{t.tagline}</h1><p>{t.intro}</p></section>
@@ -114,7 +118,7 @@ export function TeacherToolkit() {
           {isCustomized && <p className="toolkit-custom-note"><strong>{t.custom}.</strong> {t.editNote}</p>}
           {editing && <label className="toolkit-editor"><span>{t.body}</span><textarea rows={18} value={body} maxLength={16000} onChange={(event) => setEdits((previous) => ({ ...previous, [editKey]: event.target.value }))} /></label>}
           {editing && document.answerKey && <label className="toolkit-editor"><span>{t.answerTitle}</span><textarea rows={8} value={answerKey} maxLength={16000} onChange={(event) => setEdits((previous) => ({ ...previous, [`${editKey}:answers`]: event.target.value }))} /></label>}
-          <article className="toolkit-paper" lang={locale}>
+          <article className="toolkit-paper" lang={locale}><ContentReview lang={locale} contentId={`toolkit:${editKey}`} text={locale === "km" ? [document.title,body,answerKey].join("\n") : ""} />
             <header className="toolkit-paper-header"><span>KHMER ONE / {t.name}</span><h2>{document.title}</h2><p>{resourceLabels[kind][locale]} · {t.grade} {settings.grade} · {subjectLabels[unit.subject][locale]} · {settings.duration} {t.minutes} · {settings.students} {t.learners}</p></header>
             <div className="toolkit-paper-body">{body}</div>
             {showAnswers && document.answerKey && <section className="toolkit-answer-key"><h3>{t.answerTitle}</h3><p>{t.answerNote}</p><div>{answerKey}</div></section>}
@@ -123,7 +127,7 @@ export function TeacherToolkit() {
           <div className="toolkit-export-controls">{document.answerKey && <label className="toolkit-answer-toggle"><input type="checkbox" checked={showAnswers} onChange={(event) => setShowAnswers(event.target.checked)} /><span>{t.answers}</span></label>}<div className="toolkit-export-actions"><button type="button" className="toolkit-primary" onClick={() => window.print()}><Printer size={19} aria-hidden="true" />{t.print}</button><button type="button" onClick={download}><Download size={19} aria-hidden="true" />{t.download}</button></div><p>{t.printTip}</p></div>
         </section>
       </div>
-      <footer className="toolkit-footer"><p>{t.starterNote}</p><Link href="/">{t.home}</Link></footer>
+      <footer className="toolkit-footer"><p>{t.starterNote}</p><a href="/">{t.home}</a></footer>
     </main>
   </div>;
 }
