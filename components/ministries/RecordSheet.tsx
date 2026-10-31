@@ -1,5 +1,5 @@
 'use client';
-import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import type { Locale } from '@/types/app';
 import { download } from '@/lib/learning/browser';
 import { getSheet, maxRows, readSheet, rowResults, validRow, type Row, type SheetKey } from '@/lib/ministry-tools/records';
@@ -13,18 +13,23 @@ const resultLabels = {
 
 export function RecordSheet({ kind, lang }: { kind: SheetKey; lang: Locale }) {
   const sheet = getSheet(kind);
-  const empty = () => Object.fromEntries(sheet.fields.map(f => [f.key, f.choices?.[0].value || '']));
+  const formRef = useRef<HTMLFormElement>(null);
   const [rows,setRows] = useState<Row[]>([]);
-  const [draft,setDraft] = useState<Row>(empty);
   const [edit,setEdit] = useState<number | null>(null);
   const [message,setMessage] = useState<'invalid' | 'loaded' | ''>('');
   const t = (en:string, km:string) => lang === 'km' ? km : en;
   const numbers = rowResults(kind,rows);
   const resultLabel = resultLabels[kind as keyof typeof resultLabels]?.[lang];
-  const clear = () => {setDraft(empty()); setEdit(null); setMessage('');};
-  function save(event: FormEvent) {
+  const editingRow = edit === null ? undefined : rows[edit];
+  function clear() {
+    formRef.current?.reset();
+    setEdit(null);
+    setMessage('');
+  }
+  function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const entry = Object.fromEntries(sheet.fields.map(f=>[f.key,draft[f.key].trim()]));
+    const data = new FormData(event.currentTarget);
+    const entry = Object.fromEntries(sheet.fields.map(field => [field.key, String(data.get(field.key) ?? '').trim()]));
     if (!validRow(kind,entry) || (rows.length >= maxRows && edit === null)) {setMessage('invalid');return;}
     const next = edit === null ? [...rows, entry] : rows.map((r,i) => edit === i ? entry : r);
     setRows(next.sort((a,b) => a.date.localeCompare(b.date)));
@@ -49,11 +54,11 @@ export function RecordSheet({ kind, lang }: { kind: SheetKey; lang: Locale }) {
       <li>{t('Check water availability at the start and end of the school day. Try the tap and check for soap.', 'ពិនិត្យទឹកនៅពេលចូល និងចេញពីសាលា។ សាកបើករ៉ូប៊ីណេ និងពិនិត្យសាប៊ូ។')}</li>
       <li>{t('Ask the maintenance team to check drainage and record the next inspection date.', 'ស្នើក្រុមថែទាំពិនិត្យប្រព័ន្ធបង្ហូរទឹក និងកត់ថ្ងៃពិនិត្យបន្ទាប់។')}</li>
     </ul></details>}
-    <form onSubmit={save}>
+    <form ref={formRef} key={edit ?? 'new'} onSubmit={save}>
       <div className="mg-grid">{sheet.fields.map(f => <label key={f.key}>{f.label[lang]}
         {f.type === 'choice'
-          ? <select value={draft[f.key]} onChange={e=>setDraft({...draft,[f.key]:e.target.value})}>{f.choices!.map(c=><option key={c.value} value={c.value}>{c.label[lang]}</option>)}</select>
-          : <input type={f.type} required={!f.optional} maxLength={250} min={f.type === 'number' ? 0 : undefined} max={f.type === 'number' ? 1e12 : undefined} step={f.type === 'number' ? 'any' : undefined} value={draft[f.key]} onChange={e=>setDraft({...draft,[f.key]:e.target.value})} />}
+          ? <select name={f.key} defaultValue={editingRow?.[f.key] ?? f.choices?.[0]?.value}>{f.choices!.map(c=><option key={c.value} value={c.value}>{c.label[lang]}</option>)}</select>
+          : <input type={f.type} required={!f.optional} maxLength={250} min={f.type === 'number' ? 0 : undefined} max={f.type === 'number' ? 1e12 : undefined} step={f.type === 'number' ? 'any' : undefined} name={f.key} defaultValue={editingRow?.[f.key] ?? ''} />}
       </label>)}</div>
       <div className="mg-actions"><button type="submit" disabled={edit === null && rows.length >= maxRows}>{edit === null ? t('Add entry','បន្ថែមទិន្នន័យ') : t('Save changes','រក្សាទុកការកែប្រែ')}</button>
         {edit !== null && <button type="button" onClick={clear}>{t('Cancel edit','បោះបង់ការកែប្រែ')}</button>}</div>
@@ -63,7 +68,7 @@ export function RecordSheet({ kind, lang }: { kind: SheetKey; lang: Locale }) {
         {resultLabel && <th>{resultLabel}</th>}<th>{t('Actions','សកម្មភាព')}</th></tr></thead>
         <tbody>{rows.map((r,i)=><tr key={i}>{sheet.fields.map(f=><td key={f.key}>{f.type === 'choice' ? f.choices?.find(c=>c.value===r[f.key])?.label[lang] : r[f.key]}</td>)}
           {resultLabel && <td>{numbers[i]?.toLocaleString(lang,{maximumFractionDigits:2})}</td>}
-          <td><button type="button" disabled={edit !== null} onClick={()=>{setDraft({...r}); setEdit(i);}}>{t('Edit','កែប្រែ')}</button>
+          <td><button type="button" disabled={edit !== null} onClick={()=>setEdit(i)}>{t('Edit','កែប្រែ')}</button>
             <button type="button" disabled={edit !== null} onClick={()=>setRows(rows.filter((_,j)=>j!==i))}>{t('Remove','លុប')}</button></td></tr>)}</tbody>
       </table></div>}
     {kind === 'cleanup' && <output>{t('Total weighed (kg)','ទម្ងន់ដែលបានថ្លឹងសរុប (គីឡូក្រាម)')} · {rows.reduce((v,r)=>v+(r.method==='weighed' ? +r.kg : 0),0).toLocaleString(lang)}</output>}

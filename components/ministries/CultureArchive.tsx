@@ -19,7 +19,7 @@ export function CultureArchive({lang}:{lang:Locale}) {
     setBusy(true);setNotice('');
     try { await action(); } catch (error) {
       const code = error instanceof Error ? error.cause : undefined;
-      setNotice(code === 'archive_unavailable' ? 'unavailable' : code === 'archive_state_changed' ? 'conflict' : 'error');
+      setNotice(code === 'archive_unavailable' || code === 'limiter_not_configured' ? 'unavailable' : code === 'archive_state_changed' ? 'conflict' : 'error');
     } finally {setBusy(false);}
   }
   async function load(review:boolean,after:string|null=null) {

@@ -1,7 +1,5 @@
 import { HttpError, json, readBytes } from '../learning/http.ts';
 
-export const forecastSource = 'https://worldweather.wmo.int/en/city.html?cityId=348';
-export const warningSource = 'https://dhrw-cam.org/warninginfo.php';
 export type ForecastDay = { date: string; condition: string; low: number; high: number; end: number };
 export type Forecast = { issued: number; refreshBy: number; days: ForecastDay[] };
 const dayMs = 86400000;
@@ -38,7 +36,11 @@ export function parsePhnomPenhForecast(raw: unknown, now: number): Forecast {
 
 export async function readOfficialForecast(fetcher: typeof fetch = fetch) {
   try {
-    const response = await fetcher('https://worldweather.wmo.int/en/json/348_en.json', {redirect:'error',signal:AbortSignal.timeout(8000),headers:{Accept:'application/json'}});
+    const response = await fetcher('https://worldweather.wmo.int/en/json/348_en.json', {
+      redirect: 'manual',
+      signal: AbortSignal.timeout(8000),
+      headers: { Accept: 'application/json', 'User-Agent': 'KhmerOneWeather/1.0' },
+    });
     if (!response.ok) { await response.body?.cancel(); throw new Error(); }
     const bytes = await readBytes(new Request('https://internal/', {method:'POST',body:response.body,duplex:'half'} as RequestInit), 64000);
     return json(parsePhnomPenhForecast(JSON.parse(new TextDecoder().decode(bytes)), Date.now()));

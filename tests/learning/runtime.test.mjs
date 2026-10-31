@@ -18,6 +18,9 @@ test('real workerd: two-player room isolation, D1 moderation, private R2 files, 
   for(const sql of schema.split(';').filter(s=>s.trim())) await db.prepare(sql).run();
  }
  const call=(path,body,token)=>mf.dispatchFetch('https://khmerone.test/api/learning/'+path,{method:body===undefined?'GET':'POST',headers:{'Content-Type':'application/json',Origin:'https://khmerone.test',...(token?{Authorization:`Bearer ${token}`}:{})},body:body===undefined?undefined:JSON.stringify(body)});
+ const weather = await call('weather/phnom-penh');
+ assert.equal(weather.status,200);
+ assert.equal((await weather.json()).days[0].condition,'Drizzle');
  const entry = {id:crypto.randomUUID(),managementKey:crypto.randomUUID(),consent:true,title:'Rice harvest song',kind:'music',region:'Battambang',credit:'Village ensemble',story:'We sing this verse at the start of the harvest.',url:'',reuse:'view'};
  assert.equal((await call('culture/submit',{...entry,consent:false})).status,400);
  assert.equal((await call('culture/submit',entry)).status,201);
