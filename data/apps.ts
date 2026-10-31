@@ -11,6 +11,18 @@ import { learningTools, bi } from "./learning";
 
 export const apps: AppEntry[] = [
   {
+    id: 'government-services', title: bi('Government Services Finder', 'មគ្គុទ្ទេសក៍សេវារដ្ឋាភិបាល'),
+    category: AppCategory.Utilities, categoryLabel: bi('Public services & institutions', 'សេវាសាធារណៈ និងស្ថាប័ន'),
+    tagline: bi('Find the right institution and prepare your next step.', 'ស្វែងរកស្ថាប័នត្រឹមត្រូវ និងត្រៀមជំហានបន្ទាប់។'),
+    description: bi('Eight guides for birth registration, business, training, household assistance, care, driving, land and criminal records. Find responsible institutions, official links and printable preparation checklists.', 'មគ្គុទ្ទេសក៍ប្រាំបីសម្រាប់កំណើត អាជីវកម្ម ជំនាញ ជំនួយគ្រួសារ ការថែទាំ បើកបរ ដីធ្លី និងព្រឹត្តិបត្រថ្កោលទោស។ រកស្ថាប័នទទួលបន្ទុក តំណផ្លូវការ និងបញ្ជីត្រៀមខ្លួន។'),
+    audience: bi('Residents, families & small businesses', 'ប្រជាពលរដ្ឋ គ្រួសារ និងអាជីវកម្មតូច'),
+    grades: ['primary', 'lower-secondary', 'high-school', 'vocational-adult'], gradeBadge: bi('All ages', 'គ្រប់វ័យ'), hasBilingualToggle: true,
+    features: [bi('Search by service or institution', 'ស្វែងរកតាមសេវា ឬស្ថាប័ន'), bi('Khmer / English guides to print or download', 'មគ្គុទ្ទេសក៍ខ្មែរ / អង់គ្លេសសម្រាប់បោះពុម្ព ឬទាញយក')],
+    tags: ['government', 'public services', 'Office of the Council of Ministers', 'ministries', 'birth', 'business', 'training', 'IDPoor', 'documents', 'សេវារដ្ឋាភិបាល', 'ទីស្តីការគណៈរដ្ឋមន្ត្រី'],
+    notice: bi('Independent Khmer One guide. Confirm current requirements with the responsible institution.', 'មគ្គុទ្ទេសក៍ឯករាជ្យខ្មែរ វ័ន។ បញ្ជាក់តម្រូវការបច្ចុប្បន្នជាមួយស្ថាប័នទទួលបន្ទុក។'),
+    icon: 'world', url: '/public-services', offlineReady: false,
+  },
+  {
     id: "social-support",
     title: { en: "Support Services Navigator", km: "មគ្គុទ្ទេសក៍សេវាជំនួយ" },
     category: AppCategory.Utilities,
