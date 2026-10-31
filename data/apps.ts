@@ -11,6 +11,16 @@ import { learningTools, bi } from "./learning";
 
 export const apps: AppEntry[] = [
   {
+    id: 'ministries', title: bi('Ministry guides', 'មគ្គុទ្ទេសក៍តាមក្រសួង'),
+    category: AppCategory.Utilities, categoryLabel: bi('Community services', 'សេវាសហគមន៍'),
+    tagline: bi('Find a tool for your family, classroom or community.', 'រកឧបករណ៍សម្រាប់គ្រួសារ ថ្នាក់រៀន ឬសហគមន៍របស់អ្នក។'),
+    description: bi('Browse 18 Khmer and English ministry guides with service links, calculators, community maps and printable activities.', 'ស្វែងរកមគ្គុទ្ទេសក៍ក្រសួងចំនួន ១៨ ជាភាសាខ្មែរ និងអង់គ្លេស ជាមួយតំណសេវា ឧបករណ៍គណនា ផែនទីសហគមន៍ និងសកម្មភាពដែលអាចបោះពុម្ពបាន។'),
+    audience: bi('Residents, schools and community groups', 'ប្រជាពលរដ្ឋ សាលារៀន និងក្រុមសហគមន៍'),
+    grades: ['primary', 'lower-secondary', 'high-school', 'vocational-adult'], gradeBadge: bi('All ages', 'គ្រប់វ័យ'), hasBilingualToggle: true,
+    features: [bi('Printable worksheets and offline reading packs', 'សន្លឹកកិច្ចការ និងឯកសារសម្រាប់អានក្រៅបណ្ដាញ')],
+    icon: 'world', url: '/ministries', offlineReady: false,
+  },
+  {
     id: 'posts-and-telecommunications', title: bi('Posts and Telecommunications', 'ប្រៃសណីយ៍ និងទូរគមនាគមន៍'),
     category: AppCategory.Utilities, categoryLabel: bi('Communications', 'ទំនាក់ទំនង'),
     tagline: bi('Send a parcel or check an internet offer.', 'ផ្ញើបញ្ញើ ឬពិនិត្យតម្លៃគម្រោងអ៊ីនធឺណិត។'),

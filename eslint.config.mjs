@@ -6,7 +6,7 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   {
-    files: ["components/posts/**/*.tsx", "components/interior/**/*.tsx", "components/inspection/**/*.tsx", "components/international/**/*.tsx", "components/community-safety/**/*.tsx", "components/government/**/*.tsx", "components/social-support/**/*.tsx", "components/shared/**/*.tsx", "components/typing/**/*.tsx", "components/TeacherAudioMaker.tsx", "components/learning/**/*.tsx", "components/SiteSearch.tsx", "components/ComputerEngineeringLab.tsx", "components/TeacherToolkit.tsx", "components/KhmerOneBar.tsx"],
+    files: ["components/ministries/**/*.tsx", "components/posts/**/*.tsx", "components/interior/**/*.tsx", "components/inspection/**/*.tsx", "components/international/**/*.tsx", "components/community-safety/**/*.tsx", "components/government/**/*.tsx", "components/social-support/**/*.tsx", "components/shared/**/*.tsx", "components/typing/**/*.tsx", "components/TeacherAudioMaker.tsx", "components/learning/**/*.tsx", "components/SiteSearch.tsx", "components/ComputerEngineeringLab.tsx", "components/TeacherToolkit.tsx", "components/KhmerOneBar.tsx"],
     rules: {
       // Native navigation preserves the verified workaround for Vinext Link transition failures.
       "@next/next/no-html-link-for-pages": "off",

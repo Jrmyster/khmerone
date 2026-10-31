@@ -14,8 +14,8 @@ const { build } = require('esbuild');
 const temporary = await mkdtemp(join(tmpdir(), 'khmerone-search-'));
 after(() => rm(temporary, { recursive: true, force: true }));
 const outfile = join(temporary, 'index.mjs');
-await build({ stdin: { contents: `export * from './data/siteSearch'; export * from './utils/search'; export {apps} from './data/apps'; export {learningTools,terms,stories} from './data/learning'; export {toolkitUnits} from './data/teacherToolkit';`, resolveDir: process.cwd() }, bundle: true, platform: 'node', format: 'esm', outfile });
-const { siteSearchDocuments: documents, searchSite, searchSiteApps, resourceSearchDocuments, searchAppCatalog, apps, learningTools, terms, stories, toolkitUnits } = await import(pathToFileURL(outfile).href);
+await build({ stdin: { contents: `export * from './data/siteSearch'; export {ministryGuides} from './data/ministry-guides'; export * from './utils/search'; export {apps} from './data/apps'; export {learningTools,terms,stories} from './data/learning'; export {toolkitUnits} from './data/teacherToolkit';`, resolveDir: process.cwd() }, bundle: true, platform: 'node', format: 'esm', outfile });
+const { siteSearchDocuments: documents, searchSite, searchSiteApps, resourceSearchDocuments, searchAppCatalog, apps, learningTools, terms, stories, toolkitUnits, ministryGuides } = await import(pathToFileURL(outfile).href);
 
 test('English and Khmer search preserve vowels, ignore invisible spacing, and understand digits', () => {
   assert.equal(normalizeSearchText('កោសិកា'), normalizeSearchText('កោសិ\u200bកា'));
@@ -39,6 +39,14 @@ test('every catalog app, local page and public HTML page has a search destinatio
     if (normalized === 'feedback-inbox/page.tsx') { assert.ok(!destinations.has('/feedback-inbox')); continue; }
     if (!/(^|\/)page\.tsx$/.test(normalized) || normalized.includes('[brandAlias]')) continue;
     if (normalized.includes('[tool]')) { for (const tool of learningTools) assert.ok(destinations.has('/learning/' + tool.id), tool.id); }
+    else if (normalized === 'ministries/[slug]/page.tsx') {
+      assert.deepEqual(ministryGuides.map(item => item.n), Array.from({length:18}, (_, i) => i + 1));
+      assert.equal(new Set(ministryGuides.map(item => item.slug)).size, 18);
+      for (const item of ministryGuides) {
+        assert.ok(destinations.has('/ministries/' + item.slug), item.slug);
+        for (const locale of ['en','km']) assert.ok(searchSite(item.title[locale]).some(result => result.id === 'ministry-' + item.n), item.slug);
+      }
+    }
     else assert.ok(destinations.has('/' + normalized.replace(/(^|\/)page\.tsx$/, '')), normalized);
   }
   for (const file of (await readdir('public', { recursive: true })).filter(file => file.endsWith('.html'))) assert.ok(destinations.has('/' + file.replace(/\\/g, '/')), file);

@@ -60,6 +60,8 @@ async function pageText(file, route, seen = new Set()) {
 }
 for (const file of (await readdir('app', { recursive: true })).map(normalizedPath).filter(file => /(^|\/)page\.tsx$/.test(file)).sort()) {
   if (file === 'feedback-inbox/page.tsx') continue; // Private editor utility, never a public search destination.
+  // The ministry directory indexes each concrete guide from its full bilingual data in siteSearch.ts.
+  if (file === 'ministries/[slug]/page.tsx') continue;
   if (file.includes('[brandAlias]')) continue; // Aliases resolve to the already indexed home page.
   const route = '/' + file.replace(/(^|\/)page\.tsx$/, '');
   const routes = route === '/learning/[tool]' ? Object.keys(toolComponents).map(tool => '/learning/' + tool) : [route];
