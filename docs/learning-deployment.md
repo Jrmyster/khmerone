@@ -71,9 +71,23 @@ Exchange listings persist until rejected or removed by the owner. Room data is d
 - **Missing screen / old page**: refresh once after deployment. New APIs use `no-store`; the original service worker does not cache learning API responses.
 - **Rollback**: use Cloudflare Workers → khmerone → Deployments → select the previous working version. Do not delete the D1 database, R2 bucket or Durable Object namespace as part of rollback. A code rollback may need to retain the Durable Object class export; use Cloudflare's deployment rollback compatibility check. Keep the release ZIP and the earlier source backup.
 
-## Ministry archive
+## Publish the educational and ministry tools to the existing Worker
 
-The community culture archive uses the existing `LEARNING_DB` and `LEARNING_ADMIN_KEY`. Apply the additive `0003_culture_archive.sql` migration to the same database before releasing the archive. Submissions stay private until an editor approves them. Worksheets, the tool directory and private culture drafts work without these bindings.
+Use the computer where you can sign in to the Cloudflare account that owns `khmerone.jaredrobertw.workers.dev`. Open a terminal there. A fresh clone works even if you no longer have the original `learning-infra.json`. Use Node 24 and the pnpm version in `package.json`.
+
+```sh
+git clone --branch codex/khmer-one-learning-suite https://github.com/Jrmyster/khmerone.git khmerone-release
+cd khmerone-release
+pnpm install --frozen-lockfile
+pnpm exec wrangler login
+pnpm run release:production
+```
+
+If Wrangler already has a valid login on that computer, you can skip the login command. If it has access to several accounts, set `CLOUDFLARE_ACCOUNT_ID` to the account shown in the live Worker’s dashboard before running the release. The account needs permission to upload and deploy Worker versions and to apply the D1 migration. The existing Worker’s version preview URLs must be accessible to the release checks.
+
+For a read-only account and storage check, use `pnpm run release:production --check`. The release command reads the database ID and bucket name from the version currently serving all production traffic. It checks the candidate on a version-specific URL, compares the live and candidate bindings, and applies only `0003_culture_archive.sql` to the existing database. It verifies the directory, archive and six learning service flags before and after directing traffic to the new version. Concurrent deployments stop the promotion. It prints the previous production version for recovery.
+
+The archive uses the existing `LEARNING_ADMIN_KEY` for editorial review. The public endpoint shows approved contributions. Worksheets and private cultural drafts can be used on the branch preview.
 
 ## Reference documentation
 
