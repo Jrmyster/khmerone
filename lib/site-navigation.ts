@@ -9,6 +9,7 @@ export const siteNavigationHtml = `<nav class="ko-nav" aria-label="Khmer One nav
 ${toolGroups.map(group => `<details class="ko-tools" name="ko-tools"><summary>${label(group.title.en, group.title.km)}</summary><div class="ko-tool-list"><a class="ko-group-home" href="/#${group.id}">${label('View section', 'មើលផ្នែកនេះ')}</a>${group.tools.map(([en, km, url]) => `<a href="${url}">${label(en, km)}</a>`).join('')}</div></details>`).join('')}
 <a href="/search">${label('Search', 'ស្វែងរក')}</a>
 <button type="button" data-ko-low aria-pressed="false">${label('Low data: off', 'សន្សំទិន្នន័យ')}</button>
+<button type="button" data-ko-appearance aria-haspopup="dialog">${label('Appearance', 'រូបរាង')}</button>
 <button type="button" data-ko-feedback>${label('Feedback', 'មតិកែលម្អ')}</button>
 </nav><p class="ko-data-note" data-ko-data-note hidden>Low-data mode is on. Decorative pictures are hidden. Audio loads only when you ask for it. <span lang="km">រូបតុបតែងត្រូវបានលាក់។ ចុចដើម្បីផ្ទុកសំឡេង។</span></p>
 <dialog class="ko-feedback" aria-labelledby="ko-feedback-title"><form>
@@ -20,4 +21,13 @@ ${toolGroups.map(group => `<details class="ko-tools" name="ko-tools"><summary>${
 <label class="ko-honeypot" aria-hidden="true">Leave blank<input name="website" tabindex="-1" autocomplete="off" /></label>
 <p role="status" data-ko-result></p><button type="submit" data-ko-submit>Send feedback · បញ្ជូនមតិកែលម្អ</button>
 <p><a href="/feedback-inbox">Editor inbox · ប្រអប់មតិអ្នកកែសម្រួល</a></p>
-</form></dialog>`;
+</form></dialog>
+<dialog class="ko-feedback" id="ko-appearance" aria-labelledby="ko-appearance-title">
+<div class="ko-dialog-heading"><h2 id="ko-appearance-title">Appearance <small lang="km">រូបរាង</small></h2><form method="dialog"><button>Close · បិទ</button></form></div>
+<p>Personalize this browser. Your picture stays on this device. <span lang="km">រូបភាពរបស់អ្នករក្សាទុកតែលើឧបករណ៍នេះ។</span></p>
+<label>Background color · ពណ៌ផ្ទៃខាងក្រោយ<input type="color" data-ko-color value="#183c36"></label>
+<label>Background picture · រូបភាពផ្ទៃខាងក្រោយ<input type="file" data-ko-picture accept="image/jpeg,image/png,image/webp"></label>
+<small>JPG, PNG, WebP · 12 MB max. Low-data mode hides the picture. <span lang="km">មុខងារសន្សំទិន្នន័យលាក់រូបភាព។</span></small>
+<div class="ko-appearance-actions"><button type="button" data-ko-remove>Remove picture · លុបរូបភាព</button><button type="button" data-ko-reset>Reset background · ស្ដារផ្ទៃខាងក្រោយដើម</button></div>
+<p role="status" data-ko-appearance-status></p>
+</dialog>`;

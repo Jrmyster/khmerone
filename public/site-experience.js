@@ -5,10 +5,92 @@
   try { const saved = localStorage.getItem('khmerone-low-data'); low = saved === null ? navigator.connection?.saveData === true : saved === 'true'; }
   catch { low = navigator.connection?.saveData === true; }
   root.dataset.lowData = String(low);
+  function initAppearance(shell) {
+    const key = 'khmerone-background-v1';
+    const dialog = shell.querySelector('#ko-appearance');
+    if (!dialog) return;
+    const color = dialog.querySelector('[data-ko-color]');
+    const picture = dialog.querySelector('[data-ko-picture]');
+    const remove = dialog.querySelector('[data-ko-remove]');
+    const status = dialog.querySelector('[role=status]');
+    let settings = {};
+    let selection = 0;
+
+    function restore(raw) {
+      let value;
+      try { value = JSON.parse(raw); } catch { value = null; }
+      settings = {};
+      if (/^#[0-9a-f]{6}$/i.test(value?.color)) settings.color = value.color;
+      if (typeof value?.photo === 'string' && value.photo.length <= 1800000 &&
+          /^data:image\/jpeg;base64,[A-Za-z0-9+/]+=*$/.test(value.photo)) settings.photo = value.photo;
+      render();
+    }
+    function render() {
+      root.toggleAttribute('data-custom-background', Boolean(settings.color || settings.photo));
+      root.style.setProperty('--ko-background-color', settings.color || '');
+      root.style.setProperty('--ko-background-photo', settings.photo ? 'url("' + settings.photo + '")' : '');
+      color.value = settings.color || '#183c36';
+      remove.disabled = !settings.photo;
+    }
+    function save(next) {
+      try {
+        if (next.color || next.photo) localStorage.setItem(key, JSON.stringify(next));
+        else localStorage.removeItem(key);
+      } catch {
+        status.textContent = 'Could not save the background in this browser. · មិនអាចរក្សាទុកផ្ទៃខាងក្រោយបានទេ។';
+        render();
+        return;
+      }
+      settings = next;
+      render();
+      status.textContent = 'Background saved. · បានរក្សាទុកផ្ទៃខាងក្រោយ។';
+    }
+
+    try { restore(localStorage.getItem(key)); } catch { render(); }
+    shell.querySelector('[data-ko-appearance]').addEventListener('click', () => dialog.showModal());
+    color.addEventListener('change', () => save({ ...settings, color: color.value }));
+    remove.addEventListener('click', () => { selection++; save({ color: settings.color }); });
+    dialog.querySelector('[data-ko-reset]').addEventListener('click', () => { selection++; save({}); });
+    window.addEventListener('storage', event => {
+      if (event.key === key || event.key === null) { selection++; restore(event.newValue); status.textContent = ''; }
+    });
+    picture.addEventListener('change', async () => {
+      const id = ++selection;
+      const file = picture.files[0];
+      picture.value = '';
+      if (!file) return;
+      if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 12000000) {
+        status.textContent = 'Choose a JPG, PNG or WebP under 12 MB. · សូមជ្រើសរូបភាពក្រោម 12 MB។';
+        return;
+      }
+      status.textContent = 'Preparing picture… · កំពុងរៀបចំរូបភាព…';
+      const url = URL.createObjectURL(file);
+      try {
+        const img = new Image();
+        img.src = url;
+        await img.decode();
+        if (id !== selection) return;
+        const scale = Math.min(1, 1440 / Math.max(img.naturalWidth, img.naturalHeight));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+        canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const photo = canvas.toDataURL('image/jpeg', 0.75);
+        if (!photo.startsWith('data:image/jpeg;base64,') || photo.length > 1800000) throw new Error();
+        save({ ...settings, photo });
+      } catch {
+        if (id === selection) status.textContent = 'Could not read that picture. Try a smaller JPG or PNG. · សូមសាកល្បងរូបភាពតូចជាងនេះ។';
+      } finally { URL.revokeObjectURL(url); }
+    });
+  }
   function init() {
     const shell = document.getElementById('ko-site-shell');
     if (!shell || shell.dataset.ready) return;
     shell.dataset.ready = 'true';
+    initAppearance(shell);
     const toggle = shell.querySelector('[data-ko-low]');
     const note = shell.querySelector('[data-ko-data-note]');
     function sync(value) {

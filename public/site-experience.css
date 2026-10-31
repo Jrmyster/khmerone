@@ -12,3 +12,18 @@ html[data-low-data=true] .learn-hero-art,html[data-low-data=true] .cosmic-jungle
 
 #ko-site-shell .ko-tool-list .ko-group-home{font-weight:700;border-bottom:1px solid #bfd3c8;border-radius:0}
 @media(max-width:580px){#ko-site-shell .ko-nav{position:relative}#ko-site-shell .ko-tools{position:static}#ko-site-shell .ko-tool-list{left:8px;right:8px;width:auto}}
+
+#ko-appearance input[type=color]{width:6rem;padding:4px}
+#ko-appearance .ko-appearance-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+#ko-appearance .ko-appearance-actions button{border-color:#8aa99a}
+@media screen {
+  html[data-custom-background] body{background:var(--ko-background-color,var(--canvas,#183c36))!important;isolation:isolate}
+  html[data-custom-background] body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--ko-background-photo,none) center/cover no-repeat}
+  html[data-custom-background][data-low-data=true] body::before,
+  html[data-custom-background] .cosmic-jungle-background,
+  html[data-custom-background] .site-shell::before{display:none}
+  html[data-custom-background] :is(.site-shell,.ce-shell,.site-search-page,.toolkit-main){background:color-mix(in srgb,var(--canvas,#101822) 68%,transparent)}
+  html[data-custom-background] .teacher-audio-shell{background:rgb(8 24 35 / 78%)}
+  html[data-custom-background] body:has(> p.ko-review) main{background:color-mix(in srgb,var(--paper,var(--canvas,#f4f5f1)) 78%,transparent)}
+  html[data-custom-background] :is(.gs-shell,.learning,.tg-page){background:color-mix(in srgb,#f4f5f1 78%,transparent)}
+}
