@@ -11,6 +11,18 @@ import { learningTools, bi } from "./learning";
 
 export const apps: AppEntry[] = [
   {
+    id: 'inspection', title: bi('Inspection & Service Accountability', 'អធិការកិច្ច និងគណនេយ្យភាពសេវា'),
+    category: AppCategory.Utilities, categoryLabel: bi('Inspection & public services', 'អធិការកិច្ច និងសេវាសាធារណៈ'),
+    tagline: bi('Clear facts. A useful record. A better next step.', 'ការពិតច្បាស់។ កំណត់ត្រាមានប្រយោជន៍។ ជំហានបន្ទាប់ប្រសើរ។'),
+    description: bi('Find inspection, Interior ministry and anti-corruption contact sources. Prepare a private service-issue worksheet with a timeline, observations and requested response, then print or download it.', 'រកប្រភពទំនាក់ទំនងអធិការកិច្ច ក្រសួងមហាផ្ទៃ និងប្រឆាំងពុករលួយ។ ត្រៀមសន្លឹកកត់ត្រាបញ្ហាសេវាឯកជនជាមួយលំដាប់ហេតុការណ៍ ការសង្កេត និងការឆ្លើយតបដែលស្នើ រួចបោះពុម្ព ឬទាញយក។'),
+    audience: bi('Residents, families & community helpers', 'ប្រជាពលរដ្ឋ គ្រួសារ និងអ្នកជួយសហគមន៍'),
+    grades: ['primary', 'lower-secondary', 'high-school', 'vocational-adult'], gradeBadge: bi('All ages', 'គ្រប់វ័យ'), hasBilingualToggle: true,
+    features: [bi('Four reporting and advice starting points', 'កន្លែងចាប់ផ្តើមរាយការណ៍ និងប្រឹក្សាបួន'), bi('Private draft worksheet with print and text download', 'សន្លឹកព្រាងឯកជនសម្រាប់បោះពុម្ព និងទាញយកអត្ថបទ')],
+    tags: ['Inspection', 'Ministry of Inspection', 'accountability', 'public service', 'complaint', 'ACU', 'Interior', 'ALAC', 'worksheet', 'អធិការកិច្ច', 'បណ្តឹង', 'គណនេយ្យភាព'],
+    notice: bi('Preparation only. Khmer One does not receive or submit complaints.', 'សម្រាប់ត្រៀមខ្លួនប៉ុណ្ណោះ។ ខ្មែរ វ័ន មិនទទួល ឬដាក់ពាក្យបណ្តឹងទេ។'),
+    icon: 'peace', url: '/inspection', offlineReady: false,
+  },
+  {
     id: 'international-services', title: bi('International Services', 'សេវាអន្តរជាតិ'),
     category: AppCategory.Utilities, categoryLabel: bi('Foreign affairs & international cooperation', 'ការបរទេស និងសហប្រតិបត្តិការអន្តរជាតិ'),
     tagline: bi('Connect with the world. Know where to start.', 'ភ្ជាប់ទៅពិភពលោក។ ដឹងកន្លែងចាប់ផ្តើម។'),
