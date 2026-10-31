@@ -1,3 +1,4 @@
+import { safetyTopics, safetyChecklist, mineSafety, safetyNotice } from './communitySafety';
 import { governmentPaths, governmentTopics, governmentChecklist } from './governmentServices';
 import { typingLessons } from '../lib/typing-game';
 import { supportServices, supportCategories, visitChecklist } from './socialSupport';
@@ -35,6 +36,7 @@ function withParent(parentId: string, document: Omit<SearchDocument, 'category' 
 // Read directly from the content that renders the site; additions to these collections
 // are searchable on the next build without maintaining a second vocabulary list.
 export const siteSearchDocuments: SearchDocument[] = [
+  ...safetyTopics.map(topic => withParent('community-safety', { id: `safety-${topic.id}`, href: `/community-safety#topic-${topic.id}`, kind: 'page', title: topic.title, summary: topic.summary, fields: textValues(topic) })),
   ...governmentPaths.map(path => withParent('government-services', { id: `government-${path.id}`, href: `/public-services#task-${path.id}`, kind: 'page', title: path.title, summary: path.summary, fields: textValues(path) })),
   ...supportServices.map(service => withParent('social-support', { id: `support-${service.id}`, href: `/social-support#service-${service.id}`, kind: 'page', title: service.name, summary: service.description, fields: [...textValues(service), ...textValues(supportCategories.filter(category => service.categories.includes(category.id)))] })),
   { id: 'page-home', href: '/', kind: 'page', title: bi('Khmer One', 'ខ្មែរ វ័ន'), summary: bi('Free bilingual learning tools for Cambodia.', 'ឧបករណ៍សិក្សាឥតគិតថ្លៃសម្រាប់កម្ពុជា។'), fields: ['KhmerOne Khmer One Cambodia education school students teachers offline STEM health finance enterprise'] },
@@ -62,6 +64,7 @@ for (const [path, extra] of [
   ['/computer-engineering', engineeringCopy], ['/teacher-toolkit', toolkitCopy], ['/teacher-audio', teacherAudioCopy],
   ['/learning/quiz-maker', sampleQuiz],
   ['/typing', typingLessons],
+  ['/community-safety', { safetyTopics, safetyChecklist, mineSafety, safetyNotice }],
   ['/public-services', { governmentPaths, governmentTopics, governmentChecklist }],
   ['/social-support', { supportServices, supportCategories, visitChecklist }],
 ] as const) {

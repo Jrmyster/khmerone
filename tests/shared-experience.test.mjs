@@ -19,7 +19,7 @@ test('feedback bounds text and excludes arbitrary query strings and external URL
  for(const patch of [{page:'https://evil.test/'},{page:'//evil.test'},{page:'/learning?token=secret'},{message:'  '},{message:'x'.repeat(2001)},{category:'spam'},{website:'bot'},{id:'bad'}])assert.throws(()=>validateFeedback({...input,...patch}),/invalid_feedback/);
 });
 test('all built-in tools share native navigation with the standalone lab',()=>{
- assert.equal(builtInTools.length,16);
+ assert.equal(builtInTools.length,17);
  assert.equal(new Set(builtInTools.map(x=>x[2])).size,builtInTools.length);
  const html=readFileSync('public/engine-lab.html','utf8');assert.ok(html.includes(siteNavigationHtml));
  for(const [, ,url] of builtInTools)assert.ok(siteNavigationHtml.includes(`href="${url}"`));

@@ -11,6 +11,18 @@ import { learningTools, bi } from "./learning";
 
 export const apps: AppEntry[] = [
   {
+    id: 'community-safety', title: bi('Defence & Community Safety', 'ការពារជាតិ និងសុវត្ថិភាពសហគមន៍'),
+    category: AppCategory.Utilities, categoryLabel: bi('National defence · Civilian preparedness', 'ការពារជាតិ · ការត្រៀមខ្លួនរបស់ប្រជាពលរដ្ឋ'),
+    tagline: bi('Safer families. Stronger communities.', 'គ្រួសារមានសុវត្ថិភាព។ សហគមន៍រឹងមាំ។'),
+    description: bi('Learn mine and unexploded-ordnance awareness, prepare a household emergency checklist, find official defence information and connect with support services.', 'ស្វែងយល់អំពីមីន និងគ្រាប់មិនទាន់ផ្ទុះ ត្រៀមបញ្ជីអាសន្នគ្រួសារ រកព័ត៌មានការពារជាតិផ្លូវការ និងភ្ជាប់ទៅសេវាជំនួយ។'),
+    audience: bi('Families, schools & community helpers', 'គ្រួសារ សាលារៀន និងអ្នកជួយសហគមន៍'),
+    grades: ['primary', 'lower-secondary', 'high-school', 'vocational-adult'], gradeBadge: bi('All ages', 'គ្រប់វ័យ'), hasBilingualToggle: true,
+    features: [bi('Four bilingual civilian safety guides', 'មគ្គុទ្ទេសក៍សុវត្ថិភាពពីរភាសាបួន'), bi('Print or download a household checklist', 'បោះពុម្ព ឬទាញយកបញ្ជីគ្រួសារ')],
+    tags: ['National Defence', 'National Defense', 'Ministry of National Defence', 'CMAC', 'mine', 'UXO', 'emergency', 'preparedness', 'family', 'veterans', 'ការពារជាតិ', 'មីន', 'សុវត្ថិភាព'],
+    notice: bi('Independent learning guide; not a live alert or emergency reporting service.', 'មគ្គុទ្ទេសក៍សិក្សាឯករាជ្យ មិនមែនសេវាព្រមានផ្ទាល់ ឬរាយការណ៍អាសន្នទេ។'),
+    icon: 'peace', url: '/community-safety', offlineReady: false,
+  },
+  {
     id: 'government-services', title: bi('Government Services Finder', 'មគ្គុទ្ទេសក៍សេវារដ្ឋាភិបាល'),
     category: AppCategory.Utilities, categoryLabel: bi('Public services & institutions', 'សេវាសាធារណៈ និងស្ថាប័ន'),
     tagline: bi('Find the right institution and prepare your next step.', 'ស្វែងរកស្ថាប័នត្រឹមត្រូវ និងត្រៀមជំហានបន្ទាប់។'),
