@@ -11,6 +11,24 @@ import { learningTools, bi } from "./learning";
 
 export const apps: AppEntry[] = [
   {
+    id: "social-support",
+    title: { en: "Support Services Navigator", km: "មគ្គុទ្ទេសក៍សេវាជំនួយ" },
+    category: AppCategory.Utilities,
+    categoryLabel: { en: "Social affairs & community care", km: "សង្គមកិច្ច និងការគាំទ្រសហគមន៍" },
+    tagline: { en: "Find support and prepare your next step.", km: "ស្វែងរកជំនួយ និងត្រៀមជំហានបន្ទាប់។" },
+    description: { en: "A Khmer-first guide to disability and rehabilitation resources, older people's support, veterans referrals, household assistance, and child and youth services. Search source-linked providers and print or download a visit checklist.", km: "មគ្គុទ្ទេសក៍ភាសាខ្មែរសម្រាប់សេវាពិការភាព ស្តារនីតិសម្បទា មនុស្សចាស់ អតីតយុទ្ធជន ជំនួយគ្រួសារ កុមារ និងយុវជន។ ស្វែងរកអ្នកផ្តល់សេវា និងបោះពុម្ព ឬទាញយកបញ្ជីត្រៀមទៅជួប។" },
+    audience: { en: "Families, caregivers & community helpers", km: "គ្រួសារ អ្នកថែទាំ និងអ្នកជួយសហគមន៍" },
+    grades: ["primary", "lower-secondary", "high-school", "vocational-adult"],
+    gradeBadge: { en: "All ages", km: "គ្រប់វ័យ" }, hasBilingualToggle: true,
+    features: [
+      { en: "Six support topics with provider sources", km: "ប្រធានបទជំនួយ ៦ ជាមួយប្រភពអ្នកផ្តល់សេវា" },
+      { en: "Khmer / English, larger text and visit plans", km: "ខ្មែរ / អង់គ្លេស អក្សរធំ និងផែនការទៅជួប" },
+    ],
+    tags: ["social affairs", "MOSVY", "disability", "rehabilitation", "veterans", "older people", "IDPoor", "children", "youth", "family", "support", "ជំនួយ", "ពិការភាព", "មនុស្សចាស់", "អតីតយុទ្ធជន"],
+    notice: { en: "Independent guide; confirm eligibility and current services with providers.", km: "មគ្គុទ្ទេសក៍ឯករាជ្យ។ សូមបញ្ជាក់លក្ខខណ្ឌ និងសេវាបច្ចុប្បន្នជាមួយអ្នកផ្តល់សេវា។" },
+    icon: "peace", url: "/social-support", offlineReady: false,
+  },
+  {
     id: 'typing-garden', title: bi('Keyboard Garden · English typing', 'ល្បែងរៀនវាយអក្សរអង់គ្លេស'),
     category: AppCategory.Languages, categoryLabel: bi('English & computer skills', 'ភាសាអង់គ្លេស និងកុំព្យូទ័រ'),
     tagline: bi('Grow a garden, one word at a time.', 'ដាំសួន ដោយវាយម្ដងមួយពាក្យ។'),

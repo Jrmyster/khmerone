@@ -6,7 +6,7 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   {
-    files: ["components/shared/**/*.tsx", "components/typing/**/*.tsx", "components/TeacherAudioMaker.tsx", "components/learning/**/*.tsx", "components/SiteSearch.tsx", "components/ComputerEngineeringLab.tsx", "components/TeacherToolkit.tsx", "components/KhmerOneBar.tsx"],
+    files: ["components/social-support/**/*.tsx", "components/shared/**/*.tsx", "components/typing/**/*.tsx", "components/TeacherAudioMaker.tsx", "components/learning/**/*.tsx", "components/SiteSearch.tsx", "components/ComputerEngineeringLab.tsx", "components/TeacherToolkit.tsx", "components/KhmerOneBar.tsx"],
     rules: {
       // Native navigation preserves the verified workaround for Vinext Link transition failures.
       "@next/next/no-html-link-for-pages": "off",

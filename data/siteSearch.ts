@@ -1,4 +1,5 @@
 import { typingLessons } from '../lib/typing-game';
+import { supportServices, supportCategories, visitChecklist } from './socialSupport';
 import { apps, gradeLabels } from './apps';
 import { terms, stories, announcements, sampleQuiz, bi, subjectLabels } from './learning';
 import { pathways, crewConcepts } from './engagement';
@@ -33,6 +34,7 @@ function withParent(parentId: string, document: Omit<SearchDocument, 'category' 
 // Read directly from the content that renders the site; additions to these collections
 // are searchable on the next build without maintaining a second vocabulary list.
 export const siteSearchDocuments: SearchDocument[] = [
+  ...supportServices.map(service => withParent('social-support', { id: `support-${service.id}`, href: `/social-support#service-${service.id}`, kind: 'page', title: service.name, summary: service.description, fields: [...textValues(service), ...textValues(supportCategories.filter(category => service.categories.includes(category.id)))] })),
   { id: 'page-home', href: '/', kind: 'page', title: bi('Khmer One', 'ខ្មែរ វ័ន'), summary: bi('Free bilingual learning tools for Cambodia.', 'ឧបករណ៍សិក្សាឥតគិតថ្លៃសម្រាប់កម្ពុជា។'), fields: ['KhmerOne Khmer One Cambodia education school students teachers offline STEM health finance enterprise'] },
   { id: 'page-learning', href: '/learning', kind: 'page', title: bi('Learning studio', 'កន្លែងសិក្សា'), summary: bi('Eight tools to listen, learn, create and share.', 'ឧបករណ៍ប្រាំបីសម្រាប់ស្តាប់ រៀន បង្កើត និងចែករំលែក។'), fields: ['learning studio tools dictionary speaking quizzes stories announcements translation classroom exchange'] },
   { id: 'page-search', href: '/search', kind: 'page', title: bi('Search Khmer One', 'ស្វែងរកក្នុងខ្មែរ វ័ន'), summary: bi('Find apps, words, stories, lessons and school resources.', 'ស្វែងរកកម្មវិធី ពាក្យ រឿង មេរៀន និងធនធានសាលា។'), fields: ['search find browse discover ស្វែងរក'] },
@@ -58,6 +60,7 @@ for (const [path, extra] of [
   ['/computer-engineering', engineeringCopy], ['/teacher-toolkit', toolkitCopy], ['/teacher-audio', teacherAudioCopy],
   ['/learning/quiz-maker', sampleQuiz],
   ['/typing', typingLessons],
+  ['/social-support', { supportServices, supportCategories, visitChecklist }],
 ] as const) {
   const document = siteSearchDocuments.find(document => document.href === path);
   if (document) document.fields.push(...textValues(extra));
