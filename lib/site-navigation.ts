@@ -1,5 +1,6 @@
 // Used by both the React layout and the standalone Engine Lab build.
 export const builtInTools = [
+  ['International services', 'សេវាអន្តរជាតិ', '/international-services'],
   ['Community safety', 'សុវត្ថិភាពសហគមន៍', '/community-safety'],
   ['Government services', 'សេវារដ្ឋាភិបាល', '/public-services'],
   ['Support services', 'សេវាជំនួយ', '/social-support'],

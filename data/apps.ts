@@ -11,6 +11,18 @@ import { learningTools, bi } from "./learning";
 
 export const apps: AppEntry[] = [
   {
+    id: 'international-services', title: bi('International Services', 'សេវាអន្តរជាតិ'),
+    category: AppCategory.Utilities, categoryLabel: bi('Foreign affairs & international cooperation', 'ការបរទេស និងសហប្រតិបត្តិការអន្តរជាតិ'),
+    tagline: bi('Connect with the world. Know where to start.', 'ភ្ជាប់ទៅពិភពលោក។ ដឹងកន្លែងចាប់ផ្តើម។'),
+    description: bi('Find Cambodian consular contact sources, prepare for travel, distinguish Cambodia e-Visa and e-Arrival, explore scholarships and community-project cooperation. Print or download a preparation checklist.', 'រកប្រភពទំនាក់ទំនងកុងស៊ុល ត្រៀមដំណើរ បែងចែក e-Visa និង e-Arrival ស្វែងរកអាហារូបករណ៍ និងកិច្ចសហប្រតិបត្តិការគម្រោងសហគមន៍។ បោះពុម្ព ឬទាញយកបញ្ជីត្រៀមខ្លួន។'),
+    audience: bi('Travellers, students, families & community organisations', 'អ្នកធ្វើដំណើរ សិស្ស គ្រួសារ និងអង្គការសហគមន៍'),
+    grades: ['primary', 'lower-secondary', 'high-school', 'vocational-adult'], gradeBadge: bi('All ages', 'គ្រប់វ័យ'), hasBilingualToggle: true,
+    features: [bi('Five bilingual guides with official sources', 'មគ្គុទ្ទេសក៍ពីរភាសាប្រាំជាមួយប្រភពផ្លូវការ'), bi('Selected embassy contacts and preparation checklists', 'ទំនាក់ទំនងស្ថានទូតដែលបានជ្រើស និងបញ្ជីត្រៀមខ្លួន')],
+    tags: ['Foreign Affairs', 'International Cooperation', 'MFAIC', 'embassy', 'consular', 'travel', 'scholarship', 'MEXT', 'Australia Awards', 'KUSANONE', 'grant', 'ការបរទេស', 'សហប្រតិបត្តិការ', 'អាហារូបករណ៍'],
+    notice: bi('Independent guide. Confirm current requirements and deadlines with providers.', 'មគ្គុទ្ទេសក៍ឯករាជ្យ។ បញ្ជាក់តម្រូវការ និងកាលកំណត់បច្ចុប្បន្នជាមួយអ្នកផ្តល់។'),
+    icon: 'world', url: '/international-services', offlineReady: false,
+  },
+  {
     id: 'community-safety', title: bi('Defence & Community Safety', 'ការពារជាតិ និងសុវត្ថិភាពសហគមន៍'),
     category: AppCategory.Utilities, categoryLabel: bi('National defence · Civilian preparedness', 'ការពារជាតិ · ការត្រៀមខ្លួនរបស់ប្រជាពលរដ្ឋ'),
     tagline: bi('Safer families. Stronger communities.', 'គ្រួសារមានសុវត្ថិភាព។ សហគមន៍រឹងមាំ។'),

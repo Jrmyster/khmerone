@@ -1,3 +1,4 @@
+import { internationalGuides, internationalChecklist, missionContacts, internationalNotice } from './internationalServices';
 import { safetyTopics, safetyChecklist, mineSafety, safetyNotice } from './communitySafety';
 import { governmentPaths, governmentTopics, governmentChecklist } from './governmentServices';
 import { typingLessons } from '../lib/typing-game';
@@ -36,6 +37,7 @@ function withParent(parentId: string, document: Omit<SearchDocument, 'category' 
 // Read directly from the content that renders the site; additions to these collections
 // are searchable on the next build without maintaining a second vocabulary list.
 export const siteSearchDocuments: SearchDocument[] = [
+  ...internationalGuides.map(guide => withParent('international-services', { id: `international-${guide.id}`, href: `/international-services#guide-${guide.id}`, kind: 'page', title: guide.title, summary: guide.summary, fields: textValues(guide) })),
   ...safetyTopics.map(topic => withParent('community-safety', { id: `safety-${topic.id}`, href: `/community-safety#topic-${topic.id}`, kind: 'page', title: topic.title, summary: topic.summary, fields: textValues(topic) })),
   ...governmentPaths.map(path => withParent('government-services', { id: `government-${path.id}`, href: `/public-services#task-${path.id}`, kind: 'page', title: path.title, summary: path.summary, fields: textValues(path) })),
   ...supportServices.map(service => withParent('social-support', { id: `support-${service.id}`, href: `/social-support#service-${service.id}`, kind: 'page', title: service.name, summary: service.description, fields: [...textValues(service), ...textValues(supportCategories.filter(category => service.categories.includes(category.id)))] })),
@@ -64,6 +66,7 @@ for (const [path, extra] of [
   ['/computer-engineering', engineeringCopy], ['/teacher-toolkit', toolkitCopy], ['/teacher-audio', teacherAudioCopy],
   ['/learning/quiz-maker', sampleQuiz],
   ['/typing', typingLessons],
+  ['/international-services', { internationalGuides, internationalChecklist, missionContacts, internationalNotice }],
   ['/community-safety', { safetyTopics, safetyChecklist, mineSafety, safetyNotice }],
   ['/public-services', { governmentPaths, governmentTopics, governmentChecklist }],
   ['/social-support', { supportServices, supportCategories, visitChecklist }],
