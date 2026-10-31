@@ -15,6 +15,9 @@ import { toolkitUnits, resourceKinds, buildTeachingResource, defaultToolkitSetti
 import { engineeringCopy } from '../locales/computerEngineering';
 import { toolkitCopy } from '../locales/teacherToolkit';
 import { teacherAudioCopy } from '../locales/teacherAudio';
+import { resourcesFor } from './ministry-guides/resources';
+import { verifiedPlaces } from './ministry-guides/verifiedPlaces';
+import { toolGroups } from '../lib/tool-groups';
 import { searchScore, textValues } from '../lib/search';
 import type { AppCategory, GradeLevel, LocalizedText } from '../types/app';
 import type { Resource } from '../lib/learning/contracts';
@@ -41,9 +44,13 @@ function withParent(parentId: string, document: Omit<SearchDocument, 'category' 
 // Read directly from the content that renders the site; additions to these collections
 // are searchable on the next build without maintaining a second vocabulary list.
 export const siteSearchDocuments: SearchDocument[] = [
+  ...toolGroups.map(group => ({
+    id: group.id, href: '/#' + group.id, kind: 'page' as const, title: group.title, summary: group.description,
+    fields: group.tools.flatMap(([en, km]) => [en, km]),
+  })),
   ...ministryGuides.map(guide => withParent('ministries', {
     id: 'ministry-' + guide.n, href: '/ministries/' + guide.slug, kind: 'page',
-    title: guide.title, summary: guide.benefit, fields: textValues(guide),
+    title: guide.title, summary: guide.benefit, fields: [...textValues(guide), ...textValues(resourcesFor(guide.n)), ...textValues(verifiedPlaces.filter(p => p.n === guide.n))],
   })),
   ...postsTopics.map(topic => withParent('posts-and-telecommunications', {
     id: `posts-${topic.id}`, href: `/posts-and-telecommunications#${topic.id}`, kind: 'page',
@@ -58,7 +65,7 @@ export const siteSearchDocuments: SearchDocument[] = [
   ...safetyTopics.map(topic => withParent('community-safety', { id: `safety-${topic.id}`, href: `/community-safety#topic-${topic.id}`, kind: 'page', title: topic.title, summary: topic.summary, fields: textValues(topic) })),
   ...governmentPaths.map(path => withParent('government-services', { id: `government-${path.id}`, href: `/public-services#task-${path.id}`, kind: 'page', title: path.title, summary: path.summary, fields: textValues(path) })),
   ...supportServices.map(service => withParent('social-support', { id: `support-${service.id}`, href: `/social-support#service-${service.id}`, kind: 'page', title: service.name, summary: service.description, fields: [...textValues(service), ...textValues(supportCategories.filter(category => service.categories.includes(category.id)))] })),
-  { id: 'page-home', href: '/', kind: 'page', title: bi('Khmer One', 'ខ្មែរ វ័ន'), summary: bi('Free bilingual learning tools for Cambodia.', 'ឧបករណ៍សិក្សាឥតគិតថ្លៃសម្រាប់កម្ពុជា។'), fields: ['KhmerOne Khmer One Cambodia education school students teachers offline STEM health finance enterprise'] },
+  { id: 'page-home', href: '/', kind: 'page', title: bi('Khmer One', 'ខ្មែរ វ័ន'), summary: bi('Educational and ministry tools for Cambodia in Khmer and English.', 'ឧបករណ៍អប់រំ និងឧបករណ៍តាមក្រសួងសម្រាប់កម្ពុជាជាភាសាខ្មែរ និងអង់គ្លេស។'), fields: ['KhmerOne Khmer One Cambodia education school students teachers offline STEM health finance enterprise'] },
   { id: 'page-learning', href: '/learning', kind: 'page', title: bi('Learning studio', 'កន្លែងសិក្សា'), summary: bi('Eight tools to listen, learn, create and share.', 'ឧបករណ៍ប្រាំបីសម្រាប់ស្តាប់ រៀន បង្កើត និងចែករំលែក។'), fields: ['learning studio tools dictionary speaking quizzes stories announcements translation classroom exchange'] },
   { id: 'page-search', href: '/search', kind: 'page', title: bi('Search Khmer One', 'ស្វែងរកក្នុងខ្មែរ វ័ន'), summary: bi('Find apps, words, stories, lessons and school resources.', 'ស្វែងរកកម្មវិធី ពាក្យ រឿង មេរៀន និងធនធានសាលា។'), fields: ['search find browse discover ស្វែងរក'] },
   ...apps.map((app): SearchDocument => ({ id: `app-${app.id}`, href: app.url || '/#directory', kind: 'app', title: app.title, summary: app.description,

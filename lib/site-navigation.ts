@@ -1,33 +1,12 @@
 // Used by both the React layout and the standalone Engine Lab build.
-export const builtInTools = [
-  ['Ministry guides 1–18', 'មគ្គុទ្ទេសក៍ក្រសួង ១–១៨', '/ministries'],
-  ['Posts and telecommunications', 'ប្រៃសណីយ៍ និងទូរគមនាគមន៍', '/posts-and-telecommunications'],
-  ['Ministry of Interior', 'ក្រសួងមហាផ្ទៃ', '/interior'],
-  ['Inspection & accountability', 'អធិការកិច្ច និងគណនេយ្យភាព', '/inspection'],
-  ['International services', 'សេវាអន្តរជាតិ', '/international-services'],
-  ['Community safety', 'សុវត្ថិភាពសហគមន៍', '/community-safety'],
-  ['Government services', 'សេវារដ្ឋាភិបាល', '/public-services'],
-  ['Support services', 'សេវាជំនួយ', '/social-support'],
-  ['Keyboard Garden', 'រៀនវាយអក្សរ', '/typing'],
-  ['Learning studio', 'កន្លែងសិក្សា', '/learning'],
-  ['STEM dictionary', 'វចនានុក្រម STEM', '/learning/dictionary'],
-  ['Speaking practice', 'ហាត់និយាយ', '/learning/speaking'],
-  ['Listening quizzes', 'សំណួរស្តាប់', '/learning/quiz-maker'],
-  ['Story library', 'បណ្ណាល័យរឿង', '/learning/stories'],
-  ['Announcements', 'សេចក្ដីជូនដំណឹង', '/learning/announcements'],
-  ['Translation', 'ការបកប្រែ', '/learning/translation'],
-  ['Live quiz', 'សំណួរផ្ទាល់', '/learning/live-quiz'],
-  ['School exchange', 'ការចែករំលែកសាលា', '/learning/exchange'],
-  ['Audio Maker', 'កម្មវិធីសំឡេង', '/teacher-audio'],
-  ['Teacher Toolkit', 'ឧបករណ៍គ្រូ', '/teacher-toolkit'],
-  ['Computer Engineering', 'វិស្វកម្មកុំព្យូទ័រ', '/computer-engineering'],
-  ['Engine Lab', 'មន្ទីរពិសោធន៍ម៉ាស៊ីន', '/engine-lab.html'],
-] as const;
+import { toolGroups } from './tool-groups.ts';
+type NavTool = readonly [string, string, string];
+export const builtInTools: readonly NavTool[] = [...toolGroups[0].tools, ...toolGroups[1].tools];
 const label = (en: string, km: string) => `<span>${en}<small lang="km">${km}</small></span>`;
 export const siteNavigationHtml = `<nav class="ko-nav" aria-label="Khmer One navigation">
 <a class="ko-brand" href="/">KHMER ONE<small lang="km">ខ្មែរ វ័ន</small></a>
 <a href="/">${label('Home', 'ទំព័រដើម')}</a>
-<details class="ko-tools"><summary>${label('Tools', 'ឧបករណ៍')}</summary><div class="ko-tool-list">${builtInTools.map(([en, km, url]) => `<a href="${url}">${label(en, km)}</a>`).join('')}</div></details>
+${toolGroups.map(group => `<details class="ko-tools" name="ko-tools"><summary>${label(group.title.en, group.title.km)}</summary><div class="ko-tool-list"><a class="ko-group-home" href="/#${group.id}">${label('View section', 'មើលផ្នែកនេះ')}</a>${group.tools.map(([en, km, url]) => `<a href="${url}">${label(en, km)}</a>`).join('')}</div></details>`).join('')}
 <a href="/search">${label('Search', 'ស្វែងរក')}</a>
 <button type="button" data-ko-low aria-pressed="false">${label('Low data: off', 'សន្សំទិន្នន័យ')}</button>
 <button type="button" data-ko-feedback>${label('Feedback', 'មតិកែលម្អ')}</button>

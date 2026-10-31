@@ -15,3 +15,12 @@
 .mg-shell .mg-map {width:100%;height:260px;border:1px solid var(--gs-line)}
 .mg-shell .mg-print-answer {display:none}
 @media print {.mg-shell .mg-print-answer {display:block;white-space:pre-wrap;border-bottom:1px solid #777;min-height:2.5rem}.mg-shell .mg-fields textarea,.mg-shell .mg-actions{display:none}.mg-fields label{break-inside:avoid}}
+.mg-table-scroll{max-width:100%;overflow:auto;margin:1rem 0}
+.mg-table-scroll table{border-collapse:collapse;font-size:.93rem;width:100%}
+.mg-table-scroll caption{text-align:start;font-weight:700}
+.mg-table-scroll :is(th,td){padding:.6rem;border:1px solid var(--gs-line);text-align:start;vertical-align:top}
+.mg-table-scroll th{background:#f2f6f8}
+.mg-box summary{cursor:pointer;font-weight:650}
+.mg-resource-list { display:grid; gap:1rem; }
+.mg-resource-list article { border-inline-start:3px solid #419589; padding-inline-start:1rem; overflow-wrap:anywhere; }
+.mg-resource-list h3 { margin:0; }

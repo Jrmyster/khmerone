@@ -8,8 +8,8 @@ export const economy: MinistryGuide[] = [
     benefit: bi('A workshop can test a design on two samples before committing a whole batch of materials. Students can repeat the same test and compare their results with a local maker.', 'សិប្បកម្មអាចសាកល្បងគំរូពីរមុននឹងប្រើវត្ថុធាតុដើមសម្រាប់ផលិតមួយលើកធំ។ សិស្សអាចធ្វើតេស្តដូចគ្នា ហើយប្រៀបធៀបលទ្ធផលជាមួយអ្នកច្នៃប្រឌិតក្នុងមូលដ្ឋាន។'),
     steps: [
       bi('Ask a local maker what breaks or gets wasted. Choose one measurable goal, such as keeping a small cardboard box from bending under a load.', 'សួរអ្នកផលិតក្នុងមូលដ្ឋានថា អ្វីខូចញឹកញាប់ ឬខ្ជះខ្ជាយច្រើន។ ជ្រើសរើសគោលដៅមួយដែលអាចវាស់បាន ដូចជាធ្វើប្រអប់ក្រដាសតូចមួយឱ្យទ្រទម្ងន់ដោយមិនកោង។'),
-      bi('Make two small paper or cardboard prototypes. Change one feature, such as a fold. Test both with the same number of coins and record what happened.', 'ធ្វើគំរូតូចពីរពីក្រដាស ឬកាតុង។ ផ្លាស់ប្តូរចំណុចតែមួយ ដូចជារបៀបបត់។ ដាក់កាក់ចំនួនស្មើគ្នាលើគំរូទាំងពីរ ហើយកត់ត្រាលទ្ធផល។'),
-      bi('Try a repair. Flatten a torn box corner, fold a scrap of cardboard around the corner and tape it in place. Repeat the coin test. Record whether the patch changed the load the box could hold.', 'សាកជួសជុលប្រអប់។ តម្រង់ជ្រុងដែលរហែក បត់បំណែកកាតុងមួយឱបជ្រុងនោះ ហើយបិទស្កុតឱ្យជាប់។ សាកដាក់កាក់ម្តងទៀត រួចកត់ថាប្រអប់ដែលបានជួសជុលអាចទ្រទម្ងន់ខុសពីមុនយ៉ាងដូចម្តេច។'),
+      bi('Engineering challenge. Span a gap between two books with a flat sheet of paper. Fold a second, identical sheet into accordion pleats and span the same gap. Add coins of the same size one at a time at the centre. Compare how many each bridge holds before it sags.', 'លំហាត់វិស្វកម្ម៖ ដាក់ក្រដាសរាបមួយសន្លឹកឆ្លងចន្លោះរវាងសៀវភៅពីរក្បាល។ បត់ក្រដាសមួយសន្លឹកទៀតដែលដូចគ្នាជាផ្នត់ឆ្លាស់ទៅមក រួចដាក់ឆ្លងចន្លោះដដែល។ ដាក់កាក់ដែលមានទំហំដូចគ្នាម្តងមួយៗនៅចំកណ្តាល។ ប្រៀបធៀបចំនួនកាក់ដែលស្ពាននីមួយៗអាចទ្របានមុនពេលយារ។'),
+      bi('Repair challenge. Straighten a torn cardboard box corner, fold a scrap of cardboard around it and tape it in place. Compare it with an unpatched torn corner under the same small load. What else besides the patch might change your result?', 'លំហាត់ជួសជុល៖ តម្រង់ជ្រុងប្រអប់កាតុងដែលរហែក បត់បំណែកកាតុងមួយឱបជ្រុងនោះ ហើយបិទស្កុតឱ្យជាប់។ ដាក់ទម្ងន់តិចដូចគ្នា លើជ្រុងដែលបានជួសជុល និងជ្រុងរហែកដែលមិនបានជួសជុល រួចប្រៀបធៀប។ តើមានអ្វីផ្សេងទៀតដែលអាចប៉ះពាល់ដល់លទ្ធផល?'),
       bi('Estimate the material cost per usable item. If you plan to sell it, consult the KhmerSME guide about standards and licences for your product.', 'ប៉ាន់ស្មានថ្លៃវត្ថុធាតុដើមសម្រាប់ផលិតផលប្រើបានមួយឯកតា។ បើចង់លក់ សូមមើលមគ្គុទ្ទេសក៍ KhmerSME អំពីស្តង់ដារ និងអាជ្ញាបណ្ណសម្រាប់ផលិតផលនោះ។'),
     ],
     links: [
@@ -55,10 +55,11 @@ export const economy: MinistryGuide[] = [
     steps: [
       bi('Try an example household budget of 100,000 riel. Reserve 60,000 for essentials and 20,000 for emergencies. Decide how to use the remaining 20,000.', 'សាករៀបចំថវិកាគ្រួសារគំរូចំនួន ១០០ ០០០ រៀល។ ទុក ៦០ ០០០ រៀលសម្រាប់តម្រូវការចាំបាច់ និង ២០ ០០០ រៀលសម្រាប់គ្រាអាសន្ន។ សម្រេចថាត្រូវប្រើប្រាក់នៅសល់ ២០ ០០០ រៀលយ៉ាងដូចម្តេច។'),
       bi('Try a loan example with no fees. A 100,000 riel loan at 10% simple annual interest for one year costs 10,000 riel in interest. Mark when income arrives and instalments fall due to spot a cash shortfall.', 'សាកគណនាកម្ចីគំរូដែលគ្មានថ្លៃសេវា។ ប្រាក់កម្ចី ១០០ ០០០ រៀល ដែលមានការប្រាក់សាមញ្ញ ១០% ក្នុងមួយឆ្នាំ នឹងមានការប្រាក់ ១០ ០០០ រៀលសម្រាប់រយៈពេលមួយឆ្នាំ។ កត់ថ្ងៃទទួលចំណូល និងថ្ងៃត្រូវបង់សង ដើម្បីរកពេលដែលអាចខ្វះសាច់ប្រាក់។'),
-      bi('Open the Ministry’s Budget in Brief. Pick a table and record its year, unit and whether the figure describes planned revenue or expenditure.', 'បើកសៀវភៅថវិកាសង្ខេបរបស់ក្រសួង។ ជ្រើសតារាងមួយ ហើយកត់ឆ្នាំ ឯកតា និងថាតួលេខនោះជាចំណូលគ្រោងទុក ឬចំណាយគ្រោងទុក។'),
+      bi('Read the ministry and programme table for FY2026. The education ministry’s programme 02 has an approved allocation of 116,712 million riel, or 116.712 billion riel. Use the unit in the column definition to check that conversion.', 'អានតារាងថវិកាតាមក្រសួង និងកម្មវិធីសម្រាប់ឆ្នាំ២០២៦។ កម្មវិធីទី២ របស់ក្រសួងអប់រំ យុវជន និងកីឡា មានថវិកាអនុម័តចំនួន ១១៦ ៧១២ លានរៀល ឬ ១១៦ ប៊ីលាន និង ៧១២ លានរៀល។ ប្រើឯកតាក្នុងសេចក្តីពន្យល់ជួរឈរ ដើម្បីផ្ទៀងផ្ទាត់ការបម្លែងនេះ។'),
       bi('Choose one public service. Write what the plan tells you about its funding and what record would help you check actual spending or results.', 'ជ្រើសសេវាសាធារណៈមួយ។ កត់ថាផែនការបង្ហាញអ្វីខ្លះអំពីថវិកាសេវានោះ និងឯកសារអ្វីអាចជួយផ្ទៀងផ្ទាត់ចំណាយ ឬលទ្ធផលជាក់ស្តែង។'),
     ],
     links: [
+      { label: bi('FY2026 approved allocations by ministry and programme', 'ថវិកាអនុម័តតាមក្រសួង និងកម្មវិធី ឆ្នាំ២០២៦'), url: 'https://data.mef.gov.kh/datasets/pd_6880bfb23a4a460001a321ef' },
       { label: bi('Cambodia Budget in Brief FY2026', 'ថវិកាសង្ខេបកម្ពុជា ឆ្នាំ២០២៦'), url: 'https://data.mef.gov.kh/datasets/pd_699bfdf69eaed400071a6cbe' },
       { label: bi('Ministry of Economy and Finance annual budgets', 'ថវិកាប្រចាំឆ្នាំរបស់ក្រសួងសេដ្ឋកិច្ច និងហិរញ្ញវត្ថុ'), url: 'https://mef.gov.kh/documents-category/annual-budget/' },
     ],
@@ -81,7 +82,7 @@ export const economy: MinistryGuide[] = [
       bi('Build a half-day itinerary with travel time, water, a rest stop and the locally agreed price. Ask what would make the route accessible to the visitor.', 'រៀបចំកម្មវិធីកន្លះថ្ងៃ ដោយគិតពេលធ្វើដំណើរ ទឹកផឹក កន្លែងសម្រាក និងតម្លៃដែលសហគមន៍បានឯកភាព។ សួរថាតើត្រូវរៀបចំអ្វីខ្លះដើម្បីឱ្យភ្ញៀវអាចធ្វើដំណើរតាមផ្លូវនោះបាន។'),
     ],
     links: [
-      { label: bi('Chi Phat community guides and homestays, Koh Kong', 'មគ្គុទ្ទេសក៍ និងផ្ទះស្នាក់សហគមន៍ជីផាត ខេត្តកោះកុង'), url: 'https://chi-phat.org/' },
+      { label: bi('Chi Phat community guides and homestays, Koh Kong', 'មគ្គុទ្ទេសក៍ និងផ្ទះស្នាក់សហគមន៍ជីផាត ខេត្តកោះកុង'), url: 'https://www.chi-phat.org/' },
       { label: bi('Contact the Banteay Chhmar community tourism team', 'ទាក់ទងក្រុមទេសចរណ៍សហគមន៍បន្ទាយឆ្មារ'), url: 'https://www.visitbanteaychhmar.org/contact-us/' },
       { label: bi('Rokhak basket weaving workshop, Siem Reap', 'សិប្បកម្មត្បាញកន្ត្រក Rokhak ខេត្តសៀមរាប'), url: 'https://rokhak.org/' },
       { label: bi('Official Cambodia tourism handbook', 'សៀវភៅណែនាំទេសចរណ៍ផ្លូវការរបស់កម្ពុជា'), url: 'https://data.mef.gov.kh/datasets/pd_6a55e140e5154a0007a32e65' },
@@ -100,12 +101,13 @@ export const economy: MinistryGuide[] = [
     title: bi('Safe Travel and Transport Guide', 'មគ្គុទ្ទេសក៍សុវត្ថិភាពក្នុងការធ្វើដំណើរ និងដឹកជញ្ជូន'),
     benefit: bi('Students can discuss a familiar route with an adult and identify a difficult crossing. A clear description of a damaged road or missing sign gives maintenance staff a better starting point for inspection.', 'សិស្សអាចពិភាក្សាជាមួយមនុស្សពេញវ័យអំពីផ្លូវដែលធ្វើដំណើរញឹកញាប់ និងសម្គាល់កន្លែងដែលពិបាកឆ្លង។ ការពិពណ៌នាច្បាស់អំពីផ្លូវខូច ឬស្លាកសញ្ញាដែលបាត់ ជួយមន្ត្រីថែទាំកំណត់កន្លែងត្រូវចុះពិនិត្យ។'),
     steps: [
-      bi('Sketch a familiar trip. Mark a crossing or bend with poor visibility and another route or crossing point you could discuss with a trusted adult.', 'គូរផ្លូវដែលអ្នកស្គាល់។ សម្គាល់កន្លែងឆ្លង ឬផ្លូវកោងដែលមើលមិនសូវឃើញ ហើយរកផ្លូវ ឬកន្លែងឆ្លងផ្សេងមួយដើម្បីពិភាក្សាជាមួយមនុស្សពេញវ័យដែលទុកចិត្ត។'),
+      bi('Find the children-crossing sign in the ministry’s road-safety lesson. Sketch a school route with an adult and mark a crossing where parked vehicles or a bend could hide a pedestrian. Choose a crossing with a clear view in both directions.', 'រកស្លាកសញ្ញាកុមារឆ្លងកាត់ក្នុងមេរៀនសុវត្ថិភាពចរាចរណ៍របស់ក្រសួង។ គូរផ្លូវទៅសាលាជាមួយមនុស្សពេញវ័យ ហើយសម្គាល់កន្លែងឆ្លងដែលយានយន្តចត ឬផ្លូវកោងអាចបាំងអ្នកថ្មើរជើង។ ជ្រើសកន្លែងឆ្លងដែលអាចមើលឃើញច្បាស់ទាំងពីរទិស។'),
       bi('Before leaving, check that motorcycle riders and passengers have correctly fastened helmets, or that vehicle occupants have fastened their seat belts where fitted.', 'មុនចេញដំណើរ សូមពិនិត្យថាអ្នកបើកម៉ូតូ និងអ្នករួមដំណើរបានពាក់មួកសុវត្ថិភាព និងរឹតខ្សែត្រឹមត្រូវ ឬអ្នកជិះរថយន្តបានពាក់ខ្សែក្រវាត់សុវត្ថិភាពនៅកៅអីដែលមានខ្សែក្រវាត់។'),
       bi('For a trip in Phnom Penh, use the City Bus Authority route map to find the nearest stops at both ends. Check the route direction before boarding.', 'សម្រាប់ការធ្វើដំណើរនៅភ្នំពេញ ប្រើផែនទីខ្សែរត់របស់រដ្ឋាករស្វយ័តដឹកជញ្ជូនសាធារណៈរថយន្តក្រុង ដើម្បីរកចំណតក្បែរកន្លែងចេញដំណើរ និងកន្លែងត្រូវទៅដល់។ ពិនិត្យទិសដៅមុនឡើងរថយន្ត។'),
       bi('For a damaged road or sign, note the road name, a nearby landmark and the type of damage from a safe place. Use the ministry’s Road Care instructions for official reporting.', 'បើឃើញផ្លូវ ឬស្លាកសញ្ញាខូច សូមកត់ឈ្មោះផ្លូវ ទីតាំងងាយស្គាល់នៅក្បែរ និងប្រភេទការខូចខាតពីកន្លែងដែលមានសុវត្ថិភាព។ អនុវត្តតាមការណែនាំរបស់ក្រសួងអំពីកម្មវិធីថែទាំផ្លូវ ដើម្បីរាយការណ៍ជាផ្លូវការ។'),
     ],
     links: [
+      { label: bi('MPWT road-safety lesson on the children-crossing sign', 'មេរៀនសុវត្ថិភាពចរាចរណ៍របស់ក្រសួងអំពីស្លាកសញ្ញាកុមារឆ្លងកាត់'), url: 'https://mpwt.gov.kh/en/press/49500' },
       { label: bi('Phnom Penh City Bus Authority daily route map', 'ផែនទីខ្សែរត់ប្រចាំថ្ងៃរបស់រថយន្តក្រុងភ្នំពេញ'), url: 'https://citybus.phnompenh.gov.kh/en/daily' },
       { label: bi('MPWT Road Care reporting instructions', 'ការណែនាំរបស់ក្រសួងអំពីការរាយការណ៍តាមកម្មវិធីថែទាំផ្លូវ'), url: 'https://mpwt.gov.kh/en/press/30015' },
       { label: bi('Official driving licence and test guidance', 'ព័ត៌មានផ្លូវការអំពីបណ្ណបើកបរ និងការប្រឡង'), url: 'https://mpwt.gov.kh/en/public-services/driver-s-license' },

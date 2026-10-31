@@ -71,6 +71,10 @@ Exchange listings persist until rejected or removed by the owner. Room data is d
 - **Missing screen / old page**: refresh once after deployment. New APIs use `no-store`; the original service worker does not cache learning API responses.
 - **Rollback**: use Cloudflare Workers → khmerone → Deployments → select the previous working version. Do not delete the D1 database, R2 bucket or Durable Object namespace as part of rollback. A code rollback may need to retain the Durable Object class export; use Cloudflare's deployment rollback compatibility check. Keep the release ZIP and the earlier source backup.
 
+## Ministry archive
+
+The community culture archive uses the existing `LEARNING_DB` and `LEARNING_ADMIN_KEY`. Apply the additive `0003_culture_archive.sql` migration to the same database before releasing the archive. Submissions stay private until an editor approves them. Worksheets, the tool directory and private culture drafts work without these bindings.
+
 ## Reference documentation
 
 - [Azure short-audio REST API and pronunciation assessment](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/rest-speech-to-text-short)

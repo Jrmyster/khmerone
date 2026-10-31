@@ -5,6 +5,7 @@ import Link from "next/link";
 import { DecorativeImage as Image } from "@/components/shared/DecorativeImage";
 import { useRouter } from "next/navigation";
 import { ArrowUpRight, Baby, BookOpenText, Check, ClipboardCheck, Coins, Cpu, Globe2, GraduationCap, HeartPulse, Languages, Search, SlidersHorizontal, Sparkles, TriangleAlert, WifiOff, X, Zap, type LucideIcon } from "lucide-react";
+import { toolGroups, toolGroupId } from "@/lib/tool-groups";
 import { apps, gradeLabels } from "@/data/apps";
 import { crewConcepts, pathways } from "@/data/engagement";
 import { searchCrewConcepts, searchSkillPathways } from "@/utils/search";
@@ -57,14 +58,14 @@ const filters: { key: FilterKey; label: Record<Locale, string> }[] = [
 const copy = {
   en: {
     eyebrow: "FREE LEARNING. CAMBODIAN POSSIBILITIES.",
-    title: "Khmer One: Free Digital Education & STEM Tools for Cambodia",
-    intro: "Khmer One is a centralized, offline-ready educational portal delivering bilingual tools in STEM, health, computer engineering, financial literacy, and women's enterprise. Designed specifically for Cambodian teenagers, students, and educators to learn, build, and thrive.",
-    explore: "Explore Educational Apps", mission: "About the Mission",
+    title: "Khmer One educational and ministry tools for Cambodia",
+    intro: "Use Educational Tools to practise a subject or prepare a lesson. Open Ministry Tools to find Cambodian services, compare costs or plan a community project. Explore both in Khmer and English.",
+    mission: "About the Mission",
     missionBody: "Our mission is to make practical education easier to access across Cambodia. Khmer One brings specialized learning apps together in one place, so students and educators can discover a subject, practice a skill, and build something useful for their community.",
     missionOffline: "Look for the Offline ready badge in the directory to find tools that support learning without a connection.",
     search: "Search apps, words, stories or lessons", searchLabel: "Search Khmer One content",
     clear: "Clear search", grade: "Any grade level", browse: "Explore the network",
-    apps: "apps", app: "app", all: "All learning apps",
+    apps: "apps", app: "app", all: "Tool directory",
     empty: "No apps match your search.", reset: "Clear filters",
     offline: "Offline ready", launch: "Open app", pending: "Link pending",
     linkInfo: "A public link has not been added yet.",
@@ -81,14 +82,14 @@ const copy = {
   },
   km: {
     eyebrow: "ការសិក្សាឥតគិតថ្លៃ។ ឱកាសសម្រាប់កម្ពុជា។",
-    title: "ខ្មែរវ័ន៖ មជ្ឈមណ្ឌលសិក្សាឌីជីថល និងបច្ចេកវិទ្យាសម្រាប់យុវជនកម្ពុជា",
-    intro: "ខ្មែរវ័ន គឺជាច្រកទ្វារអប់រំឌីជីថលដែលផ្តល់នូវឧបករណ៍សិក្សាពីភាសា វិទ្យាសាស្ត្រ សុខភាព វិស្វកម្មកុំព្យូទ័រ និងការអប់រំអាជីវកម្ម។ ត្រូវបានបង្កើតឡើងជាពិសេសសម្រាប់សិស្សានុសិស្ស និងគ្រូបង្រៀននៅកម្ពុជា។",
-    explore: "ស្វែងរកកម្មវិធីសិក្សា", mission: "អំពីបេសកកម្ម",
+    title: "ខ្មែរ វ័ន · ឧបករណ៍អប់រំ និងឧបករណ៍តាមក្រសួងសម្រាប់កម្ពុជា",
+    intro: "ប្រើឧបករណ៍អប់រំដើម្បីអនុវត្តមុខវិជ្ជា ឬត្រៀមមេរៀន។ បើកឧបករណ៍តាមក្រសួងដើម្បីស្វែងរកសេវានៅកម្ពុជា ប្រៀបធៀបចំណាយ ឬរៀបចំគម្រោងសហគមន៍។ អ្នកអាចប្រើផ្នែកទាំងពីរជាភាសាខ្មែរ និងអង់គ្លេស។",
+    mission: "អំពីបេសកកម្ម",
     missionBody: "បេសកកម្មរបស់យើងគឺធ្វើឱ្យការអប់រំជាក់ស្ដែងកាន់តែងាយស្រួលទទួលបាននៅទូទាំងកម្ពុជា។ ខ្មែរវ័ន ប្រមូលផ្ដុំកម្មវិធីសិក្សាជំនាញនៅកន្លែងតែមួយ ដើម្បីឱ្យសិស្ស និងគ្រូបង្រៀនអាចស្វែងយល់មុខវិជ្ជា អនុវត្តជំនាញ និងបង្កើតអ្វីដែលមានប្រយោជន៍សម្រាប់សហគមន៍។",
     missionOffline: "សូមរកមើលស្លាក «អាចប្រើក្រៅបណ្ដាញ» ក្នុងបញ្ជីកម្មវិធី ដើម្បីស្វែងរកឧបករណ៍ដែលគាំទ្រការសិក្សាដោយគ្មានអ៊ីនធឺណិត។",
     search: "ស្វែងរកកម្មវិធី ប្រធានបទ ឬកម្រិតថ្នាក់", searchLabel: "ស្វែងរកកម្មវិធីសិក្សា",
     clear: "លុបពាក្យស្វែងរក", grade: "គ្រប់កម្រិតថ្នាក់", browse: "ស្វែងយល់ពីបណ្ដាញ",
-    apps: "កម្មវិធី", app: "កម្មវិធី", all: "កម្មវិធីសិក្សាទាំងអស់",
+    apps: "កម្មវិធី", app: "កម្មវិធី", all: "បញ្ជីឧបករណ៍",
     empty: "រកមិនឃើញកម្មវិធីដែលត្រូវនឹងការស្វែងរកទេ។", reset: "លុបតម្រង",
     offline: "អាចប្រើក្រៅបណ្ដាញ", launch: "បើកកម្មវិធី", pending: "រង់ចាំតំណ",
     linkInfo: "មិនទាន់មានតំណសាធារណៈទេ។",
@@ -247,18 +248,13 @@ export default function Home() {
             <p>{t.intro}</p>
             <ul className="hero-badges">{heroBadges.map((badge) => <li key={badge.en}><span aria-hidden="true">{badge.symbol}</span><span>{badge[locale]}</span></li>)}</ul>
             <div className="hero-actions">
-              <a className="hero-primary" href="#apps">{t.explore}<ArrowUpRight size={18} aria-hidden="true" /></a>
+              <a className="hero-primary" href="#educational-tools" onClick={reset}>{toolGroups[0].title[locale]}<ArrowUpRight size={18} aria-hidden="true" /></a>
+              <a className="hero-secondary" href="#ministry-tools" onClick={reset}>{toolGroups[1].title[locale]}</a>
               <a className="hero-secondary" href="#mission">{t.mission}</a>
             </div>
           </div>
         </div>
       </section>
-
-      <PowerSkillsDashboard locale={locale} progress={cyber.progress} status={cyber.status} ready={cyber.ready} onToggleStep={cyber.toggleStep} onExploreApp={cyber.exploreApp} />
-      <KhmerHistoryGuideCard locale={locale} onExploreApp={cyber.exploreApp} />
-      <CrewDirectory locale={locale} selectedId={cyber.progress.crewInterestId} onSelect={cyber.selectCrew} />
-
-      <DengueHealthNotice locale={locale} />
 
       <section id="directory" className="directory wrap" aria-labelledby="directory-title">
         <span id="apps" className="section-anchor" aria-hidden="true" />
@@ -287,17 +283,31 @@ export default function Home() {
           {crewMatches.length > 0 && <div><h3>{t.matchingCrews}</h3><div className="related-search-links">{crewMatches.map((crew) => <a href={`#crew-${crew.id}`} key={crew.id}>{crew.title[locale]} <ArrowUpRight size={15} aria-hidden="true" /></a>)}</div></div>}
         </div>}
         {query.trim() && <section className="site-search-inline" data-search-surface aria-label={locale === 'en' ? 'Matching content' : 'មាតិកាត្រូវគ្នា'}><h2>{locale === 'en' ? 'Words, lessons & pages' : 'ពាក្យ មេរៀន និងទំព័រ'}</h2><SearchResourceStatus status={publishedSearch.status} locale={locale}/><SearchResults key={query + filter + grade} results={contentMatches} query={query} locale={locale} preview/><a className="site-search-more" href={`/search?q=${encodeURIComponent(query)}`}>{locale === 'en' ? 'Search everything in Khmer One' : 'ស្វែងរកក្នុងខ្មែរ វ័នទាំងមូល'} <ArrowUpRight size={16}/></a></section>}
-        {results.length ? <div className="app-grid">{results.map((app, index) => {
-          const Icon = icons[app.icon];
-          return <article className="app-card" key={app.id}>
-            <div className="card-top"><span className={`app-icon icon-${app.icon}`}><Icon size={28} strokeWidth={1.8} aria-hidden="true" /></span><span className="card-number">{String(index + 1).padStart(2, "0")}</span></div>
-            <div className="card-content"><span className="category-label">{app.categoryLabel[locale]}</span><h3>{app.title[locale]}</h3><p className="card-tagline">{app.tagline[locale]}</p><p className="card-description">{app.description[locale]}</p></div>
-            <div className="card-meta"><div className="grade-badges">{app.gradeBadge ? <span className="grade-badge">{app.gradeBadge[locale]}</span> : app.grades.map((g) => <span className="grade-badge" key={g}>{gradeLabels[g][locale]}</span>)}</div><div className="card-status">{app.offlineReady && <span className="offline-status"><WifiOff size={14} />{t.offline}</span>}</div></div>
-            {app.notice && <aside className="health-notice" aria-label={t.healthNotice}><TriangleAlert size={18} aria-hidden="true" /><div><strong>{t.healthNotice}</strong><p>{app.notice[locale]}</p></div></aside>}
-            <div className="card-bottom">{app.url ? <a className="launch-button" href={app.url} target="_blank" rel="noopener noreferrer" onClick={() => cyber.exploreApp(app.id)} aria-label={`${t.launch}: ${app.title[locale]}`}>{t.launch}<ArrowUpRight size={18} aria-hidden="true" /></a> : <span className="pending-button" title={t.linkInfo} aria-label={`${app.title[locale]}: ${t.linkInfo}`}>{t.pending}</span>}</div>
-          </article>;
-        })}</div> : showRelatedSearch || contentMatches.length > 0 ? <p className="related-only-note">{t.noAppMatches}</p> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>}
+        {toolGroups.map(group => {
+          const cards = results.filter(app => toolGroupId(app.url) === group.id);
+          return <section key={group.id} id={group.id} className={cards.length ? "tool-directory-group" : "tool-directory-group group-empty"} aria-labelledby={group.id + "-title"}>
+            <header><h3 id={group.id + "-title"}>{group.title[locale]}</h3><p>{group.description[locale]}</p></header>
+            {!cards.length && <p>{t.empty} <button onClick={reset}>{t.reset}</button></p>}
+            <div className="app-grid">{cards.map((app, index) => {
+              const Icon = icons[app.icon];
+              return <article className="app-card" key={app.id}>
+                <div className="card-top"><span className={`app-icon icon-${app.icon}`}><Icon size={28} strokeWidth={1.8} aria-hidden="true" /></span><span className="card-number">{String(index + 1).padStart(2, "0")}</span></div>
+                <div className="card-content"><span className="category-label">{app.categoryLabel[locale]}</span><h4>{app.title[locale]}</h4><p className="card-tagline">{app.tagline[locale]}</p><p className="card-description">{app.description[locale]}</p></div>
+                <div className="card-meta"><div className="grade-badges">{app.gradeBadge ? <span className="grade-badge">{app.gradeBadge[locale]}</span> : app.grades.map((g) => <span className="grade-badge" key={g}>{gradeLabels[g][locale]}</span>)}</div><div className="card-status">{app.offlineReady && <span className="offline-status"><WifiOff size={14} />{t.offline}</span>}</div></div>
+                {app.notice && <aside className="health-notice" aria-label={t.healthNotice}><TriangleAlert size={18} aria-hidden="true" /><div><strong>{t.healthNotice}</strong><p>{app.notice[locale]}</p></div></aside>}
+                <div className="card-bottom">{app.url ? <a className="launch-button" href={app.url} target="_blank" rel="noopener noreferrer" onClick={() => cyber.exploreApp(app.id)} aria-label={`${t.launch}: ${app.title[locale]}`}>{t.launch}<ArrowUpRight size={18} aria-hidden="true" /></a> : <span className="pending-button" title={t.linkInfo} aria-label={`${app.title[locale]}: ${t.linkInfo}`}>{t.pending}</span>}</div>
+              </article>;
+            })}</div>
+          </section>;
+        })}
+        {!results.length && (showRelatedSearch || contentMatches.length > 0 ? <p className="related-only-note">{t.noAppMatches}</p> : <div className="empty-state"><Search size={27} /><p>{t.empty}</p><button onClick={reset}>{t.reset}</button></div>)}
       </section>
+
+      <PowerSkillsDashboard locale={locale} progress={cyber.progress} status={cyber.status} ready={cyber.ready} onToggleStep={cyber.toggleStep} onExploreApp={cyber.exploreApp} />
+      <KhmerHistoryGuideCard locale={locale} onExploreApp={cyber.exploreApp} />
+      <CrewDirectory locale={locale} selectedId={cyber.progress.crewInterestId} onSelect={cyber.selectCrew} />
+
+      <DengueHealthNotice locale={locale} />
       <section id="mission" className="mission-section wrap" aria-labelledby="mission-title">
         <div className="mission-card">
           <span className="mission-icon" aria-hidden="true"><GraduationCap size={28} /></span>

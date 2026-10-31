@@ -11,15 +11,41 @@ const files=['index.js',...readdirSync(root,{recursive:true}).filter(f=>/\.(m?js
 const mf=new Miniflare({modules:files.map(f=>({type:'ESModule',path:resolve(root,f)})),modulesRoot:root,compatibilityDate:'2026-05-15',compatibilityFlags:['nodejs_compat'],durableObjects:{QUIZ_ROOMS:{className:'QuizRoom',useSQLite:true}}});
 const pages={'/typing':'Keyboard Garden','/':'KHMER ONE','/search':'Search Khmer One','/teacher-toolkit':'toolkit-output','/computer-engineering':'ce-gate','/feedback-inbox':'Feedback inbox','/learning':'Small discoveries.','/learning/dictionary':'Talking STEM Dictionary','/learning/speaking':'English Speaking Practice','/learning/quiz-maker':'Listening Quiz Maker','/learning/stories':'Bilingual Story Library','/learning/announcements':'School Announcement Maker','/learning/translation':'Lesson Translation Workbench','/learning/live-quiz':'Live Classroom Quiz','/learning/exchange':'School Connect Exchange','/teacher-audio':'teacher-audio-shell'};
 try{
+ const home = await (await mf.dispatchFetch('https://khmerone.test/')).text();
+ const catalog = await (await mf.dispatchFetch('https://khmerone.test/api/catalog')).json();
+ const appCount = (html) => (html.match(/<article class="app-card"/g) || []).length;
+ for (const group of ['educational-tools', 'ministry-tools']) {
+   const start = home.indexOf('<section id="' + group + '"');
+   assert.ok(start >= 0, group);
+   const section = home.slice(start, home.indexOf('</section>', start));
+   const apps = catalog.apps.filter(app => app.group === group);
+   assert.ok(apps.length && appCount(section) === apps.length, group + ' count');
+   for (const app of apps) {
+     if (app.url) assert.ok(section.includes('href="' + app.url.replaceAll('&', '&amp;') + '"'), app.id);
+   }
+ }
+ assert.equal(appCount(home), catalog.apps.length);
+ console.log('PASS every catalog app has one homepage group');
  const directory = await mf.dispatchFetch('https://khmerone.test/ministries');
  assert.equal(directory.status, 200);
  const directoryHtml = await directory.text();
  const guideRoutes = [...new Set(Array.from(directoryHtml.matchAll(/href="(\/ministries\/[a-z-]+)"/g), match => match[1]))];
  assert.equal(guideRoutes.length, 18);
+ const cards = Array.from(directoryHtml.matchAll(/<a class="mg-card" href="([^"]+)"/g), match => match[1]);
+ assert.equal(new Set(cards).size, 24);
+ for (const route of ['/posts-and-telecommunications', '/interior', '/inspection', '/international-services', '/community-safety', '/public-services']) assert.ok(cards.includes(route), route);
+ const guideTools = {
+   education: ['id="local-map"', 'Tasiem Primary School'], health: ['Download calendar reminder'], labour: ['Cambodia Airports'],
+   culture: ['id="community-archive"'], 'farmer-learning': ['id="sheet-market"', 'id="sheet-season"'],
+   'village-infrastructure': ['id="sheet-repairs"', 'id="local-map"'], 'weather-and-water': ['id="official-weather"', 'warninginfo.php'],
+   'waste-repair-nature': ['id="sheet-cleanup"'], 'household-energy': ['id="sheet-solar"'], 'small-business': ['id="sheet-stock"', 'id="sheet-cash"'],
+   'money-and-public-budgets': ['id="sheet-cash"'], 'community-tourism': ['Chi Phat'], 'safe-travel-and-transport': ['id="road-report"'],
+ };
  for (const route of guideRoutes) {
    const guide = await mf.dispatchFetch('https://khmerone.test' + route + '?lang=en');
    assert.equal(guide.status, 200, route);
    const html = await guide.text();
+   for (const marker of guideTools[route.split('/').at(-1)] ?? []) assert.ok(html.includes(marker), route + ' ' + marker);
    if (route.endsWith('/housing-and-land')) assert.ok(html.includes('id="document-checklist"'));
    if (route.endsWith('/weather-and-water')) assert.ok(html.includes('Stored water (L)'));
    for (const marker of ['id="worksheet"', 'Sources and tools', 'Save guide for offline reading']) assert.ok(html.includes(marker), route + ' ' + marker);

@@ -126,6 +126,9 @@ export const community: MinistryGuide[] = [
       bi('Use the price per kWh from your bill for an energy-cost estimate. Try fewer hours or a different appliance rating. Actual bills can include other charges and rates.', 'ប្រើតម្លៃក្នុងមួយគីឡូវ៉ាត់ម៉ោងពីវិក្កយបត្ររបស់អ្នក ដើម្បីប៉ាន់ប្រមាណថ្លៃថាមពល។ សាកកាត់បន្ថយម៉ោង ឬប្ដូរចំនួនវ៉ាត់។ វិក្កយបត្រជាក់ស្តែងអាចមានថ្លៃផ្សេងទៀត និងអត្រាផ្សេងៗ។'),
     ],
     links: [
+      { label: bi('Ministry rooftop solar application guidance', 'ការណែនាំរបស់ក្រសួងសម្រាប់ដាក់ពាក្យដំឡើងសូឡាលើដំបូល'), url: 'https://mme.gov.kh/strategic-sectors/energy/permits-and-registrations/rooftop-solar-application' },
+      { label: bi('Check energy professional registration requirements', 'ពិនិត្យលក្ខខណ្ឌចុះបញ្ជីអ្នកជំនាញថាមពល'), url: 'https://mme.gov.kh/strategic-sectors/energy/permits-and-registrations/energy-professional-registration' },
+      { label: bi('Find clean energy businesses and verify credentials with their issuer', 'ស្វែងរកអាជីវកម្មថាមពលស្អាត រួចផ្ទៀងផ្ទាត់វិញ្ញាបនបត្រជាមួយស្ថាប័នចេញ'), url: 'https://cleanenergycambodia.org/cleanenergyorg' },
       { label: bi('Ministry energy efficiency policies and appliance standards', 'គោលនយោបាយប្រសិទ្ធភាពថាមពល និងស្តង់ដារឧបករណ៍'), url: 'https://mme.gov.kh/strategic-sectors/energy/recent-legislations-and-regulations' },
     ],
     prompts: [

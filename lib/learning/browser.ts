@@ -9,7 +9,7 @@ export async function api<T>(path: string, body?: unknown, token?: string, respo
             const e = await res.json().catch(() => ({ error: 'service_failed' })) as {
                 error: string;
             };
-            throw new Error(errorMessages[e.error] || `Request could not finish (${res.status}). Please try again.`);
+            throw new Error(errorMessages[e.error] || `Request could not finish (${res.status}). Please try again.`, { cause: e.error });
         }
         return (responseType === 'blob' || res.headers.get('Content-Type')?.startsWith('audio/') ? await res.blob() : await res.json()) as T;
     }

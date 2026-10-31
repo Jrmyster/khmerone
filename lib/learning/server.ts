@@ -1,3 +1,5 @@
+import { cultureRead, cultureWrite } from '../ministry-tools/culture.ts';
+import { readOfficialForecast } from '../ministry-tools/weather.ts';
 import { feedbackRead, feedbackWrite, feedbackResolve } from './feedback.ts';
 import { isText, isResource, isQuiz, voices } from './contracts.ts';
 import { json, readJson, sameOrigin, requireEditor, HttpError, digest, randomToken, readBytes } from './http.ts';
@@ -42,8 +44,10 @@ export async function handleLearning(request: Request, env: LearningEnv, fetcher
     try {
         const url = new URL(request.url), path = url.pathname.replace(/^\/api\/learning\/?/, '');
         sameOrigin(request);
+        if (path === 'weather/phnom-penh' && request.method === 'GET') return await readOfficialForecast(fetcher);
         if (path === 'status' && request.method === 'GET')
             return json({ speech: !!(env.AZURE_SPEECH_KEY && env.AZURE_SPEECH_REGION && env.LEARNING_RATE_LIMITER), translation: !!(env.AZURE_TRANSLATOR_KEY && env.AZURE_TRANSLATOR_REGION && env.LEARNING_RATE_LIMITER), rooms: !!(env.QUIZ_ROOMS && env.LEARNING_RATE_LIMITER && env.ROOM_RATE_LIMITER), exchange: !!env.LEARNING_DB, uploads: !!(env.LEARNING_DB && env.LEARNING_FILES), editor: !!(env.LEARNING_ADMIN_KEY && env.LEARNING_ADMIN_KEY.length >= 32) });
+        if (path === 'culture' && request.method === 'GET') return await cultureRead(request,env.LEARNING_DB,env.LEARNING_ADMIN_KEY);
         if (path === 'feedback' && request.method === 'GET') return await feedbackRead(request, env.LEARNING_DB, env.LEARNING_ADMIN_KEY);
         if (path.startsWith('rooms/')) {
             if (!env.QUIZ_ROOMS)
@@ -109,6 +113,7 @@ export async function handleLearning(request: Request, env: LearningEnv, fetcher
             throw new HttpError(405, 'method_not_allowed');
         await paid(request, env);
         const b = object(await readJson(request, path === 'assess' || path === 'files' ? 3000000 : path === 'rooms' ? 100000 : 24000));
+        if (path.startsWith('culture/')) return await cultureWrite(path.slice('culture/'.length),request,b,env.LEARNING_DB,env.LEARNING_ADMIN_KEY);
         if (path === 'feedback') return await feedbackWrite(b, env.LEARNING_DB);
         if (path === 'feedback/resolve') return await feedbackResolve(request, b, env.LEARNING_DB, env.LEARNING_ADMIN_KEY);
         if (path === 'speech') {

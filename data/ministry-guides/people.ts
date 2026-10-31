@@ -36,7 +36,6 @@ export const people: MinistryGuide[] = [
     links: [
       { label: bi('Ministry of Health hospital links', 'តំណមន្ទីរពេទ្យរបស់ក្រសួងសុខាភិបាល'), url: 'https://moh.gov.kh/' },
       { label: bi('NSSF contracted facilities (PDF)', 'បញ្ជីមូលដ្ឋានសុខាភិបាលរបស់ ប.ស.ស. (PDF)'), url: 'https://www.nssf.gov.kh/wp-content/uploads/2016/09/en.pdf' },
-      { label: bi('What is diabetes? Khmer audio from Harborview Medical Center', 'តើជំងឺទឹកនោមផ្អែមជាអ្វី? សំឡេងជាភាសាខ្មែរពីមជ្ឈមណ្ឌលវេជ្ជសាស្ត្រ Harborview'), url: 'https://ethnomed.org/resource/what-is-diabetes/' },
       { label: bi('National Maternal and Child Health Center educational videos', 'វីដេអូអប់រំរបស់មជ្ឈមណ្ឌលជាតិគាំពារមាតា និងទារក'), url: 'https://nmchc.moh.gov.kh/en/category/iec-materials-videos/' },
       { label: bi('Mother and child health handbook', 'សៀវភៅអប់រំសុខភាពមាតា និងកុមារ'), url: 'https://nmchc.gov.kh/en/mother-and-child-health-educational-hand-book/' },
     ],

@@ -12,9 +12,30 @@ test('real workerd: two-player room isolation, D1 moderation, private R2 files, 
  const temp=await mkdtemp(join(tmpdir(),'khmerone-learning-'));const outfile=join(temp,'worker.mjs');await build({entryPoints:['tests/learning/runtime-entry.ts'],bundle:true,format:'esm',target:'es2022',outfile});
  const mf=new Miniflare({modules:true,modulesRoot:temp,scriptPath:outfile,compatibilityDate:'2026-05-15',compatibilityFlags:['nodejs_compat'],durableObjects:{QUIZ_ROOMS:{className:'QuizRoom',useSQLite:true}},d1Databases:['LEARNING_DB'],r2Buckets:['LEARNING_FILES'],bindings:{LEARNING_ADMIN_KEY:secret,AZURE_SPEECH_KEY:'runtime-test-key',AZURE_SPEECH_REGION:'southeastasia'}});
  t.after(async()=>{await mf.dispose();await rm(temp,{recursive:true,force:true});});
- const db=await mf.getD1Database('LEARNING_DB');const schema=await readFile('migrations/0001_learning.sql','utf8');for(const sql of schema.split(';').filter(s=>s.trim()))await db.prepare(sql).run();
- const feedbackSchema=await readFile('migrations/0002_feedback.sql','utf8');for(const sql of feedbackSchema.split(';').filter(s=>s.trim()))await db.prepare(sql).run();
+ const db=await mf.getD1Database('LEARNING_DB');
+ for(const name of ['0001_learning.sql','0002_feedback.sql','0003_culture_archive.sql']) {
+  const schema=await readFile('migrations/'+name,'utf8');
+  for(const sql of schema.split(';').filter(s=>s.trim())) await db.prepare(sql).run();
+ }
  const call=(path,body,token)=>mf.dispatchFetch('https://khmerone.test/api/learning/'+path,{method:body===undefined?'GET':'POST',headers:{'Content-Type':'application/json',Origin:'https://khmerone.test',...(token?{Authorization:`Bearer ${token}`}:{})},body:body===undefined?undefined:JSON.stringify(body)});
+ const entry = {id:crypto.randomUUID(),managementKey:crypto.randomUUID(),consent:true,title:'Rice harvest song',kind:'music',region:'Battambang',credit:'Village ensemble',story:'We sing this verse at the start of the harvest.',url:'',reuse:'view'};
+ assert.equal((await call('culture/submit',{...entry,consent:false})).status,400);
+ assert.equal((await call('culture/submit',entry)).status,201);
+ assert.equal((await call('culture/submit',entry)).status,200);
+ assert.deepEqual((await (await call('culture')).json()).items,[]);
+ assert.equal((await call('culture?review=1')).status,401);
+ const queue=(await (await call('culture?review=1',undefined,secret)).json()).items;
+ assert.equal(queue.length,1); assert.equal(queue[0].title,entry.title); assert.equal(queue[0].managementKey,undefined);
+ assert.equal((await call('culture/moderate',{id:entry.id,decision:'approve'})).status,401);
+ assert.equal((await call('culture/moderate',{id:entry.id,decision:'approve'},secret)).status,200);
+ const publishedCulture=(await (await call('culture')).json()).items;
+ assert.equal(publishedCulture[0].credit,entry.credit); assert.equal(publishedCulture[0].reuse,'view');
+ assert.equal((await call('culture/withdraw',{id:entry.id,managementKey:crypto.randomUUID()})).status,404);
+ assert.equal((await call('culture/withdraw',{id:entry.id,managementKey:entry.managementKey})).status,200);
+ assert.deepEqual((await (await call('culture')).json()).items,[]);
+ assert.equal((await call('culture/moderate',{id:entry.id,decision:'approve'},secret)).status,409);
+ assert.equal((await call('culture/submit',entry)).status,409);
+ assert.equal((await db.prepare('SELECT entry FROM culture_entries WHERE id=?').bind(entry.id).first()).entry,null);
  const report={id:crypto.randomUUID(),category:'translation',page:'/learning/dictionary?term=stem-1',message:'Please check the Khmer definition.'};
  assert.equal((await call('feedback',report)).status,201);
  assert.equal((await call('feedback',report)).status,201);

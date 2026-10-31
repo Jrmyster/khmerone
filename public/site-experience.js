@@ -22,10 +22,16 @@
     sync(low);
     toggle.addEventListener('click', () => { sync(!low); try { localStorage.setItem('khmerone-low-data', String(low)); } catch { note.hidden = false; note.textContent = 'Preference applies to this page. Browser storage is unavailable.'; } });
     window.addEventListener('storage', e => { if (e.key === 'khmerone-low-data') sync(e.newValue === 'true'); });
-    shell.querySelectorAll('a').forEach(a => { if (new URL(a.href).pathname === location.pathname) a.setAttribute('aria-current', 'page'); });
-    const details = shell.querySelector('details');
-    document.addEventListener('click', e => { if (!details.contains(e.target)) details.open = false; });
-    details.addEventListener('keydown', e => { if (e.key === 'Escape') { details.open = false; details.querySelector('summary').focus(); } });
+    shell.querySelectorAll('a').forEach(a => { if (!a.hash && new URL(a.href).pathname === location.pathname) a.setAttribute('aria-current', 'page'); });
+    const menus = shell.querySelectorAll('details.ko-tools');
+    document.addEventListener('click', event => {
+      for (const menu of menus) if (!menu.contains(event.target) || (event.target instanceof Element && event.target.closest('a'))) menu.open = false;
+    });
+    for (const menu of menus) {
+      menu.addEventListener('keydown', event => {
+        if (event.key === 'Escape') { menu.open = false; menu.querySelector('summary').focus(); }
+      });
+    }
     const dialog = shell.querySelector('dialog'), form = dialog.querySelector('form');
     const result = shell.querySelector('[data-ko-result]'), submit = shell.querySelector('[data-ko-submit]');
     let requestId = '', fingerprint = '';

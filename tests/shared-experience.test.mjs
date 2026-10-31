@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { matchingReview } from '../lib/content-review.ts';
 import { handleLearning } from '../lib/learning/server.ts';
 import { validateFeedback } from '../lib/learning/feedback.ts';
+import { toolGroups, toolGroupId } from '../lib/tool-groups.ts';
 import { builtInTools, siteNavigationHtml } from '../lib/site-navigation.ts';
 import { readFileSync } from 'node:fs';
 test('review is tied to exact text and an identified teacher/date',()=>{
@@ -24,6 +25,17 @@ test('all built-in tools share native navigation with the standalone lab',()=>{
  const html=readFileSync('public/engine-lab.html','utf8');assert.ok(html.includes(siteNavigationHtml));
  for(const [, ,url] of builtInTools)assert.ok(siteNavigationHtml.includes(`href="${url}"`));
  assert.ok(siteNavigationHtml.includes('href="/"'));
+ const menus = Array.from(siteNavigationHtml.matchAll(/<details class="ko-tools"[^>]*>([\s\S]*?)<\/details>/g), m => m[1]);
+ assert.equal(menus.length, 2);
+ for (const [index, group] of toolGroups.entries()) {
+   assert.ok(menus[index].includes(group.title.en) && menus[index].includes(group.title.km));
+   assert.ok(menus[index].includes('href="/#' + group.id + '"'));
+   for (const [, , route] of group.tools) {
+     assert.equal(toolGroupId(route), group.id);
+     assert.ok(menus[index].includes('href="' + route + '"') && !menus[1-index].includes('href="' + route + '"'));
+   }
+ }
+ assert.equal(toolGroupId('/ministries/education'), 'ministry-tools');
 });
 
 test('feedback rejects cross-origin and rate-limited submissions before storage',async()=>{

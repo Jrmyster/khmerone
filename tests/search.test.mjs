@@ -76,6 +76,15 @@ test('all STEM definitions/examples and complete stories are indexed in both lan
   }
 });
 
+test('the two tool groups can be found by their English and Khmer names', () => {
+  for (const [id, en, km] of [
+    ['educational-tools', 'Educational Tools', 'ឧបករណ៍អប់រំ'],
+    ['ministry-tools', 'Ministry Tools', 'ឧបករណ៍តាមក្រសួង'],
+  ]) {
+    for (const query of [en, km]) assert.ok(searchSite(query).some(result => result.href === '/#' + id));
+  }
+});
+
 test('exact titles rank before incidental mentions and body-only words produce direct links', () => {
   assert.equal(searchSite('cell')[0].id, 'term-stem-1');
   assert.equal(searchSite('python')[0].id, 'code-python');

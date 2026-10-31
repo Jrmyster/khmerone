@@ -7,7 +7,19 @@ import type { MinistryGuide } from '@/data/ministry-guides/types';
 import type { Locale } from '@/types/app';
 import { CalculatorPanel } from './Calculators';
 import { LandChecklist, CvDraft, BudgetChart } from './Activity';
+import { RoadReport } from './RoadReport';
 import { LocalMap } from './LocalMap';
+import { RecordSheet } from './RecordSheet';
+import { CultureArchive } from './CultureArchive';
+import { WeatherPanel } from './WeatherPanel';
+import type { SheetKey } from '@/lib/ministry-tools/records';
+import type { DirectoryEntry } from '@/data/ministry-guides/directory';
+import type { LearningResource } from '@/data/ministry-guides/peopleResources';
+import type { VerifiedPlace } from '@/data/ministry-guides/verifiedPlaces';
+
+const recordsByMinistry: Partial<Record<number, SheetKey[]>> = {
+  8: ['market', 'season'], 9: ['repairs'], 11: ['cleanup'], 12: ['solar'], 14: ['stock', 'cash'], 15: ['cash'],
+};
 
 function CalendarReminder({ lang }: { lang: Locale }) {
   const [day, setDay] = useState('');
@@ -28,8 +40,8 @@ function CalendarReminder({ lang }: { lang: Locale }) {
   </section>;
 }
 
-type DirectoryEntry = Pick<MinistryGuide, 'n' | 'slug' | 'title' | 'ministry' | 'benefit'>;
-export function Ministries({ guide, directory = [], initialLang = 'km' }: { guide?: MinistryGuide; directory?: DirectoryEntry[]; initialLang?: Locale }) {
+type Props = { guide?: MinistryGuide; directory?: DirectoryEntry[]; initialLang?: Locale; resources?: LearningResource[]; places?: VerifiedPlace[] };
+export function Ministries({ guide, directory = [], initialLang = 'km', resources = [], places = [] }: Props) {
   const [lang, setLang] = useState<Locale>(initialLang);
   const [query, setQuery] = useState('');
   const [notes, setNotes] = useState<Record<number, string>>({});
@@ -41,6 +53,8 @@ export function Ministries({ guide, directory = [], initialLang = 'km' }: { guid
     const sections = [
       {title: item.ministry[lang], text:item.benefit[lang]},
       {title:t('Steps', 'ជំហាន'), text:item.steps.map((s, i) => (i + 1) + '. ' + s[lang]).join('\n')},
+      ...resources.map(r => ({ title: r.title[lang], text: r.detail[lang] + '\n' + r.url })),
+      ...places.map(p => ({ title: p.title[lang], text: [p.detail[lang], p.lat + ', ' + p.lon, p.checked, p.url].join('\n') })),
       ...item.prompts.map((p, i) => ({title:p[lang], text:notes[i] || '________________'})),
       {title:t('Sources and tools', 'ប្រភព និងឧបករណ៍'), text:item.links.map(link => link.label[lang] + '\n' + new URL(link.url, location.origin).href).join('\n\n')},
     ];
@@ -70,10 +84,20 @@ export function Ministries({ guide, directory = [], initialLang = 'km' }: { guid
         </details>
       </section>
       <section className="mg-box"><h2>{t('Sources and tools', 'ប្រភព និងឧបករណ៍')}</h2>
-        <div className="gs-links">{guide.links.map(link => <a key={link.url} href={link.url}>{link.label[lang]} →</a>)}</div>
+        <div className="gs-links">{guide.links.map(link => <a key={link.url} href={link.url} referrerPolicy="no-referrer">{link.label[lang]} →</a>)}</div>
       </section>
       {[10,12,14,15].includes(guide.n) && <CalculatorPanel n={guide.n} lang={lang} />}
-      {[9,11].includes(guide.n) && <LocalMap lang={lang} />}
+      {resources.length > 0 && <section className="mg-box"><h2>{guide.n === 16 ? t('Plan a visit with a local operator', 'រៀបចំដំណើរជាមួយប្រតិបត្តិករក្នុងមូលដ្ឋាន') : t('Resources you can use', 'ធនធានដែលអ្នកអាចប្រើបាន')}</h2>
+        <div className="mg-resource-list">{resources.map(resource => <article key={resource.url + resource.title.en}>
+          <h3>{resource.title[lang]}</h3>{resource.detail[lang].split('\n\n').map((part, index) => <p key={index}>{part}</p>)}
+          <a href={resource.url} referrerPolicy="no-referrer">{resource.label[lang]} →</a>
+        </article>)}</div>
+      </section>}
+      {[1,9,11].includes(guide.n) && <LocalMap lang={lang} places={places} />}
+      {recordsByMinistry[guide.n]?.map(kind => <RecordSheet key={kind} kind={kind} lang={lang} />)}
+      {guide.n === 6 && <CultureArchive lang={lang} />}
+      {guide.n === 10 && <WeatherPanel lang={lang} />}
+      {guide.n === 17 && <RoadReport lang={lang} />}
       {guide.n === 18 && <LandChecklist lang={lang} />}
       {guide.n === 15 && <BudgetChart lang={lang} />}
       {guide.n === 5 && <CvDraft lang={lang} />}
@@ -90,14 +114,14 @@ export function Ministries({ guide, directory = [], initialLang = 'km' }: { guid
           <button disabled={!Object.values(notes).some(Boolean)} onClick={() => setNotes({})}>{t('Clear notes', 'សម្អាតកំណត់ត្រា')}</button></div>
       </section>
     </> : <>
-      <section className="mg-intro"><p className="gs-eyebrow">KHMER ONE · 01–18</p>
-        <h1>{t('Ministry guides', 'មគ្គុទ្ទេសក៍តាមក្រសួង')}</h1>
-        <p>{t('Choose a guide to find a service, practise a skill or prepare a community project. Each guide includes a worksheet you can use on paper.', 'ជ្រើសរើសមគ្គុទ្ទេសក៍ដើម្បីស្វែងរកសេវា អនុវត្តជំនាញ ឬរៀបចំគម្រោងសហគមន៍។ មគ្គុទ្ទេសក៍នីមួយៗមានសន្លឹកកិច្ចការដែលអាចបោះពុម្ពប្រើបាន។')}</p>
+      <section className="mg-intro"><p className="gs-eyebrow">KHMER ONE</p>
+        <h1>{t('Ministry Tools', 'ឧបករណ៍តាមក្រសួង')}</h1>
+        <p>{t('Choose a guide to find a service, practise a skill or prepare a community project. Browse by ministry name or number.', 'ជ្រើសរើសមគ្គុទ្ទេសក៍ដើម្បីស្វែងរកសេវា អនុវត្តជំនាញ ឬរៀបចំគម្រោងសហគមន៍។ រកមើលតាមឈ្មោះ ឬលេខក្រសួង។')}</p>
       </section>
       <section aria-label={t('Guide directory', 'បញ្ជីមគ្គុទ្ទេសក៍')}>
         <label className="mg-search-label">{t('Find a ministry by name, number or tool', 'ស្វែងរកក្រសួងតាមឈ្មោះ លេខ ឬឧបករណ៍')}<input className="mg-search" type="search" value={query} onChange={e => setQuery(e.target.value)} /></label>
         <p role="status">{matches.length} / {directory.length}</p>
-        <div className="mg-grid">{matches.map(item => <a className="mg-card" key={item.n} href={'/ministries/' + item.slug + suffix}>
+        <div className="mg-grid">{matches.map(item => <a className="mg-card" key={item.n} href={item.url + (item.url.startsWith('/ministries/') ? suffix : '')}>
           <span className="gs-eyebrow">{item.n} · {item.ministry[lang]}</span><h3>{item.title[lang]}</h3><p>{item.benefit[lang]}</p>
         </a>)}</div>
       </section>
