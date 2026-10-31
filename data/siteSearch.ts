@@ -1,3 +1,4 @@
+import { postsTopics } from './posts';
 import { interiorTopics } from './interior';
 import { inspectionChannels, inspectionChecklist, inspectionFields, inspectionNotice } from './inspection';
 import { internationalGuides, internationalChecklist, missionContacts, internationalNotice } from './internationalServices';
@@ -39,6 +40,10 @@ function withParent(parentId: string, document: Omit<SearchDocument, 'category' 
 // Read directly from the content that renders the site; additions to these collections
 // are searchable on the next build without maintaining a second vocabulary list.
 export const siteSearchDocuments: SearchDocument[] = [
+  ...postsTopics.map(topic => withParent('posts-and-telecommunications', {
+    id: `posts-${topic.id}`, href: `/posts-and-telecommunications#${topic.id}`, kind: 'page',
+    title: topic.title, summary: topic.action, fields: textValues(topic),
+  })),
   ...interiorTopics.map(topic => withParent('interior', {
     id: `interior-${topic.id}`, href: `/interior#${topic.id}`, kind: 'page',
     title: topic.title, summary: topic.question, fields: textValues(topic),

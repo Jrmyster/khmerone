@@ -11,6 +11,13 @@ const files=['index.js',...readdirSync(root,{recursive:true}).filter(f=>/\.(m?js
 const mf=new Miniflare({modules:files.map(f=>({type:'ESModule',path:resolve(root,f)})),modulesRoot:root,compatibilityDate:'2026-05-15',compatibilityFlags:['nodejs_compat'],durableObjects:{QUIZ_ROOMS:{className:'QuizRoom',useSQLite:true}}});
 const pages={'/typing':'Keyboard Garden','/':'KHMER ONE','/search':'Search Khmer One','/teacher-toolkit':'toolkit-output','/computer-engineering':'ce-gate','/feedback-inbox':'Feedback inbox','/learning':'Small discoveries.','/learning/dictionary':'Talking STEM Dictionary','/learning/speaking':'English Speaking Practice','/learning/quiz-maker':'Listening Quiz Maker','/learning/stories':'Bilingual Story Library','/learning/announcements':'School Announcement Maker','/learning/translation':'Lesson Translation Workbench','/learning/live-quiz':'Live Classroom Quiz','/learning/exchange':'School Connect Exchange','/teacher-audio':'teacher-audio-shell'};
 try{
+ const posts = await mf.dispatchFetch('https://khmerone.test/posts-and-telecommunications');
+ assert.equal(posts.status, 200);
+ const postsHtml = await posts.text();
+ for (const marker of ['១៩ · ក្រសួងប្រៃសណីយ៍', 'id="plan-checklist"', 'id="internet-plans"', 'id="outages"', 'https://postcode.gov.kh/', 'https://www.cambodiapost.com.kh/tracking/search']) {
+   assert.ok(postsHtml.includes(marker), marker);
+ }
+ console.log('PASS /posts-and-telecommunications');
  const interior = await mf.dispatchFetch('https://khmerone.test/interior');
  assert.equal(interior.status, 200);
  const interiorHtml = await interior.text();

@@ -13,7 +13,7 @@ export const interiorTopics = [
     id: 'identity-card',
     title: bi('Apply for, renew or replace a Khmer ID card', 'ស្នើសុំ បន្តសុពលភាព ឬសុំជំនួសអត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ'),
     question: bi('Ask the identification office where to apply for your situation, whether you must appear in person and how to check if your card is ready to collect.', 'សួរការិយាល័យអត្តសញ្ញាណកម្មថា ត្រូវដាក់ពាក្យនៅទីណាសម្រាប់ករណីរបស់អ្នក តើត្រូវទៅផ្ទាល់ឬទេ និងតើអាចពិនិត្យថាប័ណ្ណរួចរាល់ដោយរបៀបណា។'),
-    proposal: bi('Offer a phone enquiry ទន្ទឹមនឹងdigital status checks. Workers could confirm a card is ready before taking time off, and people without smartphones could get the same information.', 'ផ្តល់មធ្យោបាយសាកសួរតាមទូរសព្ទ alongside ការពិនិត្យស្ថានភាពតាមប្រព័ន្ធឌីជីថល។ កម្មករអាចបញ្ជាក់ថាប័ណ្ណរួចរាល់មុនសុំច្បាប់ឈប់ពីការងារ ហើយអ្នកគ្មានទូរសព្ទឆ្លាតវៃក៏អាចទទួលព័ត៌មានដូចគ្នា។'),
+    proposal: bi('Offer a phone enquiry alongside digital status checks. Workers could confirm a card is ready before taking time off, and people without smartphones could get the same information.', 'ផ្តល់មធ្យោបាយសាកសួរតាមទូរសព្ទទន្ទឹមនឹងការពិនិត្យស្ថានភាពតាមប្រព័ន្ធឌីជីថល។ កម្មករអាចបញ្ជាក់ថាប័ណ្ណរួចរាល់មុនសុំច្បាប់ឈប់ពីការងារ ហើយអ្នកគ្មានទូរសព្ទឆ្លាតវៃក៏អាចទទួលព័ត៌មានដូចគ្នា។'),
     source: bi('GDI guidance on checking card status', 'ការណែនាំរបស់អគ្គនាយកដ្ឋានអត្តសញ្ញាណកម្មអំពីការពិនិត្យស្ថានភាពប័ណ្ណ'),
     url: 'https://news.gdi.gov.kh/posts/23273',
   },

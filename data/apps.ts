@@ -11,6 +11,17 @@ import { learningTools, bi } from "./learning";
 
 export const apps: AppEntry[] = [
   {
+    id: 'posts-and-telecommunications', title: bi('Posts and Telecommunications', 'ប្រៃសណីយ៍ និងទូរគមនាគមន៍'),
+    category: AppCategory.Utilities, categoryLabel: bi('Communications', 'ទំនាក់ទំនង'),
+    tagline: bi('Send a parcel or check an internet offer.', 'ផ្ញើបញ្ញើ ឬពិនិត្យតម្លៃគម្រោងអ៊ីនធឺណិត។'),
+    description: bi('Look up a postcode, track mail, compare internet plans and follow up on outages using official Cambodian service links.', 'រកលេខកូដប្រៃសណីយ៍ តាមដានបញ្ញើ ប្រៀបធៀបគម្រោងអ៊ីនធឺណិត និងសាកសួរអំពីបញ្ហាដាច់សេវា តាមតំណសេវាផ្លូវការរបស់កម្ពុជា។'),
+    audience: bi('Families, schools and small businesses', 'គ្រួសារ សាលារៀន និងអាជីវកម្មខ្នាតតូច'),
+    grades: ['primary', 'lower-secondary', 'high-school', 'vocational-adult'], gradeBadge: bi('All ages', 'គ្រប់វ័យ'), hasBilingualToggle: true,
+    features: [bi('Postal and telecom guides', 'មគ្គុទ្ទេសក៍ប្រៃសណីយ៍ និងទូរគមនាគមន៍'), bi('Internet quote checklist', 'បញ្ជីសំណួរអំពីតម្លៃអ៊ីនធឺណិត')],
+    tags: ['MPTC', 'Cambodia Post', 'postcode', 'parcel tracking', 'TRC', 'internet outage', 'ប្រៃសណីយ៍', 'ទូរគមនាគមន៍'],
+    icon: 'world', url: '/posts-and-telecommunications', offlineReady: false,
+  },
+  {
     id: 'interior', title: bi('Ministry of Interior Service Guide', 'មគ្គុទ្ទេសក៍សេវាក្រសួងមហាផ្ទៃ'),
     category: AppCategory.Utilities, categoryLabel: bi('Local administration', 'រដ្ឋបាលមូលដ្ឋាន'),
     tagline: bi('Know what to ask before travelling to an office.', 'ដឹងថាត្រូវសួរអ្វីខ្លះមុនធ្វើដំណើរទៅការិយាល័យ។'),
