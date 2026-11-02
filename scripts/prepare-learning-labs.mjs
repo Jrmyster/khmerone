@@ -65,6 +65,7 @@ for (const file of ['vendor/jsxgraph/jsxgraphcore.js','vendor/jsxgraph/jsxgraph.
 const assets=[];
 async function scan(directory) {
   for (const entry of await readdir(directory,{withFileTypes:true})) {
+    if (entry.name === '.gitignore') continue;
     const path=join(directory,entry.name);
     if(entry.isDirectory()) {await scan(path);continue;}
     const name=relative(base,path).replaceAll('\\','/');

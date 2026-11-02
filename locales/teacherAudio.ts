@@ -1,0 +1,40 @@
+export const teacherAudioCopy = {
+  km: {
+    home: "ត្រឡប់ទៅ Khmer One", toolkit: "ឧបករណ៍សម្រាប់គ្រូ", kicker: "សំឡេងសម្រាប់ថ្នាក់រៀន",
+    title: "បង្កើតសំឡេងភាសាខ្មែរ", intro: "បញ្ចូលអត្ថបទមេរៀន ជ្រើសរើសសំឡេង រួចទាញយកជា MP3 សម្រាប់សិស្ស។",
+    text: "អត្ថបទដែលត្រូវអាន", placeholder: "សរសេរ ឬបិទភ្ជាប់អត្ថបទភាសាខ្មែរនៅទីនេះ…", count: "តួអក្សរ",
+    templates: "ចាប់ផ្តើមពីគំរូ", choose: "ជ្រើសរើសគំរូ", insert: "ប្រើគំរូ", replace: "ជំនួសអត្ថបទបច្ចុប្បន្នដោយគំរូនេះ?",
+    voice: "ជ្រើសរើសសំឡេង", sreymom: "ស្រីមុំ · សំឡេងស្រី", piseth: "ពិសិដ្ឋ · សំឡេងប្រុស",
+    speed: "ល្បឿនអាន", normal: "ធម្មតា", slower: "យឺតជាងមុន", speedNote: "ល្បឿននេះអនុវត្តចំពោះសំឡេងក្នុងឯកសារ MP3 ផងដែរ។",
+    generate: "បង្កើតសំឡេង", generating: "កំពុងបង្កើតសំឡេង…", cancel: "បោះបង់", clear: "លុបអត្ថបទ", clearConfirm: "លុបអត្ថបទ និងសំឡេងបច្ចុប្បន្ន?",
+    preview: "ស្តាប់សំឡេងមេរៀន", empty: "សំឡេងរបស់អ្នកនឹងបង្ហាញនៅទីនេះ", emptyHint: "បង្កើតសំឡេង រួចស្តាប់មុនពេលប្រើក្នុងថ្នាក់។", ready: "សំឡេងរួចរាល់", download: "ទាញយក MP3",
+    privacy: "អត្ថបទត្រូវបានផ្ញើទៅ Microsoft Azure ដើម្បីបង្កើតសំឡេង។ កម្មវិធីនេះមិនរក្សាទុកអត្ថបទ ឬសំឡេងទេ។ ឯកសារដែលអ្នកទាញយកនឹងនៅលើឧបករណ៍របស់អ្នក។",
+    limit: "អត្ថបទរហូតដល់ ២,០០០ តួអក្សរ។ ត្រូវការអ៊ីនធឺណិតដើម្បីបង្កើតសំឡេង។", review: "សូមពិនិត្យការបញ្ចេញសំឡេងនៃឈ្មោះ និងពាក្យបច្ចេកទេសមុនពេលប្រើប្រាស់។",
+    offline: "អ្នកមិនមានអ៊ីនធឺណិតទេ។ ភ្ជាប់អ៊ីនធឺណិតដើម្បីបង្កើតសំឡេង។", required: "សូមបញ្ចូលអត្ថបទមុនពេលបង្កើតសំឡេង។", tooLong: "សូមកាត់បន្ថយអត្ថបទឱ្យនៅត្រឹម ២,០០០ តួអក្សរ។",
+    invalid: "សូមពិនិត្យអត្ថបទ និងជម្រើសសំឡេង រួចព្យាយាមម្ដងទៀត។", unavailable: "សេវាសំឡេងមិនទាន់រួចរាល់ទេ។ សូមព្យាយាមម្ដងទៀតនៅពេលក្រោយ។",
+    limited: "មានសំណើច្រើនពេក។ សូមរង់ចាំមួយនាទី រួចព្យាយាមម្ដងទៀត។", timeout: "ការបង្កើតសំឡេងចំណាយពេលយូរពេក។ សូមសាកល្បងអត្ថបទខ្លីជាងនេះ។",
+    failed: "សេវាសំឡេងមិនអាចបំពេញសំណើនេះបានទេ។ សូមសាកម្ដងទៀតក្នុងពេលបន្តិច ឬសុំឱ្យម្ចាស់គេហទំព័រពិនិត្យសេវាសំឡេង។", playback: "មិនអាចចាក់សំឡេងនៅក្នុងកម្មវិធីរុករកនេះបានទេ។ សូមទាញយក MP3 ដើម្បីស្តាប់។",
+  },
+  en: {
+    home: "Back to Khmer One", toolkit: "Teacher Toolkit", kicker: "CLASSROOM AUDIO",
+    title: "Give your Khmer lessons a voice", intro: "Paste your lesson, choose a voice, and make an MP3 your students can listen to anywhere.",
+    text: "Text to read aloud", placeholder: "Write or paste Khmer text here…", count: "characters",
+    templates: "Start with a template", choose: "Choose a template", insert: "Use template", replace: "Replace your current text with this template?",
+    voice: "Choose a voice", sreymom: "Sreymom · Female voice", piseth: "Piseth · Male voice",
+    speed: "Speaking speed", normal: "Normal", slower: "Slower", speedNote: "This speed is also used in your downloaded MP3.",
+    generate: "Generate audio", generating: "Creating your audio…", cancel: "Cancel", clear: "Clear text", clearConfirm: "Clear your current text and audio?",
+    preview: "Listen to your lesson", empty: "Your lesson will sound here", emptyHint: "Generate your audio, then listen before sharing it with your class.", ready: "Your audio is ready", download: "Download MP3",
+    privacy: "Your text is sent to Microsoft Azure to generate speech. This app does not save your text or audio. Downloaded files stay on your device.",
+    limit: "Up to 2,000 characters. An internet connection is needed to generate audio.", review: "Check the pronunciation of names and technical terms before using the audio in class.",
+    offline: "You're offline. Connect to the internet to generate audio.", required: "Enter some text before generating audio.", tooLong: "Shorten your text to 2,000 characters or fewer.",
+    invalid: "Check your text and voice choices, then try again.", unavailable: "The speech service is not ready. Please try again later.",
+    limited: "Too many requests. Wait one minute, then try again.", timeout: "Audio generation took too long. Try a shorter passage.",
+    failed: "The audio service could not complete this request. Try again shortly, or ask the site owner to check the speech service.", playback: "This browser could not play the audio. Download the MP3 to listen.",
+  },
+};
+
+export const teacherAudioTemplates = [
+  { id: "welcome", title: { km: "ស្វាគមន៍សិស្ស", en: "Welcome to class" }, text: "សួស្តីកូនៗទាំងអស់គ្នា! ថ្ងៃនេះយើងនឹងរៀនមេរៀនថ្មីជាមួយគ្នា។ សូមត្រៀមសៀវភៅ និងប៊ិចរបស់អ្នក។ បើមានសំណួរ សូមលើកដៃសួរ។" },
+  { id: "instructions", title: { km: "ការងារជាក្រុម", en: "Group activity" }, text: "សូមបែងចែកជាក្រុមតូចៗ។ អានសំណួរដោយប្រុងប្រយ័ត្ន ហើយពិភាក្សាចម្លើយជាមួយសមាជិកក្រុម។ អ្នកមានពេលប្រាំនាទី។ បន្ទាប់មក ក្រុមនីមួយៗនឹងចែករំលែកចម្លើយរបស់ខ្លួន។" },
+  { id: "science", title: { km: "វដ្តទឹក", en: "The water cycle" }, text: "ព្រះអាទិត្យផ្តល់កម្តៅដល់ទឹក។ ទឹកហួតឡើងទៅក្នុងខ្យល់។ នៅពេលចំហាយទឹកត្រជាក់ វាបង្កើតជាដំណក់ទឹកតូចៗនៅក្នុងពពក។ នៅពេលដំណក់ទឹកធំឡើង វាធ្លាក់ចុះមកជាភ្លៀង។" },
+] as const;

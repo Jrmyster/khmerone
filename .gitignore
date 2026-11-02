@@ -44,3 +44,9 @@ next-env.d.ts
 /.codex/
 /outputs/
 /work/
+
+# Local Cloudflare learning resources and secrets
+/learning-infra.json
+/.dev.vars*
+/.learning-setup/
+*.tsbuildinfo

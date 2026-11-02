@@ -4,6 +4,12 @@ import hostingConfig from "./.openai/hosting.json";
 import { readExecutionProfile } from "./scripts/execution-profile.mjs";
 import { sites } from "./build/sites-vite-plugin";
 import { connectorPreview } from "./build/connector-preview-plugin.mjs";
+import { existsSync, readFileSync } from "node:fs";
+
+type LearningInfrastructure = { databaseId?: string; databaseName?: string; bucketName?: string };
+const learningPath = new URL('./learning-infra.json', import.meta.url);
+const learning: LearningInfrastructure = existsSync(learningPath) ? JSON.parse(readFileSync(learningPath, 'utf8')) : {};
+if (learning.databaseId && !/^[a-f0-9-]{36}$/.test(learning.databaseId)) throw new Error('Invalid learning-infra.json databaseId');
 
 const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
   "00000000-0000-4000-8000-000000000000";
@@ -18,7 +24,16 @@ const localBindingConfig = {
   name: "khmerone",
   main: "./build/sites-worker.ts",
   compatibility_flags: ["nodejs_compat"],
-  d1_databases: d1
+  vars: { AZURE_SPEECH_REGION: "southeastasia" },
+  durable_objects: { bindings: [{ name: 'QUIZ_ROOMS', class_name: 'QuizRoom' }] },
+  migrations: [{ tag: 'learning-v1', new_sqlite_classes: ['QuizRoom'] }],
+  ratelimits: [{
+    name: "SPEECH_RATE_LIMITER",
+    namespace_id: "2026102801",
+    simple: { limit: 5, period: 60 as const },
+  }, { name: 'LEARNING_RATE_LIMITER', namespace_id: '2026102901', simple: { limit: 20, period: 60 as const } },
+  { name: 'ROOM_RATE_LIMITER', namespace_id: '2026102902', simple: { limit: 600, period: 60 as const } }],
+  d1_databases: [...(learning.databaseId ? [{ binding: 'LEARNING_DB', database_name: learning.databaseName || 'khmerone-learning', database_id: learning.databaseId, migrations_dir: './migrations' }] : []), ...(d1
     ? [
         {
           binding: d1,
@@ -26,15 +41,15 @@ const localBindingConfig = {
           database_id: SITE_CREATOR_PLACEHOLDER_DATABASE_ID,
         },
       ]
-    : [],
-  r2_buckets: r2
+    : [])],
+  r2_buckets: [...(learning.bucketName ? [{ binding: 'LEARNING_FILES', bucket_name: learning.bucketName }] : []), ...(r2
     ? [
         {
           binding: r2,
           bucket_name: "site-creator-r2",
         },
       ]
-    : [],
+    : [])],
 };
 
 export default defineConfig(async ({ command }) => {

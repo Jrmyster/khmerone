@@ -115,6 +115,10 @@
         justify-content: space-between;
         gap: 16px;
       }
+      .topbar-inner { flex-wrap: wrap; }
+      .home-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 12px; border: 1px solid var(--teal); border-radius: 9px; color: var(--teal); text-decoration: none; font-weight: 600; }
+      .home-link:hover { background: #eef7f4; }
+      .home-link:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
       .brand {
         display: flex;
         align-items: center;
@@ -908,17 +912,47 @@
         }
       }
     </script>
-  </head>
+  <!-- ko-head --><link rel="stylesheet" href="/site-experience.css" /><script src="/site-experience.js" defer></script><!-- /ko-head -->
+</head>
   <body>
+<!-- ko-navigation --><div id="ko-site-shell"><nav class="ko-nav" aria-label="Khmer One navigation">
+<a class="ko-brand" href="/">KHMER ONE<small lang="km">ខ្មែរ វ័ន</small></a>
+<a href="/"><span>Home<small lang="km">ទំព័រដើម</small></span></a>
+<details class="ko-tools" name="ko-tools"><summary><span>Educational Tools<small lang="km">ឧបករណ៍អប់រំ</small></span></summary><div class="ko-tool-list"><a class="ko-group-home" href="/#educational-tools"><span>View section<small lang="km">មើលផ្នែកនេះ</small></span></a><a href="/typing"><span>Keyboard Garden<small lang="km">រៀនវាយអក្សរ</small></span></a><a href="/learning"><span>Learning studio<small lang="km">កន្លែងសិក្សា</small></span></a><a href="/learning/dictionary"><span>STEM dictionary<small lang="km">វចនានុក្រម STEM</small></span></a><a href="/learning/speaking"><span>Speaking practice<small lang="km">ហាត់និយាយ</small></span></a><a href="/learning/quiz-maker"><span>Listening quizzes<small lang="km">សំណួរស្តាប់</small></span></a><a href="/learning/stories"><span>Story library<small lang="km">បណ្ណាល័យរឿង</small></span></a><a href="/learning/announcements"><span>Announcements<small lang="km">សេចក្ដីជូនដំណឹង</small></span></a><a href="/learning/translation"><span>Translation<small lang="km">ការបកប្រែ</small></span></a><a href="/learning/live-quiz"><span>Live quiz<small lang="km">សំណួរផ្ទាល់</small></span></a><a href="/learning/exchange"><span>School exchange<small lang="km">ការចែករំលែកសាលា</small></span></a><a href="/teacher-audio"><span>Audio Maker<small lang="km">កម្មវិធីសំឡេង</small></span></a><a href="/teacher-toolkit"><span>Teacher Toolkit<small lang="km">ឧបករណ៍គ្រូ</small></span></a><a href="/computer-engineering"><span>Computer Engineering<small lang="km">វិស្វកម្មកុំព្យូទ័រ</small></span></a><a href="/engine-lab.html"><span>Engine Lab<small lang="km">មន្ទីរពិសោធន៍ម៉ាស៊ីន</small></span></a></div></details><details class="ko-tools" name="ko-tools"><summary><span>Ministry Tools<small lang="km">ឧបករណ៍តាមក្រសួង</small></span></summary><div class="ko-tool-list"><a class="ko-group-home" href="/#ministry-tools"><span>View section<small lang="km">មើលផ្នែកនេះ</small></span></a><a href="/ministries"><span>Browse by ministry<small lang="km">រកមើលតាមក្រសួង</small></span></a><a href="/posts-and-telecommunications"><span>Posts and telecommunications<small lang="km">ប្រៃសណីយ៍ និងទូរគមនាគមន៍</small></span></a><a href="/interior"><span>Ministry of Interior<small lang="km">ក្រសួងមហាផ្ទៃ</small></span></a><a href="/inspection"><span>Inspection & accountability<small lang="km">អធិការកិច្ច និងគណនេយ្យភាព</small></span></a><a href="/international-services"><span>International services<small lang="km">សេវាអន្តរជាតិ</small></span></a><a href="/community-safety"><span>Community safety<small lang="km">សុវត្ថិភាពសហគមន៍</small></span></a><a href="/public-services"><span>Government services<small lang="km">សេវារដ្ឋាភិបាល</small></span></a><a href="/social-support"><span>Support services<small lang="km">សេវាជំនួយ</small></span></a></div></details>
+<a href="/search"><span>Search<small lang="km">ស្វែងរក</small></span></a>
+<button type="button" data-ko-low aria-pressed="false"><span>Low data: off<small lang="km">សន្សំទិន្នន័យ</small></span></button>
+<button type="button" data-ko-appearance aria-haspopup="dialog"><span>Appearance<small lang="km">រូបរាង</small></span></button>
+<button type="button" data-ko-feedback><span>Feedback<small lang="km">មតិកែលម្អ</small></span></button>
+</nav><p class="ko-data-note" data-ko-data-note hidden>Low-data mode is on. Decorative pictures are hidden. Audio loads only when you ask for it. <span lang="km">រូបតុបតែងត្រូវបានលាក់។ ចុចដើម្បីផ្ទុកសំឡេង។</span></p>
+<dialog class="ko-feedback" aria-labelledby="ko-feedback-title"><form>
+<div class="ko-dialog-heading"><h2 id="ko-feedback-title">Report a problem <small lang="km">រាយការណ៍បញ្ហា</small></h2><button type="button" data-ko-close aria-label="Close feedback">×</button></div>
+<p>Your report goes privately to the Khmer One editor. Please leave out student names, passwords and personal information.</p>
+<label>Problem type · ប្រភេទបញ្ហា<select name="category" required><option value="translation">Incorrect translation · ការបកប្រែមិនត្រឹមត្រូវ</option><option value="link">Broken link · តំណខូច</option><option value="instructions">Confusing instructions · ការណែនាំមិនច្បាស់</option><option value="other">Other · ផ្សេងទៀត</option></select></label>
+<label>What should we fix? · តើគួរកែអ្វី?<textarea name="message" rows="5" minlength="5" maxlength="2000" required placeholder="Include the word, link or step that needs attention."></textarea></label>
+<label>Page · ទំព័រ<input name="page" readonly /></label>
+<label class="ko-honeypot" aria-hidden="true">Leave blank<input name="website" tabindex="-1" autocomplete="off" /></label>
+<p role="status" data-ko-result></p><button type="submit" data-ko-submit>Send feedback · បញ្ជូនមតិកែលម្អ</button>
+<p><a href="/feedback-inbox">Editor inbox · ប្រអប់មតិអ្នកកែសម្រួល</a></p>
+</form></dialog>
+<dialog class="ko-feedback" id="ko-appearance" aria-labelledby="ko-appearance-title">
+<div class="ko-dialog-heading"><h2 id="ko-appearance-title">Appearance <small lang="km">រូបរាង</small></h2><form method="dialog"><button>Close · បិទ</button></form></div>
+<p>Personalize this browser. Your picture stays on this device. <span lang="km">រូបភាពរបស់អ្នករក្សាទុកតែលើឧបករណ៍នេះ។</span></p>
+<label>Background color · ពណ៌ផ្ទៃខាងក្រោយ<input type="color" data-ko-color value="#183c36"></label>
+<label>Background picture · រូបភាពផ្ទៃខាងក្រោយ<input type="file" data-ko-picture accept="image/jpeg,image/png,image/webp"></label>
+<small>JPG, PNG, WebP · 12 MB max. Low-data mode hides the picture. <span lang="km">មុខងារសន្សំទិន្នន័យលាក់រូបភាព។</span></small>
+<div class="ko-appearance-actions"><button type="button" data-ko-remove>Remove picture · លុបរូបភាព</button><button type="button" data-ko-reset>Reset background · ស្ដារផ្ទៃខាងក្រោយដើម</button></div>
+<p role="status" data-ko-appearance-status></p>
+</dialog></div><p class="ko-review">Khmer text · Not teacher-reviewed <span lang="km">មិនទាន់បានពិនិត្យដោយគ្រូ</span></p><!-- /ko-navigation -->
     <header class="topbar">
       <div class="topbar-inner">
-        <a class="brand" href="/#power-skills" aria-label="Back to Khmer One / ត្រឡប់ទៅ Khmer One" style="color:inherit;text-decoration:none">
+        <a class="brand" href="/" aria-label="Back to Khmer One / ត្រឡប់ទៅ Khmer One" style="color:inherit;text-decoration:none">
           <span class="brand-icon" aria-hidden="true"
             ><svg viewBox="0 0 32 32" fill="none">
               <path d="M9 6v20M9 16 24 6M14 13l10 13" stroke="currentColor" stroke-width="3" /></svg
           ></span>
           <div>Khmer One<small data-i18n="brandSub">បន្ទប់ពិសោធន៍អន្តរកម្ម</small></div>
         </a>
+        <a class="home-link" href="/"><span aria-hidden="true">←</span><span data-i18n="home">ទំព័រដើមខ្មែរ វ័ន</span></a>
         <div class="languages" role="group" aria-label="Language / ភាសា">
           <button id="lang-km" lang="km" aria-pressed="true">ខ្មែរ</button
           ><button id="lang-en" lang="en" aria-pressed="false">English</button>
@@ -1124,6 +1158,7 @@
       const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
       const text = {
         en: {
+          home: "Khmer One home",
           brandSub: "INTERACTIVE LABORATORIES",
           eyebrow: "Physics · Mechanics",
           title: "Inside a four-stroke engine",
@@ -1177,6 +1212,7 @@
           bdc: "bottom dead center",
         },
         km: {
+          home: "ទំព័រដើមខ្មែរ វ័ន",
           brandSub: "បន្ទប់ពិសោធន៍អន្តរកម្ម",
           eyebrow: "រូបវិទ្យា · មេកានិច",
           title: "ស្វែងយល់ពីម៉ាស៊ីន ៤ វគ្គ",

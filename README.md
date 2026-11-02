@@ -41,3 +41,14 @@ Every 22 seconds the backpack acts as a jetpack: cyan exhaust ignites and the bo
 ## Youth skill pathways
 
 The homepage includes a four-pathway skills dashboard, personal Cyber-XP badges, and proposed province-based crew concepts. Content and rules live in `data/engagement.ts` and `hooks/useCyberProgress.ts`. Read `docs/youth-engagement.md` for XP calculations, bilingual messaging, and the boundaries of the local-only crew prototype.
+
+
+## Khmer One learning studio
+
+The `/learning` studio adds a talking STEM dictionary, English speaking practice, listening quiz maker, bilingual stories, school announcements, lesson translation, live classroom quizzes and the School Connect resource exchange. Existing apps and the Khmer Audio Maker are retained.
+
+- [Implementation plan](docs/khmer-one-learning-plan.md)
+- [Cloudflare deployment and Azure setup](docs/learning-deployment.md)
+- [Release verification](docs/learning-release-checks.md)
+
+Run `pnpm test`, `pnpm run lint`, `pnpm build`, and `pnpm run test:production` to check the source. See the deployment guide before publishing to the existing Cloudflare Worker.

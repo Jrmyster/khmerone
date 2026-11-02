@@ -1,4 +1,4 @@
-// Exercise the actual pinned browser runtimes, not mock libraries.
+// Exercise actual pinned browser runtimes, not mock libraries.
 import { createServer } from 'node:http';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { resolve, extname } from 'node:path';
@@ -30,25 +30,27 @@ await mkdir(results,{recursive:true});
 async function open(id) {
   console.log('Opening activity:', id || 'catalog');
   await page.goto(base+(id?'#'+id:''));
-  // An iframe's text is not part of the parent textContent. Wait on actual UI,
-  // not an arbitrary character count that incorrectly rejects short lessons.
   await page.locator(id?'#activity':'.card').first().waitFor();
 }
 async function readyText(selector, text) {
   await page.waitForFunction(([selector,text]) => document.querySelector(selector)?.textContent.includes(text),[selector,text]);
+}
+async function evidenceCheck() {
+  const frame = page.frameLocator('iframe.science-frame');
+  await frame.getByRole('radio').first().check();
+  await frame.getByRole('button',{name:'Check answer'}).click();
+  await frame.locator('.ko-feedback').filter({hasText:'Correct'}).waitFor();
 }
 try {
   await open('');
   assert.equal(await page.locator('.card').count(),12);
   await page.screenshot({path:results+'/catalog-desktop.png',fullPage:true});
   console.log('PASS: catalog');
-
   await open('math');
   await page.locator('#math-board svg').waitFor();
   await page.selectOption('#math-mode','triangle');
   await readyText('#math-values','180');
   console.log('PASS: math');
-
   await open('molecules');
   const molecule = page.frameLocator('#molecule-frame');
   await molecule.locator('canvas').waitFor();
@@ -56,7 +58,6 @@ try {
   await page.getByRole('button',{name:'2',exact:true}).click();
   await readyText('.feedback','Correct');
   console.log('PASS: molecules');
-
   await open('code');
   for (const [mission,message] of [['first-plant','plant is watered'],['garden-loop','All three plants'],['turn-the-corner','Both plants']]) {
     await page.selectOption('#mission',mission);
@@ -65,7 +66,6 @@ try {
     await readyText('#code-status',message);
   }
   console.log('PASS: three Blockly missions');
-
   await open('vocabulary');
   await page.locator('#reveal').click();
   await page.locator('[data-rating="3"]').click();
@@ -73,20 +73,14 @@ try {
   await page.reload();
   await readyText('main','9 cards');
   console.log('PASS: vocabulary and saved schedule');
-
   await open('evidence');
-  const evidence = page.frameLocator('iframe.science-frame').frameLocator('iframe');
-  await evidence.getByRole('radio').first().check();
-  await evidence.getByRole('button',{name:'Check answer'}).click();
-  await evidence.locator('.ko-feedback').filter({hasText:'Correct'}).waitFor();
+  await evidenceCheck();
   console.log('PASS: H5P evidence quiz');
-
   await open('reading');
   const reading = page.frameLocator('.reading-frame');
   await reading.locator('.bloom-page').first().waitFor({state:'attached'});
   assert.equal(await reading.locator('.loadErrorMessage').count(),0);
   console.log('PASS: Bloom reader');
-
   await open('eye');
   await page.locator('[data-preset="myopia"]').click();
   await readyText('#eye-feedback','in front');
@@ -97,7 +91,6 @@ try {
   await page.screenshot({path:results+'/eye-mobile-khmer.png',fullPage:true});
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth<=window.innerWidth+1));
   console.log('PASS: eye, Khmer toggle and mobile width');
-
   await open('');
   await page.locator('#download-pack').click();
   await page.waitForFunction(() => document.getElementById('pack-status')?.textContent.startsWith('Saved.'),null,{timeout:120000});
@@ -111,7 +104,7 @@ try {
   await page.frameLocator('#molecule-frame').locator('canvas').waitFor();
   assert.equal(await page.frameLocator('#molecule-frame').locator('#error').innerText(),'');
   await open('evidence');
-  await page.frameLocator('iframe.science-frame').frameLocator('iframe').getByRole('radio').first().waitFor();
+  await evidenceCheck();
   await open('reading');
   await page.frameLocator('.reading-frame').locator('.bloom-page').first().waitFor({state:'attached'});
   assert.deepEqual(errors,[]);
