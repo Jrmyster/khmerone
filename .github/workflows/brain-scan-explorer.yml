@@ -1,0 +1,39 @@
+name: Brain Scan Explorer validation
+on:
+  push:
+    paths: ['public/brain-scan-explorer/**', 'scripts/*brain-scan-explorer*', 'tests/brain-scan-explorer.test.mjs', 'data/brain-scan.ts', '.github/workflows/brain-scan-explorer.yml']
+  pull_request:
+    paths: ['public/brain-scan-explorer/**', 'scripts/*brain-scan-explorer*', 'tests/brain-scan-explorer.test.mjs', 'data/brain-scan.ts', '.github/workflows/brain-scan-explorer.yml']
+permissions:
+  contents: read
+concurrency:
+  group: brain-explorer-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  explorer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Test lesson logic and metadata
+        run: node --test tests/brain-scan-explorer.test.mjs
+      - name: Prepare reference MRI and verified viewer
+        run: node scripts/prepare-brain-scan-explorer.mjs
+      - name: Install isolated browser test dependency
+        run: |
+          npm install --prefix /tmp/khmerone-brain-check --ignore-scripts --no-package-lock playwright@1.56.1
+          /tmp/khmerone-brain-check/node_modules/.bin/playwright install --with-deps chromium
+      - name: Exercise real MRI online and offline
+        run: node scripts/check-brain-scan-explorer-browser.mjs
+      - name: Retain screenshots and diagnostics
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: brain-scan-explorer-checks
+          path: brain-test-results/
+          retention-days: 7
