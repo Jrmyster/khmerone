@@ -16,6 +16,7 @@ const eslintConfig = defineConfig([
   globalIgnores([
     ".next/**", "out/**", "build/**", "next-env.d.ts",
     "public/learning-labs/vendor/**", "learning-labs-test-results/**",
+    "public/virtual-microscope/vendor/**", "microscope-test-results/**",
   ]),
   {
     files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],

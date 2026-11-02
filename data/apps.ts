@@ -2,4 +2,5 @@
 export * from './core-apps';
 import { apps as coreApps } from './core-apps';
 import { learningLabs } from './learning-labs';
-export const apps = [...learningLabs, ...coreApps];
+import { microscopeApp } from './microscope';
+export const apps = [microscopeApp, ...learningLabs, ...coreApps];
