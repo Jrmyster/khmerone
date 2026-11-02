@@ -1,0 +1,89 @@
+{
+  "question": "<p>Which would be useful scientific evidence for testing whether sunlight warms water?</p>",
+  "answers": [
+    {
+      "text": "<p>Recorded temperature measurements from comparable cups of water kept in sunlight and in shade.</p>",
+      "correct": true,
+      "tipsAndFeedback": {
+        "tip": "Look for observations or measurements that someone else could examine.",
+        "chosenFeedback": "These measurements can support or challenge the explanation. Use the same amount of water, the same starting temperature, similar cups, and the same observation time. Repeat the comparison.",
+        "notChosenFeedback": "Recorded measurements let us compare what happened to the two cups. The way those measurements were collected also matters."
+      }
+    },
+    {
+      "text": "<p>Many people repeating that sunlight always makes water warmer, without taking measurements.</p>",
+      "correct": false,
+      "tipsAndFeedback": {
+        "tip": "Does the number of people repeating a claim show what happened to the water?",
+        "chosenFeedback": "A widely repeated claim still needs to be checked against observations or measurements. Agreement alone does not test this claim.",
+        "notChosenFeedback": "Correct to leave this unselected. Repetition of a claim is different from repeated observations."
+      }
+    },
+    {
+      "text": "<p>A guess about the water's temperature that has not been checked.</p>",
+      "correct": false,
+      "tipsAndFeedback": {
+        "tip": "A prediction can guide a test, but what would you need to check it?",
+        "chosenFeedback": "A guess can become a prediction to test. The guess itself is not evidence that the water became warmer.",
+        "notChosenFeedback": "Correct to leave this unselected. We need observations or measurements to check a prediction."
+      }
+    }
+  ],
+  "overallFeedback": [
+    {
+      "from": 0,
+      "to": 99,
+      "feedback": "Look for observations or measurements that can be examined. A popular claim or an untested guess does not tell us what happened in this comparison."
+    },
+    {
+      "from": 100,
+      "to": 100,
+      "feedback": "Correct. Scientific evidence can support or challenge an explanation. Check how the evidence was collected and whether repeated tests give similar results."
+    }
+  ],
+  "UI": {
+    "checkAnswerButton": "Check answer",
+    "submitAnswerButton": "Submit answer",
+    "showSolutionButton": "Show answer",
+    "tryAgainButton": "Try again",
+    "tipsLabel": "Show a hint",
+    "scoreBarLabel": "You earned :num out of :total points",
+    "tipAvailable": "A hint is available",
+    "feedbackAvailable": "Feedback is available",
+    "readFeedback": "Read feedback",
+    "wrongAnswer": "Incorrect answer",
+    "correctAnswer": "Correct answer",
+    "shouldCheck": "This answer should have been selected",
+    "shouldNotCheck": "This answer should not have been selected",
+    "noInput": "Choose an answer before viewing the solution",
+    "a11yCheck": "Check your answer. It will be marked correct, incorrect, or unanswered.",
+    "a11yShowSolution": "Show which answer is correct.",
+    "a11yRetry": "Clear your answer and try the question again."
+  },
+  "behaviour": {
+    "enableRetry": true,
+    "enableSolutionsButton": true,
+    "enableCheckButton": true,
+    "type": "single",
+    "singlePoint": true,
+    "randomAnswers": false,
+    "showSolutionsRequiresInput": true,
+    "confirmCheckDialog": false,
+    "confirmRetryDialog": false,
+    "autoCheck": false,
+    "passPercentage": 100,
+    "showScorePoints": true
+  },
+  "confirmCheck": {
+    "header": "Check your answer?",
+    "body": "<p>Are you ready to check your answer?</p>",
+    "cancelLabel": "Cancel",
+    "confirmLabel": "Check answer"
+  },
+  "confirmRetry": {
+    "header": "Try again?",
+    "body": "<p>Clear your current answer and start again?</p>",
+    "cancelLabel": "Cancel",
+    "confirmLabel": "Try again"
+  }
+}

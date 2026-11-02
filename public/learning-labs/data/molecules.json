@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "disclaimer": {
+    "en": "These simplified molecular models show atoms, bonds, and approximate shapes. Colors and sticks are visual symbols. The models do not predict chemical reactions.",
+    "km": "គំរូម៉ូលេគុលសាមញ្ញទាំងនេះបង្ហាញអាតូម សម្ព័ន្ធ និងរាងប្រហាក់ប្រហែល។ ពណ៌ និងដំបងជានិមិត្តសញ្ញាសម្រាប់បង្ហាញ។ គំរូទាំងនេះមិនព្យាករណ៍ប្រតិកម្មគីមីទេ។"
+  },
+  "geometryNote": "Atom coordinates are illustrative relative geometry, not experimentally sourced coordinates or a molecular simulation.",
+  "molecules": [
+    {
+      "id": "water",
+      "name": { "en": "Water", "km": "ទឹក" },
+      "formula": "H₂O",
+      "asciiFormula": "H2O",
+      "description": {
+        "en": "One water molecule contains two hydrogen atoms and one oxygen atom. Its atoms form a bent shape.",
+        "km": "ម៉ូលេគុលទឹកមួយមានអាតូមអ៊ីដ្រូសែនពីរ និងអាតូមអុកស៊ីសែនមួយ។ អាតូមទាំងនេះតម្រៀបគ្នាជារាងកោង។"
+      },
+      "shape": { "en": "Bent", "km": "រាងកោង" },
+      "atoms": [
+        { "elem": "O", "x": 0, "y": 0, "z": 0, "bonds": [1, 2], "bondOrder": [1, 1] },
+        { "elem": "H", "x": 0.757, "y": 0.586, "z": 0, "bonds": [0], "bondOrder": [1] },
+        { "elem": "H", "x": -0.757, "y": 0.586, "z": 0, "bonds": [0], "bondOrder": [1] }
+      ],
+      "question": {
+        "prompt": {
+          "en": "How many hydrogen atoms are in one water molecule?",
+          "km": "តើម៉ូលេគុលទឹកមួយមានអាតូមអ៊ីដ្រូសែនប៉ុន្មាន?"
+        },
+        "choices": [
+          { "id": "a", "text": { "en": "1", "km": "១" } },
+          { "id": "b", "text": { "en": "2", "km": "២" } },
+          { "id": "c", "text": { "en": "3", "km": "៣" } }
+        ],
+        "correctChoiceId": "b",
+        "explanation": {
+          "en": "The small 2 after H in H₂O means two hydrogen atoms. There is one oxygen atom.",
+          "km": "លេខ ២ តូចបន្ទាប់ពី H ក្នុង H₂O មានន័យថាមានអាតូមអ៊ីដ្រូសែនពីរ។ មានអាតូមអុកស៊ីសែនមួយ។"
+        }
+      }
+    },
+    {
+      "id": "carbon-dioxide",
+      "name": { "en": "Carbon dioxide", "km": "កាបូនឌីអុកស៊ីត" },
+      "formula": "CO₂",
+      "asciiFormula": "CO2",
+      "description": {
+        "en": "One carbon dioxide molecule contains one carbon atom and two oxygen atoms. The three atoms lie in a straight line, with carbon in the middle.",
+        "km": "ម៉ូលេគុលកាបូនឌីអុកស៊ីតមួយមានអាតូមកាបូនមួយ និងអាតូមអុកស៊ីសែនពីរ។ អាតូមទាំងបីស្ថិតនៅលើបន្ទាត់ត្រង់ ដោយមានកាបូននៅចំកណ្តាល។"
+      },
+      "shape": { "en": "Linear", "km": "រាងត្រង់" },
+      "atoms": [
+        { "elem": "C", "x": 0, "y": 0, "z": 0, "bonds": [1, 2], "bondOrder": [2, 2] },
+        { "elem": "O", "x": -1.16, "y": 0, "z": 0, "bonds": [0], "bondOrder": [2] },
+        { "elem": "O", "x": 1.16, "y": 0, "z": 0, "bonds": [0], "bondOrder": [2] }
+      ],
+      "question": {
+        "prompt": {
+          "en": "What is the shape of a carbon dioxide molecule?",
+          "km": "តើម៉ូលេគុលកាបូនឌីអុកស៊ីតមានរាងដូចម្តេច?"
+        },
+        "choices": [
+          { "id": "a", "text": { "en": "Bent", "km": "រាងកោង" } },
+          { "id": "b", "text": { "en": "A triangle", "km": "រាងត្រីកោណ" } },
+          { "id": "c", "text": { "en": "A straight line", "km": "រាងបន្ទាត់ត្រង់" } }
+        ],
+        "correctChoiceId": "c",
+        "explanation": {
+          "en": "CO₂ is linear: oxygen, carbon, and oxygen lie along a straight line.",
+          "km": "CO₂ មានរាងត្រង់៖ អុកស៊ីសែន កាបូន និងអុកស៊ីសែនស្ថិតនៅលើបន្ទាត់ត្រង់មួយ។"
+        }
+      }
+    },
+    {
+      "id": "methane",
+      "name": { "en": "Methane", "km": "មេតាន" },
+      "formula": "CH₄",
+      "asciiFormula": "CH4",
+      "description": {
+        "en": "One methane molecule contains one carbon atom bonded to four hydrogen atoms. The hydrogen atoms point toward the corners of a tetrahedron, so the molecule is not flat.",
+        "km": "ម៉ូលេគុលមេតានមួយមានអាតូមកាបូនមួយភ្ជាប់នឹងអាតូមអ៊ីដ្រូសែនបួន។ អាតូមអ៊ីដ្រូសែនស្ថិតនៅទិសកំពូលទាំងបួននៃតេត្រាអែត ដូច្នេះម៉ូលេគុលនេះមិនរាបស្មើទេ។"
+      },
+      "shape": { "en": "Tetrahedral", "km": "រាងតេត្រាអែត" },
+      "atoms": [
+        { "elem": "C", "x": 0, "y": 0, "z": 0, "bonds": [1, 2, 3, 4], "bondOrder": [1, 1, 1, 1] },
+        { "elem": "H", "x": 0.629, "y": 0.629, "z": 0.629, "bonds": [0], "bondOrder": [1] },
+        { "elem": "H", "x": 0.629, "y": -0.629, "z": -0.629, "bonds": [0], "bondOrder": [1] },
+        { "elem": "H", "x": -0.629, "y": 0.629, "z": -0.629, "bonds": [0], "bondOrder": [1] },
+        { "elem": "H", "x": -0.629, "y": -0.629, "z": 0.629, "bonds": [0], "bondOrder": [1] }
+      ],
+      "question": {
+        "prompt": {
+          "en": "How many hydrogen atoms are bonded to carbon in one methane molecule?",
+          "km": "តើមានអាតូមអ៊ីដ្រូសែនប៉ុន្មានភ្ជាប់នឹងកាបូនក្នុងម៉ូលេគុលមេតានមួយ?"
+        },
+        "choices": [
+          { "id": "a", "text": { "en": "4", "km": "៤" } },
+          { "id": "b", "text": { "en": "2", "km": "២" } },
+          { "id": "c", "text": { "en": "6", "km": "៦" } }
+        ],
+        "correctChoiceId": "a",
+        "explanation": {
+          "en": "CH₄ has one carbon atom and four hydrogen atoms. Rotate the model to see all four hydrogen atoms.",
+          "km": "CH₄ មានអាតូមកាបូនមួយ និងអាតូមអ៊ីដ្រូសែនបួន។ បង្វិលគំរូដើម្បីមើលអាតូមអ៊ីដ្រូសែនទាំងបួន។"
+        }
+      }
+    },
+    {
+      "id": "oxygen",
+      "name": { "en": "Oxygen", "km": "អុកស៊ីសែន" },
+      "formula": "O₂",
+      "asciiFormula": "O2",
+      "description": {
+        "en": "An oxygen molecule contains two oxygen atoms. A double bond joins the atoms in this introductory bond model.",
+        "km": "ម៉ូលេគុលអុកស៊ីសែនមួយមានអាតូមអុកស៊ីសែនពីរ។ ក្នុងគំរូសម្ព័ន្ធមូលដ្ឋាននេះ អាតូមទាំងពីរភ្ជាប់គ្នាដោយសម្ព័ន្ធទ្វេ។"
+      },
+      "shape": { "en": "Two atoms in a line", "km": "អាតូមពីរនៅលើបន្ទាត់ត្រង់" },
+      "atoms": [
+        { "elem": "O", "x": -0.605, "y": 0, "z": 0, "bonds": [1], "bondOrder": [2] },
+        { "elem": "O", "x": 0.605, "y": 0, "z": 0, "bonds": [0], "bondOrder": [2] }
+      ],
+      "question": {
+        "prompt": {
+          "en": "What kind of bond joins the two atoms in this O₂ model?",
+          "km": "តើសម្ព័ន្ធប្រភេទណាភ្ជាប់អាតូមទាំងពីរក្នុងគំរូ O₂ នេះ?"
+        },
+        "choices": [
+          { "id": "a", "text": { "en": "A single bond", "km": "សម្ព័ន្ធទោល" } },
+          { "id": "b", "text": { "en": "A double bond", "km": "សម្ព័ន្ធទ្វេ" } },
+          { "id": "c", "text": { "en": "A triple bond", "km": "សម្ព័ន្ធត្រី" } }
+        ],
+        "correctChoiceId": "b",
+        "explanation": {
+          "en": "The model shows a double bond between the two oxygen atoms. The two sticks represent bond order; they are not physical rods.",
+          "km": "គំរូបង្ហាញសម្ព័ន្ធទ្វេរវាងអាតូមអុកស៊ីសែនទាំងពីរ។ ដំបងពីរតំណាងឱ្យសម្ព័ន្ធទ្វេ មិនមែនជាដំបងពិតទេ។"
+        }
+      }
+    },
+    {
+      "id": "nitrogen",
+      "name": { "en": "Nitrogen", "km": "អាសូត" },
+      "formula": "N₂",
+      "asciiFormula": "N2",
+      "description": {
+        "en": "A nitrogen molecule contains two nitrogen atoms joined by a triple bond. Both atoms are the same element.",
+        "km": "ម៉ូលេគុលអាសូតមួយមានអាតូមអាសូតពីរភ្ជាប់គ្នាដោយសម្ព័ន្ធត្រី។ អាតូមទាំងពីរជាធាតុដូចគ្នា។"
+      },
+      "shape": { "en": "Two atoms in a line", "km": "អាតូមពីរនៅលើបន្ទាត់ត្រង់" },
+      "atoms": [
+        { "elem": "N", "x": -0.55, "y": 0, "z": 0, "bonds": [1], "bondOrder": [3] },
+        { "elem": "N", "x": 0.55, "y": 0, "z": 0, "bonds": [0], "bondOrder": [3] }
+      ],
+      "question": {
+        "prompt": {
+          "en": "Which bond does this N₂ model show?",
+          "km": "តើគំរូ N₂ នេះបង្ហាញសម្ព័ន្ធមួយណា?"
+        },
+        "choices": [
+          { "id": "a", "text": { "en": "A double bond", "km": "សម្ព័ន្ធទ្វេ" } },
+          { "id": "b", "text": { "en": "A single bond", "km": "សម្ព័ន្ធទោល" } },
+          { "id": "c", "text": { "en": "A triple bond", "km": "សម្ព័ន្ធត្រី" } }
+        ],
+        "correctChoiceId": "c",
+        "explanation": {
+          "en": "N₂ has a triple bond between its two nitrogen atoms. The small 2 in the formula counts atoms, not bonds.",
+          "km": "N₂ មានសម្ព័ន្ធត្រីរវាងអាតូមអាសូតទាំងពីរ។ លេខ ២ តូចក្នុងរូបមន្តបង្ហាញចំនួនអាតូម មិនមែនចំនួនសម្ព័ន្ធទេ។"
+        }
+      }
+    },
+    {
+      "id": "hydrogen",
+      "name": { "en": "Hydrogen", "km": "អ៊ីដ្រូសែន" },
+      "formula": "H₂",
+      "asciiFormula": "H2",
+      "description": {
+        "en": "A hydrogen molecule contains two hydrogen atoms joined by one single bond. H is the symbol for the element hydrogen; H₂ is the formula for this molecule.",
+        "km": "ម៉ូលេគុលអ៊ីដ្រូសែនមួយមានអាតូមអ៊ីដ្រូសែនពីរភ្ជាប់គ្នាដោយសម្ព័ន្ធទោលមួយ។ H ជានិមិត្តសញ្ញាធាតុអ៊ីដ្រូសែន ហើយ H₂ ជារូបមន្តម៉ូលេគុលនេះ។"
+      },
+      "shape": { "en": "Two atoms in a line", "km": "អាតូមពីរនៅលើបន្ទាត់ត្រង់" },
+      "atoms": [
+        { "elem": "H", "x": -0.37, "y": 0, "z": 0, "bonds": [1], "bondOrder": [1] },
+        { "elem": "H", "x": 0.37, "y": 0, "z": 0, "bonds": [0], "bondOrder": [1] }
+      ],
+      "question": {
+        "prompt": {
+          "en": "Which formula represents the hydrogen molecule shown here?",
+          "km": "តើរូបមន្តមួយណាតំណាងឱ្យម៉ូលេគុលអ៊ីដ្រូសែនដែលបង្ហាញនៅទីនេះ?"
+        },
+        "choices": [
+          { "id": "a", "text": { "en": "H₂", "km": "H₂" } },
+          { "id": "b", "text": { "en": "H₂O", "km": "H₂O" } },
+          { "id": "c", "text": { "en": "CO₂", "km": "CO₂" } }
+        ],
+        "correctChoiceId": "a",
+        "explanation": {
+          "en": "H₂ means two hydrogen atoms in one molecule. H₂O also contains oxygen, while CO₂ contains carbon and oxygen.",
+          "km": "H₂ មានន័យថាមានអាតូមអ៊ីដ្រូសែនពីរក្នុងម៉ូលេគុលមួយ។ H₂O ក៏មានអុកស៊ីសែនដែរ ចំណែក CO₂ មានកាបូន និងអុកស៊ីសែន។"
+        }
+      }
+    }
+  ]
+}

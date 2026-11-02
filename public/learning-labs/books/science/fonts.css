@@ -1,0 +1,7 @@
+@font-face {
+  font-family: "Khmer One Reader";
+  src:url("../../fonts/khmer.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}

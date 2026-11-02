@@ -1,25 +1,48 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { BookOpenText, Check, Download, FileText, Languages, LoaderCircle, Pencil, Printer, RotateCcw, WifiOff } from "lucide-react";
-import { buildTeachingResource, defaultToolkitSettings, resourceKinds, resourceLabels, subjectLabels, subjects, toolkitUnits, type ResourceKind, type ToolkitSettings } from "@/data/teacherToolkit";
+import { buildTeachingResource, resourceKinds, resourceLabels, subjectLabels, subjects, toolkitUnits, type ResourceKind, type ToolkitSettings } from "@/data/teacherToolkit";
 import { toolkitCopy } from "@/locales/teacherToolkit";
 import { parseToolkitDraft, prepareToolkitOffline, TOOLKIT_DRAFT_KEY } from "@/lib/teacher-toolkit";
 import { themePresets, rainbowAccents } from "@/data/themes";
 import type { Locale } from "@/types/app";
 
+// Match server markup during hydration, then initialize the editable client once.
+const subscribeHydration = () => () => {};
 export function TeacherToolkit() {
-  const [locale, setLocale] = useState<Locale>("en");
-  const [settings, setSettings] = useState<ToolkitSettings>(defaultToolkitSettings);
-  const [kind, setKind] = useState<ResourceKind>("lesson");
-  const [edits, setEdits] = useState<Record<string, string>>({});
-  const [ready, setReady] = useState(false);
-  const [saveState, setSaveState] = useState<"saving" | "saved" | "error">("saving");
+  const ready = useSyncExternalStore(subscribeHydration, () => true, () => false);
+  return <TeacherToolkitEditor key={String(ready)} ready={ready} />;
+}
+
+function TeacherToolkitEditor({ ready }: { ready: boolean }) {
+  const [initial] = useState(() => {
+    let draft = parseToolkitDraft(null);
+    let locale: Locale = "en";
+    let storageError = false;
+    if (ready) {
+      try {
+        draft = parseToolkitDraft(localStorage.getItem(TOOLKIT_DRAFT_KEY));
+        const savedLocale = localStorage.getItem("khmerone-locale");
+        if (savedLocale === "km" || savedLocale === "en") locale = savedLocale;
+      } catch { storageError = true; }
+    }
+    return { draft, locale, storageError };
+  });
+  const [locale, setLocale] = useState<Locale>(initial.locale);
+  const [settings, setSettings] = useState<ToolkitSettings>(initial.draft.settings);
+  const [kind, setKind] = useState<ResourceKind>(initial.draft.kind);
+  const [edits, setEdits] = useState<Record<string, string>>(initial.draft.edits);
+  const [savedDraft, setSavedDraft] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState(initial.storageError);
+  const serializedDraft = JSON.stringify({ settings, kind, edits });
+  const saveState = saveError ? "error" : savedDraft === serializedDraft ? "saved" : "saving";
   const [editing, setEditing] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);
   const [offlineState, setOfflineState] = useState<"idle" | "loading" | "ready" | "error" | "unsupported">("idle");
   const mounted = useRef(false);
+  const offlineUnsupported = ready && !("serviceWorker" in navigator);
   const t = toolkitCopy[locale];
   const document = buildTeachingResource(settings, kind, locale);
   const unit = document.unit;
@@ -29,26 +52,22 @@ export function TeacherToolkit() {
   const answerKey = edits[`${editKey}:answers`] ?? document.answerKey;
 
   useEffect(() => {
+    if (!ready) return;
     mounted.current = true;
     try {
-      const draft = parseToolkitDraft(localStorage.getItem(TOOLKIT_DRAFT_KEY));
-      setSettings(draft.settings); setKind(draft.kind); setEdits(draft.edits);
-      const lang = localStorage.getItem("khmerone-locale");
-      if (lang === "km" || lang === "en") setLocale(lang);
       const theme = localStorage.getItem("khmerone-theme-v3");
       const accent = localStorage.getItem("khmerone-accent-v2");
       if (themePresets.some((item) => item.id === theme)) window.document.documentElement.dataset.theme = theme!;
       if (rainbowAccents.some((item) => item.id === accent)) window.document.documentElement.dataset.accent = accent!;
-    } catch { setSaveState("error"); }
-    setReady(true);
+    } catch { /* Theme preferences are optional. */ }
     if ("serviceWorker" in navigator) {
       void navigator.serviceWorker.register("/sw.js").catch(() => {});
       void caches.open("khmerone-teacher-toolkit-v1").then((cache) => cache.match("/teacher-toolkit")).then((cached) => {
         if (cached && mounted.current) setOfflineState("ready");
       }).catch(() => {});
-    } else setOfflineState("unsupported");
+    }
     return () => { mounted.current = false; };
-  }, []);
+  }, [ready]);
 
   useEffect(() => {
     if (!ready) return;
@@ -58,19 +77,19 @@ export function TeacherToolkit() {
 
   useEffect(() => {
     if (!ready) return;
-    setSaveState("saving");
     const timer = window.setTimeout(() => {
       try {
-        localStorage.setItem(TOOLKIT_DRAFT_KEY, JSON.stringify({ settings, kind, edits }));
-        setSaveState("saved");
-      } catch { setSaveState("error"); }
+        localStorage.setItem(TOOLKIT_DRAFT_KEY, serializedDraft);
+        setSavedDraft(serializedDraft);
+        setSaveError(false);
+      } catch { setSaveError(true); }
     }, 350);
     return () => {
       window.clearTimeout(timer);
       // Keep the final edit when navigating away before the debounce completes.
-      try { localStorage.setItem(TOOLKIT_DRAFT_KEY, JSON.stringify({ settings, kind, edits })); } catch { /* No storage available. */ }
+      try { localStorage.setItem(TOOLKIT_DRAFT_KEY, serializedDraft); } catch { /* No storage available. */ }
     };
-  }, [settings, kind, edits, ready]);
+  }, [serializedDraft, ready]);
 
   const update = <K extends keyof ToolkitSettings>(key: K, value: ToolkitSettings[K]) => setSettings((previous) => ({ ...previous, [key]: value }));
   const restore = () => setEdits((previous) => { const next = { ...previous }; delete next[editKey]; delete next[`${editKey}:answers`]; return next; });
@@ -106,7 +125,7 @@ export function TeacherToolkit() {
           <label><span>{t.notes}</span><textarea rows={3} value={settings.notes} maxLength={2000} placeholder={t.notesHint} onChange={(event) => update("notes", event.target.value)} /></label>
           <p className="toolkit-save" role="status">{saveState === "saved" && <Check size={16} aria-hidden="true" />}{saveState === "error" ? t.storageError : saveState === "saved" ? t.saved : t.saving}</p>
           <p className="toolkit-small">{t.local}</p>
-          <div className="toolkit-offline"><WifiOff size={21} aria-hidden="true" /><p>{t.offlineIntro}</p><button type="button" onClick={() => void offline()} disabled={offlineState === "loading" || offlineState === "unsupported"}>{offlineState === "loading" ? <LoaderCircle className="toolkit-spinner" size={18} aria-hidden="true" /> : <Download size={18} aria-hidden="true" />}{offlineState === "loading" ? t.offlineBusy : t.offline}</button><p role="status">{offlineState === "ready" ? t.offlineReady : offlineState === "error" ? t.offlineError : offlineState === "unsupported" ? t.offlineUnsupported : ""}</p></div>
+          <div className="toolkit-offline"><WifiOff size={21} aria-hidden="true" /><p>{t.offlineIntro}</p><button type="button" onClick={() => void offline()} disabled={offlineState === "loading" || offlineUnsupported || offlineState === "unsupported"}>{offlineState === "loading" ? <LoaderCircle className="toolkit-spinner" size={18} aria-hidden="true" /> : <Download size={18} aria-hidden="true" />}{offlineState === "loading" ? t.offlineBusy : t.offline}</button><p role="status">{offlineState === "ready" ? t.offlineReady : offlineState === "error" ? t.offlineError : offlineUnsupported || offlineState === "unsupported" ? t.offlineUnsupported : ""}</p></div>
         </aside>
         <section className="toolkit-output" aria-labelledby="toolkit-preview-title">
           <div className="toolkit-resource-picker"><h2>{t.resource}</h2><div role="group" aria-label={t.resource}>{resourceKinds.map((resource) => <button key={resource} type="button" aria-pressed={kind === resource} onClick={() => { setKind(resource); setEditing(false); }}>{resourceLabels[resource][locale]}</button>)}</div></div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { LoaderCircle, Volume2, VolumeX } from "lucide-react";
 
@@ -25,6 +25,15 @@ const labels = {
   },
 };
 
+function readPlaybackPreference() {
+  try { return localStorage.getItem(STORAGE_KEY) === "unmuted"; }
+  catch { return false; }
+}
+function subscribePlaybackPreference(onChange: () => void) {
+  window.addEventListener("storage", onChange);
+  return () => window.removeEventListener("storage", onChange);
+}
+
 /** Keep mounted in the root layout; route content never owns the audio element. */
 export function BackgroundAudio() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -35,7 +44,9 @@ export function BackgroundAudio() {
   const wantsPlayback = useRef(false);
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [preferredPlaying, setPreferredPlaying] = useState(false);
+  const storedPreference = useSyncExternalStore(subscribePlaybackPreference, readPlaybackPreference, () => false);
+  const [preferredOverride, setPreferredPlaying] = useState<boolean | null>(null);
+  const preferredPlaying = preferredOverride ?? storedPreference;
   const [error, setError] = useState(false);
   const [locale, setLocale] = useState<"en" | "km">("en");
   const [controlHost, setControlHost] = useState<HTMLElement | null>(null);
@@ -96,11 +107,6 @@ export function BackgroundAudio() {
     if (audio) {
       audio.muted = true;
       audio.volume = 0;
-    }
-    try {
-      setPreferredPlaying(localStorage.getItem(STORAGE_KEY) === "unmuted");
-    } catch {
-      /* Default to paused. */
     }
     // Home owns the language switch; the persistent player observes its locale.
     const updateLocale = () =>
