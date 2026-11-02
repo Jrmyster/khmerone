@@ -1,0 +1,121 @@
+/* Original Khmer One book layout. The Bloom player supplies navigation. */
+#bloomDataDiv {
+  display: none;
+}
+
+.bloom-page {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #f6faf8;
+  color: #163d36;
+}
+
+.Device16x9Portrait {
+  width: 360px;
+  height: 640px;
+}
+
+.Device16x9Landscape {
+  width: 640px;
+  height: 360px;
+}
+
+.marginBox {
+  position: absolute;
+  inset: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bloom-editable {
+  display: none;
+  font-family: "Khmer One Reader", Arial, sans-serif;
+  font-size: 19px;
+  line-height: 1.55;
+}
+
+.bloom-editable.bloom-visibility-code-on {
+  display: block;
+}
+
+.bloom-editable[lang="km"] {
+  font-size: 19px;
+  line-height: 1.8;
+}
+
+.bloom-editable h1 {
+  margin: 0;
+  font-size: 29px;
+  font-weight: 700;
+  line-height: 1.22;
+  color: #123f36;
+}
+
+.bloom-editable[lang="km"] h1 {
+  font-size: 25px;
+  line-height: 1.5;
+}
+
+.bloom-editable p {
+  margin: 0;
+}
+
+.bloom-editable .eyebrow {
+  margin-bottom: 7px;
+  color: #38776c;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.bloom-editable[lang="km"] .eyebrow {
+  font-size: 13px;
+}
+
+.illustration {
+  width: 100%;
+  height: 184px;
+  flex: 0 0 184px;
+  overflow: hidden;
+  border: 1px solid #dbece5;
+  border-radius: 18px;
+  background: #eaf5ef;
+}
+
+.illustration img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lessonText {
+  min-height: 0;
+}
+
+.bloom-editable .reflection {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 2px solid #c9ded5;
+  font-size: 16px;
+  font-weight: 700;
+  color: #246454;
+}
+
+.bloom-editable[lang="km"] .reflection {
+  font-size: 17px;
+}
+
+.pageNumber {
+  margin-top: auto;
+  color: #56746a;
+  font: 700 12px/1.4 Arial, sans-serif;
+  text-align: right;
+}
+
+/* Useful when viewing the source book directly, outside Bloom. */
+body > .bloom-page {
+  margin: 18px auto;
+}
