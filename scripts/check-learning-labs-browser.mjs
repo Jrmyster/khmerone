@@ -75,7 +75,7 @@ try {
   console.log('PASS: vocabulary and saved schedule');
 
   await open('evidence');
-  const evidence = page.frameLocator('iframe.science-frame').frameLocator('iframe');
+  const evidence = page.frameLocator('iframe.science-frame');
   await evidence.getByRole('radio').first().check();
   await evidence.getByRole('button',{name:'Check answer'}).click();
   await evidence.locator('.ko-feedback').filter({hasText:'Correct'}).waitFor();
@@ -111,7 +111,13 @@ try {
   await page.frameLocator('#molecule-frame').locator('canvas').waitFor();
   assert.equal(await page.frameLocator('#molecule-frame').locator('#error').innerText(),'');
   await open('evidence');
-  await page.frameLocator('iframe.science-frame').frameLocator('iframe').getByRole('radio').first().waitFor();
+  const offlineEvidence = page.frameLocator('iframe.science-frame');
+  await offlineEvidence.getByRole('radio').first().check();
+  await offlineEvidence.getByRole('button',{name:'Check answer'}).click();
+  await offlineEvidence.locator('.ko-feedback').filter({hasText:'Correct'}).waitFor();
+  await offlineEvidence.getByRole('button',{name:'Try again'}).click();
+  assert.equal(await offlineEvidence.locator('input:checked').count(),0);
+  assert.equal(await offlineEvidence.locator('.ko-feedback').innerText(),'');
   await open('reading');
   await page.frameLocator('.reading-frame').locator('.bloom-page').first().waitFor({state:'attached'});
   assert.deepEqual(errors,[]);

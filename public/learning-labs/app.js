@@ -52,7 +52,7 @@ async function downloadPack() {
       resetTimeout();
       channel.port1.onmessage = ({data}) => {
         if (data.progress) {resetTimeout(); packStatus(t(`Saving ${data.progress} / ${data.total} files…`,`កំពុងរក្សាទុក ${data.progress} / ${data.total}…`));}
-        if (typeof data.ok === 'boolean') {clearTimeout(timer); channel.port1.close(); data.ok ? resolve() : reject(new Error('Download failed'));}
+        if (typeof data.ok === 'boolean') {clearTimeout(timer); channel.port1.close(); if (data.ok) resolve(); else reject(new Error('Download failed'));}
       };
       target.postMessage({type:'DOWNLOAD_LEARNING_PACK'}, [channel.port2]);
     });
