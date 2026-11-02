@@ -7,10 +7,8 @@ import { gunzipSync } from 'node:zlib';
 import { dataset } from '../public/brain-scan-explorer/lesson.js';
 const base = resolve(dirname(fileURLToPath(import.meta.url)), '../public/brain-scan-explorer');
 const version = '0.69.0';
-const registry = 'https://registry.npmjs.org/@niivue/niivue/0.69.0';
 const archiveURL = 'https://registry.npmjs.org/@niivue/niivue/-/niivue-0.69.0.tgz';
-// The initial verification run records registry integrity; pin before release.
-const pinnedIntegrity = null;
+const pinnedIntegrity = 'sha512-YMjQvJgD1W2b7DuoxkwlC4VxbrgIePRJ5qyQzXKxi2v2MBVg285P/CIQyg46oDDGDIcaNlbd+MhtO/edMbXJkA==';
 const fontURL = 'https://registry.npmjs.org/@fontsource/noto-sans-khmer/-/noto-sans-khmer-5.2.5.tgz';
 const fontIntegrity = 'sha512-jguA0+b/wd8uJWUrqp1GEZiJ668wXDriup/RwZETrpEE5UESPihS+xIKDKplF/6oJn4c3jlDKT8WRKbSKHPsgA==';
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -42,26 +40,26 @@ function unpack(archive) {
   return entries;
 }
 await mkdir(join(base,'vendor'),{recursive:true}); await mkdir(join(base,'assets'),{recursive:true});
-const metadata = JSON.parse((await download(registry,1000000)).toString());
-if (metadata.version !== version || metadata.dist?.tarball !== archiveURL || !metadata.dist?.integrity?.startsWith('sha512-')) throw new Error('Unexpected registry metadata');
 const archive = await download(archiveURL,60000000);
-const expected = pinnedIntegrity || metadata.dist.integrity;
-if (integrity(archive) !== expected || metadata.dist.integrity !== expected) throw new Error('NiiVue archive integrity mismatch');
+if (integrity(archive) !== pinnedIntegrity) throw new Error('NiiVue archive integrity mismatch');
 console.log('NIIVUE_PIN', JSON.stringify({version, integrity:integrity(archive), tarball:archiveURL}));
 const entries = unpack(archive);
-console.log('NIIVUE_BROWSER_FILES', JSON.stringify(entries.filter(e => /(?:LICENSE|NOTICE|build\/index.min.js|dist\/)/i.test(e.name)).map(e => [e.name,e.bytes.length])));
 const encoded = entries.find(e => e.name === 'package/build/index.min.js');
 if (!encoded) throw new Error('Missing self-contained NiiVue browser module');
-// NiiVue publishes an encoded ESM export for HTML embedding. Decode as data, never eval.
+// Decode the published HTML-embedding ESM as data, never eval.
 const wrapper = encoded.bytes.toString('utf8');
 const match = wrapper.match(/^\s*export\s+const\s+esm\s*=\s*("(?:[^"\\]|\\.)*")\s*;?\s*$/s);
 if (!match) throw new Error('Unexpected NiiVue encoded ESM format');
 const moduleSource = decodeURIComponent(JSON.parse(match[1]));
 if (!moduleSource.includes('Niivue') || /\bfrom\s*["'](?:@|\.\/|\.\.\/)/.test(moduleSource)) throw new Error('NiiVue module is not self-contained');
 await writeFile(join(base,'vendor','niivue.js'),moduleSource);
-const licenses = entries.filter(e => /(?:^|\/)(?:LICENSE|NOTICE|COPYING)(?:[.\w-]*)$/i.test(e.name));
-if (!licenses.length) throw new Error('NiiVue distribution license missing');
-await writeFile(join(base,'vendor','NIIVUE-LICENSE.txt'),licenses.map(e => e.name + '\n\n' + e.bytes.toString('utf8')).join('\n\n--------------------\n\n'));
+// npm omits the repository-root LICENSE. Retain the exact upstream v0.69.0 notice.
+const license = await readFile(join(base,'NIIVUE-LICENSE.txt'),'utf8');
+const licenseGitHash = createHash('sha1').update(`blob ${Buffer.byteLength(license)}\0`).update(license).digest('hex');
+if (licenseGitHash !== 'a592d66dc5dbde86b58200ef9145f9b3e12b55f7') throw new Error('Upstream license changed');
+const notices = moduleSource.match(/\/\*![\s\S]*?\*\//g) || [];
+await writeFile(join(base,'vendor','NIIVUE-LICENSE.txt'),license + '\n\nBundled module notices (also retained in the unmodified module):\n\n' + notices.join('\n\n'));
+console.log('NIIVUE_MODULE',JSON.stringify({bytes:Buffer.byteLength(moduleSource),retainedNotices:notices.length}));
 const fontArchive = await download(fontURL,5000000);
 if (integrity(fontArchive) !== fontIntegrity) throw new Error('Font integrity mismatch');
 const fonts = unpack(fontArchive);
