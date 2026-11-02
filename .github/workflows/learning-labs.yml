@@ -1,0 +1,39 @@
+name: Learning Labs validation
+on:
+  push:
+    paths: ['public/learning-labs/**', 'scripts/*learning-labs*', 'tests/learning-labs.test.mjs', '.github/workflows/learning-labs.yml']
+  pull_request:
+    paths: ['public/learning-labs/**', 'scripts/*learning-labs*', 'tests/learning-labs.test.mjs', '.github/workflows/learning-labs.yml']
+permissions:
+  contents: read
+concurrency:
+  group: learning-labs-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  activities:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - name: Check lesson logic and data
+        run: node --test tests/learning-labs.test.mjs
+      - name: Prepare pinned browser runtimes and offline manifest
+        run: node scripts/prepare-learning-labs.mjs
+      - name: Install isolated browser test dependency
+        run: |
+          npm install --prefix /tmp/khmerone-browser-check --ignore-scripts --no-package-lock playwright@1.56.1
+          /tmp/khmerone-browser-check/node_modules/.bin/playwright install --with-deps chromium
+      - name: Exercise local activities online and offline
+        run: node scripts/check-learning-labs-browser.mjs
+      - name: Retain browser screenshots
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: learning-labs-browser-checks
+          path: learning-labs-test-results/
+          retention-days: 7

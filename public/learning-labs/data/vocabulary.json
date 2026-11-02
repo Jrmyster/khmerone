@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "title": {
+    "en": "Science and classroom vocabulary",
+    "km": "ពាក្យវិទ្យាសាស្ត្រ និងពាក្យក្នុងថ្នាក់រៀន"
+  },
+  "cards": [
+    {
+      "id": "evidence",
+      "category": "scientific-method",
+      "en": {
+        "term": "Evidence",
+        "definition": "Observations, measurements, or other information used to evaluate a claim.",
+        "example": "Our temperature measurements help us test whether water warms in sunlight."
+      },
+      "km": {
+        "term": "ភស្តុតាង",
+        "definition": "ការសង្កេត ការវាស់វែង ឬព័ត៌មានផ្សេងៗ ដែលប្រើដើម្បីវាយតម្លៃការអះអាងមួយ។",
+        "example": "ទិន្នន័យសីតុណ្ហភាពរបស់យើងជួយសាកល្បងថា ទឹកក្តៅឡើងក្រោមពន្លឺព្រះអាទិត្យឬអត់។"
+      }
+    },
+    {
+      "id": "observation",
+      "category": "scientific-method",
+      "en": {
+        "term": "Observation",
+        "definition": "The act of noticing and recording something, using our senses or instruments.",
+        "example": "We record the plant's height each day as part of our observations."
+      },
+      "km": {
+        "term": "ការសង្កេត",
+        "definition": "ការពិនិត្យ និងកត់ត្រាអ្វីមួយ ដោយប្រើការមើល ការស្តាប់ ឬឧបករណ៍។",
+        "example": "យើងកត់ត្រាកម្ពស់របស់រុក្ខជាតិរាល់ថ្ងៃ ជាផ្នែកមួយនៃការសង្កេតរបស់យើង។"
+      }
+    },
+    {
+      "id": "hypothesis",
+      "category": "scientific-method",
+      "en": {
+        "term": "Hypothesis",
+        "definition": "A proposed explanation that can be tested using evidence.",
+        "example": "Our hypothesis is that the plant's slow growth is caused by too little light."
+      },
+      "km": {
+        "term": "សម្មតិកម្ម",
+        "definition": "ការពន្យល់ដែលបានស្នើឡើង ហើយអាចសាកល្បងដោយប្រើភស្តុតាង។",
+        "example": "សម្មតិកម្មរបស់យើងគឺ រុក្ខជាតិលូតលាស់យឺតដោយសារទទួលបានពន្លឺតិចពេក។"
+      }
+    },
+    {
+      "id": "experiment",
+      "category": "scientific-method",
+      "en": {
+        "term": "Experiment",
+        "definition": "A planned test used to investigate a question or a hypothesis.",
+        "example": "In our experiment, we compare similar plants that receive different amounts of light."
+      },
+      "km": {
+        "term": "ការពិសោធន៍",
+        "definition": "ការសាកល្បងដែលបានរៀបចំទុកជាមុន ដើម្បីសិក្សាសំណួរ ឬសម្មតិកម្មមួយ។",
+        "example": "ក្នុងការពិសោធន៍របស់យើង យើងប្រៀបធៀបរុក្ខជាតិស្រដៀងគ្នាដែលទទួលបានពន្លឺក្នុងបរិមាណខុសគ្នា។"
+      }
+    },
+    {
+      "id": "atom",
+      "category": "chemistry",
+      "en": {
+        "term": "Atom",
+        "definition": "The smallest unit of a chemical element that retains that element's chemical identity.",
+        "example": "An oxygen atom has eight protons in its nucleus."
+      },
+      "km": {
+        "term": "អាតូម",
+        "definition": "ឯកតាតូចបំផុតនៃធាតុគីមីមួយ ដែលនៅតែរក្សាអត្តសញ្ញាណគីមីរបស់ធាតុនោះ។",
+        "example": "អាតូមអុកស៊ីសែនមួយមានប្រូតុងប្រាំបីក្នុងស្នូលរបស់វា។"
+      }
+    },
+    {
+      "id": "molecule",
+      "category": "chemistry",
+      "en": {
+        "term": "Molecule",
+        "definition": "An electrically neutral group of two or more atoms held together by chemical bonds.",
+        "example": "A water molecule contains two hydrogen atoms and one oxygen atom."
+      },
+      "km": {
+        "term": "ម៉ូលេគុល",
+        "definition": "ក្រុមអាតូមពីរ ឬច្រើន ដែលភ្ជាប់គ្នាដោយចំណងគីមី និងមានបន្ទុកអគ្គិសនីសរុបសូន្យ។",
+        "example": "ម៉ូលេគុលទឹកមួយមានអាតូមអ៊ីដ្រូសែនពីរ និងអាតូមអុកស៊ីសែនមួយ។"
+      }
+    },
+    {
+      "id": "energy",
+      "category": "physics",
+      "en": {
+        "term": "Energy",
+        "definition": "A physical quantity that can be transferred to produce changes, such as motion or heating.",
+        "example": "Sunlight transfers energy to the water, which can make its temperature rise."
+      },
+      "km": {
+        "term": "ថាមពល",
+        "definition": "បរិមាណរូបវិទ្យាមួយដែលអាចផ្ទេរ ដើម្បីបង្កការប្រែប្រួល ដូចជា ចលនា ឬការឡើងកម្តៅ។",
+        "example": "ពន្លឺព្រះអាទិត្យផ្ទេរថាមពលទៅទឹក ដែលអាចធ្វើឱ្យសីតុណ្ហភាពទឹកកើនឡើង។"
+      }
+    },
+    {
+      "id": "force",
+      "category": "physics",
+      "en": {
+        "term": "Force",
+        "definition": "A push or pull that can change an object's motion or shape.",
+        "example": "My hand applies a force when I push the book across the desk."
+      },
+      "km": {
+        "term": "កម្លាំង",
+        "definition": "ការរុញ ឬការទាញ ដែលអាចផ្លាស់ប្តូរចលនា ឬរូបរាងរបស់វត្ថុ។",
+        "example": "ដៃរបស់ខ្ញុំបញ្ចេញកម្លាំង នៅពេលខ្ញុំរុញសៀវភៅលើតុ។"
+      }
+    },
+    {
+      "id": "temperature",
+      "category": "physics",
+      "en": {
+        "term": "Temperature",
+        "definition": "A measure of how hot or cold something is.",
+        "example": "The thermometer shows that the water's temperature is 25 degrees Celsius."
+      },
+      "km": {
+        "term": "សីតុណ្ហភាព",
+        "definition": "រង្វាស់ដែលបង្ហាញថាវត្ថុមួយក្តៅ ឬត្រជាក់កម្រិតណា។",
+        "example": "ទែម៉ូម៉ែត្របង្ហាញថា សីតុណ្ហភាពទឹកគឺ ២៥ អង្សាសេ។"
+      }
+    },
+    {
+      "id": "measurement",
+      "category": "classroom",
+      "en": {
+        "term": "Measurement",
+        "definition": "The process of finding a quantity's value by comparing it with a unit or standard.",
+        "example": "We use a ruler to measure the pencil's length in centimetres."
+      },
+      "km": {
+        "term": "ការវាស់វែង",
+        "definition": "ដំណើរការកំណត់តម្លៃនៃបរិមាណមួយ ដោយប្រៀបធៀបវាជាមួយឯកតា ឬស្តង់ដារ។",
+        "example": "យើងប្រើបន្ទាត់ដើម្បីវាស់ប្រវែងខ្មៅដៃជាសង់ទីម៉ែត្រ។"
+      }
+    }
+  ]
+}

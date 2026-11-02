@@ -1,0 +1,44 @@
+[
+  {
+    "package": "jsxgraph",
+    "version": "1.14.2",
+    "url": "https://registry.npmjs.org/jsxgraph/-/jsxgraph-1.14.2.tgz",
+    "integrity": "sha512-OqhkRB5Qcp8dxe5ff9qdG1v/4yLrw2HDcApBoeZWRa3IzLSdIA8TXPwjspsM1XvEcV/eTPwsUFe1aiYejV2TLw=="
+  },
+  {
+    "package": "blockly",
+    "version": "13.4.0",
+    "url": "https://registry.npmjs.org/blockly/-/blockly-13.4.0.tgz",
+    "integrity": "sha512-cWZJV5nocL+VWOG9Vfm6j8shdOLGyvKkyoGOS2bk9u6PKb4qqLp50NeL8YoNMTEi7fHmY37eBYT1yC6Y7/yZ7w=="
+  },
+  {
+    "package": "3dmol",
+    "version": "2.5.5",
+    "url": "https://registry.npmjs.org/3dmol/-/3dmol-2.5.5.tgz",
+    "integrity": "sha512-kqNHouGqq3YfW58174tdERvm0XYTmP0tavQKOqIw1ouc2OJ7epkXEFrtEkVXV0clBZT2Ze2xHRC/qxX0u0qCdw=="
+  },
+  {
+    "package": "ts-fsrs",
+    "version": "5.4.2",
+    "url": "https://registry.npmjs.org/ts-fsrs/-/ts-fsrs-5.4.2.tgz",
+    "integrity": "sha512-z4qop4pzTcyTzuJ566d9EaX/4bZZzhYfeaPImfVr+xcYT65c5oBgFDijUhCE/D+C78eaolHIhKRZ04/RwF+v2g=="
+  },
+  {
+    "package": "h5p-standalone",
+    "version": "3.8.2",
+    "url": "https://registry.npmjs.org/h5p-standalone/-/h5p-standalone-3.8.2.tgz",
+    "integrity": "sha512-r7eQtTzBk/dbaQZ+tA9XD5FeSmyMxlypRZXudiheCnC8zAT0/zNgUvO4MZtZaznwfYVo98o7do5uxLTUQrxxwg=="
+  },
+  {
+    "package": "bloom-player",
+    "version": "2.22.0",
+    "url": "https://registry.npmjs.org/bloom-player/-/bloom-player-2.22.0.tgz",
+    "integrity": "sha512-24Zd8KMR1A7er9jO6IcOUNF8CbCUmMFylpw9WsLQy+o0I/QNcJJUwTs0+zLhpF+h1Io5hpq6eased1azrIy/yw=="
+  },
+  {
+    "package": "@fontsource/noto-sans-khmer",
+    "version": "5.2.5",
+    "url": "https://registry.npmjs.org/@fontsource/noto-sans-khmer/-/noto-sans-khmer-5.2.5.tgz",
+    "integrity": "sha512-jguA0+b/wd8uJWUrqp1GEZiJ668wXDriup/RwZETrpEE5UESPihS+xIKDKplF/6oJn4c3jlDKT8WRKbSKHPsgA=="
+  }
+]

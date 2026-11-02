@@ -1,0 +1,21 @@
+{
+  "bookInstanceId": "93385ff5-2c4a-48e6-ad8d-1f132f46cf21",
+  "title": "Science begins with a question",
+  "originalTitle": "Science begins with a question",
+  "allTitles": "{\"km\":\"វិទ្យាសាស្ត្រចាប់ផ្ដើមពីសំណួរ\",\"en\":\"Science begins with a question\"}",
+  "isRtl": false,
+  "bloomdVersion": 0,
+  "formatVersion": "2.1",
+  "tags": ["topic:Science"],
+  "pageCount": 5,
+  "languages": ["km", "en"],
+  "language-display-names": {
+    "km": "ភាសាខ្មែរ",
+    "en": "English"
+  },
+  "author": "Khmer One",
+  "publisher": "Khmer One",
+  "credits": "Original educational text and SVG illustrations created for Khmer One. Khmer text is a draft for teacher review.",
+  "features": [],
+  "draft": true
+}

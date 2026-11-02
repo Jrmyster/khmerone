@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "coordinateSystem": {
+    "origin": "top-left",
+    "xIncreases": "right",
+    "yIncreases": "down",
+    "directionsClockwise": ["north", "east", "south", "west"],
+    "moveRule": "Move one grid cell forward in the current direction.",
+    "rightRule": "Turn clockwise by 90 degrees without moving.",
+    "waterRule": "Water a plant on the robot's current cell.",
+    "successRule": "Water every plant without leaving the grid. A listed solution is one valid solution; other valid programs may also succeed."
+  },
+  "missions": [
+    {
+      "id": "first-plant",
+      "title": { "en": "1. Help one plant", "km": "១. ជួយដំណាំមួយដើម" },
+      "description": {
+        "en": "Rasmey is facing right. Connect Move forward, then Water the plant. Run your program to water the plant on the next square.",
+        "km": "រស្មីកំពុងបែរមុខទៅស្តាំ។ ភ្ជាប់ប្លុក «ទៅមុខ» រួចប្លុក «ស្រោចទឹកដំណាំ»។ ដំណើរការកម្មវិធីរបស់អ្នកដើម្បីស្រោចទឹកដំណាំនៅក្រឡាបន្ទាប់។"
+      },
+      "learningGoal": {
+        "en": "A sequence gives instructions in order.",
+        "km": "លំដាប់មួយផ្តល់សេចក្តីណែនាំតាមលំដាប់លំដោយ។"
+      },
+      "hint": {
+        "en": "Move onto the plant's square before watering it.",
+        "km": "ទៅដល់ក្រឡាដែលមានដំណាំសិន មុនពេលស្រោចទឹក។"
+      },
+      "successMessage": {
+        "en": "The plant is watered! Your two instructions ran in order.",
+        "km": "ដំណាំទទួលបានទឹកហើយ! សេចក្តីណែនាំទាំងពីររបស់អ្នកបានដំណើរការតាមលំដាប់។"
+      },
+      "gridSize": 5,
+      "start": { "x": 0, "y": 2, "direction": "east" },
+      "plants": [{ "x": 1, "y": 2 }],
+      "allowedBlocks": ["move", "water"],
+      "solutionActions": ["move", "water"],
+      "suggestedProgram": [{ "type": "move" }, { "type": "water" }]
+    },
+    {
+      "id": "garden-loop",
+      "title": { "en": "2. Water a row", "km": "២. ស្រោចទឹកដំណាំមួយជួរ" },
+      "description": {
+        "en": "Three plants grow in a row. Try putting Move forward and Water the plant inside a Repeat block set to 3.",
+        "km": "មានដំណាំបីដើមនៅក្នុងជួរមួយ។ សាកល្បងដាក់ប្លុក «ទៅមុខ» និង «ស្រោចទឹកដំណាំ» ក្នុងប្លុក «ធ្វើម្តងទៀត» ដែលកំណត់ចំនួន ៣ ដង។"
+      },
+      "learningGoal": {
+        "en": "A loop repeats a group of instructions.",
+        "km": "រង្វិលជុំធ្វើក្រុមសេចក្តីណែនាំមួយម្តងហើយម្តងទៀត។"
+      },
+      "hint": {
+        "en": "Each repeat should move one square and then water. Repeat the pair three times.",
+        "km": "ការធ្វើម្តងទៀតនីមួយៗគួរទៅមុខមួយក្រឡា រួចស្រោចទឹក។ ធ្វើសកម្មភាពទាំងពីរនេះបីដង។"
+      },
+      "successMessage": {
+        "en": "All three plants are watered! A repeat block can describe the same pattern with fewer blocks.",
+        "km": "ដំណាំទាំងបីទទួលបានទឹកហើយ! ប្លុក «ធ្វើម្តងទៀត» អាចបង្ហាញលំនាំដដែលដោយប្រើប្លុកតិចជាងមុន។"
+      },
+      "gridSize": 5,
+      "start": { "x": 0, "y": 2, "direction": "east" },
+      "plants": [{ "x": 1, "y": 2 }, { "x": 2, "y": 2 }, { "x": 3, "y": 2 }],
+      "allowedBlocks": ["move", "water", "repeat"],
+      "solutionActions": ["move", "water", "move", "water", "move", "water"],
+      "suggestedProgram": [
+        { "type": "repeat", "times": 3, "body": [{ "type": "move" }, { "type": "water" }] }
+      ]
+    },
+    {
+      "id": "turn-the-corner",
+      "title": { "en": "3. Turn the corner", "km": "៣. បត់នៅកែង" },
+      "description": {
+        "en": "Water the first plant, turn right, then reach the second plant. Turning changes the direction Rasmey faces; it does not move Rasmey to another square.",
+        "km": "ស្រោចទឹកដំណាំទីមួយ បត់ស្តាំ រួចទៅដល់ដំណាំទីពីរ។ ការបត់ប្តូរទិសដែលរស្មីបែរមុខទៅ ប៉ុន្តែមិនធ្វើឱ្យរស្មីផ្លាស់ទៅក្រឡាផ្សេងទេ។"
+      },
+      "learningGoal": {
+        "en": "Movement depends on the robot's current direction.",
+        "km": "ការធ្វើចលនាអាស្រ័យលើទិសបច្ចុប្បន្នរបស់មនុស្សយន្ត។"
+      },
+      "hint": {
+        "en": "Move twice and water. Turn right once. Move twice again and water the second plant.",
+        "km": "ទៅមុខពីរដង រួចស្រោចទឹក។ បត់ស្តាំមួយដង។ ទៅមុខពីរដងទៀត រួចស្រោចទឹកដំណាំទីពីរ។"
+      },
+      "successMessage": {
+        "en": "Both plants are watered! You combined movement, a turn, and watering in one program.",
+        "km": "ដំណាំទាំងពីរទទួលបានទឹកហើយ! អ្នកបានបញ្ចូលការទៅមុខ ការបត់ និងការស្រោចទឹកក្នុងកម្មវិធីតែមួយ។"
+      },
+      "gridSize": 5,
+      "start": { "x": 0, "y": 1, "direction": "east" },
+      "plants": [{ "x": 2, "y": 1 }, { "x": 2, "y": 3 }],
+      "allowedBlocks": ["move", "right", "water", "repeat"],
+      "solutionActions": ["move", "move", "water", "right", "move", "move", "water"],
+      "suggestedProgram": [
+        { "type": "repeat", "times": 2, "body": [{ "type": "move" }] },
+        { "type": "water" },
+        { "type": "right" },
+        { "type": "repeat", "times": 2, "body": [{ "type": "move" }] },
+        { "type": "water" }
+      ]
+    }
+  ]
+}

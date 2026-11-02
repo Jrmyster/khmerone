@@ -1,0 +1,13 @@
+{
+  "title": "What counts as scientific evidence?",
+  "language": "en",
+  "mainLibrary": "H5P.KhmerOneEvidence",
+  "embedTypes": ["iframe"],
+  "preloadedDependencies": [
+    {
+      "machineName": "H5P.KhmerOneEvidence",
+      "majorVersion": 1,
+      "minorVersion": 0
+    }
+  ]
+}

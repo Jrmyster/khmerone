@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="336" height="200" viewBox="0 0 336 200" role="img" aria-labelledby="title">
+  <title id="title">A ruler and a blank results table</title>
+  <rect width="336" height="200" fill="#eaf5ef"/>
+  <rect x="171" y="25" width="130" height="121" rx="9" fill="#fffdf6" stroke="#629784" stroke-width="3"/>
+  <rect x="211" y="17" width="51" height="17" rx="5" fill="#87b8a4"/>
+  <path d="M186 57h99M186 81h99M186 105h99M186 129h99M217 46v83M251 46v83" fill="none" stroke="#a9cabb" stroke-width="2"/>
+  <path d="M51 82h19l9-13h23l10 13h14v18H51z" fill="#edac56" stroke="#af763a" stroke-width="1"/>
+  <path d="M82 74h17l6 8H76z" fill="#fff4da"/>
+  <circle cx="68" cy="101" r="10" fill="#294b46"/><circle cx="109" cy="101" r="10" fill="#294b46"/>
+  <circle cx="68" cy="101" r="4" fill="#eaf5ef"/><circle cx="109" cy="101" r="4" fill="#eaf5ef"/>
+  <path d="M30 115h108" stroke="#397d70" stroke-width="5" stroke-linecap="round"/>
+  <rect x="26" y="155" width="283" height="27" rx="4" fill="#f0c66f" stroke="#c59a46" stroke-width="2"/>
+  <path d="M39 156v14m15-14v8m15-8v14m15-14v8m15-8v14m15-14v8m15-8v14m15-14v8m15-8v14m15-14v8m15-8v14m15-14v8m15-8v14m15-14v8m15-8v14m15-14v8m15-8v14m15-14v8" fill="none" stroke="#85662b" stroke-width="2"/>
+  <path d="M50 43a26 26 0 0 1 47 7m-1-11 2 13-13-2" fill="none" stroke="#76aa95" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
