@@ -1,0 +1,13 @@
+ICBM 152 Nonlinear atlases version 2009
+Source: https://www.bic.mni.mcgill.ca/ServicesAtlases/ICBM152NLin2009
+
+Copyright (C) 1993–2004 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University. Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appear in all copies. The authors and McGill University make no representations about the suitability of this software for any purpose. It is provided “as is” without express or implied warranty.
+The authors are not responsible for any data loss, equipment damage, property loss, or injury to subjects or patients resulting from the use or misuse of this software package.
+
+This app distributes the derived mni152.nii.gz teaching volume from:
+https://github.com/niivue/niivue-demo-images/tree/f6f98294c1fa89a3a32e8a44eab92368374150a0
+The upstream README identifies mni152 as derived from the ICBM 152 Nonlinear atlases version 2009. The file is retained without modification; NiiVue reorients and renders it for display. It is a reference template, not an individual patient record.
+
+Please acknowledge the publications specified by the atlas authors:
+VS Fonov, AC Evans, K Botteron, CR Almli, RC McKinstry, DL Collins and BDCG. Unbiased average age-appropriate atlases for pediatric studies. NeuroImage 54(1), January 2011. doi:10.1016/j.neuroimage.2010.07.033
+VS Fonov, AC Evans, RC McKinstry, CR Almli and DL Collins. Unbiased nonlinear average age-appropriate brain templates from birth to adulthood. NeuroImage 47(Supplement 1), July 2009, S102. doi:10.1016/S1053-8119(09)70884-5

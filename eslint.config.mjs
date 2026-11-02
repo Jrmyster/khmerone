@@ -12,22 +12,20 @@ const eslintConfig = defineConfig([
       "@next/next/no-html-link-for-pages": "off",
     },
   },
-  // Override default ignores of eslint-config-next.
   globalIgnores([
     ".next/**", "out/**", "build/**", "next-env.d.ts",
     "public/learning-labs/vendor/**", "learning-labs-test-results/**",
     "public/virtual-microscope/vendor/**", "microscope-test-results/**",
+    "public/brain-scan-explorer/vendor/**", "brain-test-results/**",
   ]),
   {
     files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],
     rules: {
-      // These files are vendored verbatim from shadcn@4.17.0. Keep the
-      // registry source intact while applying the stricter rules to Site code.
+      // These files are vendored verbatim from shadcn@4.17.0.
       "@typescript-eslint/no-unused-vars": "off",
       "react-hooks/purity": "off",
       "react-hooks/set-state-in-effect": "off",
     },
   },
 ]);
-
 export default eslintConfig;
