@@ -1,4 +1,5 @@
 import { dataset, views, questions, selectView, boundedIndex, displayWindow, gradeAnswer, readNote } from './lesson.js';
+import { viewerOptions } from './viewer-options.js';
 
 const $ = id => document.getElementById(id);
 const copy = {
@@ -46,7 +47,6 @@ const t = (en, km) => language === 'km' ? km : en;
 const text = value => value[language];
 function updateURL() {
   const url = new URL(location.href);
-  // Drop unrecognized query parameters; they never become volume URLs.
   url.search = new URLSearchParams({ lang: language, view: view.id }).toString();
   history.replaceState(null, '', url);
 }
@@ -85,7 +85,6 @@ function syncPosition() {
 function applyPosition() {
   if (!loaded) return;
   const desired = ['x', 'y', 'z'].map((axis, index) => boundedIndex($(`slice-${axis}`).value, dimensions[index]));
-  // The pinned NiiVue release maps these indices in its reoriented RAS volume.
   nv.scene.crosshairPos = nv.vox2frac(desired);
   nv.moveCrosshairInVox(0, 0, 0);
   syncPosition();
@@ -123,16 +122,16 @@ async function loadBrain() {
   $('loading-status').textContent = t('Loading viewer and reference MRI…','កំពុងផ្ទុកកម្មវិធី និងរូបភាព MRI យោង…');
   let timer;
   try {
-    // Probe only after the learner asks to load. Never request personal scans.
     const canvas = $('brain-canvas');
     if (!canvas.getContext('webgl2', { preserveDrawingBuffer: true, alpha: false })) {
       fail(t('Interactive viewing needs WebGL2, which is unavailable here. The lesson and questions still work. Try another supported browser or device.','ការមើលអន្តរកម្មត្រូវការ WebGL2 ដែលមិនមាននៅទីនេះ។ មេរៀន និងសំណួរនៅតែប្រើបាន។ សូមសាកល្បងកម្មវិធីរុករក ឬឧបករណ៍ផ្សេង។')); return;
     }
     const { Niivue } = await import('./vendor/niivue.js');
-    nv = new Niivue({ isRadiologicalConvention: false, isDragAndDropEnabled: false, isColorbar: false, show3Dcrosshair: true, crosshairWidth: 1, crosshairColor: [0.65, 0.92, 0.84, 1], backColor: [0.02, 0.04, 0.07, 1], textHeight: 0.035 });
+    nv = new Niivue(viewerOptions());
     nv.onLocationChange = syncPosition;
     await nv.attachToCanvas(canvas);
     nv.setRadiologicalConvention(false); nv.setHighResolutionCapable(1); nv.setDragMode(nv.dragModes.none);
+    nv.setIsOrientationTextVisible(true); nv.setShowAllOrientationMarkers(true);
     const controller = new AbortController(); timer = setTimeout(() => controller.abort(), 60000);
     const response = await fetch(new URL(dataset.file, import.meta.url), { signal: controller.signal });
     if (!response.ok) throw new Error('MRI download failed');
@@ -145,7 +144,7 @@ async function loadBrain() {
     dimensions = Array.from(volume.dimsRAS).slice(1, 4);
     if (dimensions.length !== 3 || dimensions.some(n => !Number.isInteger(n) || n < 2 || n > 1024)) throw new Error('Unexpected volume dimensions');
     originalRange = [volume.cal_min, volume.cal_max];
-    displayWindow(...originalRange, 50, 100); // Reject invalid display metadata.
+    displayWindow(...originalRange, 50, 100);
     ['x','y','z'].forEach((axis,index) => { $(`slice-${axis}`).max = String(dimensions[index] - 1); $(`slice-${axis}`).value = String(Math.floor((dimensions[index] - 1) / 2)); });
     loaded = true; loading = false; $('start-panel').hidden = true; $('brain-canvas').dataset.ready = 'true';
     $('brain-canvas').dataset.dimensions = dimensions.join(','); enableControls(true); resetView(); translate();
@@ -191,7 +190,7 @@ for (const axis of ['x','y','z']) $(`slice-${axis}`).addEventListener('input', a
 $('window-center').addEventListener('input', contrast); $('window-width').addEventListener('input', contrast);
 $('expand').addEventListener('click', () => expand(!expanded));
 document.addEventListener('keydown', event => { if (event.key === 'Escape' && expanded) { expand(false); $('expand').focus(); } });
-// The page accepts only the packaged reference. Stop file/URL drops before any library handler.
+// Only the packaged reference is accepted. Capture drops before library handlers.
 for (const type of ['drop','dragover']) document.addEventListener(type, event => { event.preventDefault(); event.stopImmediatePropagation(); }, true);
 $('language').addEventListener('click', () => { language = language === 'km' ? 'en' : 'km'; try { localStorage.setItem('khmerone-locale', language); } catch { /* Session preference still works. */ } translate(); });
 $('check-answer').addEventListener('click', () => {
