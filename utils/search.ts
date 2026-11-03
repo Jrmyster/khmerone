@@ -3,30 +3,18 @@ import { rotatingSearchPrompts } from "../data/searchPrompts";
 import type { AppEntry } from "../types/app";
 import type { CrewConcept, SkillPathway } from "../types/engagement";
 import { isKhmerOneAlias } from "../lib/khmerUtils";
+import { normalizeSearchText, matchesSearchFields, searchScore } from "../lib/search";
+export { normalizeSearchText } from "../lib/search";
 
 /** Keep letters, numbers and combining marks, including Khmer script. */
-export function normalizeSearchText(value: string = ""): string {
-  return value.normalize("NFKC").toLocaleLowerCase().replace(/[\s\p{Cf}\p{P}\p{S}]+/gu, "");
-}
-
-function matchesFields(fields: string[], query: string): boolean {
-  const trimmed = query.normalize("NFKC").trim();
-  if (!trimmed) return true;
-  const content = normalizeSearchText(fields.join(" "));
-  const compactQuery = normalizeSearchText(trimmed);
-  if (!compactQuery) return true;
-  if (content.includes(compactQuery)) return true;
-  return trimmed.split(/\s+/u).map(normalizeSearchText).filter(Boolean)
-    .every((token) => content.includes(token));
-}
+const matchesFields = matchesSearchFields;
 
 export function searchAppCatalog(entries: AppEntry[], query: string): AppEntry[] {
   if (isKhmerOneAlias(query)) return entries;
   const normalizedQuery = normalizeSearchText(query);
-  const featured = normalizedQuery && rotatingSearchPrompts.find((item) =>
-    [item.query, item.en, item.km].some((text) => normalizeSearchText(text) === normalizedQuery));
-  if (featured) return entries.filter((app) => app.id === featured.appId);
-  return entries.filter((app) => matchesFields([
+  const featured = normalizedQuery ? rotatingSearchPrompts.find((item) =>
+    [item.query, item.en, item.km].some((text) => normalizeSearchText(text) === normalizedQuery)) : undefined;
+  return entries.map((app, index) => ({ app, index, score: !query.trim() ? 1 : searchScore([app.title.en, app.title.km], [
     app.id, app.url ?? "", app.category, app.icon,
     app.title.en, app.title.km,
     app.tagline.en, app.tagline.km,
@@ -38,7 +26,8 @@ export function searchAppCatalog(entries: AppEntry[], query: string): AppEntry[]
     ...app.grades.flatMap((grade) => [grade, gradeLabels[grade].en, gradeLabels[grade].km]),
     ...app.features.flatMap((feature) => [feature.en, feature.km]),
     ...(app.tags ?? []),
-  ], query));
+  ], query) + (app.id === featured?.appId ? 2000 : 0) }))
+    .filter(result => result.score > 0).sort((a, b) => b.score - a.score || a.index - b.index).map(result => result.app);
 }
 
 export function searchSkillPathways(entries: SkillPathway[], query: string): SkillPathway[] {

@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="km">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101827" />
+    <meta name="description" content="Explore data and evidence with a guided Khmer and English CODAP lesson, practice data, and a printable worksheet from Khmer One." />
+    <title>Khmer One · CODAP Evidence &amp; Data Lab</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23101827'/%3E%3Cpath d='M8 23V9m0 14h17M13 19v-5m5 5V7m5 12v-8' fill='none' stroke='%2373e3df' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0c1320;
+        --panel: #121e30;
+        --panel-light: #19283d;
+        --line: #304158;
+        --ink: #f4f6fa;
+        --muted: #b3c1d1;
+        --cyan: #85eee5;
+        --coral: #ffb3a4;
+        --yellow: #f3d591;
+        font-family: "Noto Sans Khmer", "Kantumruy Pro", "Khmer OS System", system-ui, sans-serif;
+        font-size: 16px;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.75; }
+      button, input, textarea, select { font: inherit; }
+      button, a { -webkit-tap-highlight-color: transparent; }
+      button { cursor: pointer; }
+      a { color: var(--cyan); text-underline-offset: .2em; }
+      a:hover { color: #c1fff9; }
+      button:focus-visible, a:focus-visible, textarea:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+        outline: 3px solid var(--yellow); outline-offset: 4px;
+      }
+      h1, h2, h3, p { margin-top: 0; }
+      h2 { font-size: clamp(1.25rem, 2.3vw, 1.6rem); line-height: 1.6; margin-bottom: 10px; }
+      h3 { font-size: 1.05rem; line-height: 1.7; margin-bottom: 8px; }
+      p { margin-bottom: 16px; }
+      svg { display: block; }
+      code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .9em; color: #c4f6f0; overflow-wrap: anywhere; }
+      .wrap { max-width: 1300px; margin-inline: auto; padding-inline: 28px; }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+      .skip-link { position: absolute; top: -100px; left: 16px; z-index: 10; padding: 10px 16px; background: var(--yellow); color: #132033; border-radius: 6px; }
+      .skip-link:focus { top: 12px; }
+      .site-header { border-bottom: 1px solid var(--line); background: #101827; }
+      .header-row { min-height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-block: 14px; flex-wrap: wrap; }
+      .brand { display: inline-flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; }
+      .brand-mark { width: 40px; height: 40px; border: 1px solid #5a9d9b; border-radius: 10px; display: grid; place-items: center; background: #163338; color: var(--cyan); }
+      .brand-name { font-size: 1.13rem; font-weight: 750; line-height: 1.4; }
+      .brand-name small { display: block; color: var(--muted); font-size: .7rem; font-weight: 500; letter-spacing: .07em; margin-top: 3px; }
+      .header-actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+      .home-link { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; color: var(--muted); text-decoration: none; font-size: .88rem; }
+      .languages { display: inline-flex; gap: 3px; border: 1px solid var(--line); border-radius: 9px; padding: 3px; }
+      .languages button { border: 0; border-radius: 6px; background: transparent; color: var(--muted); min-height: 44px; min-width: 56px; padding: 6px 11px; font-weight: 650; }
+      .languages button[aria-pressed="true"] { color: #112b2e; background: var(--cyan); }
+      .hero { display: grid; grid-template-columns: 1.25fr .85fr; align-items: center; gap: 48px; padding-block: 48px 36px; }
+      .eyebrow { display: flex; align-items: center; gap: 9px; color: var(--cyan); font-size: .75rem; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; margin-bottom: 15px; }
+      .eyebrow::before { content: ""; width: 21px; height: 2px; background: var(--cyan); flex-shrink: 0; }
+      h1 { font-size: clamp(2rem, 3.5vw, 3.1rem); line-height: 1.45; letter-spacing: -.035em; font-weight: 760; margin-bottom: 16px; }
+      .hero-copy { color: var(--muted); font-size: 1.04rem; max-width: 680px; }
+      .facts { display: flex; flex-wrap: wrap; gap: 10px; padding: 0; list-style: none; margin: 22px 0 0; }
+      .facts li { border: 1px solid var(--line); border-radius: 50px; padding: 5px 12px; color: #d5e0ea; font-size: .78rem; }
+      .chart-card { min-width: 0; border: 1px solid #39516a; border-radius: 18px; padding: 22px 22px 18px; background: linear-gradient(150deg, #1b3044, #132033 70%); }
+      .chart-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; font-size: .78rem; }
+      .chart-heading strong { color: #e4edf6; font-weight: 600; }
+      .sample-tag { color: var(--coral); font-size: .67rem; padding: 3px 7px; border: 1px solid #775a59; border-radius: 5px; white-space: nowrap; }
+      .mini-chart { width: 100%; height: auto; }
+      .chart-key { display: flex; flex-wrap: wrap; gap: 17px; color: var(--muted); font-size: .75rem; margin-top: 8px; }
+      .chart-key span { display: flex; align-items: center; gap: 7px; }
+      .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex: none; }
+      .dot.sun { background: var(--coral); }
+      .dot.shade { background: var(--cyan); }
+      .synthetic-note { border-left: 3px solid var(--coral); padding: 11px 16px; background: #211e2a; color: #edcec7; font-size: .87rem; margin-bottom: 30px; border-radius: 0 7px 7px 0; }
+      .synthetic-note strong { color: #ffe0d7; }
+      .section-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+      .section-top p { color: var(--muted); margin-bottom: 0; font-size: .91rem; }
+      .section-index { display: inline-block; color: var(--cyan); font-family: ui-monospace, monospace; font-size: .76rem; letter-spacing: .09em; margin-bottom: 4px; }
+      .workspace-section { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); overflow: hidden; }
+      .workspace-head { padding: 25px 25px 18px; }
+      .workspace-head .section-top { margin-bottom: 17px; }
+      .external-badge { flex-shrink: 0; color: var(--muted); font-size: .75rem; background: #1a2b3f; border: 1px solid #3c4c61; border-radius: 5px; padding: 4px 8px; margin-top: 7px; }
+      .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+      .button { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 9px 15px; border: 1px solid #53657d; border-radius: 8px; background: #1b2b40; color: var(--ink); font-weight: 650; font-size: .89rem; text-decoration: none; line-height: 1.65; }
+      .button:hover { background: #293e56; border-color: #849cb4; color: white; }
+      .button.primary { background: var(--cyan); color: #0d3031; border-color: var(--cyan); }
+      .button.primary:hover { background: #b3fff6; border-color: #b3fff6; color: #0d3031; }
+      .button.subtle { background: transparent; }
+      .button svg { width: 17px; height: 17px; flex-shrink: 0; }
+      .mobile-tip { display: none; color: var(--yellow); border: 1px solid #685b3d; border-radius: 7px; padding: 9px 12px; font-size: .82rem; background: #302b20; margin-bottom: 14px; }
+      .launch-note { color: var(--muted); font-size: .76rem; margin: 12px 0 0; max-width: 920px; }
+      .workspace-status { display: flex; align-items: flex-start; gap: 9px; padding: 12px 25px; background: #101b2b; border-block: 1px solid var(--line); color: var(--muted); font-size: .8rem; }
+      .status-light { margin-top: .65em; width: 6px; height: 6px; border-radius: 50%; background: #7a8ea5; flex: none; }
+      .workspace-status[data-state="loading"] .status-light { background: var(--yellow); }
+      .workspace-status[data-state="responded"] .status-light { background: var(--cyan); }
+      .workspace-status[data-state="delayed"] .status-light { background: var(--coral); }
+      .workspace-mount { background: #0e1726; }
+      .workspace-placeholder { min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px; text-align: center; }
+      .placeholder-mark { width: 56px; height: 56px; border: 1px solid #375770; border-radius: 14px; color: #7ab9c6; display: grid; place-items: center; background: #162a3c; margin-bottom: 15px; }
+      .workspace-placeholder h3 { margin-bottom: 5px; font-weight: 600; }
+      .workspace-placeholder p { color: #9bafc4; max-width: 590px; margin-bottom: 0; font-size: .87rem; }
+      .workspace-mount iframe { width: 100%; height: 700px; border: 0; display: block; background: #f5f7f9; }
+      .workspace-footer { padding: 14px 25px; color: var(--muted); font-size: .77rem; border-top: 1px solid var(--line); }
+      .workspace-footer p { margin: 0; }
+      .workspace-footer p + p { margin-top: 9px; }
+      .lesson-section { padding-block: 37px 30px; }
+      .lesson-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+      .step { border: 1px solid var(--line); background: #111d2d; border-radius: 12px; padding: 20px; }
+      .step-number { width: 31px; height: 31px; display: grid; place-items: center; border-radius: 50%; background: #22394b; color: var(--cyan); font-family: ui-monospace, monospace; font-size: .8rem; margin-bottom: 15px; }
+      .step p { color: var(--muted); font-size: .86rem; margin-bottom: 0; }
+      .step .step-detail { margin-top: 12px; font-size: .77rem; color: #d8e5ee; border-top: 1px solid var(--line); padding-top: 12px; }
+      .method-note { display: grid; grid-template-columns: 38px 1fr; align-items: start; gap: 13px; background: #15282d; border: 1px solid #3b5f62; border-radius: 10px; padding: 18px 20px; margin-top: 18px; }
+      .method-note .icon { color: var(--cyan); padding-top: 5px; }
+      .method-note h3 { color: #b8f3e8; font-size: .92rem; margin-bottom: 5px; }
+      .method-note p { color: #bad3d5; font-size: .83rem; margin: 0; }
+      .resource-grid { display: grid; grid-template-columns: .86fr 1.14fr; gap: 22px; align-items: start; padding-bottom: 38px; }
+      .data-section, .worksheet { min-width: 0; padding: 24px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+      .data-section .section-top, .worksheet .section-top { margin-bottom: 17px; }
+      .resource-grid .actions { gap: 8px; }
+      .resource-grid .button { font-size: .79rem; padding: 8px 12px; }
+      .data-note { color: var(--muted); font-size: .79rem; margin: 15px 0 10px; }
+      .table-wrap { overflow-x: auto; margin-top: 17px; border: 1px solid var(--line); border-radius: 8px; }
+      table { border-collapse: collapse; width: 100%; font-size: .8rem; font-variant-numeric: tabular-nums; }
+      caption { text-align: left; padding: 9px 12px; color: var(--muted); font-size: .75rem; background: #0e1b2a; }
+      th, td { padding: 7px 11px; border-top: 1px solid #2a3b50; text-align: right; }
+      th { color: #e1edf6; font-weight: 600; font-size: .74rem; background: #192a3e; }
+      th:first-child, td:first-child { text-align: left; }
+      tbody tr:nth-child(even) { background: #162436; }
+      .sun-value { color: #ffc4b9; }
+      .shade-value { color: #a0efe5; }
+      .dictionary { margin-top: 15px; border-top: 1px solid var(--line); padding-top: 12px; }
+      .dictionary summary { cursor: pointer; min-height: 44px; color: #d2e2ec; font-size: .8rem; padding-block: 8px; }
+      .dictionary dl { display: grid; grid-template-columns: max-content 1fr; gap: 7px 12px; font-size: .78rem; color: var(--muted); margin: 4px 0 0; }
+      .dictionary dt { margin: 0; }
+      .dictionary dd { margin: 0; }
+      .worksheet { background: #172132; }
+      .worksheet-intro { color: var(--muted); font-size: .81rem; }
+      .worksheet-fields { display: grid; gap: 16px; }
+      .answer-field label { display: block; font-size: .86rem; font-weight: 650; margin-bottom: 7px; color: #e7edf5; }
+      .answer-field label span { display: block; }
+      .answer-field label .english-label { color: var(--muted); font-size: .76rem; font-weight: 400; }
+      textarea { display: block; resize: vertical; min-height: 87px; width: 100%; border: 1px solid #506077; border-radius: 7px; padding: 11px 12px; background: #0d1726; color: var(--ink); line-height: 1.7; font-size: .85rem; }
+      .worksheet-actions { margin-top: 19px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+      .worksheet-actions p { margin: 0; color: var(--muted); font-size: .73rem; max-width: 340px; }
+      .site-footer { border-top: 1px solid var(--line); padding-block: 25px 30px; color: var(--muted); font-size: .78rem; }
+      .footer-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 15px; }
+      .site-footer p { margin: 0; }
+      .footer-links { display: flex; flex-wrap: wrap; gap: 17px; }
+      .footer-links a { min-height: 44px; display: inline-flex; align-items: center; }
+      .print-only { display: none; }
+      noscript p { padding: 20px 28px; border: 1px solid var(--coral); margin: 24px; }
+      @media (max-width: 1050px) {
+        .hero { grid-template-columns: 1.1fr .9fr; gap: 25px; }
+        .lesson-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .resource-grid { grid-template-columns: 1fr 1fr; }
+        .header-actions { gap: 12px; }
+      }
+      @media (max-width: 760px) {
+        .wrap { padding-inline: 18px; }
+        .header-row { gap: 10px; min-height: 76px; }
+        .brand-name small { display: none; }
+        .header-actions { gap: 8px; }
+        .home-link { font-size: .75rem; }
+        .home-link .home-label { display: none; }
+        .home-link { min-width: 44px; justify-content: center; font-size: 1.2rem; border: 1px solid var(--line); border-radius: 8px; }
+        .languages button { min-width: 47px; padding-inline: 8px; font-size: .85rem; }
+        .hero { grid-template-columns: 1fr; padding-block: 31px 24px; gap: 22px; }
+        h1 { font-size: 2rem; max-width: 580px; }
+        .hero-copy { font-size: .94rem; }
+        .chart-card { max-width: 580px; width: 100%; padding: 17px 19px 14px; }
+        .hero-visual { display: none; }
+        .synthetic-note { font-size: .79rem; margin-bottom: 24px; }
+        .workspace-head { padding: 20px 17px 15px; }
+        .workspace-head .section-top { gap: 9px; flex-wrap: wrap; }
+        .external-badge { margin: 0; }
+        .mobile-tip { display: block; }
+        .actions .button { flex: 1 1 auto; }
+        .workspace-actions .button { font-size: .82rem; }
+        .new-tab-link { order: -1; flex-basis: 100% !important; background: var(--cyan); color: #0d3031; border-color: var(--cyan); }
+        .workspace-actions .button.primary { background: #1b2b40; color: var(--ink); border-color: #53657d; }
+        .new-tab-link:hover { background: #b3fff6; color: #0d3031; }
+        .workspace-status { padding-inline: 17px; font-size: .75rem; }
+        .workspace-placeholder { min-height: 215px; padding: 25px 19px; }
+        .workspace-placeholder p { font-size: .8rem; }
+        .workspace-mount iframe { height: 78vh; height: 78dvh; min-height: 520px; }
+        .workspace-footer { padding-inline: 17px; }
+        .lesson-section { padding-top: 28px; }
+        .step { padding: 17px; }
+        .resource-grid { grid-template-columns: 1fr; }
+        .data-section, .worksheet { padding: 20px; }
+      }
+      @media (max-width: 420px) {
+        .brand-name { font-size: 1rem; }
+        .brand-mark { width: 33px; height: 36px; border-radius: 8px; }
+        .brand { gap: 7px; }
+        .header-actions { gap: 6px; }
+        .header-row { gap: 6px; }
+        .languages button { min-width: 41px; padding-inline: 5px; }
+        .lesson-grid { grid-template-columns: 1fr; }
+        h1 { font-size: 1.85rem; }
+        .dictionary dl { grid-template-columns: 1fr; gap: 1px; }
+        .dictionary dd { margin-bottom: 10px; }
+      }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+      @page { size: A4; margin: 14mm; }
+      @media print {
+        :root { color-scheme: light; }
+        body { background: white !important; color: #172334 !important; font-size: 10pt; line-height: 1.6; }
+        .site-header, .hero, .synthetic-note, .workspace-section, .lesson-section, .skip-link, .actions, .worksheet-actions, .footer-links, .dictionary, .section-index, .screen-only, noscript { display: none !important; }
+        .wrap { max-width: none; padding: 0; }
+        .resource-grid { display: flex; flex-direction: column; gap: 0; padding: 0; }
+        .worksheet { order: -1; }
+        .worksheet, .data-section { width: 100%; background: white; padding: 0; border: 0; border-radius: 0; }
+        .data-section { break-before: page; }
+        .print-only { display: block; }
+        .print-brand { border-bottom: 2px solid #243c4e; margin-bottom: 13px; padding-bottom: 10px; }
+        .print-brand strong { font-size: 16pt; display: block; }
+        .print-brand p, .print-person { margin: 8px 0; }
+        .print-person { padding-block: 9px; border-bottom: 1px solid #aab3bd; }
+        .print-disclosure { padding: 8px 10px; border: 1px solid #7e8b97; font-size: 9pt; margin-bottom: 15px; }
+        .worksheet .section-top, .worksheet-intro, .data-section .section-top { display: none; }
+        .worksheet-fields { gap: 13px; }
+        .answer-field { break-inside: avoid; }
+        .answer-field label, .answer-field label .english-label { color: #172334; }
+        .answer-field label { font-size: 10pt; margin-bottom: 4px; }
+        .answer-field label .english-label { font-size: 8.5pt; }
+        textarea { display: none; }
+        .written-answer { min-height: 53px; white-space: pre-wrap; overflow-wrap: anywhere; border: 1px solid #abb5bf; padding: 7px 9px; font-size: 10pt; }
+        .print-method { margin-top: 17px; font-size: 8.5pt; }
+        .data-note { color: #172334; font-size: 9pt; }
+        .table-wrap { margin-top: 10px; overflow: visible; border: 1px solid #84919e; }
+        table { font-size: 10pt; }
+        th, td { border-color: #adb7c0; padding: 7px 10px; }
+        caption, th, tbody tr:nth-child(even) { background: white; color: #172334; }
+        th { font-size: 9pt; }
+        .sun-value, .shade-value { color: #172334; }
+        .site-footer { color: #34485a; margin-top: 18px; padding: 10px 0 0; border-color: #aab3bd; font-size: 8pt; }
+        a, code { color: #172334; }
+        h2 { font-size: 16pt; }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="skip">ទៅមាតិកាសំខាន់</a>
+    <header class="site-header">
+      <div class="wrap header-row">
+        <a class="brand home-target" href="/" aria-label="Khmer One">
+          <span class="brand-mark" aria-hidden="true"><svg width="25" height="25" viewBox="0 0 28 28" fill="none"><path d="M6 22V7m0 15h17M11 18v-5m5 5V5m5 13v-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          <span class="brand-name">Khmer One<small data-i18n="brandSub">បន្ទប់ពិសោធន៍ទិន្នន័យ និងភស្តុតាង</small></span>
+        </a>
+        <div class="header-actions">
+          <a class="home-link home-target" href="/" id="homeLink"><span aria-hidden="true">←</span><span class="home-label" data-i18n="home">ទំព័រដើម</span><span class="sr-only" data-i18n="home">ទំព័រដើម</span></a>
+          <div class="languages" role="group" aria-label="Language / ភាសា">
+            <button type="button" data-lang="km" lang="km" aria-pressed="true">ខ្មែរ</button>
+            <button type="button" data-lang="en" lang="en" aria-pressed="false">EN</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main id="main" class="wrap" tabindex="-1">
+      <section class="hero" aria-labelledby="pageTitle">
+        <div>
+          <p class="eyebrow" data-i18n="eyebrow">វិទ្យាសាស្ត្រ · ភស្តុតាង · ការស្រាវជ្រាវ</p>
+          <h1 id="pageTitle" data-i18n="title">សង្កេត។ បង្កើតក្រាហ្វ។ ពន្យល់។</h1>
+          <p class="hero-copy" data-i18n="intro">ស្វែងយល់ពីទិន្នន័យដោយប្រើ CODAP។ ប្រៀបធៀបសីតុណ្ហភាពក្នុងទិន្នន័យគំរូ ហើយសួរថា៖ តើអ្វីអាចគាំទ្រការសន្និដ្ឋានរបស់យើងបាន?</p>
+          <ul class="facts" aria-label="Lesson details">
+            <li data-i18n="duration">២០–៣០ នាទី</li>
+            <li data-i18n="level">សិស្សមធ្យមសិក្សា និងគ្រូ</li>
+            <li data-i18n="pairs">១២ គូ · ទិន្នន័យ ២៤ ជួរ</li>
+          </ul>
+        </div>
+        <div class="hero-visual chart-card">
+          <div class="chart-heading"><strong data-i18n="chartTitle">មើលការប្រែប្រួល</strong><span class="sample-tag" data-i18n="practiceOnly">គំរូសម្រាប់ហាត់</span></div>
+          <svg class="mini-chart" viewBox="0 0 380 190" role="img" aria-labelledby="chartDescription">
+            <title id="chartDescription">Practice temperature dot plot. The distributions overlap. All values are invented and listed in the data table below.</title>
+            <g stroke="#365068" stroke-width="1"><path d="M40 25v130M105 25v130M170 25v130M235 25v130M300 25v130M365 25v130" stroke-dasharray="3 5"/><path d="M40 155h325"/></g>
+            <g fill="#aebfd0" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle"><text x="40" y="176">30.0</text><text x="105" y="176">30.5</text><text x="170" y="176">31.0</text><text x="235" y="176">31.5</text><text x="300" y="176">32.0</text><text x="365" y="176">32.5 °C</text></g>
+            <g id="sunDots" fill="#ffb3a4" stroke="#172538" stroke-width="1.5"></g>
+            <g id="shadeDots" fill="#85eee5" stroke="#172538" stroke-width="1.5"></g>
+          </svg>
+          <div class="chart-key"><span><i class="dot sun" aria-hidden="true"></i><span data-i18n="sunLabel">ទីតាំងមានពន្លឺថ្ងៃ</span></span><span><i class="dot shade" aria-hidden="true"></i><span data-i18n="shadeLabel">ទីតាំងមានម្លប់</span></span></div>
+        </div>
+      </section>
+      <aside class="synthetic-note"><strong data-i18n="inventedTitle">ទិន្នន័យបង្កើតឡើងសម្រាប់ហាត់។</strong> <span data-i18n="inventedBody">លេខទាំងនេះមិនមែនជាការវាស់វែងនៅកម្ពុជា ឬពីការសិក្សាពិតណាមួយទេ។ ប្រើវាសម្រាប់រៀនបង្កើតក្រាហ្វ និងពិចារណាអំពីភស្តុតាង។</span></aside>
+
+      <section class="workspace-section" aria-labelledby="workspaceTitle">
+        <div class="workspace-head">
+          <div class="section-top"><div><span class="section-index">01 / CODAP</span><h2 id="workspaceTitle" data-i18n="workspaceTitle">កន្លែងស្វែងយល់ទិន្នន័យរបស់អ្នក</h2><p data-i18n="workspaceIntro">ចាប់ផ្ដើមជាមួយទិន្នន័យគំរូ ឬកន្លែងធ្វើការទទេ។</p></div><span class="external-badge" data-i18n="externalBadge">កម្មវិធីខាងក្រៅ · មុខងារជាភាសាអង់គ្លេស</span></div>
+          <p class="mobile-tip" data-i18n="mobileTip">នៅលើទូរស័ព្ទ សូមបើក CODAP ក្នុងផ្ទាំងថ្មី ដើម្បីមានកន្លែងធ្វើការធំជាងមុន។ អេក្រង់កុំព្យូទ័រ ឬថេប្លេតងាយស្រួលសម្រាប់អូសក្រាហ្វ។</p>
+          <div class="actions workspace-actions">
+            <button type="button" id="loadPractice" class="button primary"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 15V5m0 10h12M8 12V8m4 4V4m4 8V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span data-i18n="loadPractice">ផ្ទុកទិន្នន័យគំរូ</span></button>
+            <button type="button" id="openBlank" class="button"><span aria-hidden="true">＋</span><span data-i18n="openBlank">បើកកន្លែងធ្វើការទទេ</span></button>
+            <a id="newTab" class="button subtle new-tab-link" href="https://codap.concord.org/app/?v=3&amp;inbounds=true" target="_blank" rel="noopener noreferrer"><span data-i18n="newTab">បើកក្នុងផ្ទាំងថ្មី</span><span aria-hidden="true">↗</span></a>
+          </div>
+          <p class="launch-note" id="launchNote" data-i18n="newTabPractice">ផ្ទាំងថ្មីចាប់ផ្ដើមដោយទិន្នន័យគំរូដើម។ វាមិនចម្លងការកែប្រែក្នុង CODAP ដែលកំពុងបើកទេ។ សូមរក្សាទុកការងាររបស់អ្នកក្នុង CODAP មុនប្ដូរកន្លែងធ្វើការ។</p>
+        </div>
+        <div class="workspace-status" id="workspaceStatus" data-state="idle" role="status" aria-live="polite"><span class="status-light" aria-hidden="true"></span><span id="statusText" data-i18n="statusIdle">CODAP មិនទាន់ផ្ទុកទេ។ ត្រូវការអ៊ីនធឺណិតដើម្បីប្រើកម្មវិធីនេះ។</span></div>
+        <div class="workspace-mount" id="workspaceMount">
+          <div class="workspace-placeholder">
+            <div class="placeholder-mark" aria-hidden="true"><svg width="31" height="31" viewBox="0 0 32 32" fill="none"><path d="M6 24V7m0 17h21" stroke="currentColor" stroke-width="1.8"/><circle cx="13" cy="17" r="2" stroke="currentColor" stroke-width="1.8"/><circle cx="19" cy="11" r="2" stroke="currentColor" stroke-width="1.8"/><circle cx="25" cy="14" r="2" stroke="currentColor" stroke-width="1.8"/></svg></div>
+            <h3 data-i18n="placeholderTitle">ចាប់ផ្ដើមនៅពេលអ្នករួចរាល់</h3>
+            <p data-i18n="placeholderBody">ជ្រើសប៊ូតុងខាងលើដើម្បីផ្ទុក CODAP។ អ្នកក៏អាចអានការណែនាំ មើលតារាង និងទាញយកសន្លឹកកិច្ចការខាងក្រោមបានដែរ។</p>
+          </div>
+        </div>
+        <div class="workspace-footer"><p data-i18n="saveHelp"></p><p data-i18n="importHelp"></p><p><span data-i18n="embedHelp">បើកន្លែងធ្វើការទទេ ឬទិន្នន័យមិនបង្ហាញ សូមបើកក្នុងផ្ទាំងថ្មី។ អ្នកក៏អាចទាញយក CSV ខាងក្រោម ហើយនាំចូលវាក្នុង CODAP។</span> <a href="#data" data-i18n="seeData">មើលទិន្នន័យ និងការទាញយក</a></p></div>
+      </section>
+
+      <section class="lesson-section" aria-labelledby="lessonTitle">
+        <div class="section-top"><div><span class="section-index">02 / <span data-i18n="guidedInquiry">ការស្វែងយល់តាមជំហាន</span></span><h2 id="lessonTitle" data-i18n="lessonTitle">ពីសំណួរ ទៅការសន្និដ្ឋានដោយប្រុងប្រយ័ត្ន</h2><p data-i18n="lessonIntro">ប្រើជំហានទាំងនេះជាមួយគ្នា ឬពិភាក្សាជាមួយមិត្តរួមថ្នាក់។</p></div></div>
+        <div class="lesson-grid">
+          <article class="step"><span class="step-number" aria-hidden="true">1</span><h3 data-i18n="step1Title">ព្យាករជាមុន</h3><p data-i18n="step1Body">តើអ្នករំពឹងថាតម្លៃសីតុណ្ហភាពក្នុងក្រុមណាខ្ពស់ជាង? សរសេរមូលហេតុ និងប្រាប់ថាលទ្ធផលបែបណាអាចធ្វើឱ្យអ្នកប្ដូរគំនិត។</p><p class="step-detail" data-i18n="step1Detail">សម្រាប់ការស៊ើបអង្កេតពិត សូមសរសេរការព្យាករមុនប្រមូលទិន្នន័យ។ ក្រាហ្វគំរូខាងលើបង្ហាញលទ្ធផលដែលបានបង្កើតឡើងសម្រាប់ហាត់។</p></article>
+          <article class="step"><span class="step-number" aria-hidden="true">2</span><h3 data-i18n="step2Title">បង្កើតក្រាហ្វ</h3><p><span data-i18n="step2Before">ក្នុង CODAP បើក Graph រួចអូស</span> <code>condition</code> <span data-i18n="step2Middle">ពីតារាងទៅអ័ក្សផ្ដេក និងអូស</span> <code>temperature_C</code> <span data-i18n="step2After">ទៅអ័ក្សបញ្ឈរ។</span></p><p class="step-detail"><span data-i18n="step2DetailBefore">រក្សាជួរឈរ</span> <code>pair</code> <span data-i18n="step2DetailAfter">ដើម្បីស្គាល់ការសង្កេតដែលត្រូវគ្នា។</span></p></article>
+          <article class="step"><span class="step-number" aria-hidden="true">3</span><h3 data-i18n="step3Title">ប្រៀបធៀបលំនាំ</h3><p data-i18n="step3Body">ប្រៀបធៀបតម្លៃធម្មតា ការបែកខ្ញែក និងការត្រួតស៊ីគ្នារវាងក្រុម។ តើគ្រប់គូសុទ្ធតែបង្ហាញលំនាំដូចគ្នាឬទេ?</p><p class="step-detail" data-i18n="step3Detail">មើលចំណុចទាំងអស់ និងគូនីមួយៗ។ តម្លៃមធ្យមមួយមិនបង្ហាញរឿងទាំងមូលទេ។</p></article>
+          <article class="step"><span class="step-number" aria-hidden="true">4</span><h3 data-i18n="step4Title">ស្គាល់ដែនកំណត់</h3><p data-i18n="step4Body">ទិន្នន័យដែលបង្កើតឡើងនេះមិនអាចបញ្ជាក់ពីឥទ្ធិពលពិតរបស់ពន្លឺថ្ងៃ និងម្លប់បានទេ។ សម្រាប់ទិន្នន័យពិត ក្រាហ្វតែមួយក៏មិនអាចបញ្ជាក់មូលហេតុបានដែរ។</p><p class="step-detail" data-i18n="step4Detail">តើយើងត្រូវដឹងអ្វីខ្លះអំពីទីតាំង ពេលវេលា ឧបករណ៍ និងវិធីប្រមូលទិន្នន័យ?</p></article>
+        </div>
+        <aside class="method-note"><span class="icon" aria-hidden="true"><svg width="29" height="29" viewBox="0 0 32 32" fill="none"><path d="M13 6a3 3 0 0 1 6 0v12a6 6 0 1 1-6 0V6Z" stroke="currentColor" stroke-width="1.8"/><path d="M16 11v12m-6-13H6m4 5H7m15-5h4m-4 5h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="16" cy="23" r="2" fill="currentColor"/></svg></span><div><h3 data-i18n="methodTitle">បើអ្នកវាស់សីតុណ្ហភាពខ្យល់ពិតប្រាកដ</h3><p data-i18n="methodBody">ប្រើឧបករណ៍ដែលបានផ្ទៀងផ្ទាត់ដូចគ្នា នៅកម្ពស់ដូចគ្នា ហើយវាស់គូនីមួយៗក្នុងពេលតែមួយ។ ការពារឧបករណ៍ទាំងពីរពីពន្លឺថ្ងៃផ្ទាល់ និងកត់ត្រាអាកាសធាតុ និងទីតាំង។ ពន្លឺថ្ងៃអាចកម្ដៅឧបករណ៍វាស់ផ្ទាល់ ដូច្នេះវាមិនស្មើនឹងសីតុណ្ហភាពខ្យល់ទេ។</p></div></aside>
+      </section>
+
+      <div class="resource-grid">
+        <section class="data-section" id="data" aria-labelledby="dataTitle">
+          <div class="section-top"><div><span class="section-index">03 / <span data-i18n="openData">ទិន្នន័យសម្រាប់ហាត់</span></span><h2 id="dataTitle" data-i18n="dataTitle">មើលទិន្នន័យដោយខ្លួនឯង</h2><p data-i18n="dataIntro">តារាងនេះមានលេខដូចគ្នានឹងឯកសារ CSV។</p></div></div>
+          <div class="print-only print-brand"><strong>Khmer One · Practice data / ទិន្នន័យសម្រាប់ហាត់</strong><p>Sun and shade / ទីតាំងមានពន្លឺថ្ងៃ និងទីតាំងមានម្លប់</p></div>
+          <div class="actions"><a class="button" href="/codap/data/sun-shade-practice.csv" download="sun-shade-practice.csv"><span aria-hidden="true">↓</span><span data-i18n="downloadData">ទាញយក CSV គំរូ</span></a><button class="button subtle" type="button" id="downloadTemplate"><span data-i18n="downloadTemplate">ទាញយកតារាងទទេ</span></button></div>
+          <p class="data-note" id="templateStatus" role="status"></p><p class="data-note" data-i18n="dataNote">គូនីមួយៗមានតម្លៃ «sun» មួយ និង «shade» មួយ៖ មាន១២គូ មិនមែន២៤ការសាកល្បងឯករាជ្យទេ។ តម្លៃទាំងអស់ត្រូវបានបង្កើតឡើងសម្រាប់ហាត់ មិនមែនជាភស្តុតាងពីការវាស់វែងពិតទេ។</p>
+          <p class="print-only print-disclosure">Invented practice values; not measurements from Cambodia or any real study.<br />តម្លៃបង្កើតឡើងសម្រាប់ហាត់ មិនមែនជាការវាស់វែងនៅកម្ពុជា ឬពីការសិក្សាពិតណាមួយទេ។</p>
+          <div class="table-wrap"><table><caption><span data-i18n="dataCaption" class="screen-only">១២ គូ · ឯកសារ CSV មាន ២៤ ជួរ</span><span class="print-only">12 pairs / ១២ គូ · 24 CSV rows / CSV មាន ២៤ ជួរ</span></caption><thead><tr><th scope="col"><span class="screen-only" data-i18n="pairColumn">គូ</span><span class="print-only">Pair / គូ</span></th><th scope="col"><span class="screen-only" data-i18n="sunColumn">ពន្លឺថ្ងៃ (°C)</span><span class="print-only">Sun / ពន្លឺថ្ងៃ (°C)</span></th><th scope="col"><span class="screen-only" data-i18n="shadeColumn">ម្លប់ (°C)</span><span class="print-only">Shade / ម្លប់ (°C)</span></th></tr></thead><tbody id="dataRows"></tbody></table></div>
+          <details class="dictionary"><summary data-i18n="columnGuide">អត្ថន័យនៃជួរឈរ CSV</summary><dl><dt><code>condition</code></dt><dd data-i18n="conditionDef">sun = ទីតាំងមានពន្លឺថ្ងៃ; shade = ទីតាំងមានម្លប់</dd><dt><code>temperature_C</code></dt><dd data-i18n="temperatureDef">សីតុណ្ហភាពខ្យល់គំរូ គិតជាអង្សាសេ (°C)</dd><dt><code>pair</code></dt><dd data-i18n="pairDef">លេខសម្គាល់គូសង្កេត ១–១២</dd></dl></details>
+        </section>
+        <section class="worksheet" aria-labelledby="worksheetTitle">
+          <div class="section-top"><div><span class="section-index">04 / <span data-i18n="yourReasoning">ការពិចារណារបស់អ្នក</span></span><h2 id="worksheetTitle" data-i18n="worksheetTitle">កត់ត្រាភស្តុតាងរបស់អ្នក</h2></div></div>
+          <p class="worksheet-intro" data-i18n="worksheetIntro">សរសេរការពិចារណារបស់អ្នក ឬបោះពុម្ពសន្លឹកពីរភាសាដើម្បីប្រើក្នុងថ្នាក់។ សំណួរនីមួយៗមានភាសាខ្មែរ និងអង់គ្លេស។</p>
+          <div class="print-only print-brand"><strong>Khmer One · Evidence &amp; Data Lab</strong><p>បន្ទប់ពិសោធន៍ទិន្នន័យ និងភស្តុតាង · CODAP</p></div>
+          <p class="print-only print-person">Name / ឈ្មោះ: ____________________ &nbsp; Class / ថ្នាក់: __________ &nbsp; Date / ថ្ងៃខែ: __________</p>
+          <p class="print-only print-disclosure">Sun and shade: 12 invented pairs for practice, not measurements from Cambodia or a real study.<br />ពន្លឺថ្ងៃ និងម្លប់៖ គូទិន្នន័យ ១២ ដែលបង្កើតឡើងសម្រាប់ហាត់ មិនមែនជាការវាស់វែងនៅកម្ពុជា ឬការសិក្សាពិតទេ។</p>
+          <div class="worksheet-fields">
+            <div class="answer-field"><label for="prediction"><span lang="km">១. តើអ្នកព្យាករអ្វី? តើអ្វីអាចធ្វើឱ្យអ្នកប្ដូរគំនិត?</span><span lang="en" class="english-label">1. What do you predict? What result could change your mind?</span></label><textarea id="prediction" rows="3" spellcheck="true"></textarea><div class="print-only written-answer" data-answer="prediction"></div></div>
+            <div class="answer-field"><label for="comparison"><span lang="km">២. តើក្រុមទាំងពីរខុសគ្នា និងត្រួតស៊ីគ្នាយ៉ាងដូចម្តេច?</span><span lang="en" class="english-label">2. How do the groups differ and overlap? Include a value or pair.</span></label><textarea id="comparison" rows="3" spellcheck="true"></textarea><div class="print-only written-answer" data-answer="comparison"></div></div>
+            <div class="answer-field"><label for="limitation"><span lang="km">៣. តើទិន្នន័យទាំងនេះមិនអាចបញ្ជាក់អ្វីខ្លះ?</span><span lang="en" class="english-label">3. What can these data not establish? Explain one limitation.</span></label><textarea id="limitation" rows="3" spellcheck="true"></textarea><div class="print-only written-answer" data-answer="limitation"></div></div>
+            <div class="answer-field"><label for="method"><span lang="km">៤. តើអ្នកនឹងប្រមូលទិន្នន័យពិតឱ្យបានត្រឹមត្រូវយ៉ាងដូចម្តេច?</span><span lang="en" class="english-label">4. How would you make a fair measurement and record its context?</span></label><textarea id="method" rows="3" spellcheck="true"></textarea><div class="print-only written-answer" data-answer="method"></div></div>
+          </div>
+          <div class="worksheet-actions"><button type="button" id="printWorksheet" class="button"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7V3h10v4M5 14H3V8h14v6h-2M5 11h10v6H5v-6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span data-i18n="printWorksheet">បោះពុម្ពសន្លឹកកិច្ចការ</span></button><p data-i18n="worksheetSaveNote">ការឆ្លើយតបនៅតែក្នុងទំព័រនេះប៉ុណ្ណោះ។ បោះពុម្ព ឬរក្សាទុកជា PDF មុនបិទ ឬផ្ទុកទំព័រឡើងវិញ។</p></div>
+          <p class="print-only print-method">Method reminder: measure each pair at the same time and height; use matching calibrated instruments; shield both sensors from direct sunlight; record weather and location.<br />ការរំលឹក៖ វាស់គូនីមួយៗក្នុងពេល និងកម្ពស់ដូចគ្នា ប្រើឧបករណ៍ដែលបានផ្ទៀងផ្ទាត់ដូចគ្នា ការពារឧបករណ៍ទាំងពីរពីពន្លឺថ្ងៃផ្ទាល់ ហើយកត់ត្រាអាកាសធាតុ និងទីតាំង។</p>
+        </section>
+      </div>
+      <footer class="site-footer"><div class="footer-row"><p>CODAP by <a href="https://github.com/concord-consortium/codap" target="_blank" rel="noopener noreferrer">The Concord Consortium</a> · <a href="/licenses/codap-MIT.txt">MIT</a><br /><span data-i18n="footerLesson">ការណែនាំ និងទិន្នន័យសម្រាប់ហាត់៖ Khmer One</span></p><div class="footer-links"><a href="https://codap.concord.org/" target="_blank" rel="noopener noreferrer" data-i18n="aboutCodap">អំពី CODAP ↗</a><a class="home-target" href="/" data-i18n="homeFull">ត្រឡប់ទៅ Khmer One</a></div></div></footer>
+    </main>
+    <noscript><p>JavaScript is needed to switch languages, launch the embedded workspace, and print the worksheet with typed responses. You can still <a href="https://codap.concord.org/app/?v=3&amp;inbounds=true" target="_blank" rel="noopener noreferrer">open CODAP</a> and <a href="/codap/data/sun-shade-practice.csv" download>download the practice CSV</a>.<br />ត្រូវការ JavaScript ដើម្បីប្ដូរភាសា បើកកម្មវិធីក្នុងទំព័រ និងបោះពុម្ពចម្លើយដែលបានសរសេរ។ អ្នកនៅតែអាចបើក CODAP និងទាញយក CSV បាន។</p></noscript>
+    <script>
+      (() => {
+        "use strict";
+        const $ = (id) => document.getElementById(id);
+        const LOCALE_KEY = "khmerone-locale";
+        const CSV_PATH = "/codap/data/sun-shade-practice.csv";
+        const APP_URL = "https://codap.concord.org/app/";
+        // Original synthetic teaching data. Keep in sync with sun-shade-practice.csv.
+        const pairs = [
+          [31.0, 30.2], [31.5, 30.7], [30.8, 31.0], [32.1, 31.1],
+          [31.8, 30.5], [30.9, 30.2], [32.4, 31.4], [31.6, 31.0],
+          [30.7, 30.9], [32.0, 31.2], [31.3, 30.4], [31.9, 31.1]
+        ];
+        const text = {
+          en: {
+            skip: "Skip to main content", brandSub: "EVIDENCE & DATA LAB", home: "Home", homeFull: "Back to Khmer One",
+            eyebrow: "Science · Evidence · Research", title: "Observe. Graph. Explain.",
+            intro: "Explore data with CODAP. Compare temperatures in a practice dataset, then ask: what would support our conclusion?",
+            duration: "20–30 minutes", level: "Secondary students & teachers", pairs: "12 pairs · 24 observations",
+            chartTitle: "Look for variation", practiceOnly: "PRACTICE DATA", sunLabel: "Sun site", shadeLabel: "Shade site",
+            chartDescription: "Practice temperature dot plot. The two distributions overlap. All values are invented and listed in the data table below.",
+            inventedTitle: "Invented data for practice.",
+            inventedBody: "These values are not measurements from Cambodia or any real study. Use them to learn graphing and think about evidence.",
+            workspaceTitle: "Your data workspace", workspaceIntro: "Start with the practice dataset or a blank workspace.",
+            externalBadge: "External app · English interface",
+            mobileTip: "On a phone, open CODAP in a new tab for more space. A computer or tablet makes dragging and arranging graphs easier.",
+            loadPractice: "Load practice data", openBlank: "Open blank workspace", newTab: "Open in new tab",
+            newTabPractice: "A new tab starts with the original practice data. It does not copy changes from an open CODAP workspace. Save your work in CODAP before replacing a workspace.",
+            newTabBlank: "A new tab starts with a blank workspace. It does not copy changes from an open CODAP workspace. Save your work in CODAP before replacing a workspace.",
+            statusIdle: "CODAP has not loaded. An internet connection is needed to use the application.",
+            statusLoading: "Requesting CODAP… Loading time depends on your connection. The new-tab link is available if the workspace does not appear.",
+            statusResponded: "Check the workspace below. If you do not see CODAP or your table, use the new-tab link and the import steps.",
+            statusDelayed: "The workspace may still be loading or may be blocked. If it is not visible, open it in a new tab. The CSV and lesson remain available below.",
+            placeholderTitle: "Start when you are ready", placeholderBody: "Choose a button above to load CODAP. You can also read the guide, inspect the data, and use the worksheet below.",
+            saveHelp: "Save graphs and data: File → Save… → Local File → Download. Keep the downloaded CODAP document so you can reopen your workspace later; no sign-in is needed for this option.",
+            importHelp: "To import a CSV: File → Import… → Local File, then choose your downloaded CSV. A CSV contains table values; a saved CODAP document also keeps your graphs.",
+            embedHelp: "If the workspace is blank or data do not appear, try a new tab. You can also download the CSV below and import the file into CODAP.",
+            seeData: "View data & downloads", guidedInquiry: "GUIDED INQUIRY", lessonTitle: "From a question to a careful conclusion",
+            lessonIntro: "Follow these steps on your own or discuss them with a classmate.",
+            step1Title: "Make a prediction", step1Body: "Which group do you expect to have higher temperatures? Write your reason and describe a result that could change your mind.",
+            step1Detail: "For a real investigation, write down your prediction before collecting data. The preview here already shows invented practice results.",
+            step2Title: "Build a graph", step2Before: "In CODAP, open Graph. Drag", step2Middle: "from the table to the horizontal axis, and drag", step2After: "to the vertical axis.",
+            step2DetailBefore: "Keep the", step2DetailAfter: "column to identify matched observations.",
+            step3Title: "Compare the pattern", step3Body: "Compare typical values, spread, and overlap between the groups. Does every matched pair show the same pattern?",
+            step3Detail: "Look at all the points and each pair. One average does not show the whole story.",
+            step4Title: "Identify the limits", step4Body: "These invented data cannot establish a real sun–shade effect. With real observations, a graph alone does not establish cause.",
+            step4Detail: "What would we need to know about the sites, timing, instruments, and data collection method?",
+            methodTitle: "If you measure real air temperatures",
+            methodBody: "Use matching calibrated instruments at the same height and measure each pair at the same time. Shield both sensors from direct sunlight and record weather and site differences. Sunlight heating a bare thermometer is not the same as measuring air temperature.",
+            openData: "PRACTICE DATA", dataTitle: "Inspect the data yourself", dataIntro: "This table contains the same values as the CSV file.",
+            downloadData: "Download practice CSV", downloadTemplate: "Download blank template",
+            dataNote: "Each pair contains one sun value and one shade value: 12 pairs, not 24 independent trials. All values are invented for practice, not evidence from real measurements.",
+            dataCaption: "12 pairs · 24 rows in the CSV", pairColumn: "Pair", sunColumn: "Sun (°C)", shadeColumn: "Shade (°C)",
+            columnGuide: "What the CSV columns mean", conditionDef: "sun = sun site; shade = shade site",
+            temperatureDef: "Illustrative air temperature in degrees Celsius (°C)", pairDef: "Matched observation ID, 1–12",
+            yourReasoning: "YOUR REASONING", worksheetTitle: "Keep an evidence notebook",
+            worksheetIntro: "Write your reasoning, or print the bilingual worksheet for class. Each question is shown in Khmer and English.",
+            printWorksheet: "Print worksheet", worksheetSaveNote: "Responses stay in this page only. Print or save as PDF before closing or reloading it.",
+            footerLesson: "Guided lesson & original practice data: Khmer One. Khmer translation is a draft for teacher review.", aboutCodap: "About CODAP ↗",
+            iframeTitle: "CODAP data exploration workspace — English interface",
+            replaceWorkspace: "Replace the open CODAP workspace? Any unsaved work in it may be lost. Choose Cancel to keep it, then save from CODAP or use Open in new tab.",
+            templateDownloaded: "The blank observation template was prepared. Enter your own measurements; keep date, time, location, instrument, and method notes with your observations."
+          },
+          km: {
+            skip: "ទៅមាតិកាសំខាន់", brandSub: "បន្ទប់ពិសោធន៍ទិន្នន័យ និងភស្តុតាង", home: "ទំព័រដើម", homeFull: "ត្រឡប់ទៅ Khmer One",
+            eyebrow: "វិទ្យាសាស្ត្រ · ភស្តុតាង · ការស្រាវជ្រាវ", title: "សង្កេត។ បង្កើតក្រាហ្វ។ ពន្យល់។",
+            intro: "ស្វែងយល់ពីទិន្នន័យដោយប្រើ CODAP។ ប្រៀបធៀបសីតុណ្ហភាពក្នុងទិន្នន័យគំរូ ហើយសួរថា៖ តើអ្វីអាចគាំទ្រការសន្និដ្ឋានរបស់យើងបាន?",
+            duration: "២០–៣០ នាទី", level: "សិស្សមធ្យមសិក្សា និងគ្រូ", pairs: "១២ គូ · ទិន្នន័យ ២៤ ជួរ",
+            chartTitle: "មើលការប្រែប្រួល", practiceOnly: "គំរូសម្រាប់ហាត់", sunLabel: "ទីតាំងមានពន្លឺថ្ងៃ", shadeLabel: "ទីតាំងមានម្លប់",
+            chartDescription: "ក្រាហ្វចំណុចសីតុណ្ហភាពគំរូ។ ក្រុមទាំងពីរមានតម្លៃត្រួតស៊ីគ្នា។ លេខទាំងអស់ត្រូវបានបង្កើតឡើង និងមានក្នុងតារាងខាងក្រោម។",
+            inventedTitle: "ទិន្នន័យបង្កើតឡើងសម្រាប់ហាត់។",
+            inventedBody: "លេខទាំងនេះមិនមែនជាការវាស់វែងនៅកម្ពុជា ឬពីការសិក្សាពិតណាមួយទេ។ ប្រើវាសម្រាប់រៀនបង្កើតក្រាហ្វ និងពិចារណាអំពីភស្តុតាង។",
+            workspaceTitle: "កន្លែងស្វែងយល់ទិន្នន័យរបស់អ្នក", workspaceIntro: "ចាប់ផ្ដើមជាមួយទិន្នន័យគំរូ ឬកន្លែងធ្វើការទទេ។",
+            externalBadge: "កម្មវិធីខាងក្រៅ · មុខងារជាភាសាអង់គ្លេស",
+            mobileTip: "នៅលើទូរស័ព្ទ សូមបើក CODAP ក្នុងផ្ទាំងថ្មី ដើម្បីមានកន្លែងធ្វើការធំជាងមុន។ អេក្រង់កុំព្យូទ័រ ឬថេប្លេតងាយស្រួលសម្រាប់អូសក្រាហ្វ។",
+            loadPractice: "ផ្ទុកទិន្នន័យគំរូ", openBlank: "បើកកន្លែងធ្វើការទទេ", newTab: "បើកក្នុងផ្ទាំងថ្មី",
+            newTabPractice: "ផ្ទាំងថ្មីចាប់ផ្ដើមដោយទិន្នន័យគំរូដើម។ វាមិនចម្លងការកែប្រែក្នុង CODAP ដែលកំពុងបើកទេ។ សូមរក្សាទុកការងាររបស់អ្នកក្នុង CODAP មុនប្ដូរកន្លែងធ្វើការ។",
+            newTabBlank: "ផ្ទាំងថ្មីចាប់ផ្ដើមដោយកន្លែងធ្វើការទទេ។ វាមិនចម្លងការកែប្រែក្នុង CODAP ដែលកំពុងបើកទេ។ សូមរក្សាទុកការងាររបស់អ្នកក្នុង CODAP មុនប្ដូរកន្លែងធ្វើការ។",
+            statusIdle: "CODAP មិនទាន់ផ្ទុកទេ។ ត្រូវការអ៊ីនធឺណិតដើម្បីប្រើកម្មវិធីនេះ។",
+            statusLoading: "កំពុងស្នើសុំផ្ទុក CODAP… រយៈពេលអាស្រ័យលើអ៊ីនធឺណិត។ បើកន្លែងធ្វើការមិនបង្ហាញ អ្នកអាចបើកក្នុងផ្ទាំងថ្មីបាន។",
+            statusResponded: "សូមពិនិត្យកន្លែងធ្វើការខាងក្រោម។ បើមិនឃើញ CODAP ឬតារាងទិន្នន័យ សូមបើកក្នុងផ្ទាំងថ្មី ហើយអនុវត្តតាមជំហាននាំចូល។",
+            statusDelayed: "កន្លែងធ្វើការអាចកំពុងផ្ទុក ឬត្រូវបានរារាំង។ បើមិនឃើញ សូមបើកក្នុងផ្ទាំងថ្មី។ CSV និងមេរៀននៅតែមានខាងក្រោម។",
+            placeholderTitle: "ចាប់ផ្ដើមនៅពេលអ្នករួចរាល់", placeholderBody: "ជ្រើសប៊ូតុងខាងលើដើម្បីផ្ទុក CODAP។ អ្នកក៏អាចអានការណែនាំ មើលតារាង និងទាញយកសន្លឹកកិច្ចការខាងក្រោមបានដែរ។",
+            saveHelp: "រក្សាទុកក្រាហ្វ និងទិន្នន័យ៖ File → Save… → Local File → Download។ រក្សាឯកសារ CODAP ដើម្បីបើកកន្លែងធ្វើការឡើងវិញ។ ជម្រើសនេះមិនត្រូវការចូលគណនីទេ។",
+            importHelp: "នាំចូល CSV៖ File → Import… → Local File រួចជ្រើសឯកសារ CSV ដែលបានទាញយក។ CSV មានតម្លៃក្នុងតារាង ហើយឯកសារ CODAP ក៏រក្សាទុកក្រាហ្វផងដែរ។",
+            embedHelp: "បើកន្លែងធ្វើការទទេ ឬទិន្នន័យមិនបង្ហាញ សូមបើកក្នុងផ្ទាំងថ្មី។ អ្នកក៏អាចទាញយក CSV ខាងក្រោម ហើយនាំចូលវាក្នុង CODAP។",
+            seeData: "មើលទិន្នន័យ និងការទាញយក", guidedInquiry: "ការស្វែងយល់តាមជំហាន", lessonTitle: "ពីសំណួរ ទៅការសន្និដ្ឋានដោយប្រុងប្រយ័ត្ន",
+            lessonIntro: "ប្រើជំហានទាំងនេះជាមួយគ្នា ឬពិភាក្សាជាមួយមិត្តរួមថ្នាក់។",
+            step1Title: "ព្យាករជាមុន", step1Body: "តើអ្នករំពឹងថាតម្លៃសីតុណ្ហភាពក្នុងក្រុមណាខ្ពស់ជាង? សរសេរមូលហេតុ និងប្រាប់ថាលទ្ធផលបែបណាអាចធ្វើឱ្យអ្នកប្ដូរគំនិត។",
+            step1Detail: "សម្រាប់ការស៊ើបអង្កេតពិត សូមសរសេរការព្យាករមុនប្រមូលទិន្នន័យ។ ក្រាហ្វគំរូខាងលើបង្ហាញលទ្ធផលដែលបានបង្កើតឡើងសម្រាប់ហាត់។",
+            step2Title: "បង្កើតក្រាហ្វ", step2Before: "ក្នុង CODAP បើក Graph រួចអូស", step2Middle: "ពីតារាងទៅអ័ក្សផ្ដេក និងអូស", step2After: "ទៅអ័ក្សបញ្ឈរ។",
+            step2DetailBefore: "រក្សាជួរឈរ", step2DetailAfter: "ដើម្បីស្គាល់ការសង្កេតដែលត្រូវគ្នា។",
+            step3Title: "ប្រៀបធៀបលំនាំ", step3Body: "ប្រៀបធៀបតម្លៃធម្មតា ការបែកខ្ញែក និងការត្រួតស៊ីគ្នារវាងក្រុម។ តើគ្រប់គូសុទ្ធតែបង្ហាញលំនាំដូចគ្នាឬទេ?",
+            step3Detail: "មើលចំណុចទាំងអស់ និងគូនីមួយៗ។ តម្លៃមធ្យមមួយមិនបង្ហាញរឿងទាំងមូលទេ។",
+            step4Title: "ស្គាល់ដែនកំណត់", step4Body: "ទិន្នន័យដែលបង្កើតឡើងនេះមិនអាចបញ្ជាក់ពីឥទ្ធិពលពិតរបស់ពន្លឺថ្ងៃ និងម្លប់បានទេ។ សម្រាប់ទិន្នន័យពិត ក្រាហ្វតែមួយក៏មិនអាចបញ្ជាក់មូលហេតុបានដែរ។",
+            step4Detail: "តើយើងត្រូវដឹងអ្វីខ្លះអំពីទីតាំង ពេលវេលា ឧបករណ៍ និងវិធីប្រមូលទិន្នន័យ?",
+            methodTitle: "បើអ្នកវាស់សីតុណ្ហភាពខ្យល់ពិតប្រាកដ",
+            methodBody: "ប្រើឧបករណ៍ដែលបានផ្ទៀងផ្ទាត់ដូចគ្នា នៅកម្ពស់ដូចគ្នា ហើយវាស់គូនីមួយៗក្នុងពេលតែមួយ។ ការពារឧបករណ៍ទាំងពីរពីពន្លឺថ្ងៃផ្ទាល់ និងកត់ត្រាអាកាសធាតុ និងទីតាំង។ ពន្លឺថ្ងៃអាចកម្ដៅឧបករណ៍វាស់ផ្ទាល់ ដូច្នេះវាមិនស្មើនឹងសីតុណ្ហភាពខ្យល់ទេ។",
+            openData: "ទិន្នន័យសម្រាប់ហាត់", dataTitle: "មើលទិន្នន័យដោយខ្លួនឯង", dataIntro: "តារាងនេះមានលេខដូចគ្នានឹងឯកសារ CSV។",
+            downloadData: "ទាញយក CSV គំរូ", downloadTemplate: "ទាញយកតារាងទទេ",
+            dataNote: "គូនីមួយៗមានតម្លៃ «sun» មួយ និង «shade» មួយ៖ មាន១២គូ មិនមែន២៤ការសាកល្បងឯករាជ្យទេ។ តម្លៃទាំងអស់ត្រូវបានបង្កើតឡើងសម្រាប់ហាត់ មិនមែនជាភស្តុតាងពីការវាស់វែងពិតទេ។",
+            dataCaption: "១២ គូ · ឯកសារ CSV មាន ២៤ ជួរ", pairColumn: "គូ", sunColumn: "ពន្លឺថ្ងៃ (°C)", shadeColumn: "ម្លប់ (°C)",
+            columnGuide: "អត្ថន័យនៃជួរឈរ CSV", conditionDef: "sun = ទីតាំងមានពន្លឺថ្ងៃ; shade = ទីតាំងមានម្លប់",
+            temperatureDef: "សីតុណ្ហភាពខ្យល់គំរូ គិតជាអង្សាសេ (°C)", pairDef: "លេខសម្គាល់គូសង្កេត ១–១២",
+            yourReasoning: "ការពិចារណារបស់អ្នក", worksheetTitle: "កត់ត្រាភស្តុតាងរបស់អ្នក",
+            worksheetIntro: "សរសេរការពិចារណារបស់អ្នក ឬបោះពុម្ពសន្លឹកពីរភាសាដើម្បីប្រើក្នុងថ្នាក់។ សំណួរនីមួយៗមានភាសាខ្មែរ និងអង់គ្លេស។",
+            printWorksheet: "បោះពុម្ពសន្លឹកកិច្ចការ", worksheetSaveNote: "ការឆ្លើយតបនៅតែក្នុងទំព័រនេះប៉ុណ្ណោះ។ បោះពុម្ព ឬរក្សាទុកជា PDF មុនបិទ ឬផ្ទុកទំព័រឡើងវិញ។",
+            footerLesson: "ការណែនាំ និងទិន្នន័យសម្រាប់ហាត់៖ Khmer One។ ការបកប្រែខ្មែរជាសេចក្ដីព្រាងសម្រាប់គ្រូពិនិត្យ។", aboutCodap: "អំពី CODAP ↗",
+            iframeTitle: "កន្លែងស្វែងយល់ទិន្នន័យ CODAP — មុខងារជាភាសាអង់គ្លេស",
+            replaceWorkspace: "តើចង់ជំនួសកន្លែងធ្វើការ CODAP ដែលកំពុងបើកមែនទេ? ការងារមិនទាន់រក្សាទុកអាចបាត់បង់។ ជ្រើស Cancel ដើម្បីទុកវា រួចរក្សាទុកក្នុង CODAP ឬបើកក្នុងផ្ទាំងថ្មី។",
+            templateDownloaded: "បានរៀបចំតារាងសង្កេតទទេ។ បញ្ចូលការវាស់វែងរបស់អ្នក ហើយកត់ត្រាកាលបរិច្ឆេទ ពេលវេលា ទីតាំង ឧបករណ៍ និងវិធីវាស់ជាមួយទិន្នន័យ។"
+          }
+        };
+        let language = "km";
+        let currentMode = "practice";
+        let frame = null;
+        let loadTimer = null;
+        let statusKey = "statusIdle";
+
+        function readLanguage() {
+          const query = new URL(window.location.href).searchParams.get("khmerone_lang");
+          if (query === "km" || query === "en") return query;
+          try {
+            const stored = localStorage.getItem(LOCALE_KEY);
+            if (stored === "km" || stored === "en") return stored;
+          } catch (_) { /* The lesson works when storage is unavailable. */ }
+          return "km";
+        }
+
+        function appUrl(mode) {
+          const url = new URL(APP_URL);
+          url.searchParams.set("v", "3");
+          url.searchParams.set("lang", "en-US");
+          if (mode === "practice") url.searchParams.set("url", new URL(CSV_PATH, location.href).href);
+          url.searchParams.set("inbounds", "true");
+          return url.href;
+        }
+
+        function updateLaunchLinks() {
+          $("newTab").href = appUrl(currentMode);
+          $("launchNote").textContent = text[language][currentMode === "practice" ? "newTabPractice" : "newTabBlank"];
+          $("newTab").setAttribute("aria-label", text[language].newTab + " — " + text[language][currentMode === "practice" ? "loadPractice" : "openBlank"]);
+        }
+
+        function applyLanguage(next) {
+          language = next === "en" ? "en" : "km";
+          document.documentElement.lang = language;
+          document.title = "Khmer One · " + (language === "en" ? "CODAP Evidence & Data Lab" : "CODAP · បន្ទប់ពិសោធន៍ទិន្នន័យ និងភស្តុតាង");
+          document.querySelectorAll("[data-i18n]").forEach((element) => {
+            const key = element.dataset.i18n;
+            if (Object.prototype.hasOwnProperty.call(text[language], key)) element.textContent = text[language][key];
+          });
+          document.querySelectorAll("[data-lang]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.lang === language)));
+          document.querySelectorAll(".home-target").forEach((link) => { link.href = "/?khmerone_lang=" + language; });
+          $("homeLink").setAttribute("aria-label", text[language].homeFull);
+          $("chartDescription").textContent = text[language].chartDescription;
+          $("statusText").textContent = text[language][statusKey];
+          if (frame) frame.title = text[language].iframeTitle;
+          updateLaunchLinks();
+          try { localStorage.setItem(LOCALE_KEY, language); } catch (_) { /* Optional preference only. */ }
+          // Keep an explicit incoming locale consistent with the selected language on reload.
+          try {
+            const currentUrl = new URL(location.href);
+            if (currentUrl.searchParams.has("khmerone_lang")) {
+              currentUrl.searchParams.set("khmerone_lang", language);
+              history.replaceState(history.state, "", currentUrl);
+            }
+          } catch (_) { /* A restricted host may disallow history updates. */ }
+        }
+
+        function setStatus(key, state) {
+          statusKey = key;
+          $("statusText").textContent = text[language][key];
+          $("workspaceStatus").dataset.state = state;
+        }
+
+        function openWorkspace(mode) {
+          if (frame && !window.confirm(text[language].replaceWorkspace)) return;
+          if (loadTimer !== null) window.clearTimeout(loadTimer);
+          currentMode = mode;
+          updateLaunchLinks();
+          setStatus("statusLoading", "loading");
+          const nextFrame = document.createElement("iframe");
+          nextFrame.title = text[language].iframeTitle;
+          nextFrame.referrerPolicy = "strict-origin-when-cross-origin";
+          nextFrame.allow = "fullscreen";
+          nextFrame.addEventListener("load", () => {
+            if (frame !== nextFrame) return;
+            window.clearTimeout(loadTimer);
+            loadTimer = null;
+            // A cross-origin load event does not prove CODAP or its data loaded.
+            setStatus("statusResponded", "responded");
+          });
+          nextFrame.addEventListener("error", () => {
+            if (frame !== nextFrame) return;
+            window.clearTimeout(loadTimer);
+            loadTimer = null;
+            setStatus("statusDelayed", "delayed");
+          });
+          nextFrame.src = appUrl(mode);
+          frame = nextFrame;
+          $("workspaceMount").replaceChildren(nextFrame);
+          loadTimer = window.setTimeout(() => {
+            if (frame === nextFrame) setStatus("statusDelayed", "delayed");
+          }, 20000);
+        }
+
+        function renderData() {
+          const fragment = document.createDocumentFragment();
+          pairs.forEach((values, index) => {
+            const row = document.createElement("tr");
+            [String(index + 1), values[0].toFixed(1), values[1].toFixed(1)].forEach((value, column) => {
+              const cell = document.createElement(column === 0 ? "th" : "td");
+              cell.textContent = value;
+              if (column === 0) cell.scope = "row";
+              if (column === 1) cell.className = "sun-value";
+              if (column === 2) cell.className = "shade-value";
+              row.append(cell);
+            });
+            fragment.append(row);
+          });
+          $("dataRows").replaceChildren(fragment);
+          ["sunDots", "shadeDots"].forEach((groupId, condition) => {
+            const counts = new Map();
+            pairs.forEach((values) => {
+              const value = values[condition];
+              const count = counts.get(value) || 0;
+              counts.set(value, count + 1);
+              const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+              circle.setAttribute("cx", String(40 + (value - 30) * 130));
+              circle.setAttribute("cy", String((condition === 0 ? 57 : 119) - count * 12));
+              circle.setAttribute("r", "5");
+              $(groupId).append(circle);
+            });
+          });
+        }
+
+        function downloadTemplate() {
+          const lines = ["condition,temperature_C,pair"];
+          pairs.forEach((_, index) => {
+            lines.push("sun,," + (index + 1));
+            lines.push("shade,," + (index + 1));
+          });
+          const blob = new Blob([lines.join("\r\n") + "\r\n"], { type: "text/csv;charset=utf-8" });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "sun-shade-observation-template.csv";
+          document.body.append(link);
+          link.click();
+          link.remove();
+          $("templateStatus").dataset.i18n = "templateDownloaded";
+          $("templateStatus").textContent = text[language].templateDownloaded;
+          window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+
+        function preparePrint() {
+          document.querySelectorAll("[data-answer]").forEach((element) => {
+            element.textContent = $(element.dataset.answer).value.trim();
+          });
+        }
+
+        document.querySelectorAll("[data-lang]").forEach((button) => button.addEventListener("click", () => applyLanguage(button.dataset.lang)));
+        document.addEventListener("khmerone-lang-change", (event) => {
+          const lang = event.detail && event.detail.lang;
+          if (lang === "en" || lang === "km") applyLanguage(lang);
+        });
+        window.addEventListener("storage", (event) => {
+          if (event.key === LOCALE_KEY && (event.newValue === "en" || event.newValue === "km")) applyLanguage(event.newValue);
+        });
+        $("loadPractice").addEventListener("click", () => openWorkspace("practice"));
+        $("openBlank").addEventListener("click", () => openWorkspace("blank"));
+        $("downloadTemplate").addEventListener("click", downloadTemplate);
+        $("printWorksheet").addEventListener("click", () => { preparePrint(); window.print(); });
+        window.addEventListener("beforeprint", preparePrint);
+        renderData();
+        applyLanguage(readLanguage());
+      })();
+    </script>
+  </body>
+</html>

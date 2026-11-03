@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Image from "next/image";
+import { DecorativeImage as Image } from "@/components/shared/DecorativeImage";
 import { BookOpenText, ExternalLink, Play, X } from "lucide-react";
 import type { Locale } from "@/types/app";
 

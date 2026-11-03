@@ -56,6 +56,7 @@ export function ThemeSwitcher({ locale, theme, accent, onAccentChange, onThemeCh
     {open &&
       <div className="theme-picker" id="theme-picker" role="dialog" aria-label={t.button}>
         <div className="theme-picker-head"><div className="theme-picker-heading"><strong>{t.title}</strong></div><button type="button" className="theme-picker-close" aria-label={t.close} onClick={() => { setOpen(false); controlRef.current?.querySelector<HTMLButtonElement>(".theme-trigger")?.focus(); }}><X size={18} aria-hidden="true" /></button></div>
+        <button type="button" onClick={() => { setOpen(false); document.querySelector<HTMLButtonElement>("[data-ko-appearance]")?.click(); }}>{locale === "km" ? "ពណ៌ ឬរូបភាពផ្ទៃខាងក្រោយ" : "Background color or picture"}</button>
         <div className="background-mode-picker" role="group" aria-label={locale === "km" ? "ផ្ទៃខាងក្រោយ" : "Background"}>
           <button type="button" aria-pressed={theme === "cyberpunk"} onClick={() => onThemeChange("cyberpunk")}>{locale === "km" ? "លំហអាកាស" : "Cosmic"}</button>
           <button type="button" aria-pressed={theme === "khmer-sunrise"} onClick={() => onThemeChange("khmer-sunrise")}>{locale === "km" ? "ព្រះអាទិត្យរះខ្មែរ" : "Khmer Sunrise"}</button>

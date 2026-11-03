@@ -1,0 +1,26 @@
+.mg-shell .mg-intro {padding:2.25rem 0 1rem;max-width:56rem}
+.mg-intro h1 {font-size:clamp(2rem,4vw,3.2rem);line-height:1.5;margin:.5rem 0}
+.mg-shell .mg-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:1rem;margin:1rem 0}
+.mg-shell .mg-card {display:block;background:white;border:1px solid var(--gs-line);border-radius:12px;padding:1.2rem;text-decoration:none}
+.mg-card:hover {border-color:var(--gs-blue);background:#edf2f5}
+.mg-card h3 {line-height:1.6;margin:.45rem 0}
+.mg-card p,.mg-summary {color:#475c70}
+.mg-shell .mg-search,.mg-fields :is(input:not([type="checkbox"]),textarea,select){display:block;width:100%;padding:.65rem .8rem;font:inherit;color:var(--gs-ink);border:1px solid #8194a4;border-radius:6px;background:white}
+.mg-fields textarea {resize:vertical;min-height:4em}
+.mg-fields label,.mg-shell .mg-search-label{display:block;font-weight:600;margin:.8rem 0}
+.mg-shell .mg-box {background:#fff;border:1px solid var(--gs-line);border-radius:12px;padding:1.4rem;margin:1rem 0}
+.mg-fields fieldset {margin:1rem 0;border:1px solid var(--gs-line);border-radius:.5rem}
+.mg-fields output {display:block;font-weight:700;margin:1em 0}
+.mg-shell .mg-actions {display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1rem}
+.mg-shell .mg-map {width:100%;height:260px;border:1px solid var(--gs-line)}
+.mg-shell .mg-print-answer {display:none}
+@media print {.mg-shell .mg-print-answer {display:block;white-space:pre-wrap;border-bottom:1px solid #777;min-height:2.5rem}.mg-shell .mg-fields textarea,.mg-shell .mg-actions{display:none}.mg-fields label{break-inside:avoid}}
+.mg-table-scroll{max-width:100%;overflow:auto;margin:1rem 0}
+.mg-table-scroll table{border-collapse:collapse;font-size:.93rem;width:100%}
+.mg-table-scroll caption{text-align:start;font-weight:700}
+.mg-table-scroll :is(th,td){padding:.6rem;border:1px solid var(--gs-line);text-align:start;vertical-align:top}
+.mg-table-scroll th{background:#f2f6f8}
+.mg-box summary{cursor:pointer;font-weight:650}
+.mg-resource-list { display:grid; gap:1rem; }
+.mg-resource-list article { border-inline-start:3px solid #419589; padding-inline-start:1rem; overflow-wrap:anywhere; }
+.mg-resource-list h3 { margin:0; }

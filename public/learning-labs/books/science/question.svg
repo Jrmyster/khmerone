@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="336" height="200" viewBox="0 0 336 200" role="img" aria-labelledby="title">
+  <title id="title">A toy car, a ramp, a smooth surface, and a rough surface</title>
+  <rect width="336" height="200" fill="#eaf5ef"/>
+  <circle cx="284" cy="41" r="26" fill="#cfe8e1"/>
+  <path d="M277 34c0-10 16-10 16 0 0 7-9 7-9 13" fill="none" stroke="#28665a" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="284" cy="56" r="2.5" fill="#28665a"/>
+  <path d="M24 119h125L44 63H24z" fill="#96b9a8"/>
+  <path d="M24 62h22l105 57" fill="none" stroke="#456f60" stroke-width="7" stroke-linecap="round"/>
+  <g transform="translate(39 55) rotate(29)">
+    <path d="M0-17h14l8-9h21l10 9h12v15H0z" fill="#edac56"/>
+    <path d="M25-22h15l7 7H19z" fill="#fff4da"/>
+    <circle cx="14" cy="-1" r="8" fill="#294b46"/><circle cx="51" cy="-1" r="8" fill="#294b46"/>
+    <circle cx="14" cy="-1" r="3" fill="#e6f2ed"/><circle cx="51" cy="-1" r="3" fill="#e6f2ed"/>
+  </g>
+  <path d="M167 120h139" stroke="#397d70" stroke-width="8" stroke-linecap="round"/>
+  <path d="M167 156l9-6 10 12 10-12 10 12 10-12 10 12 10-12 10 12 10-12 10 12 10-12 10 12 10-12 10 6" fill="none" stroke="#a87747" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M139 129l14-8m-14 18 14 11" stroke="#709689" stroke-width="2" stroke-dasharray="4 4"/>
+  <path d="M24 179h287" stroke="#c9dfd2" stroke-width="2"/>
+</svg>

@@ -1,0 +1,78 @@
+html,
+body {
+  margin: 0;
+  background: #f8fafc;
+  color: #102a43;
+  font-family: "Noto Sans Khmer", "Khmer OS Battambang", system-ui, sans-serif;
+}
+
+.h5p-content {
+  box-sizing: border-box;
+  border: 0;
+  padding: clamp(12px, 3vw, 24px);
+  background: #f8fafc;
+  color: #102a43;
+  font-family: "Noto Sans Khmer", "Khmer OS Battambang", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.h5p-question-introduction {
+  font-size: 1.12em;
+  font-weight: 600;
+  line-height: 1.9;
+}
+
+.h5p-content p {
+  margin-block: 0.4em;
+  overflow-wrap: anywhere;
+}
+
+.h5p-multichoice .h5p-alternative-container {
+  min-height: 48px;
+  border-radius: 10px;
+}
+
+.h5p-multichoice .h5p-alternative-inner {
+  line-height: 1.8;
+}
+
+.h5p-question-buttons button,
+.h5p-joubelui-button {
+  min-height: 44px;
+  border-radius: 9px;
+  font-family: inherit;
+  line-height: 1.7;
+}
+
+.h5p-content button:focus-visible,
+.h5p-content [tabindex]:focus-visible {
+  outline: 3px solid #075985;
+  outline-offset: 3px;
+}
+
+.h5p-question-feedback,
+.h5p-feedback-text {
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 480px) {
+  .h5p-content {
+    padding: 12px;
+  }
+
+  .h5p-question-buttons button,
+  .h5p-joubelui-button {
+    margin-block: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .h5p-content *,
+  .h5p-content *::before,
+  .h5p-content *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

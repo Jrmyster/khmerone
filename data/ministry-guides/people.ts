@@ -1,0 +1,117 @@
+import { bi, type MinistryGuide } from './types';
+
+export const people: MinistryGuide[] = [
+  {
+    n: 1, slug: 'education',
+    ministry: bi('Education, Youth and Sport', 'អប់រំ យុវជន និងកីឡា'),
+    title: bi('Learning and Teacher Hub', 'កន្លែងសិក្សាសម្រាប់សិស្ស និងគ្រូ'),
+    benefit: bi('A teacher can adapt one bilingual activity for several classes and print it for students who share a phone or have no connection at home.', 'គ្រូអាចកែសម្រួលសកម្មភាពពីរភាសាមួយសម្រាប់ថ្នាក់ជាច្រើន ហើយបោះពុម្ពចែកសិស្សដែលប្រើទូរសព្ទរួមគ្នា ឬគ្មានអ៊ីនធឺណិតនៅផ្ទះ។'),
+    steps: [
+      bi('Choose a grade, subject and one thing students should be able to do by the end of the lesson. Find a matching Khmer reading or diagram in Sala Digital.', 'ជ្រើសរើសថ្នាក់ មុខវិជ្ជា និងអ្វីមួយដែលសិស្សគួរអាចធ្វើបាននៅចុងមេរៀន។ ស្វែងរកអត្ថបទ ឬរូបពន្យល់ជាភាសាខ្មែរដែលសមនឹងមេរៀននៅសាលាឌីជីថល។'),
+      bi('Use Teacher Toolkit to create a worksheet. For example, ask pairs to label a plant in Khmer and English, then explain what one part does.', 'ប្រើឧបករណ៍សម្រាប់គ្រូ ដើម្បីបង្កើតសន្លឹកកិច្ចការ។ ឧទាហរណ៍ ឱ្យសិស្សធ្វើការជាគូ ដាក់ឈ្មោះផ្នែករុក្ខជាតិជាខ្មែរ និងអង់គ្លេស រួចពន្យល់ពីមុខងារផ្នែកមួយ។'),
+      bi('End with one question each student answers alone. Share a revised activity through School Connect Exchange after removing student names.', 'បញ្ចប់ដោយសំណួរមួយដែលសិស្សម្នាក់ៗត្រូវឆ្លើយដោយខ្លួនឯង។ លុបឈ្មោះសិស្សចេញ រួចចែករំលែកសកម្មភាពដែលបានកែលម្អតាមរយៈកម្មវិធីផ្លាស់ប្តូរធនធានរវាងសាលា។'),
+    ],
+    links: [
+      { label: bi('MoEYS Sala Digital library', 'បណ្ណាល័យសាលាឌីជីថលរបស់ក្រសួងអប់រំ'), url: 'https://sala.moeys.gov.kh/kh' },
+      { label: bi('Teacher Toolkit', 'ឧបករណ៍សម្រាប់គ្រូ'), url: '/teacher-toolkit' },
+      { label: bi('English speaking practice', 'ហាត់និយាយភាសាអង់គ្លេស'), url: '/learning/speaking' },
+      { label: bi('STEM dictionary', 'វចនានុក្រមស្ទែម'), url: '/learning/dictionary' },
+      { label: bi('Keyboard Garden typing practice', 'ហាត់វាយអក្សរ'), url: '/typing' },
+      { label: bi('Teacher Audio Maker', 'ឧបករណ៍បង្កើតសំឡេងសម្រាប់គ្រូ'), url: '/teacher-audio' },
+      { label: bi('Primary school map (2012 locations)', 'ផែនទីសាលាបឋមសិក្សា (ទីតាំងឆ្នាំ២០១២)'), url: 'https://opendevelopmentcambodia.net/layers/primary-school/' },
+      { label: bi('School Connect Exchange', 'ផ្លាស់ប្តូរធនធានរវាងសាលា'), url: '/learning/exchange' },
+    ],
+    prompts: [bi('Grade, subject and learning goal', 'ថ្នាក់ មុខវិជ្ជា និងគោលដៅសិក្សា'), bi('Activity and materials available in class', 'សកម្មភាព និងសម្ភារៈដែលមានក្នុងថ្នាក់'), bi('Question to check understanding', 'សំណួរសម្រាប់ពិនិត្យការយល់ដឹង')],
+  },
+  {
+    n: 2, slug: 'health',
+    ministry: bi('Health', 'សុខាភិបាល'),
+    title: bi('Health Literacy and Care Finder', 'ចំណេះដឹងសុខភាព និងការស្វែងរកសេវាថែទាំ'),
+    benefit: bi('Families can prepare questions for a clinician and call ahead to check the service they need. This can avoid a long trip to a facility that cannot provide it.', 'គ្រួសារអាចត្រៀមសំណួរសម្រាប់គ្រូពេទ្យ និងទូរសព្ទសួរជាមុនអំពីសេវាដែលត្រូវការ។ វាអាចជួយចៀសវាងការធ្វើដំណើរឆ្ងាយទៅកន្លែងដែលមិនមានសេវានោះ។'),
+    steps: [
+      bi('For a routine visit, start with your local health centre. For a hospital contact, use the Ministry of Health links. NSSF members can also consult the list of contracted facilities.', 'សម្រាប់ការពិនិត្យសុខភាពធម្មតា សូមចាប់ផ្តើមនៅមណ្ឌលសុខភាពមូលដ្ឋាន។ សម្រាប់ទំនាក់ទំនងមន្ទីរពេទ្យ ប្រើតំណរបស់ក្រសួងសុខាភិបាល។ សមាជិក ប.ស.ស. ក៏អាចមើលបញ្ជីមូលដ្ឋានសុខាភិបាលដែលបានចុះកិច្ចព្រមព្រៀង។'),
+      bi('Ask the facility about opening hours, appointments, fees and any referral needed for your visit. If you use NSSF coverage, confirm that it applies to the service.', 'សួរអំពីម៉ោងបើក ការណាត់ជួប ថ្លៃសេវា និងលិខិតបញ្ជូនដែលអាចត្រូវការ។ បើប្រើ ប.ស.ស. សូមបញ្ជាក់ថាសេវានោះស្ថិតក្នុងការធានារ៉ាប់រង។'),
+      bi('For a mother or child health visit, use the national handbook to choose a topic to discuss, such as a vaccination record. Bring your questions to the clinician.', 'ពេលទៅពិនិត្យសុខភាពមាតា ឬកុមារ ប្រើសៀវភៅអប់រំសុខភាពជាតិដើម្បីជ្រើសរើសប្រធានបទដែលចង់សួរ ដូចជាកំណត់ត្រាចាក់វ៉ាក់សាំង។ យកសំណួរទៅពិភាក្សាជាមួយគ្រូពេទ្យ។'),
+    ],
+    links: [
+      { label: bi('Ministry of Health hospital links', 'តំណមន្ទីរពេទ្យរបស់ក្រសួងសុខាភិបាល'), url: 'https://moh.gov.kh/' },
+      { label: bi('NSSF contracted facilities (PDF)', 'បញ្ជីមូលដ្ឋានសុខាភិបាលរបស់ ប.ស.ស. (PDF)'), url: 'https://www.nssf.gov.kh/wp-content/uploads/2016/09/en.pdf' },
+      { label: bi('National Maternal and Child Health Center educational videos', 'វីដេអូអប់រំរបស់មជ្ឈមណ្ឌលជាតិគាំពារមាតា និងទារក'), url: 'https://nmchc.moh.gov.kh/en/category/iec-materials-videos/' },
+      { label: bi('Mother and child health handbook', 'សៀវភៅអប់រំសុខភាពមាតា និងកុមារ'), url: 'https://nmchc.gov.kh/en/mother-and-child-health-educational-hand-book/' },
+    ],
+    prompts: [bi('Service to ask about', 'សេវាដែលចង់សួរ'), bi('Facility, opening hours and appointment arrangements', 'មូលដ្ឋានសុខាភិបាល ម៉ោងបើក និងការណាត់ជួប'), bi('Questions about cost, referral or a follow-up visit', 'សំណួរអំពីថ្លៃសេវា ការបញ្ជូន ឬការមកពិនិត្យឡើងវិញ')],
+  },
+  {
+    n: 3, slug: 'social-affairs',
+    ministry: bi('Social Affairs, Veterans and Youth Rehabilitation', 'សង្គមកិច្ច អតីតយុទ្ធជន និងយុវនីតិសម្បទា'),
+    title: bi('Support Services Navigator', 'មគ្គុទ្ទេសក៍ស្វែងរកសេវាជំនួយ'),
+    benefit: bi('A caregiver can identify a rehabilitation contact and confirm accessibility before arranging transport. A veteran’s family can check which office handles its request before gathering documents.', 'អ្នកថែទាំអាចរកទំនាក់ទំនងសេវាស្តារនីតិសម្បទា និងសួរពីលទ្ធភាពចូលប្រើមុនរៀបចំការធ្វើដំណើរ។ គ្រួសារអតីតយុទ្ធជនអាចសួរថាការិយាល័យណាទទួលសំណើ មុនប្រមូលឯកសារ។'),
+    steps: [
+      bi('Open the navigator and choose the kind of support you need. It covers household assistance, rehabilitation, older people, veterans, children and youth.', 'បើកមគ្គុទ្ទេសក៍ រួចជ្រើសរើសប្រភេទជំនួយដែលអ្នកត្រូវការ។ មានផ្នែកជំនួយគ្រួសារ ការស្តារនីតិសម្បទា មនុស្សចាស់ អតីតយុទ្ធជន កុមារ និងយុវជន។'),
+      bi('Ask the listed provider which local office to visit, what to bring and whether someone can accompany you. For IDPoor interviews, check the Ministry of Planning’s FAQ.', 'សួរអ្នកផ្តល់សេវាក្នុងបញ្ជីថាត្រូវទៅការិយាល័យមូលដ្ឋានណា ត្រូវយកអ្វីទៅ និងតើអាចមានអ្នកជូនទៅបានឬទេ។ សម្រាប់ការសម្ភាសន៍ IDPoor មើលសំណួរដែលសួរញឹកញាប់របស់ក្រសួងផែនការ។'),
+    ],
+    links: [
+      { label: bi('Open the Support Services Navigator', 'បើកមគ្គុទ្ទេសក៍ស្វែងរកសេវាជំនួយ'), url: '/social-support' },
+      { label: bi('IDPoor questions and answers', 'សំណួរ និងចម្លើយអំពី IDPoor'), url: 'https://idpoor.gov.kh/en/faq/' },
+    ],
+    prompts: [bi('Service or local office to contact', 'សេវា ឬការិយាល័យមូលដ្ឋានដែលត្រូវទាក់ទង'), bi('Documents and access arrangements to confirm', 'ឯកសារ និងការសម្របសម្រួលការចូលប្រើដែលត្រូវបញ្ជាក់'), bi('Next visit or follow-up', 'ការទៅជួប ឬតាមដានលើកក្រោយ')],
+  },
+  {
+    n: 4, slug: 'womens-affairs',
+    ministry: bi('Women’s Affairs', 'កិច្ចការនារី'),
+    title: bi('Women’s Opportunity and Support Hub', 'កន្លែងស្វែងរកឱកាស និងជំនួយសម្រាប់ស្ត្រី'),
+    benefit: bi('A woman comparing courses can check schedules, travel costs and childcare before enrolling. A separate support route lets someone find help without sharing an account of violence on this site.', 'ស្ត្រីដែលកំពុងជ្រើសរើសវគ្គសិក្សាអាចសួរអំពីកាលវិភាគ ថ្លៃធ្វើដំណើរ និងការថែទាំកូន មុនចុះឈ្មោះ។ ផ្លូវដាច់ដោយឡែកសម្រាប់សេវាគាំទ្រជួយឱ្យអ្នកត្រូវការជំនួយរកសេវាបាន ដោយមិនចាំបាច់រៀបរាប់ហេតុការណ៍ហិង្សានៅទីនេះ។'),
+    steps: [
+      bi('For training, find your provincial Women’s Affairs department in the ministry directory. Ask which women’s development centre offers the skill you want, when the next course starts and what it costs.', 'សម្រាប់វគ្គបណ្តុះបណ្តាល រកមន្ទីរកិច្ចការនារីខេត្តរបស់អ្នកក្នុងបញ្ជីក្រសួង។ សួរថាមជ្ឈមណ្ឌលអភិវឌ្ឍន៍ស្ត្រីណាបង្រៀនជំនាញដែលអ្នកចង់រៀន តើវគ្គថ្មីចាប់ផ្តើមពេលណា និងត្រូវបង់ប៉ុន្មាន។'),
+      bi('For a business idea, use Srey Enterprise to practise planning. Compare the course with your time, travel budget and sales goals.', 'បើមានគំនិតអាជីវកម្ម ប្រើកម្មវិធី Srey Enterprise ដើម្បីហាត់រៀបចំផែនការ។ ប្រៀបធៀបវគ្គសិក្សាជាមួយពេលវេលា ថវិកាធ្វើដំណើរ និងគោលដៅលក់របស់អ្នក។'),
+      bi('For STEM or a skilled trade, compare a coding club or TVET programme and ask about mentors. Check the scholarship provider’s own dates, qualifications and costs before applying.', 'បើចង់រៀនស្ទែម ឬជំនាញវិជ្ជាជីវៈ សូមប្រៀបធៀបក្លឹបសរសេរកូដ ឬវគ្គបណ្តុះបណ្តាល ហើយសួរអំពីគ្រូណែនាំ។ មុនដាក់ពាក្យសុំអាហារូបករណ៍ សូមផ្ទៀងផ្ទាត់កាលបរិច្ឆេទ លក្ខខណ្ឌ និងចំណាយជាមួយស្ថាប័នផ្តល់អាហារូបករណ៍។'),
+      bi('For support related to violence, the ministry’s Safe App provides information about services. Use a device and contact method you consider safe. You can skip the worksheet.', 'បើត្រូវការជំនួយពាក់ព័ន្ធនឹងអំពើហិង្សា កម្មវិធីសុវត្ថិភាពយើងរបស់ក្រសួងមានព័ត៌មានអំពីសេវាគាំទ្រ។ ប្រើឧបករណ៍ និងមធ្យោបាយទាក់ទងដែលអ្នកយល់ថាមានសុវត្ថិភាព។ អ្នកអាចរំលងសន្លឹកកិច្ចការ។'),
+    ],
+    links: [
+      { label: bi('Provincial departments and women’s development centres', 'មន្ទីរកិច្ចការនារីខេត្ត និងមជ្ឈមណ្ឌលអភិវឌ្ឍន៍ស្ត្រី'), url: 'https://mowa.gov.kh/en/contact-us' },
+      { label: bi('Sisters of Code digital skills programmes', 'វគ្គបណ្តុះបណ្តាលជំនាញឌីជីថលរបស់ Sisters of Code'), url: 'https://www.sistersofcode.org/services-4' },
+      { label: bi('British Council postgraduate STEM scholarships', 'អាហារូបករណ៍ស្ទែមក្រោយបរិញ្ញាបត្ររបស់ក្រុមប្រឹក្សាអង់គ្លេស'), url: 'https://cambodia.britishcouncil.org/study-uk/women-in-stem' },
+      { label: bi('TVET training institutes', 'គ្រឹះស្ថានបណ្តុះបណ្តាលវិជ្ជាជីវៈ'), url: 'https://skillsportal.mlvt.gov.kh/institutes' },
+      { label: bi('Srey Enterprise business learning', 'រៀនអំពីអាជីវកម្មជាមួយ Srey Enterprise'), url: 'https://srey-enterprise.jaredrobertw.workers.dev/' },
+      { label: bi('Ministry Safe App (Android)', 'កម្មវិធីសុវត្ថិភាពយើងរបស់ក្រសួង (Android)'), url: 'https://play.google.com/store/apps/details?id=kh.gov.mowa.safe' },
+      { label: bi('Ministry Safe App (iPhone)', 'កម្មវិធីសុវត្ថិភាពយើងរបស់ក្រសួង (iPhone)'), url: 'https://apps.apple.com/kh/app/gbv-safe/id6759996757' },
+    ],
+    prompts: [bi('Skill or business goal', 'ជំនាញ ឬគោលដៅអាជីវកម្ម'), bi('Course schedule, fee and travel cost', 'កាលវិភាគ ថ្លៃវគ្គសិក្សា និងថ្លៃធ្វើដំណើរ'), bi('Questions for the training centre', 'សំណួរសម្រាប់មជ្ឈមណ្ឌលបណ្តុះបណ្តាល')],
+  },
+  {
+    n: 5, slug: 'labour',
+    ministry: bi('Labour and Vocational Training', 'ការងារ និងបណ្តុះបណ្តាលវិជ្ជាជីវៈ'),
+    title: bi('Skills-to-Work Navigator', 'មគ្គុទ្ទេសក៍ពីជំនាញទៅការងារ'),
+    benefit: bi('Students can see which skills employers ask for and compare training with those requirements before spending money on travel, tools or a course.', 'សិស្សអាចស្វែងយល់ពីជំនាញដែលនិយោជកត្រូវការ ហើយប្រៀបធៀបជាមួយខ្លឹមសារវគ្គបណ្តុះបណ្តាល មុនចំណាយប្រាក់លើការធ្វើដំណើរ ឧបករណ៍ ឬការសិក្សា។'),
+    steps: [
+      bi('Choose a job, such as electrical repair or bookkeeping. Find a current vacancy with the National Employment Agency and list two skills it asks for.', 'ជ្រើសរើសការងារមួយ ដូចជាជួសជុលប្រព័ន្ធអគ្គិសនី ឬកត់ត្រាបញ្ជីគណនេយ្យ។ រកដំណឹងជ្រើសរើសបុគ្គលិកនៅទីភ្នាក់ងារជាតិមុខរបរ និងការងារ ហើយកត់ជំនាញពីរដែលគេត្រូវការ។'),
+      bi('Look up an institute or programme in the National Skills Portal. Ask about entry requirements, practical training hours, fees, apprenticeships and the next intake.', 'ស្វែងរកគ្រឹះស្ថាន ឬកម្មវិធីសិក្សាក្នុងវិបផតថលជំនាញជាតិ។ សួរអំពីលក្ខខណ្ឌចូលរៀន ម៉ោងអនុវត្ត ថ្លៃសិក្សា ឱកាសហាត់ការងារ និងកាលបរិច្ឆេទទទួលសិស្សថ្មី។'),
+      bi('Prepare a short CV. For one required skill, write what you did at school, at work or in a community project that demonstrates it.', 'រៀបចំប្រវត្តិរូបសង្ខេប។ សម្រាប់ជំនាញមួយដែលគេត្រូវការ សរសេរឧទាហរណ៍ពីសកម្មភាពដែលអ្នកបានធ្វើនៅសាលា កន្លែងធ្វើការ ឬគម្រោងសហគមន៍។'),
+      bi('Practise explaining a shift schedule and a payslip in an interview. Confirm the employer and terms independently before sharing ID or paying any fee. Ask the labour ministry how to report a suspicious offer.', 'ហាត់ពន្យល់ពីកាលវិភាគវេនការងារ និងប័ណ្ណបើកប្រាក់ខែក្នុងការសម្ភាសន៍។ ផ្ទៀងផ្ទាត់និយោជក និងលក្ខខណ្ឌពីប្រភពផ្សេង មុនផ្តល់អត្តសញ្ញាណប័ណ្ណ ឬបង់ប្រាក់។ សួរក្រសួងការងារអំពីរបៀបរាយការណ៍ការផ្តល់ការងារដែលគួរឱ្យសង្ស័យ។'),
+    ],
+    links: [
+      { label: bi('Labour ministry public services and complaints', 'សេវាសាធារណៈ និងបណ្តឹងនៅក្រសួងការងារ'), url: 'https://mlvt.gov.kh/index.php/en/' },
+      { label: bi('National Skills Portal institutes', 'គ្រឹះស្ថានក្នុងវិបផតថលជំនាញជាតិ'), url: 'https://skillsportal.mlvt.gov.kh/institutes' },
+      { label: bi('National Employment Agency job search', 'ស្វែងរកការងារតាមទីភ្នាក់ងារជាតិមុខរបរ និងការងារ'), url: 'https://www.nea.gov.kh/' },
+      { label: bi('Vocational training enquiry guide', 'មគ្គុទ្ទេសក៍សាកសួរអំពីការបណ្តុះបណ្តាលវិជ្ជាជីវៈ'), url: '/public-services#task-training' },
+    ],
+    prompts: [bi('Target job and skills in the vacancy', 'ការងារដែលចង់ធ្វើ និងជំនាញដែលគេត្រូវការ'), bi('Institute, programme and intake to confirm', 'គ្រឹះស្ថាន វគ្គសិក្សា និងពេលទទួលសិស្សដែលត្រូវបញ្ជាក់'), bi('A concrete example of my work for a CV or interview', 'ឧទាហរណ៍ពីការងាររបស់ខ្ញុំសម្រាប់ប្រវត្តិរូប ឬការសម្ភាសន៍')],
+  },
+  {
+    n: 6, slug: 'culture',
+    ministry: bi('Culture and Fine Arts', 'វប្បធម៌ និងវិចិត្រសិល្បៈ'),
+    title: bi('Living Khmer Culture Archive', 'បណ្ណសារវប្បធម៌ខ្មែររស់រវើក'),
+    benefit: bi('Students can document how a local practitioner describes a tradition in their own words. Crediting the practitioner and agreeing who may see the record lets the community shape how its knowledge is shared.', 'សិស្សអាចកត់ត្រារបៀបដែលអ្នកអនុវត្តប្រពៃណីក្នុងមូលដ្ឋានពន្យល់ដោយពាក្យរបស់ពួកគាត់ផ្ទាល់។ ការផ្តល់កិត្តិយស និងការឯកភាពគ្នាថាអ្នកណាអាចមើលកំណត់ត្រា ផ្តល់សិទ្ធិឱ្យសហគមន៍សម្រេចរបៀបចែករំលែកចំណេះដឹងរបស់ខ្លួន។'),
+    steps: [
+      bi('Choose one tradition. For krama weaving, ask how the weaver plans the pattern. For Sbek Thom shadow theatre, ask how a puppet is moved. For a lullaby, ask when it is sung and who taught it.', 'ជ្រើសប្រពៃណីមួយ។ សម្រាប់ការត្បាញក្រមា សួរថាអ្នកត្បាញរៀបលំនាំដោយរបៀបណា។ សម្រាប់ល្ខោនស្បែកធំ សួរថាអ្នកសម្តែងធ្វើចលនាផ្ទាំងស្បែកយ៉ាងដូចម្តេច។ សម្រាប់ចម្រៀងបំពេកូន សួរថាគេច្រៀងពេលណា និងនរណាបានបង្រៀន។'),
+      bi('For a local dance, record the name of a gesture and the music that accompanies it. Compare how two storytellers from different villages tell the same regional story, with permission from both.', 'សម្រាប់របាំក្នុងតំបន់ សូមកត់ឈ្មោះក្បាច់រាំមួយ និងតន្ត្រីដែលលេងអម។ បើអ្នកនិទានពីរនាក់ពីភូមិផ្សេងគ្នាយល់ព្រម សូមប្រៀបធៀបរបៀបដែលពួកគាត់និទានរឿងតំបន់តែមួយ។'),
+      bi('Ask permission before taking notes, photographs or audio. Agree on the name or credit to use and whether the record may be shared at home, at school or more widely.', 'សុំការអនុញ្ញាតមុនកត់ត្រា ថតរូប ឬថតសំឡេង។ ឯកភាពគ្នាអំពីឈ្មោះដែលត្រូវដាក់ជាម្ចាស់ប្រភព និងថាតើអាចចែករំលែកកំណត់ត្រាក្នុងគ្រួសារ នៅសាលា ឬជាសាធារណៈបានឬអត់។'),
+      bi('Read your notes back to the practitioner. Invite corrections, keep their Khmer terms and share a copy with them if they wish.', 'អានកំណត់ត្រាឱ្យអ្នកផ្តល់ព័ត៌មានស្តាប់។ អញ្ជើញពួកគាត់កែតម្រូវ រក្សាពាក្យខ្មែរដែលពួកគាត់ប្រើ និងផ្តល់ច្បាប់ចម្លងមួយជូនពួកគាត់ ប្រសិនបើចង់បាន។'),
+    ],
+    links: [
+      { label: bi('Ministry guide to intangible cultural heritage', 'បេតិកភណ្ឌវប្បធម៌អរូបីរបស់ក្រសួងវប្បធម៌'), url: 'https://mcfa.gov.kh/intangible-cultural-heritage/' },
+      { label: bi('National Museum of Cambodia', 'សារមន្ទីរជាតិកម្ពុជា'), url: 'https://nmc.gov.kh/index.php/about-us' },
+    ],
+    prompts: [bi('Tradition, place and Khmer terms', 'ប្រពៃណី ទីកន្លែង និងពាក្យខ្មែរ'), bi('Practitioner’s account or a question to explore', 'ការរៀបរាប់របស់អ្នកអនុវត្ត ឬសំណួរដែលចង់ស្វែងយល់'), bi('Agreed credit and audience', 'ឈ្មោះប្រភព និងអ្នកអានដែលបានព្រមព្រៀង'), bi('Corrections after community review', 'ចំណុចកែតម្រូវក្រោយសហគមន៍ពិនិត្យ')],
+  },
+];

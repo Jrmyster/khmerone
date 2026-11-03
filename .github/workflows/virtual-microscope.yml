@@ -1,0 +1,39 @@
+name: Virtual Microscope validation
+on:
+  push:
+    paths: ['public/virtual-microscope/**', 'scripts/*virtual-microscope*', 'tests/virtual-microscope.test.mjs', 'data/microscope.ts', '.github/workflows/virtual-microscope.yml']
+  pull_request:
+    paths: ['public/virtual-microscope/**', 'scripts/*virtual-microscope*', 'tests/virtual-microscope.test.mjs', 'data/microscope.ts', '.github/workflows/virtual-microscope.yml']
+permissions:
+  contents: read
+concurrency:
+  group: virtual-microscope-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  microscope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Test specimen metadata and local state
+        run: node --test tests/virtual-microscope.test.mjs
+      - name: Prepare licensed images and pinned viewer
+        run: node scripts/prepare-virtual-microscope.mjs
+      - name: Install isolated browser test dependency
+        run: |
+          npm install --prefix /tmp/khmerone-microscope-check --ignore-scripts --no-package-lock playwright@1.56.1
+          /tmp/khmerone-microscope-check/node_modules/.bin/playwright install --with-deps chromium
+      - name: Exercise microscope online, mobile and offline
+        run: node scripts/check-virtual-microscope-browser.mjs
+      - name: Retain microscope test screenshots
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: virtual-microscope-browser-checks
+          path: microscope-test-results/
+          retention-days: 7

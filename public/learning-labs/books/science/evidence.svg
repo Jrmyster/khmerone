@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="336" height="200" viewBox="0 0 336 200" role="img" aria-labelledby="title">
+  <title id="title">Reviewing a notebook and forming a new question</title>
+  <rect width="336" height="200" fill="#eaf5ef"/>
+  <path d="M41 37q45-8 89 7v119q-44-15-89-7z" fill="#fffdf6" stroke="#77a792" stroke-width="3"/>
+  <path d="M130 44q44-15 89-7v119q-45-8-89 7z" fill="#fffdf6" stroke="#77a792" stroke-width="3"/>
+  <path d="M57 61l55 5M57 80l55 5M57 99l55 5M57 118l55 5M148 65l54-4M148 84l54-4M148 103l54-4M148 122l54-4" fill="none" stroke="#c2dbce" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="166" cy="106" r="32" fill="#d9f0e8" fill-opacity=".6" stroke="#2b7768" stroke-width="7"/>
+  <path d="M190 130l27 28" stroke="#2b7768" stroke-width="12" stroke-linecap="round"/>
+  <path d="M154 97l14-1m-14 13 22-1m-22 13 17-1" stroke="#548f7a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M246 27h49a13 13 0 0 1 13 13v34a13 13 0 0 1-13 13h-22l-18 14V87h-9a13 13 0 0 1-13-13V40a13 13 0 0 1 13-13z" fill="#f1cf88"/>
+  <path d="M262 47c0-12 20-12 20 0 0 8-10 9-10 16" fill="none" stroke="#865f29" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="272" cy="74" r="2.5" fill="#865f29"/>
+  <path d="M254 132c22 5 27 19 14 34m9-6-10 8-4-12" fill="none" stroke="#92b9a5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
