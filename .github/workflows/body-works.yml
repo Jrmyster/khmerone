@@ -1,0 +1,39 @@
+name: Body Works validation
+on:
+  push:
+    paths: ['public/body-works/**', 'scripts/*body-works*', 'scripts/generate-course-search.mjs', 'tests/body-works.test.mjs', 'data/body-works.ts', '.github/workflows/body-works.yml']
+  pull_request:
+    paths: ['public/body-works/**', 'scripts/*body-works*', 'scripts/generate-course-search.mjs', 'tests/body-works.test.mjs', 'data/body-works.ts', '.github/workflows/body-works.yml']
+permissions:
+  contents: read
+concurrency:
+  group: body-works-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  course:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Test bilingual content and progress logic
+        run: node --test tests/body-works.test.mjs
+      - name: Prepare pinned fonts and offline pack
+        run: node scripts/prepare-body-works.mjs
+      - name: Install isolated browser test dependency
+        run: |
+          npm install --prefix /tmp/khmerone-course-check --ignore-scripts --no-package-lock playwright@1.56.1
+          /tmp/khmerone-course-check/node_modules/.bin/playwright install --with-deps chromium
+      - name: Complete the course online and offline
+        run: node scripts/check-body-works-browser.mjs
+      - name: Retain browser screenshots
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: body-works-browser-checks
+          path: body-works-test-results/
+          retention-days: 7
