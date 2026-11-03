@@ -19,6 +19,7 @@ export const toolGroups = [
       ['Teacher Toolkit', 'ឧបករណ៍គ្រូ', '/teacher-toolkit'],
       ['Computer Engineering', 'វិស្វកម្មកុំព្យូទ័រ', '/computer-engineering'],
       ['Engine Lab', 'មន្ទីរពិសោធន៍ម៉ាស៊ីន', '/engine-lab.html'],
+      ['CODAP Evidence & Data Lab', 'CODAP ភស្តុតាង និងទិន្នន័យ', '/codap-lab.html'],
     ],
   },
   {

@@ -1,0 +1,5 @@
+# Only these public teaching datasets are shared with the hosted CODAP app.
+/codap/data/*.csv
+  Access-Control-Allow-Origin: *
+  Content-Type: text/csv; charset=utf-8
+  X-Content-Type-Options: nosniff
