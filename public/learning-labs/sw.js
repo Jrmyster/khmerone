@@ -67,10 +67,11 @@ self.addEventListener('fetch', event => {
     const cached = await cache.match(lookup, {ignoreSearch:true});
     try {
       const response = await fetch(event.request);
-      return response.status >= 500 && cached ? cached : response;
+      if (response.status < 500 || !cached) return response;
     } catch (error) {
-      if (cached) return cached;
-      throw error;
+      if (!cached) throw error;
     }
+    // A navigation cannot replay a response that followed Cloudflare's HTML redirect.
+    return cached.redirected ? new Response(cached.body, cached) : cached;
   })());
 });

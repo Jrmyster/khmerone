@@ -49,9 +49,18 @@ self.addEventListener('fetch',event => {
   const url = new URL(event.request.url);
   if (event.request.method !== 'GET' || url.origin !== BASE.origin || !url.pathname.startsWith(BASE.pathname)) return;
   event.respondWith((async () => {
-    try { const response = await fetch(event.request); if (response.ok) return response; throw new Error('Network unavailable'); }
+    try { const response = await fetch(event.request); if (response.ok || response.type === 'opaqueredirect') return response; throw new Error('Network unavailable'); }
     catch {
-      try { const pointer = await activePack(); if (pointer) { const pack = await caches.open(pointer.cache); const path = url.pathname === BASE.pathname ? new URL('index.html',BASE).pathname : url.pathname; const cached = await pack.match(url.origin + path); if (cached) return cached; } } catch { /* Browser storage unavailable. */ }
+      try {
+        const pointer = await activePack();
+        if (pointer) {
+          const pack = await caches.open(pointer.cache);
+          const path = url.pathname === BASE.pathname ? new URL('index.html',BASE).pathname : url.pathname;
+          const cached = await pack.match(url.origin + path);
+          // A navigation cannot replay a response that followed Cloudflare's HTML redirect.
+          if (cached) return cached.redirected ? new Response(cached.body, cached) : cached;
+        }
+      } catch { /* Browser storage unavailable. */ }
       return new Response('Course unavailable offline. Connect and save the complete course pack first.',{status:503,headers:{'Content-Type':'text/plain;charset=utf-8'}});
     }
   })());
