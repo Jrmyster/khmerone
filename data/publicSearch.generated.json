@@ -2266,6 +2266,53 @@
     ]
   },
   {
+    "href": "/phet-math",
+    "title": "PhET · Additional Math Resources | Khmer One",
+    "fields": [
+      "PhET · Additional Math Resources | Khmer One",
+      "Explore nine official PhET mathematics simulations with Khmer and English guidance, suggested learning levels, and short activities from arithmetic to calculus. Internet required for external resources.",
+      "ខ្មែរ",
+      "English",
+      "phet.colorado.edu",
+      "+",
+      "½",
+      "=",
+      "∫",
+      "·",
+      ":",
+      "PhET · Additional Math Resources",
+      "ត្រឡប់ទៅឧបករណ៍អប់រំ",
+      "រំលងទៅធនធានគណិតវិទ្យា",
+      "ភាសានៃការណែនាំ",
+      "ឧបករណ៍អប់រំ · បណ្ដុំធនធានខាងក្រៅ",
+      "PhET · ធនធានគណិតវិទ្យាបន្ថែម",
+      "ស្វែងយល់ពីចំនួន ប្រភាគ ពិជគណិត ក្រាប និងកាល់គុល តាមគំរូអន្តរកម្ម។ ជ្រើសរើសកម្រិតចាប់ផ្តើម រួចសាកល្បងសកម្មភាពខ្លីមួយដោយខ្លួនឯង។",
+      "ការក្លែងធ្វើអន្តរកម្ម",
+      "ពីការរាប់ដល់កាល់គុល",
+      "ត្រូវការអ៊ីនធឺណិត",
+      "ធនធានខាងក្រៅ",
+      "បើកនៅលើ PhET",
+      "ភ្ជាប់អ៊ីនធឺណិត ដើម្បីបើកការក្លែងធ្វើទាំងនេះនៅលើគេហទំព័រ PhET។ សម្រាប់ការប្រើក្រៅបណ្ដាញ សូមអនុវត្តតាមការណែនាំទាញយករបស់ PhET។",
+      "ការណែនាំជាខ្មែរ និងអង់គ្លេស",
+      "ការណែនាំនេះមានពីរភាសា។ ភាសាដែលមានក្នុងការក្លែងធ្វើនីមួយៗអាចខុសគ្នា។ សូមពិនិត្យជម្រើសភាសានៅលើទំព័រ PhET នីមួយៗ។",
+      "រកមើល PhET ជាភាសាខ្មែរ",
+      "ការណែនាំផ្លូវការអំពីការប្រើក្រៅបណ្ដាញ និងការទាញយក",
+      "ជ្រើសរើសកម្រិតសិក្សាដែលបានណែនាំ",
+      "គ្រប់កម្រិត",
+      "កម្រិតទាំងនេះជាការណែនាំរបស់ Khmer One មិនមែនជាការកំណត់តាមកម្មវិធីសិក្សាផ្លូវការរបស់កម្ពុជាទេ។ ជ្រើសរើសតាមការយល់ដឹងរបស់អ្នកអំពីប្រធានបទ។ កាល់គុលជាជម្រើសកម្រិតខ្ពស់។",
+      "បង្ហាញធនធាន {count} ក្នុងចំណោម {total}",
+      "ជ្រើសរើសសកម្មភាព",
+      "បើក PhET ក្នុងផ្ទាំងថ្មី",
+      "សាកល្បងនេះ",
+      "កម្រិតខ្ពស់",
+      "ឈ្មោះផ្លូវការ",
+      "អំពីធនធានទាំងនេះ",
+      "ការក្លែងធ្វើបង្កើតដោយ PhET Interactive Simulations នៃ University of Colorado Boulder។ Khmer One ជ្រើសរើសធនធាន ណែនាំកម្រិត និងផ្តល់សកម្មភាពសិក្សាពីរភាសា។",
+      "ការផ្តល់ប្រភព និងអាជ្ញាបណ្ណរបស់ PhET",
+      "វិធីសិក្សាសាមញ្ញក្នុងថ្នាក់៖ ទស្សន៍ទាយអ្វីដែលនឹងកើតឡើង ប្តូរអ្វីមួយ រួចពន្យល់អ្វីដែលអ្នកសង្កេតឃើញ។"
+    ]
+  },
+  {
     "href": "/posts-and-telecommunications",
     "title": "Posts and Telecommunications | Khmer One",
     "fields": [
@@ -2786,6 +2833,13 @@
     ]
   },
   {
+    "href": "/brain-scan-explorer/index.html",
+    "title": "Brain Scan Explorer · Khmer One",
+    "fields": [
+      "Brain Scan Explorer · Khmer One Skip to explorer / ចូលទៅសកម្មភាពសិក្សា ✦ Khmer One Educational Tools Virtual Microscope Search ភាសាខ្មែរ MEDICAL & LIFE SCIENCES Brain Scan Explorer One reference brain. Three ways to look inside. Educational use only—not a diagnostic tool. Khmer text is a draft for teacher review. MNI152 · MRI A reference volume derived from averaged MRI data—not an individual patient's scan. Explore the volume Expand view Your browser needs WebGL2 to display the MRI. The explanations and questions remain available. MNI152 / NIfTI Ready to look inside? Load the reference MRI when you are ready. The viewer and scan stay on this website; no account is needed. Load reference MRI Reload and retry Reset view + Zoom − Zoom Crosshair Turn 3D left Turn 3D right Select a point in a slice to move the crosshair. Use the sliders for precise movement. In 3D, drag to rotate or use the turn buttons. Orientation: L = left, R = right, A = front, P = back, S = top, I = bottom. L/R refer to the brain, not your hands. This viewer uses neurological display convention. Move through the volume Sagittal · left → right Coronal · back → front Axial · bottom → top Positions count voxel centers along the viewer's reoriented axes. They are not millimeters or anatomical labels. Display contrast Window center 50% Window width 100% These controls change the display, not the underlying MRI values. Reset restores the original display range. OBSERVE → COMPARE → EXPLAIN Try an observation Move one slice slider slowly. Describe what changes and what stays continuous. Then switch direction and find the same crosshair location. Check your understanding Check answer Next question What this image can—and cannot—show MRI data forms a three-dimensional grid of values. A slice displays one cross-section; volume rendering combines values into a 3D view. This teaching reference is not a diagnosis, a live brain, or a map of someone's thoughts. It does not represent every person's anatomy. Patient-file uploads and drag-and-drop loading are disabled. No personal health data is requested. Sources and licenses MNI / McConnell Brain Imaging Centre, McGill University. Teaching derivative: NiiVue demo images. ICBM 152 nonlinear atlases (2009) · Dataset provenance · MNI license Fonov et al. (2011), NeuroImage 54(1), doi:10.1016/j.neuroimage.2010.07.033; Fonov et al. (2009), NeuroImage 47(S1), doi:10.1016/S1053-8119(09)70884-5. NiiVue 0.69.0 · Source · BSD-2-Clause and notices Noto Sans Khmer · SIL Open Font License YOUR OBSERVATION NOTEBOOK Describe what you see. Keep observations separate from explanations. Your note stays in this browser. Do not enter personal medical information. My observation Download note Take the explorer offline Save the viewer, reference MRI, lessons and Khmer fonts while connected. This pack is separate from the microscope and Learning Labs. Other pages and external source sites are not included. Save brain explorer pack A reference MRI for learning—not a diagnostic service. WebGL2 is required for interactive viewing. Browser storage may be cleared or evicted. Back to Learning Labs JavaScript is needed for the interactive explorer. / សកម្មភាពនេះត្រូវការ JavaScript។"
+    ]
+  },
+  {
     "href": "/engine-lab.html",
     "title": "Khmer One · Four-stroke engine lab",
     "fields": [
@@ -2970,6 +3024,39 @@
       "វ៉ាល់បញ្ចេញបើក ហើយពិស្តុងឡើងលើ ដើម្បីរុញឧស្ម័នដែលបានឆេះចេញ។ វ៉ាល់ស្រូបបិទ។ បន្ទាប់មក វដ្តចាប់ផ្ដើមឡើងវិញ។",
       "#ffed9d",
       "low-power"
+    ]
+  },
+  {
+    "href": "/learning-labs/credits.html",
+    "title": "Learning Labs · Open-source credits · Khmer One",
+    "fields": [
+      "Learning Labs · Open-source credits · Khmer One Khmer One Learning Labs Open-source credits ប្រភព និងអាជ្ញាបណ្ណ Seven local activities, five external resources Six activities use the open-source runtimes below. The seventh is an original simplified eye-focusing lesson, with a separate link to the gkaModelEye MATLAB research repository. The downloadable activity pack does not install the five external resources or MATLAB. កញ្ចប់ក្រៅបណ្ដាញរួមបញ្ចូលសកម្មភាពក្នុងគេហទំព័រចំនួន៧។ ធនធានខាងក្រៅ និង MATLAB ត្រូវដំឡើង ឬប្រើប្រាស់ដោយឡែក។ Khmer translations are drafts for teacher review. The illustrated book, evidence activity, coding missions, vocabulary explanations, and reduced-eye model were prepared for Khmer One. Optional third-party audio is not distributed in this pack. Local open-source runtimes H5P Standalone 3.8.2 — Source · MIT license . Original Khmer One evidence content type: MIT license . JSXGraph 1.14.2 — Source · MIT license option . 3Dmol.js 2.5.5 — Source · BSD-3-Clause and bundled notices . Blockly 13.4.0 — Source · Apache-2.0 license . ts-fsrs 5.4.2 — Source · MIT license . Review schedules are saved only on the current browser/device. Bloom Player 2.22.0 — Source · MIT license . The original five-page science book has text and illustrations, without recorded narration. External resources Repository licenses do not necessarily cover every book, dataset or media item available through a project. Microsoft Web Development for Beginners — MIT repository license. The linked Khmer translation is identified upstream as automated. CircuitJS1 — GPL-2.0-or-later repository license. Pyodide — MPL-2.0 repository license. The external console loads its own runtime. Kolibri — MIT repository license. Offline school use requires separate installation and imported lessons. Kiwix JS — GPL-3.0 repository license. Reader and ZIM archives require separate downloads; archives retain their own content licenses. Eye model distinction gkaguirrelab/gkaModelEye is an MIT-licensed MATLAB research model. It is linked, not executed, by this website. The local simplified paraxial eye diagram is separate and is not a validated port of that model. It must not be used for diagnosis or prescribing lenses. Fonts and bundled notices Noto Sans Khmer is supplied through @fontsource/noto-sans-khmer 5.2.5 under the SIL Open Font License . Additional runtime font notices remain with their distributed files. Package versions and archive integrity values appear in the runtime manifest . Back to Learning Labs / ត្រឡប់ទៅសកម្មភាពសិក្សា"
+    ]
+  },
+  {
+    "href": "/learning-labs/evidence-player.html",
+    "title": "learning-labs/evidence-player",
+    "fields": []
+  },
+  {
+    "href": "/learning-labs/index.html",
+    "title": "Learning Labs · Khmer One",
+    "fields": [
+      "Learning Labs · Khmer One Skip to learning activities / ចូលទៅសកម្មភាពសិក្សា ✦ Khmer One ខ្មែរ វ័ន For teachers ភាសាខ្មែរ Loading learning activities… / កំពុងបើកសកម្មភាពសិក្សា… Khmer One Free learning, connected. Open-source credits Turn on JavaScript to use these interactive activities. / សូមបើក JavaScript ដើម្បីប្រើសកម្មភាពទាំងនេះ។"
+    ]
+  },
+  {
+    "href": "/learning-labs/molecule-viewer.html",
+    "title": "learning-labs/molecule-viewer",
+    "fields": [
+      "Rotate Reset view"
+    ]
+  },
+  {
+    "href": "/virtual-microscope/index.html",
+    "title": "Virtual Microscope · Khmer One",
+    "fields": [
+      "Virtual Microscope · Khmer One Skip to microscope / ចូលទៅមីក្រូទស្សន៍ ✦ Khmer One Tools Search Learning Labs ភាសាខ្មែរ MEDICAL & LIFE SCIENCES Virtual Microscope Look closer. Compare real tissue photographs, make observations, and test what you notice. Khmer text: draft for teacher review. Educational use only—not a diagnostic tool. Choose a specimen REAL MICROSCOPE PHOTOGRAPH Expand view + Zoom in − Zoom out Reset view Rotate 90° Study markers The image could not load. Check your connection or download the complete offline pack first. Retry Open the image directly Drag to move; pinch or use the zoom buttons. When the image has keyboard focus, use arrows, +, − and 0. View zoom is relative to fitting the photograph on screen—not optical magnification. No calibrated micrometer scale is available. Enlarging pixels cannot reveal new detail. OBSERVE → EXPLAIN → CHECK Look for Image source & license Check your observation Check answer YOUR OBSERVATION NOTEBOOK What can you actually see? Describe shapes, colors and patterns. Keep observations separate from explanations. Notes stay on this browser; do not enter personal medical information. My note for this specimen Download note Bring the microscope offline Save this microscope and its three images while connected. This is a separate pack from Learning Labs. Other Khmer One pages and external source websites are not included. Save microscope pack Three teaching photographs—not complete whole-slide scans. No patient uploads, diagnosis, accounts or cloud storage. OpenSeadragon 6.1.1 · Source · BSD-3-Clause license Berkshire Community College Bioscience Image Library · Image library · CC0 1.0 Noto Sans Khmer · SIL Open Font License This microscope requires JavaScript. / មីក្រូទស្សន៍នេះត្រូវការ JavaScript។"
     ]
   }
 ]
