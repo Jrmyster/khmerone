@@ -17,6 +17,7 @@ export const toolGroups = [
       ['School exchange', 'ការចែករំលែកសាលា', '/learning/exchange'],
       ['Audio Maker', 'កម្មវិធីសំឡេង', '/teacher-audio'],
       ['Teacher Toolkit', 'ឧបករណ៍គ្រូ', '/teacher-toolkit'],
+      ['PhET · Additional math resources', 'PhET · ធនធានគណិតវិទ្យាបន្ថែម', '/phet-math'],
       ['Computer Engineering', 'វិស្វកម្មកុំព្យូទ័រ', '/computer-engineering'],
       ['Engine Lab', 'មន្ទីរពិសោធន៍ម៉ាស៊ីន', '/engine-lab.html'],
       ['CODAP Evidence & Data Lab', 'CODAP ភស្តុតាង និងទិន្នន័យ', '/codap-lab.html'],

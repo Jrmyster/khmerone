@@ -5,5 +5,6 @@ import { learningLabs } from './learning-labs';
 import { microscopeApp } from './microscope';
 import { brainScanApp } from './brain-scan';
 import { bodyWorksApp } from './body-works';
+import { phetMathApp } from './phet-app';
 import { codapApp } from './codap';
-export const apps = [codapApp, bodyWorksApp, brainScanApp, microscopeApp, ...learningLabs, ...coreApps];
+export const apps = [phetMathApp, codapApp, bodyWorksApp, brainScanApp, microscopeApp, ...learningLabs, ...coreApps];

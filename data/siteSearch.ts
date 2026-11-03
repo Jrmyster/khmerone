@@ -15,6 +15,8 @@ import { toolkitUnits, resourceKinds, buildTeachingResource, defaultToolkitSetti
 import { engineeringCopy } from '../locales/computerEngineering';
 import { toolkitCopy } from '../locales/teacherToolkit';
 import { teacherAudioCopy } from '../locales/teacherAudio';
+import { phetMathResources, phetLevels } from './phetMath';
+import { phetMathCopy } from '../locales/phetMath';
 import { resourcesFor } from './ministry-guides/resources';
 import { verifiedPlaces } from './ministry-guides/verifiedPlaces';
 import { toolGroups } from '../lib/tool-groups';
@@ -88,6 +90,7 @@ export const siteSearchDocuments: SearchDocument[] = [
 // Include interface copy and built-in examples as well as catalog descriptions.
 for (const [path, extra] of [
   ['/computer-engineering', engineeringCopy], ['/teacher-toolkit', toolkitCopy], ['/teacher-audio', teacherAudioCopy],
+  ['/phet-math', { phetMathResources, phetLevels, phetMathCopy }],
   ['/learning/quiz-maker', sampleQuiz],
   ['/typing', typingLessons],
   ['/inspection', { inspectionChannels, inspectionChecklist, inspectionFields, inspectionNotice }],
