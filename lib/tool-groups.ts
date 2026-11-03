@@ -20,6 +20,7 @@ export const toolGroups = [
       ['PhET · Additional math resources', 'PhET · ធនធានគណិតវិទ្យាបន្ថែម', '/phet-math'],
       ['Computer Engineering', 'វិស្វកម្មកុំព្យូទ័រ', '/computer-engineering'],
       ['Engine Lab', 'មន្ទីរពិសោធន៍ម៉ាស៊ីន', '/engine-lab.html'],
+      ['CODAP Evidence & Data Lab', 'CODAP ភស្តុតាង និងទិន្នន័យ', '/codap-lab.html'],
     ],
   },
   {
