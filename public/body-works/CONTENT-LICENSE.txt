@@ -1,0 +1,18 @@
+HOW YOUR BODY WORKS — Khmer One short course
+
+Lesson text and teaching adaptations: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0).
+License: https://creativecommons.org/licenses/by-nc-sa/4.0/
+Legal code: https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+
+Adapted from Anatomy and Physiology 2e, OpenStax, Rice University, published April 20, 2022.
+Authors: J. Gordon Betts, Kelly A. Young, James A. Wise, Eddie Johnson, Brandon Poe, Dean H. Kruse, Oksana Korol, Jody E. Johnson, Mark Womble, Peter DeSaix.
+Access for free at https://openstax.org/books/anatomy-and-physiology-2e/pages/1-introduction
+Repository: https://github.com/openstax/osbooks-anatomy-physiology
+
+Changes for Khmer One, November 3, 2026: shortened and reorganized explanations, Khmer translations, new classroom prompts, vocabulary definitions, questions, feedback and connections to existing educational tools. No textbook images or logos are reproduced. OpenStax has not reviewed or endorsed this course. Individual section sources appear in each lesson and in lessons.js.
+
+When sharing these educational adaptations, retain attribution, identify changes, use the same CC BY-NC-SA 4.0 license and comply with its noncommercial condition. This notice applies to the course educational text, not to the rest of the Khmer One repository or separate third-party applications.
+
+Khmer translations are drafts for review by a Khmer-speaking teacher and subject-matter reviewer. No completed teacher review is claimed. The course provides introductory education, not diagnosis, treatment or individual medical advice.
+
+Noto Sans Khmer fonts retain their separate SIL Open Font License in vendor/FONT-LICENSE.txt. The course can be used without submitting any personal or medical information.
