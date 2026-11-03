@@ -4,4 +4,5 @@ import { apps as coreApps } from './core-apps';
 import { learningLabs } from './learning-labs';
 import { microscopeApp } from './microscope';
 import { brainScanApp } from './brain-scan';
-export const apps = [brainScanApp, microscopeApp, ...learningLabs, ...coreApps];
+import { bodyWorksApp } from './body-works';
+export const apps = [bodyWorksApp, brainScanApp, microscopeApp, ...learningLabs, ...coreApps];
